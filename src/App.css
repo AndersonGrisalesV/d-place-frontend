@@ -1,0 +1,25 @@
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+*::selection {
+  /* Your CSS styles to apply when 
+    user selects content in the HTML */
+  background-color: #da4453c7;
+  color: white;
+}
