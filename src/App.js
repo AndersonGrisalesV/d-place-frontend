@@ -5,8 +5,9 @@ import styled from "@emotion/styled";
 import HomePage from "./pages/HomePage";
 import FavoritesPage from "./pages/FavoritesPage";
 import SideBar from "./shared/components/Navigation/SideBar/SideBar";
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes, Navigate, Link } from "react-router-dom";
 import AppStyles from "./App.css";
+import Profile from "./pages/Profile";
 
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",
@@ -61,42 +62,49 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={darkThemeTypographyAndBreakpoints}>
-      <StyleBox
-        className={AppStyles}
-        bgcolor={"background.main"}
-        sx={{ fontFamily: "Noto Sans" }}
-        color={"text.primary"}
-        style={{ margin: 0, padding: 0 }}
-      >
-        <NavigationBar
-          setMode={setMode}
-          mode={mode}
-          onOption={handleBurgerMenu}
-        />
-        <div style={{ margin: 0, padding: 0 }}>
-          <Stack direction="row" spacing={2} justifyContent="space-between">
-            {menuOption ? (
-              <SideBar
-                menuOption={menuOption}
-                mode={mode}
-                setMode={setMode}
-                onOption={handleBurgerMenu}
-              />
-            ) : (
-              <SideBar
-                menuOption={menuOption}
-                mode={mode}
-                setMode={setMode}
-                onOption={handleBurgerMenu}
-              />
-            )}
+    <div>
+      <ThemeProvider theme={darkThemeTypographyAndBreakpoints}>
+        <StyleBox
+          className={AppStyles}
+          bgcolor={"background.main"}
+          sx={{ fontFamily: "Noto Sans" }}
+          color={"text.primary"}
+          style={{ margin: 0, padding: 0 }}
+        >
+          <NavigationBar
+            setMode={setMode}
+            mode={mode}
+            onOption={handleBurgerMenu}
+          />
 
-            <HomePage />
-          </Stack>
-        </div>
-      </StyleBox>
-    </ThemeProvider>
+          <div style={{ margin: 0, padding: 0 }}>
+            <Stack direction="row" spacing={2} justifyContent="space-between">
+              {menuOption ? (
+                <SideBar
+                  menuOption={menuOption}
+                  mode={mode}
+                  setMode={setMode}
+                  onOption={handleBurgerMenu}
+                />
+              ) : (
+                <SideBar
+                  menuOption={menuOption}
+                  mode={mode}
+                  setMode={setMode}
+                  onOption={handleBurgerMenu}
+                />
+              )}
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/favorites" element={<FavoritesPage />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="*" element={<p>Not Found!</p>} />
+              </Routes>
+            </Stack>
+          </div>
+        </StyleBox>
+      </ThemeProvider>
+    </div>
   );
 }
 

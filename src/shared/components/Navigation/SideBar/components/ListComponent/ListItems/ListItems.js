@@ -17,6 +17,8 @@ import {
 } from "@mui/icons-material";
 import ModeSwitch from "../../ModeSwitch/ModeSwitch";
 import styled from "@emotion/styled/macro";
+import { NavLink } from "react-router-dom";
+import classes from "./ListItems.module.css";
 
 const StyleHomeIcon = styled(HomeOutlined)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "" : "#00000091",
@@ -49,11 +51,18 @@ const StyleSettingsIcon = styled(SettingsOutlined)(({ theme }) => ({
 const StyleLogoutIcon = styled(Logout)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "" : "#00000091",
   "&:hover": {
-    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
   },
 }));
 
-const StyleListItemIcon = styled(ListItem)(({ theme }) => ({
+const StyleListItemText = styled(ListItemText)(({ theme }) => ({
+  color: theme.palette.mode === "dark" ? "" : "#000000",
+  "&:hover": {
+    color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
+  },
+}));
+
+const StyleListItems = styled(ListItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -71,6 +80,20 @@ const StyleListItemIcon = styled(ListItem)(({ theme }) => ({
     },
     [`${StyleLogoutIcon}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+  },
+}));
+
+const StyleNavLink = styled(NavLink)(({ theme }) => ({
+  textDecoration: "none",
+  color: theme.palette.mode === "dark" ? "#fff" : "#000000",
+  "&.active": {
+    backgroundColor: "#00000",
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "black",
     },
   },
 }));
@@ -110,7 +133,7 @@ const ListItems = ({ mode, setMode }) => {
     >
       <MenuItem style={{ backgroundColor: "transparent" }}>
         <ListItemButton
-          component="a"
+          component="ul"
           href="#simple-list"
           style={{ backgroundColor: "transparent" }}
         >
@@ -125,73 +148,71 @@ const ListItems = ({ mode, setMode }) => {
 
   return (
     <>
-      <StyleListItemIcon disablePadding>
-        <ListItemButton component="a" href="#home">
+      <StyleListItems disablePadding component={StyleNavLink} to="/">
+        <ListItemButton component="ul" href="/">
           <ListItemIcon>
             <StyleHomeIcon />
           </ListItemIcon>
-          <ListItemText primary="Homepage" />
+          <StyleListItemText primary="Homepage" />
         </ListItemButton>
-      </StyleListItemIcon>
+      </StyleListItems>
 
       {!isLoggedIn ? (
-        <StyleListItemIcon disablePadding>
-          <ListItemButton
-            component="a"
-            href="#settings"
-            onClick={handleProfileMenuOpen}
-          >
+        <StyleListItems disablePadding>
+          <ListItemButton component="li" onClick={handleProfileMenuOpen}>
             <ListItemIcon>
               <StyleSettingsIcon />
             </ListItemIcon>
-            <ListItemText primary="Settings" />
+            <StyleListItemText primary="Settings" />
           </ListItemButton>
-        </StyleListItemIcon>
+        </StyleListItems>
       ) : (
         ""
       )}
 
       {isLoggedIn ? (
         <React.Fragment>
-          <StyleListItemIcon disablePadding>
-            <ListItemButton component="a" href="#favorites">
+          <StyleListItems
+            disablePadding
+            component={StyleNavLink}
+            to="/favorites"
+            className={(navData) => (navData.isActive ? classes.active : "")}
+          >
+            <ListItemButton component="li" href="/favorites">
               <ListItemIcon>
                 <StyleFavoriteIcon />
               </ListItemIcon>
-              <ListItemText primary="Favorites" />
-            </ListItemButton>
-          </StyleListItemIcon>
 
-          <StyleListItemIcon disablePadding>
-            <ListItemButton component="a" href="#profile">
+              <StyleListItemText primary="Favorites" />
+            </ListItemButton>
+          </StyleListItems>
+
+          <StyleListItems disablePadding component={StyleNavLink} to="/profile">
+            <ListItemButton component="li" href="/profile">
               <ListItemIcon>
                 <StyleAccountCircleIcon />
               </ListItemIcon>
-              <ListItemText primary="Profile" />
+              <StyleListItemText primary="Profile" />
             </ListItemButton>
-          </StyleListItemIcon>
+          </StyleListItems>
 
-          <StyleListItemIcon disablePadding>
-            <ListItemButton
-              component="a"
-              href="#settings"
-              onClick={handleProfileMenuOpen}
-            >
+          <StyleListItems disablePadding>
+            <ListItemButton component="ul" onClick={handleProfileMenuOpen}>
               <ListItemIcon>
                 <StyleSettingsIcon />
               </ListItemIcon>
-              <ListItemText primary="Settings" />
+              <StyleListItemText primary="Settings" />
             </ListItemButton>
-          </StyleListItemIcon>
+          </StyleListItems>
 
-          <StyleListItemIcon disablePadding>
-            <ListItemButton component="a" href="#logout">
+          <StyleListItems disablePadding>
+            <ListItemButton component="ul" href="#logout">
               <ListItemIcon>
                 <StyleLogoutIcon />
               </ListItemIcon>
-              <ListItemText primary="Logout" />
+              <StyleListItemText primary="Logout" />
             </ListItemButton>
-          </StyleListItemIcon>
+          </StyleListItems>
         </React.Fragment>
       ) : (
         ""

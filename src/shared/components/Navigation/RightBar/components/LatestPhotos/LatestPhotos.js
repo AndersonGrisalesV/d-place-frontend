@@ -3,6 +3,7 @@ import {
   ImageList,
   ImageListItem,
   Typography,
+  Zoom,
 } from "@mui/material";
 import React from "react";
 
@@ -34,36 +35,38 @@ const itemData = [
 
 const LatestPhotos = () => {
   return (
-    <CardContent sx={{ paddingTop: "0px", paddingBottom: "0px" }}>
-      <Typography variant="h6" fontWeight={400} mt={2} mb={2}>
-        Latest Photos
-      </Typography>
-      <div>
-        <ImageList
-          variant="quilted"
-          cols={1}
-          rowHeight={80}
-          gap={5}
-          sx={{ width: "330px", height: "250px", paddingRight: "0px" }}
-        >
-          {itemData.map((item) => (
-            <ImageListItem
-              key={item.img}
-              cols={item.cols || 1}
-              rows={item.rows || 1}
-              sx={{ borderRadius: "18%" }}
-            >
-              <img
-                style={{ borderRadius: "2.2%" }}
-                {...srcset(item.img, 121, item.rows, item.cols)}
-                alt={item.title}
-                loading="lazy"
-              />
-            </ImageListItem>
-          ))}
-        </ImageList>
-      </div>
-    </CardContent>
+    <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
+      <CardContent sx={{ paddingTop: "0px", paddingBottom: "0px" }}>
+        <Typography variant="h6" fontWeight={400} mt={2} mb={2}>
+          Latest Photos
+        </Typography>
+        <div>
+          <ImageList
+            variant="quilted"
+            cols={1}
+            rowHeight={80}
+            gap={5}
+            sx={{ width: "330px", height: "250px", paddingRight: "0px" }}
+          >
+            {itemData.map((item) => (
+              <ImageListItem
+                key={item.img}
+                cols={item.cols || 1}
+                rows={item.rows || 1}
+                sx={{ borderRadius: "18%" }}
+              >
+                <img
+                  style={{ borderRadius: "2.2%" }}
+                  {...srcset(item.img, 121, item.rows, item.cols)}
+                  alt={item.title}
+                  loading="lazy"
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </div>
+      </CardContent>
+    </Zoom>
   );
 };
 
