@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ListItem from "@mui/material/ListItem";
 import {
+  Grow,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -13,12 +14,15 @@ import {
   HomeOutlined,
   Logout,
   ModeNight,
+  Route,
   SettingsOutlined,
 } from "@mui/icons-material";
 import ModeSwitch from "../../ModeSwitch/ModeSwitch";
 import styled from "@emotion/styled/macro";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { LoginContext } from "../../../../../../context/login-context";
 import classes from "./ListItems.module.css";
+import HomePage from "../../../../../../../pages/HomePage";
 
 const StyleHomeIcon = styled(HomeOutlined)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "" : "#00000091",
@@ -99,7 +103,8 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
 }));
 
 const ListItems = ({ mode, setMode }) => {
-  let isLoggedIn = true;
+  const login = useContext(LoginContext);
+  let navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -111,6 +116,11 @@ const ListItems = ({ mode, setMode }) => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    login.logout();
+    navigate("/");
   };
 
   const menuId = "primary-search-account-menu";
@@ -148,71 +158,115 @@ const ListItems = ({ mode, setMode }) => {
 
   return (
     <>
-      <StyleListItems disablePadding component={StyleNavLink} to="/">
-        <ListItemButton component="ul" href="/">
-          <ListItemIcon>
-            <StyleHomeIcon />
-          </ListItemIcon>
-          <StyleListItemText primary="Homepage" />
-        </ListItemButton>
-      </StyleListItems>
-
-      {!isLoggedIn ? (
-        <StyleListItems disablePadding>
-          <ListItemButton component="li" onClick={handleProfileMenuOpen}>
+      <Grow
+        in={true}
+        style={{ transitionDelay: true ? "100ms" : "0ms" }}
+        {...(true ? { timeout: 500 } : {})}
+      >
+        <StyleListItems disablePadding component={StyleNavLink} to="/">
+          <ListItemButton component="ul" href="/">
             <ListItemIcon>
-              <StyleSettingsIcon />
+              <StyleHomeIcon />
             </ListItemIcon>
-            <StyleListItemText primary="Settings" />
+            <StyleListItemText primary="Homepage" />
           </ListItemButton>
         </StyleListItems>
-      ) : (
-        ""
-      )}
+      </Grow>
 
-      {isLoggedIn ? (
-        <React.Fragment>
-          <StyleListItems
-            disablePadding
-            component={StyleNavLink}
-            to="/favorites"
-            className={(navData) => (navData.isActive ? classes.active : "")}
-          >
-            <ListItemButton component="li" href="/favorites">
-              <ListItemIcon>
-                <StyleFavoriteIcon />
-              </ListItemIcon>
-
-              <StyleListItemText primary="Favorites" />
-            </ListItemButton>
-          </StyleListItems>
-
-          <StyleListItems disablePadding component={StyleNavLink} to="/profile">
-            <ListItemButton component="li" href="/profile">
-              <ListItemIcon>
-                <StyleAccountCircleIcon />
-              </ListItemIcon>
-              <StyleListItemText primary="Profile" />
-            </ListItemButton>
-          </StyleListItems>
-
+      {!login.isLoggedIn ? (
+        <Grow
+          in={true}
+          style={{ transitionDelay: true ? "100ms" : "0ms" }}
+          {...(true ? { timeout: 500 } : {})}
+        >
           <StyleListItems disablePadding>
-            <ListItemButton component="ul" onClick={handleProfileMenuOpen}>
+            <ListItemButton component="div" onClick={handleProfileMenuOpen}>
               <ListItemIcon>
                 <StyleSettingsIcon />
               </ListItemIcon>
               <StyleListItemText primary="Settings" />
             </ListItemButton>
           </StyleListItems>
+        </Grow>
+      ) : (
+        ""
+      )}
 
-          <StyleListItems disablePadding>
-            <ListItemButton component="ul" href="#logout">
-              <ListItemIcon>
-                <StyleLogoutIcon />
-              </ListItemIcon>
-              <StyleListItemText primary="Logout" />
-            </ListItemButton>
-          </StyleListItems>
+      {login.isLoggedIn ? (
+        <React.Fragment>
+          <Grow
+            in={true}
+            style={{ transitionDelay: true ? "100ms" : "0ms" }}
+            {...(true ? { timeout: 500 } : {})}
+          >
+            <StyleListItems
+              disablePadding
+              component={StyleNavLink}
+              to="/favorites"
+              className={(navData) => (navData.isActive ? classes.active : "")}
+            >
+              <ListItemButton component="li" href="/favorites">
+                <ListItemIcon>
+                  <StyleFavoriteIcon />
+                </ListItemIcon>
+
+                <StyleListItemText primary="Favorites" />
+              </ListItemButton>
+            </StyleListItems>
+          </Grow>
+
+          <Grow
+            in={true}
+            style={{ transitionDelay: true ? "100ms" : "0ms" }}
+            {...(true ? { timeout: 500 } : {})}
+          >
+            <StyleListItems
+              disablePadding
+              component={StyleNavLink}
+              to="/profile"
+            >
+              <ListItemButton component="li" href="/profile">
+                <ListItemIcon>
+                  <StyleAccountCircleIcon />
+                </ListItemIcon>
+                <StyleListItemText primary="Profile" />
+              </ListItemButton>
+            </StyleListItems>
+          </Grow>
+
+          <Grow
+            in={true}
+            style={{ transitionDelay: true ? "100ms" : "0ms" }}
+            {...(true ? { timeout: 500 } : {})}
+          >
+            <StyleListItems disablePadding>
+              <ListItemButton component="ul" onClick={handleProfileMenuOpen}>
+                <ListItemIcon>
+                  <StyleSettingsIcon />
+                </ListItemIcon>
+                <StyleListItemText primary="Settings" />
+              </ListItemButton>
+            </StyleListItems>
+          </Grow>
+
+          <Grow
+            in={true}
+            style={{ transitionDelay: true ? "100ms" : "0ms" }}
+            {...(true ? { timeout: 500 } : {})}
+          >
+            <StyleListItems disablePadding>
+              <ListItemButton
+                component="ul"
+                href="/logout"
+                onClick={handleLogout}
+              >
+                <ListItemIcon>
+                  <StyleLogoutIcon />
+                </ListItemIcon>
+                <StyleListItemText primary="Logout" />
+              </ListItemButton>
+            </StyleListItems>
+          </Grow>
         </React.Fragment>
       ) : (
         ""

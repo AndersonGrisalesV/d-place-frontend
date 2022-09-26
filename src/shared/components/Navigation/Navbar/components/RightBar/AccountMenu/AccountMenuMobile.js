@@ -1,5 +1,5 @@
 import { IconButton, Menu, MenuItem } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   AccountCircleOutlined,
   FavoriteBorderOutlined,
@@ -7,6 +7,8 @@ import {
 import Box from "@mui/material/Box";
 import LoginButton from "../LoginButtons/LoginButton";
 import NotificationsButton from "../NotificationsButton/NotificationsButton";
+import { LoginContext } from "../../../../../../context/login-context";
+import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled/macro";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
@@ -23,7 +25,8 @@ const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
 }));
 
 const AccountMenuMobile = () => {
-  let isLoggedIn = true;
+  const login = useContext(LoginContext);
+  let navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -42,6 +45,13 @@ const AccountMenuMobile = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+
+  const handleMenuCloseAndLogout = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    login.logout();
+    navigate("/");
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -78,7 +88,7 @@ const AccountMenuMobile = () => {
         </IconButton>
         <p>Favorites</p>
       </StyleMenuItem>
-      {isLoggedIn ? (
+      {login.isLoggedIn ? (
         <StyleMenuItem onClick={handleProfileMenuOpen}>
           <IconButton
             style={{ backgroundColor: "transparent" }}
@@ -94,14 +104,6 @@ const AccountMenuMobile = () => {
         </StyleMenuItem>
       ) : (
         ""
-        // <Box
-        //   display="flex"
-        //   width={"100%"}
-        //   alignItems="center"
-        //   justifyContent="center"
-        // >
-        //   <LogoutButton />
-        // </Box>
       )}
     </Menu>
   );
@@ -124,13 +126,13 @@ const AccountMenuMobile = () => {
       onClose={handleMenuClose}
     >
       <StyleMenuItem onClick={handleMenuClose}>Profile</StyleMenuItem>
-      <StyleMenuItem onClick={handleMenuClose}>Logout</StyleMenuItem>
+      <StyleMenuItem onClick={handleMenuCloseAndLogout}>Logout</StyleMenuItem>
     </Menu>
   );
 
   return (
     <React.Fragment>
-      {isLoggedIn ? (
+      {login.isLoggedIn ? (
         <Box
           sx={{
             display: {

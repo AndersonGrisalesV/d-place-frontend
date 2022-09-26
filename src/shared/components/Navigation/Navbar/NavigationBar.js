@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,7 +12,8 @@ import SideBarMenuResponsive from "./components/SideBar/SideBarMenuResponsive";
 import FavoritesButton from "./components/RightBar/FavoritesButton/FavoritesButton";
 import LoginButton from "./components/RightBar/LoginButtons/LoginButton";
 import NotificationsButton from "./components/RightBar/NotificationsButton/NotificationsButton";
-import { Box } from "@mui/material";
+import { Box, Grow } from "@mui/material";
+import { LoginContext } from "../../../context/login-context";
 import styles from "./NavigationBar.module.css";
 
 const StyleToolbar = styled(Toolbar)({
@@ -21,55 +22,61 @@ const StyleToolbar = styled(Toolbar)({
 });
 
 export default function NavigationBar(props) {
-  let isLoggedIn = true;
+  const login = useContext(LoginContext);
 
   return (
-    <AppBar
-      position="sticky"
-      className={props.mode === "light" ? styles.coloredAppBar : ""}
+    <Grow
+      in={true}
+      style={{ transitionDelay: true ? "100ms" : "0ms" }}
+      {...(true ? { timeout: 500 } : {})}
     >
-      <StyleToolbar>
-        <HamburgerMenu onOption={props.onOption} />
+      <AppBar
+        position="sticky"
+        className={props.mode === "light" ? styles.coloredAppBar : ""}
+      >
+        <StyleToolbar>
+          <HamburgerMenu onOption={props.onOption} />
 
-        <AppName />
+          <AppName />
 
-        <SearchBar />
+          <SearchBar />
 
-        {isLoggedIn ? (
-          <React.Fragment>
-            <FavoritesButton />
-            <NotificationsButton onResponsive={false} />
-            <AccountMenu />
-          </React.Fragment>
-        ) : (
-          <Box
-            sx={{
-              display: {
-                sps: "none",
-                ps: "none",
-                ts: "none",
-                sls: "none",
-                sms: "none",
-                sc: "none",
-                nsc: "none",
-                ns: "flex",
-                msc: "flex",
-                mns: "flex",
-                ms: "flex",
-                lgs: "flex",
-              },
-            }}
-          >
-            <LoginButton />
-          </Box>
-        )}
+          {login.isLoggedIn ? (
+            <React.Fragment>
+              <FavoritesButton />
+              <NotificationsButton onResponsive={false} />
+              <AccountMenu />
+            </React.Fragment>
+          ) : (
+            <Box
+              sx={{
+                display: {
+                  sps: "none",
+                  ps: "none",
+                  ts: "none",
+                  sls: "none",
+                  sms: "none",
+                  sc: "none",
+                  nsc: "none",
+                  ns: "flex",
+                  msc: "flex",
+                  mns: "flex",
+                  ms: "flex",
+                  lgs: "flex",
+                },
+              }}
+            >
+              <LoginButton />
+            </Box>
+          )}
 
-        <SideBarMenuResponsive setMode={props.setMode} mode={props.mode} />
+          <SideBarMenuResponsive setMode={props.setMode} mode={props.mode} />
 
-        <SearchBarResponsive />
+          <SearchBarResponsive />
 
-        <AccountMenuMobile />
-      </StyleToolbar>
-    </AppBar>
+          <AccountMenuMobile />
+        </StyleToolbar>
+      </AppBar>
+    </Grow>
   );
 }

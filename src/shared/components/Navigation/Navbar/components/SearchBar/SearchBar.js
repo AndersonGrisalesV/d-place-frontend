@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Zoom } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
@@ -46,35 +46,37 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchBar = () => {
   return (
-    <Box
-      display="flex"
-      width={"100%"}
-      alignItems="center"
-      justifyContent="center"
-      sx={{
-        display: {
-          sps: "none",
-          ps: "none",
-          ts: "none",
-          sls: "none",
-          sms: "none",
-          sc: "none",
-          nsc: "none",
-          ns: "flex",
-          msc: "flex",
-          mns: "flex",
-          ms: "flex",
-          lgs: "flex",
-        },
-      }}
-    >
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase placeholder="Search" />
-      </Search>
-    </Box>
+    <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
+      <Box
+        display="flex"
+        width={"100%"}
+        alignItems="center"
+        justifyContent="center"
+        sx={{
+          display: {
+            sps: "none",
+            ps: "none",
+            ts: "none",
+            sls: "none",
+            sms: "none",
+            sc: "none",
+            nsc: "none",
+            ns: "flex",
+            msc: "flex",
+            mns: "flex",
+            ms: "flex",
+            lgs: "flex",
+          },
+        }}
+      >
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase placeholder="Search" />
+        </Search>
+      </Box>
+    </Zoom>
   );
 };
 

@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Badge, Box, IconButton, MenuItem, Stack } from "@mui/material";
+import {
+  Avatar,
+  Badge,
+  Box,
+  IconButton,
+  MenuItem,
+  Stack,
+  Zoom,
+} from "@mui/material";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
@@ -77,69 +85,73 @@ const NotificationsButton = ({ onResponsive }) => {
   return (
     <React.Fragment>
       {changeResponsive ? (
-        <Box
-          sx={{
-            display: {
-              sps: "flex",
-              ps: "flex",
-              ts: "flex",
-              sls: "flex",
-              sms: "flex",
-              sc: "flex",
-              nsc: "flex",
-              ns: "none",
-              ms: "none",
-              lgs: "none",
-            },
-          }}
-        >
-          <StyleMenuItem>
+        <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
+          <Box
+            sx={{
+              display: {
+                sps: "flex",
+                ps: "flex",
+                ts: "flex",
+                sls: "flex",
+                sms: "flex",
+                sc: "flex",
+                nsc: "flex",
+                ns: "none",
+                ms: "none",
+                lgs: "none",
+              },
+            }}
+          >
+            <StyleMenuItem>
+              <IconButton
+                style={{ backgroundColor: "transparent" }}
+                size="large"
+                aria-label="show new notifications"
+                color="inherit"
+                title="Notifications"
+              >
+                <Badge badgeContent={1} color="error">
+                  <NotificationsOutlinedIcon onClick={handleClick} />
+
+                  {PopoverComponent}
+                </Badge>
+              </IconButton>
+              <p onClick={handleClick}>Notifications</p>
+            </StyleMenuItem>
+          </Box>
+        </Zoom>
+      ) : (
+        <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
+          <Box
+            sx={{
+              display: {
+                sps: "none",
+                ps: "none",
+                ts: "none",
+                sls: "none",
+                sms: "none",
+                sc: "none",
+                nsc: "none",
+                ns: "flex",
+                ms: "flex",
+                lgs: "flex",
+              },
+            }}
+          >
             <IconButton
-              style={{ backgroundColor: "transparent" }}
               size="large"
               aria-label="show new notifications"
               color="inherit"
               title="Notifications"
+              sx={{ marginLeft: "6px" }}
             >
               <Badge badgeContent={1} color="error">
                 <NotificationsOutlinedIcon onClick={handleClick} />
-
                 {PopoverComponent}
               </Badge>
             </IconButton>
-            <p onClick={handleClick}>Notifications</p>
-          </StyleMenuItem>
-        </Box>
-      ) : (
-        <Box
-          sx={{
-            display: {
-              sps: "none",
-              ps: "none",
-              ts: "none",
-              sls: "none",
-              sms: "none",
-              sc: "none",
-              nsc: "none",
-              ns: "flex",
-              ms: "flex",
-              lgs: "flex",
-            },
-          }}
-        >
-          <IconButton
-            size="large"
-            aria-label="show new notifications"
-            color="inherit"
-            title="Notifications"
-            sx={{ marginLeft: "6px" }}
-          >
-            <Badge badgeContent={1} color="error">
-              <NotificationsOutlinedIcon onClick={handleClick} />
-              {PopoverComponent}
-            </Badge>
-          </IconButton>
-        </Box>
+          </Box>
+        </Zoom>
       )}
     </React.Fragment>
   );

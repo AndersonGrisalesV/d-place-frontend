@@ -5,7 +5,7 @@ const Profile = () => {
   return (
     <React.Fragment>
       {/* <SidebarBackground /> */}
-      <p>Profile</p>
+
       <Feed bgcolor={"backgroundColor"} />
     </React.Fragment>
   );

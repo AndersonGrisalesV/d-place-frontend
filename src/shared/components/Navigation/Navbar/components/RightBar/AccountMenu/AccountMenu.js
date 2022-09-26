@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Box } from "@mui/system";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem, Zoom } from "@mui/material";
 import { AccountCircleOutlined } from "@mui/icons-material";
+import { LoginContext } from "../../../../../../context/login-context";
+import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled/macro";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
@@ -15,7 +17,8 @@ const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
 }));
 
 const AccountMenu = () => {
-  let isLoggedIn = true;
+  const login = useContext(LoginContext);
+  let navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -30,6 +33,12 @@ const AccountMenu = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+  const handleMenuCloseAndLogout = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    login.logout();
+    navigate("/");
   };
 
   const menuId = "primary-search-account-menu";
@@ -50,45 +59,47 @@ const AccountMenu = () => {
       onClose={handleMenuClose}
     >
       <StyleMenuItem onClick={handleMenuClose}>Profile</StyleMenuItem>
-      <StyleMenuItem onClick={handleMenuClose}>Logout</StyleMenuItem>
+      <StyleMenuItem onClick={handleMenuCloseAndLogout}>Logout</StyleMenuItem>
     </Menu>
   );
 
   return (
     <React.Fragment>
-      {isLoggedIn ? (
-        <Box
-          sx={{
-            display: {
-              sps: "none",
-              ps: "none",
-              ts: "none",
-              sls: "none",
-              sms: "none",
-              sc: "none",
-              nsc: "none",
-              ns: "flex",
-              msc: "flex",
-              mns: "flex",
-              ms: "flex",
-              lgs: "flex",
-            },
-          }}
-        >
-          <IconButton
-            size="large"
-            edge="end"
-            aria-label="account of current user"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
-            color="inherit"
-            title="Account"
+      {login ? (
+        <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
+          <Box
+            sx={{
+              display: {
+                sps: "none",
+                ps: "none",
+                ts: "none",
+                sls: "none",
+                sms: "none",
+                sc: "none",
+                nsc: "none",
+                ns: "flex",
+                msc: "flex",
+                mns: "flex",
+                ms: "flex",
+                lgs: "flex",
+              },
+            }}
           >
-            <AccountCircleOutlined />
-          </IconButton>
-          {renderMenu}
-        </Box>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+              title="Account"
+            >
+              <AccountCircleOutlined />
+            </IconButton>
+            {renderMenu}
+          </Box>
+        </Zoom>
       ) : (
         ""
       )}

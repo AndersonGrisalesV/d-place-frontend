@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Fab, Grow, Zoom } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import styled from "@emotion/styled";
+import { LoginContext } from "../../../context/login-context";
 
 const StyleFabButton = styled(Fab)(({ theme }) => ({
   background: "#da4453",
@@ -13,9 +14,10 @@ const StyleFabButton = styled(Fab)(({ theme }) => ({
 }));
 
 const NewButton = ({ menuOption, onResponsive = false }) => {
+  const login = useContext(LoginContext);
   let Button;
 
-  if (menuOption && !onResponsive) {
+  if (login.isLoggedIn && menuOption && !onResponsive) {
     Button = (
       <Zoom
         in={menuOption}
@@ -56,7 +58,7 @@ const NewButton = ({ menuOption, onResponsive = false }) => {
         </StyleFabButton>
       </Grow>
     );
-  } else if (!menuOption && onResponsive) {
+  } else if (login.isLoggedIn && !menuOption && onResponsive) {
     Button = (
       <Grow
         in={true}
