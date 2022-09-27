@@ -37,7 +37,7 @@ const NewButton = ({ menuOption, onResponsive = false }) => {
         </StyleFabButton>
       </Zoom>
     );
-  } else if (!menuOption && !onResponsive) {
+  } else if (login.isLoggedIn && !menuOption && !onResponsive) {
     Button = (
       <Grow
         in={true}

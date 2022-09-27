@@ -11,16 +11,6 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-// const StyledButton = withStyles({
-//   root: {
-//     backgroundColor: "#3c52b2",
-//     color: "#fff",
-//     "&:hover": {
-//       backgroundColor: "#fff",
-//       color: "#3c52b2",
-//     },
-//   },
-
 const ButtonDetails = () => {
   return (
     <Stack

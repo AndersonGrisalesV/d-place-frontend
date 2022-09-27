@@ -79,6 +79,7 @@ function App() {
             backgroundColor: "#0000000f",
             background: {
               main: "#f2f2f2",
+              secondary: "#da4453c7",
             },
             text: {
               primary: "rgba(0, 0, 0, 0.87)",
