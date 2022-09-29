@@ -18,7 +18,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const UploadButton = () => {
+const UploadButton = ({ onUpload }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -28,6 +28,23 @@ const UploadButton = () => {
     }
   }, [selectedImage]);
 
+  const changeImageHandler = (e) => {
+    let reader = new FileReader();
+
+    setSelectedImage(e.target.files[0]);
+
+    reader.readAsDataURL(e.target.files[0]);
+    console.log(e.target.name);
+    reader.onload = () => {
+      // console.log(reader.result); //base64encoded string
+      const baseResult = reader.result;
+      onUpload(baseResult);
+    };
+    // reader.onerror = (error) => {
+    //   console.log("Error: ", error);
+    // };
+  };
+
   return (
     <>
       <Stack direction="row" spacing={1} justifyContent="space-between">
@@ -36,7 +53,8 @@ const UploadButton = () => {
           type="file"
           id="select-image"
           style={{ display: "none" }}
-          onChange={(e) => setSelectedImage(e.target.files[0])}
+          onChange={changeImageHandler}
+          name="image"
         />
         <label htmlFor="select-image" style={{ marginLeft: "0px" }}>
           <StyleButton
