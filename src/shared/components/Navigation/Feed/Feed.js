@@ -4,11 +4,18 @@ import Place from "./places/Place";
 
 const Feed = () => {
   return (
-    <Box flex={4} p={2}>
+    <Box flex={4} p={2} style={{ marginBottom: "100%" }}>
       <Place />
       <br />
       <Place />
       <br />
+      {/*
+      <Place />
+      <br />
+      <Place />
+      <br />
+      <Place />
+      <br /> */}
     </Box>
   );
 };

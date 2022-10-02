@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   Avatar,
   Box,
@@ -11,9 +11,7 @@ import {
 } from "@mui/material";
 import CardWrapper from "../shared/components/Navigation/Feed/places/components/CardWrapper";
 import { LoginContext } from "../shared/context/login-context";
-import { useForm } from "../shared/hooks/form-hook";
-import UploadButton from "../shared/components/LoginRegister/UploadButton";
-import useFocusBlurHook from "../shared/hooks/focusblur-hook";
+import useFocusBlurHook from "../shared/hooks/use-my-input";
 import styled from "@emotion/styled";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
@@ -43,24 +41,27 @@ const StyleButton = styled(Button)(({ theme }) => ({
 }));
 
 const StyleButtonImage = styled(Button)(({ theme }) => ({
-  border:
-    theme.palette.mode === "dark"
-      ? "rgba(255, 255, 255, 0.7)"
-      : "1px solid #da4453",
+  // border:
+  //   theme.palette.mode === "dark"
+  //     ? "rgba(255, 255, 255, 0.7)"
+  //     : "1px solid #da4453",
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
   "&:hover": {
     backgroundColor: "transparent",
     color: "#9b9b9bc7",
-    border:
-      theme.palette.mode === "dark"
-        ? "rgba(255, 255, 255, 0.7)"
-        : "1px solid #9b9b9bc7",
+    // border:
+    //   theme.palette.mode === "dark"
+    //     ? "rgba(255, 255, 255, 0.7)"
+    //     : "1px solid #9b9b9bc7",
   },
 }));
 
 const LoginRegister = () => {
   const login = useContext(LoginContext);
+  const passwordInputRef = useRef();
+
   const [isLoginMode, setIsLoginMode] = useState(true);
+
   const initialFormInputs = {
     name: "",
     email: "",
@@ -71,29 +72,52 @@ const LoginRegister = () => {
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
 
-  const handlerOnFocus = (e) => {
-    console.log(e.target.value);
-    if (e.target.name === "image") {
-      setSelectedImage(e.target.files[0]);
-      let reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = () => {
-        // console.log(reader.result); //base64encoded string
-        setFormInputs({
-          ...formInputs,
-          [e.target.name]: "",
-        });
-        // console.log(reader.result);
-      };
-    } else {
-      setFormInputs({
-        ...formInputs,
-        [e.target.name]: "",
-      });
-    }
+  const onSubmitLoginRegisterHandler = (e) => {
+    e.preventDefault();
+
+    console.log(formInputs);
+    login.login();
+
+    resetNameInput();
+    resetEmailInput();
+    resetPasswordInput();
+    resetconfirmPasswordInput();
   };
 
-  const handleSetFormInputs = (e) => {
+  const switchModeHandler = () => {
+    // if (!isLoginMode) {
+    //   // setFormData(
+    //   //   {
+    //   //     ...formState.inputs,
+    //   //     name: undefined,
+    //   //   },
+    //   //   formState.inputs.email.isValid && formState.inputs.password.isValid
+    //   // );
+    // } else {
+    //   // setFormData(
+    //   //   {
+    //   //     ...formState.inputs,
+    //   //     name: {
+    //   //       value: "",
+    //   //       isValid: false,
+    //   //     },
+    //   //   },
+    //   //   false
+    //   // );
+    // }
+    setIsLoginMode((prevMode) => !prevMode);
+  };
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+
+  useEffect(() => {
+    if (selectedImage) {
+      setImageUrl(URL.createObjectURL(selectedImage));
+    }
+  }, [selectedImage]);
+
+  const formInputsHandler = (e) => {
     console.log(e.target.value);
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
@@ -112,66 +136,11 @@ const LoginRegister = () => {
         ...formInputs,
         [e.target.name]: e.target.value,
       });
-      e.target.error(true);
     }
   };
-
-  const onSubmitLoginRegisterHandler = (e) => {
-    e.preventDefault();
-    console.log(formInputs);
-    login.login();
-  };
-
-  const switchModeHandler = () => {
-    if (!isLoginMode) {
-      // setFormData(
-      //   {
-      //     ...formState.inputs,
-      //     name: undefined,
-      //   },
-      //   formState.inputs.email.isValid && formState.inputs.password.isValid
-      // );
-    } else {
-      // setFormData(
-      //   {
-      //     ...formState.inputs,
-      //     name: {
-      //       value: "",
-      //       isValid: false,
-      //     },
-      //   },
-      //   false
-      // );
-    }
-    setIsLoginMode((prevMode) => !prevMode);
-  };
-
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
-
-  useEffect(() => {
-    if (selectedImage) {
-      setImageUrl(URL.createObjectURL(selectedImage));
-    }
-  }, [selectedImage]);
-
-  // const changeImageHandlerUrl = (e) => {
-  //   let reader = new FileReader();
-
-  //   reader.readAsDataURL(e.target.files[0]);
-  //   reader.onload = () => {
-  //     // console.log(reader.result); //base64encoded string
-
-  //     return reader.result;
-  //   };
-  //   // reader.onerror = (error) => {
-  //   //   console.log("Error: ", error);
-  //   // };
-
-  // };
 
   const {
-    value: name,
+    value: nameInput,
     isValid: nameIsValid,
     hasError: nameInputHasError,
     valueChangeHandler: nameChangeHandler,
@@ -179,8 +148,35 @@ const LoginRegister = () => {
     reset: resetNameInput,
   } = useFocusBlurHook((value) => validateNameAndLastName(value));
 
+  const {
+    value: emailInput,
+    isValid: emailIsValid,
+    hasError: emailInputHasError,
+    valueChangeHandler: emailChangeHandler,
+    valueBlurHandler: emailBlurHandler,
+    reset: resetEmailInput,
+  } = useFocusBlurHook((value) => ValidateEmail(value));
+
+  const {
+    value: passwordInput,
+    isValid: passwordIsValid,
+    hasError: passwordInputHasError,
+    valueChangeHandler: passwordChangeHandler,
+    valueBlurHandler: passwordBlurHandler,
+    reset: resetPasswordInput,
+  } = useFocusBlurHook((value) => ValidatePassword(value));
+
+  const {
+    value: confirmPasswordInput,
+    isValid: confirmPasswordIsValid,
+    hasError: confirmPasswordInputHasError,
+    valueChangeHandler: confirmPasswordChangeHandler,
+    valueBlurHandler: confirmPasswordBlurHandler,
+    reset: resetconfirmPasswordInput,
+  } = useFocusBlurHook((value) => ValidatePasswordAndConfirmPassword(value));
+
   function validateNameAndLastName(text) {
-    if (text.trim() !== "") {
+    if (text.trim() !== "" && text.length > 4) {
       return true;
     }
     return false;
@@ -193,19 +189,69 @@ const LoginRegister = () => {
     return false;
   }
 
+  function ValidatePassword(password) {
+    if (password.trim() !== "" && password.length > 5) {
+      return true;
+    }
+    return false;
+  }
+
+  function ValidatePasswordAndConfirmPassword(password) {
+    if (
+      password.trim() !== "" &&
+      password.length > 5 &&
+      passwordInput.length > 5 &&
+      passwordInput === password.trim()
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  let formIsValid = false;
+
+  if (
+    (isLoginMode && emailIsValid && passwordIsValid) ||
+    (!isLoginMode &&
+      nameIsValid &&
+      emailIsValid &&
+      passwordIsValid &&
+      confirmPasswordIsValid)
+  ) {
+    formIsValid = true;
+  }
+
   return (
     <Box flex={8} p={8} m={1}>
       <Box
         sx={{
           marginLeft: "10px",
           marginTop: "14px",
+          marginBottom: "100%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
         <CardWrapper sx={{ marginRight: "105px" }}>
-          <CardContent sx={{ width: "368px" }}>
+          <CardContent
+            sx={{
+              width: {
+                sps: "100px",
+                ps: "164px",
+                ts: "294px",
+                sls: "295px",
+                sms: "358px",
+                sc: "368px",
+                nsc: "368px",
+                ns: "368px",
+                msc: "368px",
+                mns: "368px",
+                ms: "368px",
+                lgs: "368px",
+              },
+            }}
+          >
             <Typography
               variant="h6"
               fontWeight={400}
@@ -232,13 +278,17 @@ const LoginRegister = () => {
                   <StyleTextField
                     id="outlined-name-input"
                     label="Name"
-                    type="name"
+                    type="text"
                     autoComplete="current-name"
                     size="small"
                     name="name"
-                    onChange={handleSetFormInputs}
-                    value={formInputs.name}
-                    onFocus={handlerOnFocus}
+                    onChange={(e) => {
+                      formInputsHandler(e);
+                      nameChangeHandler(e);
+                    }}
+                    onBlur={nameBlurHandler}
+                    value={nameInput}
+                    error={nameInputHasError}
                   />
                 )}
                 <StyleTextField
@@ -248,8 +298,13 @@ const LoginRegister = () => {
                   autoComplete="current-email"
                   size="small"
                   name="email"
-                  value={formInputs.email}
-                  onChange={handleSetFormInputs}
+                  onChange={(e) => {
+                    formInputsHandler(e);
+                    emailChangeHandler(e);
+                  }}
+                  onBlur={emailBlurHandler}
+                  value={emailInput}
+                  error={emailInputHasError}
                 />
                 <StyleTextField
                   id="outlined-password-input"
@@ -258,19 +313,30 @@ const LoginRegister = () => {
                   autoComplete="current-password"
                   size="small"
                   name="password"
-                  onChange={handleSetFormInputs}
-                  value={formInputs.password}
+                  onChange={(e) => {
+                    formInputsHandler(e);
+                    passwordChangeHandler(e);
+                  }}
+                  onBlur={passwordBlurHandler}
+                  value={passwordInput}
+                  error={passwordInputHasError}
+                  ref={passwordInputRef}
                 />
                 {!isLoginMode && (
                   <StyleTextField
                     id="outlined-confirmpassword-input"
                     label="Confirm Password"
                     type="password"
-                    autoComplete="current-confirmpassword"
+                    autoComplete="current-confirmPassword"
                     size="small"
                     name="confirmPassword"
-                    onChange={handleSetFormInputs}
-                    value={formInputs.confirmPassword}
+                    onChange={(e) => {
+                      formInputsHandler(e);
+                      confirmPasswordChangeHandler(e);
+                    }}
+                    onBlur={confirmPasswordBlurHandler}
+                    value={confirmPasswordInput}
+                    error={confirmPasswordInputHasError}
                   />
                 )}
                 {!isLoginMode && (
@@ -285,7 +351,7 @@ const LoginRegister = () => {
                         type="file"
                         id="select-image"
                         style={{ display: "none" }}
-                        onChange={handleSetFormInputs}
+                        onChange={formInputsHandler}
                         name="image"
                       />
                       <label
@@ -360,8 +426,7 @@ const LoginRegister = () => {
                 >
                   <StyleButton
                     type="submit"
-                    disabled={!isLoginMode ? false : true}
-                    // disabled={!formState.isValid}
+                    disabled={formIsValid ? false : true}
                     sx={{
                       display: "flex",
                       justifyContent: "center",
