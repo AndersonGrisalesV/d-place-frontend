@@ -1,18 +1,17 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  CardContent,
-  Divider,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import CardWrapper from "../shared/components/Navigation/Feed/places/components/CardWrapper";
+import { Stack, TextField } from "@mui/material";
 import { LoginContext } from "../shared/context/login-context";
 import useFocusBlurHook from "../shared/hooks/use-my-input";
+import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
+import Title from "../shared/components/LoginRegister/components/Title";
+import CardContentLogin from "../shared/components/LoginRegister/components/CardContentLogin";
+import CardWrapperLogin from "../shared/components/LoginRegister/components/CardWrapperLogin";
+import CreateAccountButton from "../shared/components/LoginRegister/Buttons/CreateAccountButton";
+import LoginRegisterButton from "../shared/components/LoginRegister/Buttons/LoginRegisterButton";
+import ButtonsWrapper from "../shared/components/LoginRegister/Buttons/ButtonsWrapper";
+import ImageUploadButton from "../shared/components/LoginRegister/Buttons/ImageUploadButton";
+import ImagePreviewButton from "../shared/components/LoginRegister/Buttons/ImagePreviewButton";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -32,35 +31,13 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const StyleButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
-  "&:hover": {
-    backgroundColor: "transparent",
-    color: "#9b9b9bc7",
-  },
-}));
-
-const StyleButtonImage = styled(Button)(({ theme }) => ({
-  // border:
-  //   theme.palette.mode === "dark"
-  //     ? "rgba(255, 255, 255, 0.7)"
-  //     : "1px solid #da4453",
-  color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
-  "&:hover": {
-    backgroundColor: "transparent",
-    color: "#9b9b9bc7",
-    // border:
-    //   theme.palette.mode === "dark"
-    //     ? "rgba(255, 255, 255, 0.7)"
-    //     : "1px solid #9b9b9bc7",
-  },
-}));
-
 const LoginRegister = () => {
   const login = useContext(LoginContext);
   const passwordInputRef = useRef();
+  let navigate = useNavigate();
 
   const [isLoginMode, setIsLoginMode] = useState(true);
+  // const [successMessage, setSuccessMessage] = useState(false);
 
   const initialFormInputs = {
     name: "",
@@ -76,12 +53,17 @@ const LoginRegister = () => {
     e.preventDefault();
 
     console.log(formInputs);
-    login.login();
-
+    if (isLoginMode) {
+      login.login();
+    } else {
+      login.createAccount();
+    }
     resetNameInput();
     resetEmailInput();
     resetPasswordInput();
     resetconfirmPasswordInput();
+    navigate("/");
+    // setTimeout(navigate("/"), 8000);
   };
 
   const switchModeHandler = () => {
@@ -129,7 +111,6 @@ const LoginRegister = () => {
           ...formInputs,
           [e.target.name]: reader.result,
         });
-        // console.log(reader.result);
       };
     } else {
       setFormInputs({
@@ -222,269 +203,114 @@ const LoginRegister = () => {
   }
 
   return (
-    <Box flex={8} p={8} m={1}>
-      <Box
-        sx={{
-          marginLeft: "10px",
-          marginTop: "14px",
-          marginBottom: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <CardWrapper sx={{ marginRight: "105px" }}>
-          <CardContent
-            sx={{
-              width: {
-                sps: "100px",
-                ps: "164px",
-                ts: "294px",
-                sls: "295px",
-                sms: "358px",
-                sc: "368px",
-                nsc: "368px",
-                ns: "368px",
-                msc: "368px",
-                mns: "368px",
-                ms: "368px",
-                lgs: "368px",
-              },
-            }}
-          >
-            <Typography
-              variant="h6"
-              fontWeight={400}
-              mt={2}
-              mb={2}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+    <CardWrapperLogin>
+      <CardContentLogin>
+        <Title isLoginMode={isLoginMode} />
+        <form onSubmit={onSubmitLoginRegisterHandler}>
+          <Stack direction="column" spacing={4} justifyContent="space-between">
+            {!isLoginMode && (
+              <StyleTextField
+                id="outlined-name-input"
+                label="Name"
+                type="text"
+                autoComplete="current-name"
+                size="small"
+                name="name"
+                onChange={(e) => {
+                  formInputsHandler(e);
+                  nameChangeHandler(e);
+                }}
+                onBlur={nameBlurHandler}
+                value={nameInput}
+                error={nameInputHasError}
+                helperText={
+                  nameInputHasError ? "Name must be at least 5 letters" : ""
+                }
+              />
+            )}
+            <StyleTextField
+              id="outlined-email-input"
+              label="Email Address"
+              type="email"
+              autoComplete="current-email"
+              size="small"
+              name="email"
+              onChange={(e) => {
+                formInputsHandler(e);
+                emailChangeHandler(e);
               }}
-            >
-              {isLoginMode ? "Login" : "Register"}
-            </Typography>
-            <Divider variant="middle" />
-            <br />
-            <br />
-            <form onSubmit={onSubmitLoginRegisterHandler}>
-              <Stack
-                direction="column"
-                spacing={4}
-                justifyContent="space-between"
-              >
-                {!isLoginMode && (
-                  <StyleTextField
-                    id="outlined-name-input"
-                    label="Name"
-                    type="text"
-                    autoComplete="current-name"
-                    size="small"
-                    name="name"
-                    onChange={(e) => {
-                      formInputsHandler(e);
-                      nameChangeHandler(e);
-                    }}
-                    onBlur={nameBlurHandler}
-                    value={nameInput}
-                    error={nameInputHasError}
+              onBlur={emailBlurHandler}
+              value={emailInput}
+              error={emailInputHasError}
+              helperText={emailInputHasError ? "Incorrect mail" : ""}
+            />
+            <StyleTextField
+              id="outlined-password-input"
+              label="Password"
+              type="password"
+              autoComplete="current-password"
+              size="small"
+              name="password"
+              onChange={(e) => {
+                formInputsHandler(e);
+                passwordChangeHandler(e);
+              }}
+              onBlur={passwordBlurHandler}
+              value={passwordInput}
+              error={passwordInputHasError}
+              ref={passwordInputRef}
+              helperText={
+                passwordInputHasError
+                  ? "Password must be at least 6 characters long"
+                  : ""
+              }
+            />
+            {!isLoginMode && (
+              <StyleTextField
+                id="outlined-confirmpassword-input"
+                label="Confirm Password"
+                type="password"
+                autoComplete="current-confirmPassword"
+                size="small"
+                name="confirmPassword"
+                onChange={(e) => {
+                  formInputsHandler(e);
+                  confirmPasswordChangeHandler(e);
+                }}
+                onBlur={confirmPasswordBlurHandler}
+                value={confirmPasswordInput}
+                error={confirmPasswordInputHasError}
+                helperText={
+                  confirmPasswordInputHasError ? "Passwords don't match" : ""
+                }
+              />
+            )}
+            {!isLoginMode && (
+              <React.Fragment>
+                <ImageUploadButton formInputsHandler={formInputsHandler} />
+                {imageUrl && selectedImage && (
+                  <ImagePreviewButton
+                    imageUrl={imageUrl}
+                    selectedImageName={selectedImage.name}
                   />
                 )}
-                <StyleTextField
-                  id="outlined-email-input"
-                  label="Email Address"
-                  type="email"
-                  autoComplete="current-email"
-                  size="small"
-                  name="email"
-                  onChange={(e) => {
-                    formInputsHandler(e);
-                    emailChangeHandler(e);
-                  }}
-                  onBlur={emailBlurHandler}
-                  value={emailInput}
-                  error={emailInputHasError}
-                />
-                <StyleTextField
-                  id="outlined-password-input"
-                  label="Password"
-                  type="password"
-                  autoComplete="current-password"
-                  size="small"
-                  name="password"
-                  onChange={(e) => {
-                    formInputsHandler(e);
-                    passwordChangeHandler(e);
-                  }}
-                  onBlur={passwordBlurHandler}
-                  value={passwordInput}
-                  error={passwordInputHasError}
-                  ref={passwordInputRef}
-                />
-                {!isLoginMode && (
-                  <StyleTextField
-                    id="outlined-confirmpassword-input"
-                    label="Confirm Password"
-                    type="password"
-                    autoComplete="current-confirmPassword"
-                    size="small"
-                    name="confirmPassword"
-                    onChange={(e) => {
-                      formInputsHandler(e);
-                      confirmPasswordChangeHandler(e);
-                    }}
-                    onBlur={confirmPasswordBlurHandler}
-                    value={confirmPasswordInput}
-                    error={confirmPasswordInputHasError}
-                  />
-                )}
-                {!isLoginMode && (
-                  <>
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      justifyContent="space-between"
-                    >
-                      <input
-                        accept="image/*"
-                        type="file"
-                        id="select-image"
-                        style={{ display: "none" }}
-                        onChange={formInputsHandler}
-                        name="image"
-                      />
-                      <label
-                        htmlFor="select-image"
-                        style={{ marginLeft: "0px" }}
-                      >
-                        <StyleButtonImage
-                          component="span"
-                          sx={{
-                            fontWeight: 500,
-                            textTransform: "none",
-                            fontSize: {
-                              sps: "10px",
-                              ps: "12px",
-                              ts: "12px",
-                              sls: "13px",
-                              sms: "14px",
-                              sc: "14px",
-                              nsc: "14px",
-                              ns: "14px",
-                              msc: "14px",
-                              mns: "14px",
-                              ms: "14px",
-                              lgs: "14px",
-                            },
-                          }}
-                        >
-                          Upload Image
-                        </StyleButtonImage>
-                      </label>
-                    </Stack>
-                    {imageUrl && selectedImage && (
-                      <React.Fragment>
-                        <Typography
-                          variant="h9"
-                          fontWeight={300}
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          Image Preview
-                        </Typography>
-                        <Box mt={2} textAlign="center">
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Avatar
-                              src={imageUrl}
-                              alt={selectedImage.name}
-                              sx={{
-                                width: 150,
-                                height: 150,
-                                border: "1px solid rgb(118, 118, 118)",
-                              }}
-                            />
-                          </Box>
-                        </Box>
-                      </React.Fragment>
-                    )}
-                  </>
-                )}
-                <Stack
-                  direction="column"
-                  spacing={2}
-                  justifyContent="space-between"
-                >
-                  <StyleButton
-                    type="submit"
-                    disabled={formIsValid ? false : true}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-
-                      fontWeight: 500,
-                      textTransform: "none",
-                      fontSize: {
-                        sps: "10px",
-                        ps: "12px",
-                        ts: "12px",
-                        sls: "13px",
-                        sms: "14px",
-                        sc: "14px",
-                        nsc: "14px",
-                        ns: "14px",
-                        msc: "14px",
-                        mns: "14px",
-                        ms: "14px",
-                        lgs: "14px",
-                      },
-                    }}
-                  >
-                    {isLoginMode ? "LOGIN" : "REGISTER"}
-                  </StyleButton>
-                  <StyleButton
-                    onClick={switchModeHandler}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      fontWeight: 500,
-                      textTransform: "none",
-                      fontSize: {
-                        sps: "10px",
-                        ps: "12px",
-                        ts: "12px",
-                        sls: "13px",
-                        sms: "14px",
-                        sc: "14px",
-                        nsc: "14px",
-                        ns: "14px",
-                        msc: "14px",
-                        mns: "14px",
-                        ms: "14px",
-                        lgs: "14px",
-                      },
-                    }}
-                  >
-                    {isLoginMode ? "Create an Account" : "Go back"}
-                  </StyleButton>
-                </Stack>
-              </Stack>
-            </form>
-          </CardContent>
-        </CardWrapper>
-      </Box>
-    </Box>
+              </React.Fragment>
+            )}
+            <ButtonsWrapper>
+              <LoginRegisterButton
+                formIsValid={formIsValid}
+                isLoginMode={isLoginMode}
+              />
+              <CreateAccountButton
+                switchModeHandler={switchModeHandler}
+                isLoginMode={isLoginMode}
+              />
+            </ButtonsWrapper>
+          </Stack>
+        </form>
+      </CardContentLogin>
+      {/* {successMessage ? showMessage : ""} */}
+    </CardWrapperLogin>
   );
 };
 

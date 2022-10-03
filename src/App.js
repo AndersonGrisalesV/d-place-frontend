@@ -10,6 +10,7 @@ import AppStyles from "./App.css";
 import Profile from "./pages/Profile";
 import { LoginContext } from "./shared/context/login-context";
 import LoginRegister from "./pages/LoginRegister";
+import PlaceDetail from "./pages/PlaceDetail";
 
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",
@@ -19,6 +20,10 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login = useCallback(() => {
+    setIsLoggedIn(true);
+  }, []);
+
+  const createAccount = useCallback(() => {
     setIsLoggedIn(true);
   }, []);
 
@@ -34,7 +39,7 @@ function App() {
         {/* <Route path="/new" element={<NewPlacePage />} /> */}
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/profile" element={<Profile />} />
-
+        <Route path="/places/:placeId" element={<PlaceDetail />} />
         <Route path="*" element={<p>Not Found!</p>} />
       </React.Fragment>
     );
@@ -43,6 +48,7 @@ function App() {
       <React.Fragment>
         {/* <Route path="/new" element={<NewPlacePage />} /> */}
         <Route path="/loginregister" element={<LoginRegister />} />
+        <Route path="/places/:placeId" element={<PlaceDetail />} />
         <Route path="*" element={<p>Not found!</p>} />
       </React.Fragment>
     );
@@ -98,7 +104,12 @@ function App() {
 
   return (
     <LoginContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      value={{
+        isLoggedIn: isLoggedIn,
+        login: login,
+        createAccount: createAccount,
+        logout: logout,
+      }}
     >
       <div>
         <ThemeProvider theme={darkThemeTypographyAndBreakpoints}>

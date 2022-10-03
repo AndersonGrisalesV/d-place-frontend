@@ -31,7 +31,7 @@ const Rightbar = () => {
           },
         }}
       >
-        <Box position="absolute" sx={{ bgcolor: "background.paper" }}>
+        <Box position="fixed" sx={{ bgcolor: "background.paper" }}>
           <Card
             variant="outlined"
             sx={{

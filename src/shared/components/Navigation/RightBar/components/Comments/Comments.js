@@ -17,11 +17,19 @@ const StyledListItem = styled(ListItem)({
 const Comments = () => {
   return (
     <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
-      <CardContent sx={{ paddingTop: "0px" }}>
+      <CardContent
+        sx={{
+          paddingLeft: "16px",
+          paddingRight: "16px",
+          paddingTop: "0px",
+          paddingBottom: "0PX",
+        }}
+      >
         <List
           sx={{
             width: "100%",
             maxWidth: 330,
+            paddingTop: "0px",
           }}
         >
           <Typography variant="h6" fontWeight={400}>

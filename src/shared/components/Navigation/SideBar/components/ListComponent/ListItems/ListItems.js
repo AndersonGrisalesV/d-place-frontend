@@ -14,7 +14,6 @@ import {
   HomeOutlined,
   Logout,
   ModeNight,
-  Route,
   SettingsOutlined,
 } from "@mui/icons-material";
 import ModeSwitch from "../../ModeSwitch/ModeSwitch";
@@ -22,7 +21,6 @@ import styled from "@emotion/styled/macro";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../../../../context/login-context";
 import classes from "./ListItems.module.css";
-import HomePage from "../../../../../../../pages/HomePage";
 
 const StyleHomeIcon = styled(HomeOutlined)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "" : "#00000091",
@@ -203,7 +201,7 @@ const ListItems = ({ mode, setMode }) => {
               disablePadding
               component={StyleNavLink}
               to="/favorites"
-              className={(navData) => (navData.isActive ? classes.active : "")}
+              // className={(navData) => (navData.isActive ? classes.active : "")}
             >
               <ListItemButton component="li" href="/favorites">
                 <ListItemIcon>

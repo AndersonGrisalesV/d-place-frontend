@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Stack } from "@mui/material";
+import { NavLink, useParams } from "react-router-dom";
 
 import styled from "@emotion/styled";
 
@@ -11,7 +12,15 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+const StyleNavLink = styled(NavLink)(({ theme }) => ({
+  textDecoration: "none",
+}));
+
 const ButtonDetails = () => {
+  const params = useParams();
+
+  const { placeId } = params;
+
   return (
     <Stack
       direction="row"
@@ -32,28 +41,30 @@ const ButtonDetails = () => {
         },
       }}
     >
-      <StyleButton
-        sx={{
-          fontWeight: 500,
-          textTransform: "none",
-          fontSize: {
-            sps: "10px",
-            ps: "12px",
-            ts: "12px",
-            sls: "13px",
-            sms: "14px",
-            sc: "14px",
-            nsc: "14px",
-            ns: "14px",
-            msc: "14px",
-            mns: "14px",
-            ms: "14px",
-            lgs: "14px",
-          },
-        }}
-      >
-        See details
-      </StyleButton>
+      <StyleNavLink to={`/places/${placeId}`}>
+        <StyleButton
+          sx={{
+            fontWeight: 500,
+            textTransform: "none",
+            fontSize: {
+              sps: "10px",
+              ps: "12px",
+              ts: "12px",
+              sls: "13px",
+              sms: "14px",
+              sc: "14px",
+              nsc: "14px",
+              ns: "14px",
+              msc: "14px",
+              mns: "14px",
+              ms: "14px",
+              lgs: "14px",
+            },
+          }}
+        >
+          See details
+        </StyleButton>
+      </StyleNavLink>
     </Stack>
   );
 };
