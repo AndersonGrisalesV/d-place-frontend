@@ -5,13 +5,13 @@ import CardTitle from "./CardTitle";
 import ButtonsWrapper from "./Buttons/ButtonsWrapper";
 import CardWrapper from "./CardWrapper";
 
-const CardPlaces = () => {
+const CardPlaces = ({ onMap = false, DUMMY_PLACES }) => {
   return (
     <CardWrapper>
-      <AvatarWrapper />
+      <AvatarWrapper DUMMY_PLACES={DUMMY_PLACES} />
       <CardImages />
-      <CardTitle />
-      <ButtonsWrapper />
+      <CardTitle onMap={onMap} />
+      <ButtonsWrapper onMap={onMap} />
     </CardWrapper>
   );
 };

@@ -3,14 +3,14 @@ import React from "react";
 import AvatarComponent from "./AvatarComponent";
 import ButtonEdit from "../Buttons/ButtonEdit";
 
-const AvatarWrapper = () => {
+const AvatarWrapper = ({ DUMMY_PLACES }) => {
   let isLoggedIn = true;
 
   return (
     <CardHeader
       avatar={<AvatarComponent />}
       action={isLoggedIn ? <ButtonEdit /> : ""}
-      title="Anderson"
+      title={DUMMY_PLACES.creatorName}
       subheader="September 6, 2022"
       titleTypographyProps={{
         fontSize: {

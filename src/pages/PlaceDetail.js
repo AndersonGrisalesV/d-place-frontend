@@ -5,7 +5,7 @@ const PlaceDetail = () => {
   return (
     <React.Fragment>
       {/* <SidebarBackground /> */}
-      <Feed bgcolor={"backgroundColor"} onDetail={true} />
+      <Feed bgcolor={"backgroundColor"} onDetail={true} onMap={true} />
     </React.Fragment>
   );
 };

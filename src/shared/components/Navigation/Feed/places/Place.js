@@ -2,7 +2,7 @@ import { Box, Zoom } from "@mui/material";
 import React from "react";
 import CardPlace from "./components/CardPlace";
 
-const Place = () => {
+const Place = ({ onMap = false, DUMMY_PLACES }) => {
   return (
     <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
       <Box
@@ -29,7 +29,7 @@ const Place = () => {
           // },
         }}
       >
-        <CardPlace />
+        <CardPlace onMap={onMap} DUMMY_PLACES={DUMMY_PLACES} />
       </Box>
     </Zoom>
   );

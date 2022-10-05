@@ -1,7 +1,7 @@
 import { CardContent, Typography } from "@mui/material";
 import React from "react";
 
-const CardTitle = () => {
+const CardTitle = ({ onMap = false }) => {
   return (
     <CardContent
       sx={{
@@ -32,6 +32,35 @@ const CardTitle = () => {
       >
         Title impressive paella is a perfect party dish
       </Typography>
+      {onMap && (
+        <React.Fragment>
+          <p style={{ margin: "8px" }} />
+          <Typography
+            variant="h6"
+            fontWeight={400}
+            color="text.secondary"
+            sx={{
+              fontSize: {
+                sps: "8px",
+                ps: "9px",
+                ts: "11px",
+                sls: "11px",
+                sms: "13px",
+                sc: "13px",
+                nsc: "13px",
+                ns: "13px",
+                msc: "13px",
+                mns: "13px",
+                ms: "13px",
+                lgs: "13px",
+              },
+            }}
+          >
+            Title impressive paella is a perfect party dish Title impressive
+            paella is a perfect party dish Title impressive paella is a perfect
+          </Typography>
+        </React.Fragment>
+      )}
     </CardContent>
   );
 };
