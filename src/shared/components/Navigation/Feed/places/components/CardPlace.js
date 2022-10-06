@@ -9,9 +9,9 @@ const CardPlaces = ({ onMap = false, DUMMY_PLACES }) => {
   return (
     <CardWrapper>
       <AvatarWrapper DUMMY_PLACES={DUMMY_PLACES} />
-      <CardImages />
-      <CardTitle onMap={onMap} />
-      <ButtonsWrapper onMap={onMap} />
+      <CardImages DUMMY_PLACES={DUMMY_PLACES} />
+      <CardTitle onMap={onMap} DUMMY_PLACES={DUMMY_PLACES} />
+      <ButtonsWrapper onMap={onMap} DUMMY_PLACES={DUMMY_PLACES} />
     </CardWrapper>
   );
 };

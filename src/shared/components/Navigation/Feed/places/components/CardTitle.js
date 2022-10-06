@@ -1,7 +1,7 @@
 import { CardContent, Typography } from "@mui/material";
 import React from "react";
 
-const CardTitle = ({ onMap = false }) => {
+const CardTitle = ({ onMap = false, DUMMY_PLACES }) => {
   return (
     <CardContent
       sx={{
@@ -30,7 +30,7 @@ const CardTitle = ({ onMap = false }) => {
           },
         }}
       >
-        Title impressive paella is a perfect party dish
+        {DUMMY_PLACES.title}
       </Typography>
       {onMap && (
         <React.Fragment>
@@ -56,8 +56,7 @@ const CardTitle = ({ onMap = false }) => {
               },
             }}
           >
-            Title impressive paella is a perfect party dish Title impressive
-            paella is a perfect party dish Title impressive paella is a perfect
+            {DUMMY_PLACES.description}
           </Typography>
         </React.Fragment>
       )}

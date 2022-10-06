@@ -11,7 +11,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonEdit = () => {
+const ButtonEdit = ({ DUMMY_PLACES }) => {
   const login = useContext(LoginContext);
 
   return (

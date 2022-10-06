@@ -8,10 +8,10 @@ const AvatarWrapper = ({ DUMMY_PLACES }) => {
 
   return (
     <CardHeader
-      avatar={<AvatarComponent />}
-      action={isLoggedIn ? <ButtonEdit /> : ""}
+      avatar={<AvatarComponent DUMMY_PLACES={DUMMY_PLACES} />}
+      action={isLoggedIn ? <ButtonEdit DUMMY_PLACES={DUMMY_PLACES} /> : ""}
       title={DUMMY_PLACES.creatorName}
-      subheader="September 6, 2022"
+      subheader={DUMMY_PLACES.postDate}
       titleTypographyProps={{
         fontSize: {
           sps: "10px",

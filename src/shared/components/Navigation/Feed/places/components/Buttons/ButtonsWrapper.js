@@ -12,6 +12,7 @@ import ButtonDetails from "./ButtonDetails";
 import FavoriteButton from "./FavoriteButton";
 import ShareButton from "./ShareButton";
 import ButtonSeeMap from "./ButtonSeeMap";
+import Map from "../../../../../Map/Map";
 
 const style = {
   position: "absolute",
@@ -25,7 +26,7 @@ const style = {
   p: 4,
 };
 
-const ButtonsWrapper = ({ onMap = false }) => {
+const ButtonsWrapper = ({ onMap = false, DUMMY_PLACES }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -36,10 +37,14 @@ const ButtonsWrapper = ({ onMap = false }) => {
       sx={{ paddingTop: "0px", paddingLeft: "0px", paddingBottom: "0px" }}
     >
       <Stack direction="row" spacing={-3}>
-        <FavoriteButton />
+        <FavoriteButton DUMMY_PLACES={DUMMY_PLACES} />
         <ShareButton />
       </Stack>
-      {!onMap ? <ButtonDetails /> : <ButtonSeeMap onHandleOpen={handleOpen} />}
+      {!onMap ? (
+        <ButtonDetails DUMMY_PLACES={DUMMY_PLACES} />
+      ) : (
+        <ButtonSeeMap onHandleOpen={handleOpen} />
+      )}
       {onMap && (
         <div>
           <Modal
@@ -56,12 +61,37 @@ const ButtonsWrapper = ({ onMap = false }) => {
                 variant="h6"
                 color="text.primary"
               >
-                Ali Connors
+                {DUMMY_PLACES.title}
               </Typography>
-
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </Typography>
+              <React.Fragment>
+                <p style={{ margin: "8px" }} />
+                <Typography
+                  variant="h6"
+                  fontWeight={400}
+                  color="text.secondary"
+                  sx={{
+                    fontSize: {
+                      sps: "8px",
+                      ps: "9px",
+                      ts: "11px",
+                      sls: "11px",
+                      sms: "13px",
+                      sc: "13px",
+                      nsc: "13px",
+                      ns: "13px",
+                      msc: "13px",
+                      mns: "13px",
+                      ms: "13px",
+                      lgs: "13px",
+                    },
+                  }}
+                >
+                  {DUMMY_PLACES.address}
+                </Typography>
+              </React.Fragment>
+              <div>
+                <Map center={DUMMY_PLACES.location} zoom={16} />
+              </div>
             </Box>
           </Modal>
         </div>

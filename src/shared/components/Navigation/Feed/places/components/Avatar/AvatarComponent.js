@@ -2,24 +2,25 @@ import React from "react";
 import Avatar from "@mui/material/Avatar";
 import { red } from "@mui/material/colors";
 
-const AvatarComponent = () => {
+const AvatarComponent = ({ DUMMY_PLACES }) => {
   return (
     <Avatar
-      title="Anderson"
+      src={DUMMY_PLACES.creatorImageUrl ? DUMMY_PLACES.creatorImageUrl : ""}
+      title={DUMMY_PLACES.creatorName}
       sx={{
         fontSize: {
           sps: "10px",
           ps: "12px",
           ts: "14px",
           sls: "15px",
-          sms: "19px",
-          sc: "19px",
-          nsc: "19px",
-          ns: "19px",
-          msc: "19px",
-          mns: "19px",
-          ms: "19px",
-          lgs: "19px",
+          sms: "18px",
+          sc: "18px",
+          nsc: "18px",
+          ns: "18px",
+          msc: "18px",
+          mns: "18px",
+          ms: "18px",
+          lgs: "18px",
         },
         bgcolor: red[500],
         width: {
@@ -53,7 +54,9 @@ const AvatarComponent = () => {
       }}
       aria-label="recipe"
     >
-      A
+      {DUMMY_PLACES.creatorImageUrl === ""
+        ? DUMMY_PLACES.creatorName.charAt(0)
+        : ""}
     </Avatar>
   );
 };

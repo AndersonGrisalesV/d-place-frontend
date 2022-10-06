@@ -1,14 +1,14 @@
-import { CardMedia } from "@mui/material";
 import React from "react";
+import { CardMedia } from "@mui/material";
 
-const CardImages = () => {
+const CardImages = ({ DUMMY_PLACES }) => {
   return (
     <CardMedia
-      sx={{ height: "min-content" }}
+      sx={{ height: "min-content", objectFit: "contain" }}
       component="img"
       height="194"
-      image="https://areajugones.sport.es/wp-content/uploads/2022/09/bleach-tybw-akksakls.jpg"
-      alt="Paella dish"
+      image={DUMMY_PLACES.imageUrl}
+      alt={DUMMY_PLACES.title}
     />
   );
 };

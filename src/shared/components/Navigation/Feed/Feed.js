@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import Place from "./places/Place";
 
 const DUMMY_PLACES = [
@@ -19,7 +19,7 @@ const DUMMY_PLACES = [
     },
     postDate: "September 6, 2022",
     creatorId: "u1",
-    creatorName: "Andersons",
+    creatorName: "Anderson",
     creatorImageUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzHQv_th9wq3ivQ1CVk7UZRxhbPq64oQrg5Q&usqp=CAU",
   },
@@ -42,45 +42,59 @@ const DUMMY_PLACES = [
     creatorImageUrl: "",
   },
 ];
+function ScrollToTop(props) {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return props.children;
+}
 
 const Feed = ({ onDetail = false, onMap = false }) => {
-  const userId = useParams().userId;
-  let loadedPlaces = [{}];
+  const params = useParams();
+
+  const { placeId } = params;
+  // console.log(placeId);
+
+  let loadedPlaces;
   if (onDetail && onMap) {
-    loadedPlaces = DUMMY_PLACES.filter((place) => place.creatorId === userId);
+    loadedPlaces = DUMMY_PLACES.filter((place) => place.placeId === placeId);
   }
 
   const places = (
     <React.Fragment>
-      <Place />
-      <br />
-      <Place />
-      <br />
-      <Place />
-      <br />
-      {/*
-      <Place />
-      <br />
-      <Place />
-      <br /> */}
+      {DUMMY_PLACES.map((place) => (
+        <React.Fragment key={place.placeId}>
+          <Place DUMMY_PLACES={place} key={place.placeId} id={place.placeId} />
+
+          <br />
+        </React.Fragment>
+      ))}
     </React.Fragment>
   );
 
   return (
     <Box flex={4} p={2} style={{ marginBottom: "100%" }}>
-      {onDetail && !onMap ? (
-        <React.Fragment>
-          <Place />
-          <br />
-        </React.Fragment>
-      ) : onDetail && onMap ? (
-        <React.Fragment>
-          <Place onMap={true} DUMMY_PLACES={loadedPlaces} />
-          <br />
-        </React.Fragment>
-      ) : (
-        places
-      )}
+      <ScrollToTop>
+        {onDetail && !onMap ? (
+          <React.Fragment>
+            {/* <Place />
+          <br /> */}
+          </React.Fragment>
+        ) : onDetail && onMap ? (
+          <React.Fragment>
+            <Place
+              onMap={true}
+              DUMMY_PLACES={loadedPlaces[0]}
+              id={loadedPlaces[0].placeId}
+              key={loadedPlaces[0].placeId}
+            />
+            <br />
+          </React.Fragment>
+        ) : (
+          places
+        )}
+      </ScrollToTop>
     </Box>
   );
 };
