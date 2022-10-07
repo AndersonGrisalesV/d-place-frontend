@@ -1,5 +1,5 @@
-import { Box, Zoom } from "@mui/material";
 import React from "react";
+import { Box, Zoom } from "@mui/material";
 import CardPlace from "./components/CardPlace";
 
 const Place = ({ onMap = false, DUMMY_PLACES }) => {
@@ -31,6 +31,7 @@ const Place = ({ onMap = false, DUMMY_PLACES }) => {
       >
         <CardPlace onMap={onMap} DUMMY_PLACES={DUMMY_PLACES} />
       </Box>
+      {/* <CommentsPlace /> */}
     </Zoom>
   );
 };

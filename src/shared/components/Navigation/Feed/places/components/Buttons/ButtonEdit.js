@@ -12,11 +12,13 @@ const StyleButton = styled(Button)(({ theme }) => ({
 }));
 
 const ButtonEdit = ({ DUMMY_PLACES }) => {
-  const login = useContext(LoginContext);
+  // const login = useContext(LoginContext);
+  let login = true;
 
   return (
     <React.Fragment>
-      {login.isLoggedIn && (
+      {/* {login.isLoggedIn && ( */}
+      {login && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
             sx={{

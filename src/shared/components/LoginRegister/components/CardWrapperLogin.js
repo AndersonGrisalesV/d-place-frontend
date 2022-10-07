@@ -4,8 +4,8 @@ import CardWrapper from "../../Navigation/Feed/places/components/CardWrapper";
 
 const CardWrapperLogin = (props) => {
   return (
-    <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
-      <Box flex={8} p={8} m={1}>
+    <Box flex={8} p={8} m={1}>
+      <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
         <Box
           sx={{
             marginLeft: "10px",
@@ -20,8 +20,8 @@ const CardWrapperLogin = (props) => {
             {props.children}
           </CardWrapper>
         </Box>
-      </Box>
-    </Zoom>
+      </Zoom>
+    </Box>
   );
 };
 
