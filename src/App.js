@@ -84,7 +84,7 @@ function App() {
             divider: "#cfcfcfd4",
             backgroundColor: "#0000000f",
             background: {
-              main: "#f2f2f2",
+              main: "##dfdfdf8c",
               secondary: "#da4453c7",
             },
             text: {

@@ -17,9 +17,7 @@ const TitleComments = () => {
       >
         Comments
       </Typography>
-      <Divider variant="middle" />
-      <br />
-      <br />
+      <Divider />
     </React.Fragment>
   );
 };
