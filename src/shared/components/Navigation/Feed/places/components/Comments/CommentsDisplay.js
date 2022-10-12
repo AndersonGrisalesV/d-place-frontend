@@ -25,6 +25,9 @@ import CreateAccountButton from "../../../../../LoginRegister/Buttons/CreateAcco
 import CardWrapperCommentsDisplay from "./components/CardWrapperCommentsDisplay";
 import CardContentComments from "./components/CardContentComments";
 import CommentShow from "./components/CommentShow";
+import LeaveComment from "./LeaveComment";
+import ButtonSendComment from "./components/Buttons/ButtonSendComment";
+import ButtonCancelComment from "./components/Buttons/ButtonCancelComment";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -44,7 +47,7 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const CommentsDisplay = () => {
+const CommentsDisplay = ({ DUMMY_COMMENTS }) => {
   //   const login = useContext(LoginContext);
   //   const passwordInputRef = useRef();
   //   let navigate = useNavigate();
@@ -215,113 +218,78 @@ const CommentsDisplay = () => {
   //     formIsValid = true;
   //   }
 
+  const comments = (
+    <React.Fragment>
+      {DUMMY_COMMENTS.map((comment) => (
+        <React.Fragment key={comment.commentId}>
+          <CommentShow
+            DUMMY_COMMENTS={comment}
+            key={comment.commentId}
+            id={comment.commentId}
+          />
+        </React.Fragment>
+      ))}
+    </React.Fragment>
+  );
+
   return (
     <CardWrapperCommentsDisplay>
       <CardContentComments>
         <TitleComments />
-        <CommentShow />
-        {/* <form onSubmit={onSubmitLoginRegisterHandler}>
+        <LeaveComment />
+        {comments}
+        <Divider sx={{ marginTop: "12px" }} />
+        <Typography
+          variant="subtitle1"
+          fontWeight={400}
+          mt={2}
+          mb={2}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          Leave a comment
+        </Typography>
+
+        <form>
           <Stack direction="column" spacing={4} justifyContent="space-between">
-            {!isLoginMode && (
-              <StyleTextField
-                id="outlined-name-input"
-                label="Name"
-                type="text"
-                autoComplete="current-name"
-                size="small"
-                name="name"
-                onChange={(e) => {
-                  formInputsHandler(e);
-                  nameChangeHandler(e);
-                }}
-                onBlur={nameBlurHandler}
-                value={nameInput}
-                error={nameInputHasError}
-                helperText={
-                  nameInputHasError ? "Name must be at least 5 letters" : ""
-                }
-              />
-            )}
             <StyleTextField
-              id="outlined-email-input"
-              label="Email Address"
-              type="email"
-              autoComplete="current-email"
+              id="outlined-commentText-input"
+              multiline
+              placeholder="Type here..."
+              autoComplete="current-name"
               size="small"
-              name="email"
-              onChange={(e) => {
-                formInputsHandler(e);
-                emailChangeHandler(e);
-              }}
-              onBlur={emailBlurHandler}
-              value={emailInput}
-              error={emailInputHasError}
-              helperText={emailInputHasError ? "Incorrect mail" : ""}
+              name="name"
+              // onChange={(e) => {
+              //    formInputsHandler(e);
+              //    nameChangeHandler(e);
+              // }}
+              // onBlur={nameBlurHandler}
+              // value={nameInput}
+              // error={nameInputHasError}
+              // helperText={
+              //   nameInputHasError ? "Name must be at least 5 letters" : ""
             />
-            <StyleTextField
-              id="outlined-password-input"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-              size="small"
-              name="password"
-              onChange={(e) => {
-                formInputsHandler(e);
-                passwordChangeHandler(e);
-              }}
-              onBlur={passwordBlurHandler}
-              value={passwordInput}
-              error={passwordInputHasError}
-              ref={passwordInputRef}
-              helperText={
-                passwordInputHasError
-                  ? "Password must be at least 6 characters long"
-                  : ""
-              }
-            />
-            {!isLoginMode && (
-              <StyleTextField
-                id="outlined-confirmpassword-input"
-                label="Confirm Password"
-                type="password"
-                autoComplete="current-confirmPassword"
-                size="small"
-                name="confirmPassword"
-                onChange={(e) => {
-                  formInputsHandler(e);
-                  confirmPasswordChangeHandler(e);
-                }}
-                onBlur={confirmPasswordBlurHandler}
-                value={confirmPasswordInput}
-                error={confirmPasswordInputHasError}
-                helperText={
-                  confirmPasswordInputHasError ? "Passwords don't match" : ""
-                }
-              />
-            )}
-            {!isLoginMode && (
-              <React.Fragment>
-                <ImageUploadButton formInputsHandler={formInputsHandler} />
-                {imageUrl && selectedImage && (
-                  <ImagePreviewButton
-                    imageUrl={imageUrl}
-                    selectedImageName={selectedImage.name}
-                  />
-                )}
-              </React.Fragment>
-            )}
-            <ButtonsWrapper>
-              <LoginRegisterButton
-                formIsValid={formIsValid}
-                isLoginMode={isLoginMode}
-              />
-              <CreateAccountButton
+
+            {/* <ButtonsWrapper> */}
+            {/* <LoginRegisterButton
+
+              // formIsValid={formIsValid}
+              // isLoginMode={isLoginMode}
+              /> */}
+            {/* <CreateAccountButton
                 switchModeHandler={switchModeHandler}
                 isLoginMode={isLoginMode}
-              />
-            </ButtonsWrapper>
+              /> */}
+            {/* </ButtonsWrapper> */}
+            <Stack direction="row" spacing={0} justifyContent="center">
+              <ButtonSendComment />
+              <ButtonCancelComment />
+            </Stack>
           </Stack>
-        </form> */}
+        </form>
       </CardContentComments>
       {/* {successMessage ? showMessage : ""} */}
     </CardWrapperCommentsDisplay>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import ButtonEditDeleteComments from "./Buttons/ButtonEditDeleteComments";
 import styled from "@emotion/styled";
+import { LoginContext } from "../../../../../../../context/login-context";
 
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",
@@ -28,9 +29,34 @@ const StyleListItemText = styled(ListItemText)(({ theme }) => ({
   },
 }));
 
-const CommentShow = () => {
+const CommentShow = ({ DUMMY_COMMENTS, onButton }) => {
+  const login = useContext(LoginContext);
+  // console.log("here" + `${onButton}`);
+  // const [showButtons, setShowButtons] = useState(false);
+
+  // useEffect(() => {
+  //   if (`${DUMMY_COMMENTS.commentId}` === `${onButton.creatorId}`) {
+  //     setShowButtons(true);
+  //   } else {
+  //     setShowButtons(false);
+  //   }
+  // }, [DUMMY_COMMENTS, onButton]);
+
+  // let buttonsShow;
+  // buttonsShow = Object.values(DUMMY_COMMENTS).filter(
+  //   (comment) => comment.creatorId === onButton.creatorId
+  // );
+
+  const buttonsShow = (
+    <Stack direction="row" spacing={0} justifyContent="end">
+      <ButtonEditDeleteComments />
+      <ButtonEditDeleteComments onDelete={true} />
+    </Stack>
+  );
+
   return (
     <Box>
+      <Divider />
       <StyledListItem
         alignItems="flex-start"
         bgcolor={"background.paper"}
@@ -39,14 +65,14 @@ const CommentShow = () => {
         <ListItemAvatar sx={{ marginTop: "0px" }}>
           <Avatar
             sx={{ marginTop: "5%", marginLeft: "5%" }}
-            title="Ali Connors"
-            alt="Ali Connors"
-            src="/static/images/avatar/1.jpg"
+            title={DUMMY_COMMENTS.creatorName}
+            alt={DUMMY_COMMENTS.creatorName}
+            src={DUMMY_COMMENTS.creatorImageUrl}
           />
         </ListItemAvatar>
 
         <StyleListItemText
-          primary="Ali Connors"
+          primary={DUMMY_COMMENTS.creatorName}
           secondary={
             <React.Fragment>
               <Typography
@@ -60,21 +86,20 @@ const CommentShow = () => {
                 variant="body2"
                 color="text.primary"
               >
-                September 9, 2022
+                {DUMMY_COMMENTS.postCommentDate}
               </Typography>
-              {
-                "I'll be in your neighborhood doing errands this… I'll be in your neighborhood doing errands this…"
-              }
+              {`${DUMMY_COMMENTS.commentText}`}
             </React.Fragment>
           }
         />
       </StyledListItem>
-
-      <Stack direction="row" spacing={0} justifyContent="end">
-        <ButtonEditDeleteComments />
-        <ButtonEditDeleteComments onDelete={true} />
-      </Stack>
-      <Divider variant="middle" sx={{ visibility: "hidden" }} />
+      {login.isLoggedIn ? (
+        buttonsShow
+      ) : (
+        <React.Fragment>
+          <br />
+        </React.Fragment>
+      )}
     </Box>
   );
 };

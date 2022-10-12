@@ -47,23 +47,23 @@ const DUMMY_COMMENTS = [
   },
 ];
 
-const CommentsPost = ({ DUMMY_PLACES, DUMMY_COMMENTS }) => {
-  //   function getDifference(array1, array2) {
-  //     return array1.filter((object1) => {
-  //       return !array2.some((object2) => {
-  //         return object1.placeId === object2.placeId;
-  //       });
-  //     });
-  //   }
-  //   const difference = [
-  //     ...getDifference(DUMMY_PLACES, DUMMY_COMMENTS),
-  //     ...getDifference(DUMMY_COMMENTS, DUMMY_PLACES),
-  //   ];
-  //   console.log(difference);
+const CommentsPost = ({ DUMMY_PLACES }) => {
+  let placeComments;
+  placeComments = DUMMY_COMMENTS.filter(
+    (place) => place.placeId === DUMMY_PLACES.placeId
+  );
+
+  // let editDeleteComments;
+  // editDeleteComments = DUMMY_COMMENTS.filter(
+  //   (comment) => comment.creatorId === DUMMY_PLACES.creatorId
+  // );
+
+  console.log(placeComments);
+  // console.log(editDeleteComments[0]);
 
   return (
     <React.Fragment>
-      <CommentsDisplay DUMMY_COMMENTS={DUMMY_COMMENTS} />
+      <CommentsDisplay DUMMY_COMMENTS={placeComments} />
     </React.Fragment>
   );
 };

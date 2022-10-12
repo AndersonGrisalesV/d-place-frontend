@@ -66,7 +66,6 @@ const Feed = ({ onDetail = false, onMap = false }) => {
       {DUMMY_PLACES.map((place) => (
         <React.Fragment key={place.placeId}>
           <Place DUMMY_PLACES={place} key={place.placeId} id={place.placeId} />
-
           <br />
         </React.Fragment>
       ))}
@@ -85,6 +84,7 @@ const Feed = ({ onDetail = false, onMap = false }) => {
           <React.Fragment>
             <Place
               onMap={true}
+              onShowComments={onDetail}
               DUMMY_PLACES={loadedPlaces[0]}
               id={loadedPlaces[0].placeId}
               key={loadedPlaces[0].placeId}
