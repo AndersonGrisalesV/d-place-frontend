@@ -11,7 +11,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonCancelComment = ({ DUMMY_PLACES }) => {
+const ButtonCancelComment = ({ DUMMY_PLACES, onHandleOpen }) => {
   //   const login = useContext(LoginContext);
   let login = true;
 
@@ -21,6 +21,8 @@ const ButtonCancelComment = ({ DUMMY_PLACES }) => {
       {login && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
+            // type="submit"
+            onClick={onHandleOpen}
             sx={{
               fontWeight: 500,
               textTransform: "none",

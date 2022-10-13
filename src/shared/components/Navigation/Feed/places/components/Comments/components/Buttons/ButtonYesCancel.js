@@ -11,13 +11,8 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonEditDeleteComments = ({
-  onButtonName = false,
-  DUMMY_PLACES,
-  onEdit,
-  onDelete,
-}) => {
-  // const login = useContext(LoginContext);
+const ButtonYesCancel = ({ DUMMY_PLACES, onYesCancel }) => {
+  //   const login = useContext(LoginContext);
   let login = true;
 
   return (
@@ -26,7 +21,7 @@ const ButtonEditDeleteComments = ({
       {login && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
-            onClick={!onButtonName ? onEdit : onDelete}
+            onClick={onYesCancel}
             sx={{
               fontWeight: 500,
               textTransform: "none",
@@ -60,7 +55,7 @@ const ButtonEditDeleteComments = ({
               },
             }}
           >
-            {onButtonName ? "Delete" : "Edit"}
+            Cancel
           </StyleButton>
         </Zoom>
       )}
@@ -68,4 +63,4 @@ const ButtonEditDeleteComments = ({
   );
 };
 
-export default ButtonEditDeleteComments;
+export default ButtonYesCancel;

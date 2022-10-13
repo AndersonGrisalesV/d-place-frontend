@@ -1,33 +1,16 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import {
-  Typography,
-  Avatar,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Stack,
-  TextField,
-  Divider,
-} from "@mui/material";
+import { Typography, Stack, TextField, Divider } from "@mui/material";
 
 import useFocusBlurHook from "../../../../../../../shared/hooks/use-my-input";
-import { useNavigate } from "react-router-dom";
-import styled from "@emotion/styled";
-import { LoginContext } from "../../../../../../context/login-context";
-import CardWrapperLogin from "../../../../../LoginRegister/components/CardWrapperLogin";
-import CardContentLogin from "../../../../../LoginRegister/components/CardContentLogin";
+
 import TitleComments from "./components/TitleComments";
-import ImageUploadButton from "../../../../../LoginRegister/Buttons/ImageUploadButton";
-import ImagePreviewButton from "../../../../../LoginRegister/Buttons/ImagePreviewButton";
-import ButtonsWrapper from "../Buttons/ButtonsWrapper";
-import LoginRegisterButton from "../../../../../LoginRegister/Buttons/LoginRegisterButton";
-import CreateAccountButton from "../../../../../LoginRegister/Buttons/CreateAccountButton";
 import CardWrapperCommentsDisplay from "./components/CardWrapperCommentsDisplay";
 import CardContentComments from "./components/CardContentComments";
 import CommentShow from "./components/CommentShow";
 import LeaveComment from "./LeaveComment";
 import ButtonSendComment from "./components/Buttons/ButtonSendComment";
-import ButtonCancelComment from "./components/Buttons/ButtonCancelComment";
+import styled from "@emotion/styled";
+import { LoginContext } from "../../../../../../context/login-context";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -48,7 +31,7 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
 }));
 
 const CommentsDisplay = ({ DUMMY_COMMENTS }) => {
-  //   const login = useContext(LoginContext);
+  const login = useContext(LoginContext);
   //   const passwordInputRef = useRef();
   //   let navigate = useNavigate();
 
@@ -238,7 +221,7 @@ const CommentsDisplay = ({ DUMMY_COMMENTS }) => {
         <TitleComments />
         <LeaveComment />
         {comments}
-        <Divider sx={{ marginTop: "12px" }} />
+        <Divider sx={{ marginTop: "2px" }} />
         <Typography
           variant="subtitle1"
           fontWeight={400}
@@ -252,44 +235,76 @@ const CommentsDisplay = ({ DUMMY_COMMENTS }) => {
         >
           Leave a comment
         </Typography>
+        {login.isLoggedIn ? (
+          <form>
+            <Stack
+              direction="column"
+              spacing={4}
+              justifyContent="space-between"
+            >
+              <StyleTextField
+                id="outlined-commentText-input"
+                multiline
+                placeholder="Type here..."
+                autoComplete="current-name"
+                size="small"
+                name="name"
+                // onChange={(e) => {
+                //    formInputsHandler(e);
+                //    nameChangeHandler(e);
+                // }}
+                // onBlur={nameBlurHandler}
+                // value={nameInput}
+                // error={nameInputHasError}
+                // helperText={
+                //   nameInputHasError ? "Name must be at least 5 letters" : ""
+              />
 
-        <form>
-          <Stack direction="column" spacing={4} justifyContent="space-between">
-            <StyleTextField
-              id="outlined-commentText-input"
-              multiline
-              placeholder="Type here..."
-              autoComplete="current-name"
-              size="small"
-              name="name"
-              // onChange={(e) => {
-              //    formInputsHandler(e);
-              //    nameChangeHandler(e);
-              // }}
-              // onBlur={nameBlurHandler}
-              // value={nameInput}
-              // error={nameInputHasError}
-              // helperText={
-              //   nameInputHasError ? "Name must be at least 5 letters" : ""
-            />
-
-            {/* <ButtonsWrapper> */}
-            {/* <LoginRegisterButton
+              {/* <ButtonsWrapper> */}
+              {/* <LoginRegisterButton
 
               // formIsValid={formIsValid}
               // isLoginMode={isLoginMode}
               /> */}
-            {/* <CreateAccountButton
+              {/* <CreateAccountButton
                 switchModeHandler={switchModeHandler}
                 isLoginMode={isLoginMode}
               /> */}
-            {/* </ButtonsWrapper> */}
-            <Stack direction="row" spacing={0} justifyContent="center">
-              <ButtonSendComment />
-              <ButtonCancelComment />
+              {/* </ButtonsWrapper> */}
+              <Stack direction="row" spacing={0} justifyContent="center">
+                <ButtonSendComment />
+              </Stack>
             </Stack>
-          </Stack>
-        </form>
+          </form>
+        ) : (
+          <Typography
+            variant="h6"
+            fontWeight={400}
+            color="text.secondary"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              paddingLeft: "24px",
+              fontSize: {
+                sps: "8px",
+                ps: "9px",
+                ts: "11px",
+                sls: "11px",
+                sms: "13px",
+                sc: "13px",
+                nsc: "13px",
+                ns: "13px",
+                msc: "13px",
+                mns: "13px",
+                ms: "13px",
+                lgs: "13px",
+              },
+            }}
+          >
+            You must be logged in to leave a comment
+          </Typography>
+        )}
       </CardContentComments>
       {/* {successMessage ? showMessage : ""} */}
     </CardWrapperCommentsDisplay>
