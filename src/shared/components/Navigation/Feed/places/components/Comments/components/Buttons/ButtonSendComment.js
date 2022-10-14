@@ -21,6 +21,7 @@ const ButtonSendComment = ({ DUMMY_PLACES }) => {
       {login && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
+            type="submit"
             sx={{
               fontWeight: 500,
               textTransform: "none",

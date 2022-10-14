@@ -41,6 +41,25 @@ const DUMMY_PLACES = [
     creatorName: "The bleach himself",
     creatorImageUrl: "",
   },
+  {
+    placeId: "p3",
+    title: "France",
+    description:
+      "Known as the land of liberty, equality, fraternity, A legacy of the Age of Enlightenment, the motto 'Liberté, Egalité, Fraternité' first appeared during the French Revolution",
+    imageUrl:
+      "https://i.insider.com/58d919eaf2d0331b008b4bbd?width=1000&format=jpeg&auto=webp",
+    address: "Champ de Mars, 5 Av. Anatole France, 75007 Paris, France",
+    favorite: false,
+    location: {
+      lat: 48.8804446,
+      lng: 2.2017446,
+    },
+    postDate: "October 14, 2022",
+    creatorId: "u1",
+    creatorName: "Anderson",
+    creatorImageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzHQv_th9wq3ivQ1CVk7UZRxhbPq64oQrg5Q&usqp=CAU",
+  },
 ];
 function ScrollToTop(props) {
   const { pathname } = useLocation();

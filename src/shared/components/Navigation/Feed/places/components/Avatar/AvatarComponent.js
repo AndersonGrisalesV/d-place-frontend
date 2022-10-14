@@ -1,6 +1,5 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
-import { red } from "@mui/material/colors";
 
 const AvatarComponent = ({ DUMMY_PLACES }) => {
   return (
@@ -22,7 +21,7 @@ const AvatarComponent = ({ DUMMY_PLACES }) => {
           ms: "18px",
           lgs: "18px",
         },
-        bgcolor: red[500],
+        bgcolor: "#da4453c7",
         width: {
           sps: "28px",
           ps: "31px",

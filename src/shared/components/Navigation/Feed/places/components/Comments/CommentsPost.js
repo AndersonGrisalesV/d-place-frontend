@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CommentsDisplay from "./CommentsDisplay";
 
 const DUMMY_COMMENTS = [
@@ -61,9 +61,41 @@ const CommentsPost = ({ DUMMY_PLACES }) => {
   console.log(placeComments);
   // console.log(editDeleteComments[0]);
 
+  // const [commentsList, setCommentsList] = useState(DUMMY_COMMENTS);
+
+  // const addCommentHandler = (
+  //   newCommentId,
+  //   newPostCommentDate,
+  //   newCommentText,
+  //   newPlaceId,
+  //   newTitle,
+  //   newCreatorId,
+  //   newCreatorName,
+  //   newCcreatorImageUrl
+  // ) => {
+  //   setCommentsList((prevCommentsList) => {
+  //     return [
+  //       ...prevCommentsList,
+  //       {
+  //         commentId: newCommentId,
+  //         postCommentDate: newPostCommentDate,
+  //         commentText: newCommentText,
+  //         placeId: newPlaceId,
+  //         title: newTitle,
+  //         creatorId: newCreatorId,
+  //         creatorName: newCreatorName,
+  //         creatorImageUrl: newCcreatorImageUrl,
+  //       },
+  //     ];
+  //   });
+  // };
+
   return (
     <React.Fragment>
-      <CommentsDisplay DUMMY_COMMENTS={placeComments} />
+      <CommentsDisplay
+        DUMMY_COMMENTS={placeComments}
+        // onAddComment={addCommentHandler}
+      />
     </React.Fragment>
   );
 };

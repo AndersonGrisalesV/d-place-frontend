@@ -30,7 +30,7 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const CommentsDisplay = ({ DUMMY_COMMENTS }) => {
+const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
   const login = useContext(LoginContext);
   //   const passwordInputRef = useRef();
   //   let navigate = useNavigate();
@@ -201,6 +201,29 @@ const CommentsDisplay = ({ DUMMY_COMMENTS }) => {
   //     formIsValid = true;
   //   }
 
+  const onSubmitAddCommentHandler = (e) => {
+    e.preventDefault();
+    // const currentYear = new Date().getFullYear();
+
+    // const currentMonth = new Date().getMonth() + 1;
+
+    // const currentDay = new Date().getDate();
+    // const monthAndDay = [currentMonth, currentDay].join(" ");
+    // const completeDAte = [monthAndDay, currentYear].join(",");
+
+    // onAddComment();
+    // Math.random().toString(),
+    // completeDAte,
+    // commentText,
+    // placeId,
+    // title,
+    // creatorId,
+    // creatorName,
+    // creatorImageUrl
+
+    // setTimeout(navigate("/"), 8000);
+  };
+
   const comments = (
     <React.Fragment>
       {DUMMY_COMMENTS.map((comment) => (
@@ -219,7 +242,6 @@ const CommentsDisplay = ({ DUMMY_COMMENTS }) => {
     <CardWrapperCommentsDisplay>
       <CardContentComments>
         <TitleComments />
-        <LeaveComment />
         {comments}
         <Divider sx={{ marginTop: "2px" }} />
         <Typography
@@ -231,12 +253,27 @@ const CommentsDisplay = ({ DUMMY_COMMENTS }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            textAlign: "-webkit-center",
+            fontSize: {
+              sps: "0.9rem",
+              ps: "1rem",
+              ts: "1rem",
+              sls: "1.25rem",
+              sms: "1.25rem",
+              sc: "1.25rem",
+              nsc: "1.25rem",
+              ns: "1.25rem",
+              msc: "1.25rem",
+              mns: "1.25rem",
+              ms: "1.25rem",
+              lgs: "1.25rem",
+            },
           }}
         >
           Leave a comment
         </Typography>
         {login.isLoggedIn ? (
-          <form>
+          <form onSubmit={onSubmitAddCommentHandler}>
             <Stack
               direction="column"
               spacing={4}
@@ -246,9 +283,28 @@ const CommentsDisplay = ({ DUMMY_COMMENTS }) => {
                 id="outlined-commentText-input"
                 multiline
                 placeholder="Type here..."
-                autoComplete="current-name"
+                autoComplete="comment-text"
                 size="small"
-                name="name"
+                name="comment"
+                inputProps={{
+                  sx: {
+                    fontSize: {
+                      sps: "9px",
+                      ps: "10pxr",
+                      ts: "12px",
+                      sls: "12px",
+                      sms: "14px",
+                      sc: "14px",
+                      nsc: "14px",
+                      ns: "14px",
+                      msc: "14px",
+                      mns: "14px",
+                      ms: "14px",
+                      lgs: "14px",
+                    },
+                    fontWeight: "500",
+                  },
+                }}
                 // onChange={(e) => {
                 //    formInputsHandler(e);
                 //    nameChangeHandler(e);
@@ -260,17 +316,6 @@ const CommentsDisplay = ({ DUMMY_COMMENTS }) => {
                 //   nameInputHasError ? "Name must be at least 5 letters" : ""
               />
 
-              {/* <ButtonsWrapper> */}
-              {/* <LoginRegisterButton
-
-              // formIsValid={formIsValid}
-              // isLoginMode={isLoginMode}
-              /> */}
-              {/* <CreateAccountButton
-                switchModeHandler={switchModeHandler}
-                isLoginMode={isLoginMode}
-              /> */}
-              {/* </ButtonsWrapper> */}
               <Stack direction="row" spacing={0} justifyContent="center">
                 <ButtonSendComment />
               </Stack>
@@ -285,7 +330,7 @@ const CommentsDisplay = ({ DUMMY_COMMENTS }) => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              paddingLeft: "24px",
+
               fontSize: {
                 sps: "8px",
                 ps: "9px",

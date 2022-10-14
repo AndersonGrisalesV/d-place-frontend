@@ -20,6 +20,7 @@ import ButtonCancelComment from "./Buttons/ButtonCancelComment";
 import ButtonGoback from "./Buttons/ButtonGoback";
 import ButtonYesCancel from "./Buttons/ButtonYesCancel";
 import ButtonYesDelete from "./Buttons/ButtonYesDelete";
+import { red } from "@mui/material/colors";
 
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",
@@ -30,7 +31,7 @@ const StyleListItemText = styled(ListItemText)(({ theme }) => ({
   "& .MuiListItemText-primary": {
     display: "flex",
     justifyContent: "flex-start",
-    fontSize: "13px",
+    fontSize: "15px",
   },
   "& .MuiListItemText-secondary": {
     color: "gray",
@@ -130,6 +131,7 @@ const styleModalDelete = {
     ms: "5.6rem",
     lgs: "5.6rem",
   },
+
   bgcolor: "background.paper",
   borderRadius: "8px",
   boxShadow: 24,
@@ -139,7 +141,7 @@ const styleModalDelete = {
   paddingBottom: "0px",
 };
 
-const CommentShow = ({ DUMMY_COMMENTS, onButton }) => {
+const CommentShow = ({ DUMMY_COMMENTS, onButton, onAddComment }) => {
   const login = useContext(LoginContext);
   // console.log("here" + `${onButton}`);
 
@@ -210,28 +212,158 @@ const CommentShow = ({ DUMMY_COMMENTS, onButton }) => {
         <StyledListItem
           alignItems="flex-start"
           bgcolor={"background.paper"}
-          sx={{ marginTop: "18px", marginBottom: "0px", paddingBottom: "0px" }}
+          sx={{
+            marginTop: "18px",
+            marginBottom: "0px",
+            paddingBottom: "0px",
+            paddingRight: "0px",
+          }}
         >
-          <ListItemAvatar sx={{ marginTop: "0px" }}>
+          <ListItemAvatar
+            sx={{
+              marginTop: "0px",
+              display: {
+                sps: "none",
+                ps: "none",
+                ts: "flex",
+                sls: "flex",
+                sms: "flex",
+                sc: "flex",
+                nsc: "flex",
+                ns: "flex",
+                msc: "flex",
+                mns: "flex",
+                ms: "flex",
+                lgs: "flex",
+              },
+            }}
+          >
             <Avatar
-              sx={{ marginTop: "5%", marginLeft: "5%" }}
+              sx={{
+                marginTop: "5%",
+                marginLeft: "5%",
+                fontSize: {
+                  sps: "10px",
+                  ps: "12px",
+                  ts: "14px",
+                  sls: "15px",
+                  sms: "18px",
+                  sc: "18px",
+                  nsc: "18px",
+                  ns: "18px",
+                  msc: "18px",
+                  mns: "18px",
+                  ms: "18px",
+                  lgs: "18px",
+                },
+                bgcolor: "#da4453c7",
+                width: {
+                  sps: "28px",
+                  ps: "31px",
+                  ts: "34px",
+                  sls: "36px",
+                  sms: "40px",
+                  sc: "40px",
+                  nsc: "40px",
+                  ns: "40px",
+                  msc: "40px",
+                  mns: "40px",
+                  ms: "40px",
+                  lgs: "40px",
+                },
+                height: {
+                  sps: "28px",
+                  ps: "31px",
+                  ts: "34px",
+                  sls: "36px",
+                  sms: "40px",
+                  sc: "40px",
+                  nsc: "40px",
+                  ns: "40px",
+                  msc: "40px",
+                  mns: "40px",
+                  ms: "40px",
+                  lgs: "40px",
+                },
+              }}
               title={DUMMY_COMMENTS.creatorName}
               alt={DUMMY_COMMENTS.creatorName}
               src={DUMMY_COMMENTS.creatorImageUrl}
-            />
+            >
+              {DUMMY_COMMENTS.creatorImageUrl === ""
+                ? DUMMY_COMMENTS.creatorName.charAt(0)
+                : ""}
+            </Avatar>
           </ListItemAvatar>
 
           <StyleListItemText
-            primary={DUMMY_COMMENTS.creatorName}
+            primary={
+              <Typography
+                variant="body1"
+                fontWeight={400}
+                color="text.primary"
+                sx={{
+                  fontSize: {
+                    sps: "10px",
+                    ps: "11px",
+                    ts: "13px",
+                    sls: "13px",
+                    sms: "15px",
+                    sc: "15px",
+                    nsc: "15px",
+                    ns: "15px",
+                    msc: "15px",
+                    mns: "15px",
+                    ms: "15px",
+                    lgs: "15px",
+                  },
+                }}
+              >
+                {DUMMY_COMMENTS.creatorName}
+              </Typography>
+            }
             secondary={
-              <React.Fragment>
+              <Typography
+                variant="h6"
+                fontWeight={400}
+                color="text.secondary"
+                sx={{
+                  fontSize: {
+                    sps: "8px",
+                    ps: "9px",
+                    ts: "11px",
+                    sls: "11px",
+                    sms: "13px",
+                    sc: "13px",
+                    nsc: "13px",
+                    ns: "13px",
+                    msc: "13px",
+                    mns: "13px",
+                    ms: "13px",
+                    lgs: "13px",
+                  },
+                }}
+              >
                 <Typography
                   sx={{
                     display: "flex",
                     justifyContent: "flex-start",
                     marginBottom: "10px",
+                    fontSize: {
+                      sps: "6px",
+                      ps: "7px",
+                      ts: "9px",
+                      sls: "9px",
+                      sms: "11px",
+                      sc: "11px",
+                      nsc: "11px",
+                      ns: "11px",
+                      msc: "11px",
+                      mns: "11px",
+                      ms: "11px",
+                      lgs: "11px",
+                    },
                   }}
-                  fontSize={10}
                   component="span"
                   variant="body2"
                   color="text.primary"
@@ -239,7 +371,7 @@ const CommentShow = ({ DUMMY_COMMENTS, onButton }) => {
                   {DUMMY_COMMENTS.postCommentDate}
                 </Typography>
                 {`${DUMMY_COMMENTS.commentText}`}
-              </React.Fragment>
+              </Typography>
             }
           />
         </StyledListItem>

@@ -11,8 +11,8 @@ const CardTitle = ({ onMap = false, DUMMY_PLACES }) => {
     >
       <Typography
         variant="body1"
-        fontWeight={500}
-        color="text.secondary"
+        fontWeight={400}
+        color="text.primary"
         sx={{
           fontSize: {
             sps: "10px",
