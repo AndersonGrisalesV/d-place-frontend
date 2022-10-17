@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import { LoginContext } from "./shared/context/login-context";
 import LoginRegister from "./pages/LoginRegister";
 import PlaceDetail from "./pages/PlaceDetail";
+import NewPlace from "./pages/NewPlace";
 
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",
@@ -39,6 +40,7 @@ function App() {
         {/* <Route path="/new" element={<NewPlacePage />} /> */}
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/places/newPlace" element={<NewPlace />} />
         <Route path="/places/:placeId" element={<PlaceDetail />} />
         <Route path="*" element={<p>Not Found!</p>} />
       </React.Fragment>

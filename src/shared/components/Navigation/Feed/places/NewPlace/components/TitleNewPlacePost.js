@@ -1,7 +1,7 @@
-import React from "react";
 import { Typography } from "@mui/material";
+import React from "react";
 
-const TitleComments = () => {
+const TitleNewPlacePost = () => {
   return (
     <React.Fragment>
       <Typography
@@ -29,10 +29,10 @@ const TitleComments = () => {
           },
         }}
       >
-        Comments
+        New Place
       </Typography>
     </React.Fragment>
   );
 };
 
-export default TitleComments;
+export default TitleNewPlacePost;

@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { Box, Fab, Grow, Zoom } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import styled from "@emotion/styled";
 import { LoginContext } from "../../../context/login-context";
+import { NavLink } from "react-router-dom";
+import styled from "@emotion/styled";
 
 const StyleFabButton = styled(Fab)(({ theme }) => ({
   background: "#da4453",
@@ -23,18 +24,20 @@ const NewButton = ({ menuOption, onResponsive = false }) => {
         in={menuOption}
         style={{ transitionDelay: menuOption ? "200ms" : "0ms" }}
       >
-        <StyleFabButton
-          sx={{
-            color: "#fff",
-            background: "#da4453",
-            marginLeft: "141px",
-            marginTop: "136px",
-          }}
-          size="medium"
-          aria-label="add"
-        >
-          <AddIcon />
-        </StyleFabButton>
+        <NavLink to="/places/newPlace">
+          <StyleFabButton
+            sx={{
+              color: "#fff",
+              background: "#da4453",
+              marginLeft: "141px",
+              marginTop: "136px",
+            }}
+            size="medium"
+            aria-label="add"
+          >
+            <AddIcon />
+          </StyleFabButton>
+        </NavLink>
       </Zoom>
     );
   } else if (login.isLoggedIn && !menuOption && !onResponsive) {
@@ -44,18 +47,20 @@ const NewButton = ({ menuOption, onResponsive = false }) => {
         style={{ transitionDelay: menuOption ? "200ms" : "0ms" }}
         {...(true ? { timeout: 500 } : {})}
       >
-        <StyleFabButton
-          sx={{
-            color: "#fff",
-            background: "#da4453",
-            marginLeft: "4.3px",
-            marginTop: "136px",
-          }}
-          size="medium"
-          aria-label="add"
-        >
-          <AddIcon />
-        </StyleFabButton>
+        <NavLink to="/places/newPlace">
+          <StyleFabButton
+            sx={{
+              color: "#fff",
+              background: "#da4453",
+              marginLeft: "4.3px",
+              marginTop: "136px",
+            }}
+            size="medium"
+            aria-label="add"
+          >
+            <AddIcon />
+          </StyleFabButton>
+        </NavLink>
       </Grow>
     );
   } else if (login.isLoggedIn && !menuOption && onResponsive) {
@@ -65,18 +70,20 @@ const NewButton = ({ menuOption, onResponsive = false }) => {
         style={{ transitionDelay: menuOption ? "200ms" : "0ms" }}
         {...(true ? { timeout: 500 } : {})}
       >
-        <StyleFabButton
-          sx={{
-            color: "#fff",
-            background: "#da4453",
-            marginLeft: "74.7px",
-            marginTop: "8px",
-          }}
-          size="medium"
-          aria-label="add"
-        >
-          <AddIcon />
-        </StyleFabButton>
+        <NavLink to="/places/newPlace">
+          <StyleFabButton
+            sx={{
+              color: "#fff",
+              background: "#da4453",
+              marginLeft: "74.7px",
+              marginTop: "8px",
+            }}
+            size="medium"
+            aria-label="add"
+          >
+            <AddIcon />
+          </StyleFabButton>
+        </NavLink>
       </Grow>
     );
   }

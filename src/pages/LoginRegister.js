@@ -3,7 +3,6 @@ import { Stack, TextField } from "@mui/material";
 import { LoginContext } from "../shared/context/login-context";
 import useFocusBlurHook from "../shared/hooks/use-my-input";
 import { useNavigate } from "react-router-dom";
-import styled from "@emotion/styled";
 import Title from "../shared/components/LoginRegister/components/Title";
 import CardContentLogin from "../shared/components/LoginRegister/components/CardContentLogin";
 import CardWrapperLogin from "../shared/components/LoginRegister/components/CardWrapperLogin";
@@ -12,6 +11,7 @@ import LoginRegisterButton from "../shared/components/LoginRegister/Buttons/Logi
 import ButtonsWrapper from "../shared/components/LoginRegister/Buttons/ButtonsWrapper";
 import ImageUploadButton from "../shared/components/LoginRegister/Buttons/ImageUploadButton";
 import ImagePreviewButton from "../shared/components/LoginRegister/Buttons/ImagePreviewButton";
+import styled from "@emotion/styled";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {

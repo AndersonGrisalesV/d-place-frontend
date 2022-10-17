@@ -1,7 +1,6 @@
+import { Button, styled, Zoom } from "@mui/material";
 import React, { useContext } from "react";
-import { Button, Zoom } from "@mui/material";
-import styled from "@emotion/styled";
-import { LoginContext } from "../../../../../../../../context/login-context";
+import { LoginContext } from "../../../../../../../context/login-context";
 
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
@@ -11,8 +10,8 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonSendComment = ({ DUMMY_PLACES, formIsValid }) => {
-  //   const login = useContext(LoginContext);
+const ButtonGobackNewPlace = ({ onGoback }) => {
+  // const login = useContext(LoginContext);
   let login = true;
 
   return (
@@ -21,8 +20,7 @@ const ButtonSendComment = ({ DUMMY_PLACES, formIsValid }) => {
       {login && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
-            type="submit"
-            disabled={formIsValid ? false : true}
+            onClick={onGoback}
             sx={{
               fontWeight: 500,
               textTransform: "none",
@@ -56,7 +54,7 @@ const ButtonSendComment = ({ DUMMY_PLACES, formIsValid }) => {
               },
             }}
           >
-            Send
+            Go back
           </StyleButton>
         </Zoom>
       )}
@@ -64,4 +62,4 @@ const ButtonSendComment = ({ DUMMY_PLACES, formIsValid }) => {
   );
 };
 
-export default ButtonSendComment;
+export default ButtonGobackNewPlace;

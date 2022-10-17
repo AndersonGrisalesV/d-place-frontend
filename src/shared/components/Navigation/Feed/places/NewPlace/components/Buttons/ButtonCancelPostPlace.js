@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { Button, Zoom } from "@mui/material";
-import styled from "@emotion/styled";
-import { LoginContext } from "../../../../../../../../context/login-context";
+import { LoginContext } from "../../../../../../../context/login-context";
+import ModalCancel from "./Modals/ModalCancel";
+import { styled } from "@mui/system";
 
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
@@ -11,8 +12,13 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonSendComment = ({ DUMMY_PLACES, formIsValid }) => {
-  //   const login = useContext(LoginContext);
+const ButtonCancelPostPlace = ({
+  open,
+  close,
+  onHandleOpen,
+  onHandleClose,
+}) => {
+  // const login = useContext(LoginContext);
   let login = true;
 
   return (
@@ -21,8 +27,8 @@ const ButtonSendComment = ({ DUMMY_PLACES, formIsValid }) => {
       {login && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
-            type="submit"
-            disabled={formIsValid ? false : true}
+            // type="submit"
+            onClick={onHandleOpen}
             sx={{
               fontWeight: 500,
               textTransform: "none",
@@ -56,12 +62,22 @@ const ButtonSendComment = ({ DUMMY_PLACES, formIsValid }) => {
               },
             }}
           >
-            Send
+            Cancel
           </StyleButton>
         </Zoom>
       )}
+      <React.Fragment>
+        {open && (
+          <ModalCancel
+            open={open}
+            close={close}
+            onHandleOpen={onHandleOpen}
+            onHandleClose={onHandleClose}
+          />
+        )}
+      </React.Fragment>
     </React.Fragment>
   );
 };
 
-export default ButtonSendComment;
+export default ButtonCancelPostPlace;

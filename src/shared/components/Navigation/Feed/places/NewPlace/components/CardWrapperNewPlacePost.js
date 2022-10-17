@@ -33,7 +33,8 @@ const BoxStyled = styled(Box)(() => ({
     lgs: "800px",
   },
 }));
-const CardWrapperComments = (props) => {
+
+const CardWrapperNewPlacePost = (props) => {
   return (
     <BoxStyled>
       <Card
@@ -61,4 +62,4 @@ const CardWrapperComments = (props) => {
   );
 };
 
-export default CardWrapperComments;
+export default CardWrapperNewPlacePost;
