@@ -1,7 +1,5 @@
 import React from "react";
-import { Stack } from "@mui/system";
-import { Button } from "@mui/material";
-import styled from "@emotion/styled";
+import { Button, Stack, styled } from "@mui/material";
 
 const StyleButtonImage = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
@@ -11,7 +9,7 @@ const StyleButtonImage = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ImageUploadButton = ({ formInputsHandler }) => {
+const ImageUploadPlaceButton = ({ formInputsHandler }) => {
   return (
     <Stack direction="row" spacing={1} justifyContent="space-between">
       <input
@@ -51,4 +49,4 @@ const ImageUploadButton = ({ formInputsHandler }) => {
   );
 };
 
-export default ImageUploadButton;
+export default ImageUploadPlaceButton;

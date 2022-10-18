@@ -7,6 +7,8 @@ import useFocusBlurHook from "../../../../../../shared/hooks/use-my-input";
 import styled from "@emotion/styled";
 import { LoginContext } from "../../../../../context/login-context";
 import ButtonCancelPostPlace from "./components/Buttons/ButtonCancelPostPlace";
+import ImageUploadPlaceButton from "./components/Buttons/ImageUploadPlaceButton";
+import ImagePreviewPlaceButton from "./components/Buttons/ImagePreviewPlaceButton";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -104,6 +106,22 @@ const NewPlacePostDisplay = () => {
     return false;
   }
 
+  const {
+    value: addressInput,
+    isValid: addressIsValid,
+    hasError: addressInputHasError,
+    valueChangeHandler: addressChangeHandler,
+    valueBlurHandler: addressBlurHandler,
+    reset: resetAddressInput,
+  } = useFocusBlurHook((value) => validateAddress(value));
+
+  function validateAddress(text) {
+    if (text.trim() !== "" && text.length < 100) {
+      return true;
+    }
+    return false;
+  }
+
   const onSubmitPostPlaceHandler = (e) => {
     e.preventDefault();
 
@@ -113,6 +131,7 @@ const NewPlacePostDisplay = () => {
     }
     resetTitleInput();
     resetDescriptionInput();
+    resetAddressInput();
 
     // const currentYear = new Date().getFullYear();
 
@@ -137,7 +156,12 @@ const NewPlacePostDisplay = () => {
 
   let formIsValid = false;
 
-  if (login.isLoggedIn && titleIsValid && descriptionIsValid) {
+  if (
+    login.isLoggedIn &&
+    titleIsValid &&
+    descriptionIsValid &&
+    addressIsValid
+  ) {
     formIsValid = true;
   }
 
@@ -184,13 +208,14 @@ const NewPlacePostDisplay = () => {
               value={titleInput}
               error={titleInputHasError}
               helperText={
-                titleInputHasError ? "Title cannot be empty or too long" : ""
+                titleInputHasError ? "Title cannot be empty or too long." : ""
               }
             />
             <StyleTextField
               id="outlined-description-input"
               label="Description"
-              type="text"
+              multiline
+              rows={4}
               autoComplete="description-text"
               size="small"
               name="description"
@@ -222,10 +247,58 @@ const NewPlacePostDisplay = () => {
               error={descriptionInputHasError}
               helperText={
                 descriptionInputHasError
-                  ? "Description cannot be empty or too long"
+                  ? "Description cannot be empty or too long."
                   : ""
               }
             />
+            <StyleTextField
+              id="outlined-address-input"
+              label="Address"
+              type="text"
+              autoComplete="address-text"
+              size="small"
+              name="address"
+              inputProps={{
+                sx: {
+                  fontSize: {
+                    sps: "9px",
+                    ps: "10pxr",
+                    ts: "12px",
+                    sls: "12px",
+                    sms: "14px",
+                    sc: "14px",
+                    nsc: "14px",
+                    ns: "14px",
+                    msc: "14px",
+                    mns: "14px",
+                    ms: "14px",
+                    lgs: "14px",
+                  },
+                  fontWeight: "500",
+                },
+              }}
+              onChange={(e) => {
+                formInputsHandler(e);
+                addressChangeHandler(e);
+              }}
+              onBlur={addressBlurHandler}
+              value={addressInput}
+              error={addressInputHasError}
+              helperText={
+                addressInputHasError
+                  ? "Address cannot be empty or too long."
+                  : ""
+              }
+            />
+            <React.Fragment>
+              <ImageUploadPlaceButton formInputsHandler={formInputsHandler} />
+              {imageUrl && selectedImage && (
+                <ImagePreviewPlaceButton
+                  imageUrl={imageUrl}
+                  selectedImageName={selectedImage.name}
+                />
+              )}
+            </React.Fragment>
             <Stack direction="row" spacing={0} justifyContent="center">
               {/* <ButtonPostPlace formIsValid={formIsValid} /> */}
               <ButtonCancelPostPlace

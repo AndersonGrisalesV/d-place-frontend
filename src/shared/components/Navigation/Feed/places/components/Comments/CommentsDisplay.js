@@ -53,7 +53,7 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
   } = useFocusBlurHook((value) => validateComment(value));
 
   function validateComment(text) {
-    if (text.trim() !== "" && text.length !== 0) {
+    if (text.trim() !== "" && text.length < 378) {
       return true;
     }
     return false;
@@ -152,10 +152,11 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
             >
               <StyleTextField
                 id="outlined-commentText-input"
-                multiline
+                type="text"
                 placeholder="Type here..."
                 autoComplete="comment-text"
-                type="text"
+                multiline
+                rows={2}
                 size="small"
                 name="comment"
                 inputProps={{
@@ -184,7 +185,11 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
                 onBlur={commentBlurHandler}
                 value={commentInput}
                 error={commentInputHasError}
-                helperText={commentInputHasError ? "It cannot be empty" : ""}
+                helperText={
+                  commentInputHasError
+                    ? "Your comment cannot be empty or too long."
+                    : ""
+                }
               />
               <Stack direction="row" spacing={0} justifyContent="center">
                 <ButtonSendComment formIsValid={formIsValid} />

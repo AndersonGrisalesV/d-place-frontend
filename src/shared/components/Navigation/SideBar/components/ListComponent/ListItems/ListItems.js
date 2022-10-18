@@ -100,7 +100,12 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
   },
 }));
 
-const ListItems = ({ mode, setMode }) => {
+const ListItems = ({
+  mode,
+  setMode,
+  onCloseResponsiveDrawer = false,
+  onToggleResponsive,
+}) => {
   const login = useContext(LoginContext);
   let navigate = useNavigate();
 
@@ -114,10 +119,12 @@ const ListItems = ({ mode, setMode }) => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    onToggleResponsive("left", false);
   };
 
   const handleLogout = () => {
     login.logout();
+    onToggleResponsive("left", false);
     navigate("/");
   };
 
@@ -154,6 +161,10 @@ const ListItems = ({ mode, setMode }) => {
     </Menu>
   );
 
+  const handleDrawerClose = () => {
+    onToggleResponsive("left", false);
+  };
+
   return (
     <>
       <Grow
@@ -162,7 +173,11 @@ const ListItems = ({ mode, setMode }) => {
         {...(true ? { timeout: 500 } : {})}
       >
         <StyleListItems disablePadding component={StyleNavLink} to="/">
-          <ListItemButton component="ul" href="/">
+          <ListItemButton
+            component="ul"
+            href="/"
+            onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
+          >
             <ListItemIcon>
               <StyleHomeIcon />
             </ListItemIcon>
@@ -203,7 +218,11 @@ const ListItems = ({ mode, setMode }) => {
               to="/favorites"
               // className={(navData) => (navData.isActive ? classes.active : "")}
             >
-              <ListItemButton component="li" href="/favorites">
+              <ListItemButton
+                component="li"
+                href="/favorites"
+                onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
+              >
                 <ListItemIcon>
                   <StyleFavoriteIcon />
                 </ListItemIcon>
@@ -223,7 +242,11 @@ const ListItems = ({ mode, setMode }) => {
               component={StyleNavLink}
               to="/profile"
             >
-              <ListItemButton component="li" href="/profile">
+              <ListItemButton
+                component="li"
+                href="/profile"
+                onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
+              >
                 <ListItemIcon>
                   <StyleAccountCircleIcon />
                 </ListItemIcon>

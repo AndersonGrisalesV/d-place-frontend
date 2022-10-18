@@ -70,7 +70,11 @@ export default function NavigationBar(props) {
             </Box>
           )}
 
-          <SideBarMenuResponsive setMode={props.setMode} mode={props.mode} />
+          <SideBarMenuResponsive
+            setMode={props.setMode}
+            mode={props.mode}
+            onCloseResponsiveDrawer={true}
+          />
 
           <SearchBarResponsive />
 

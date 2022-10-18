@@ -14,9 +14,18 @@ const StyleFabButton = styled(Fab)(({ theme }) => ({
   },
 }));
 
-const NewButton = ({ menuOption, onResponsive = false }) => {
+const NewButton = ({
+  menuOption,
+  onResponsive = false,
+  onCloseResponsiveDrawer = false,
+  onToggleResponsive,
+}) => {
   const login = useContext(LoginContext);
   let Button;
+
+  const handleDrawerClose = () => {
+    onToggleResponsive("left", false);
+  };
 
   if (login.isLoggedIn && menuOption && !onResponsive) {
     Button = (
@@ -72,6 +81,7 @@ const NewButton = ({ menuOption, onResponsive = false }) => {
       >
         <NavLink to="/places/newPlace">
           <StyleFabButton
+            onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
             sx={{
               color: "#fff",
               background: "#da4453",

@@ -47,6 +47,18 @@ const AccountMenuMobile = () => {
     handleMobileMenuClose();
   };
 
+  const handleProfileMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    navigate("/profile");
+  };
+
+  const handleFavoritesMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    navigate("/favorites");
+  };
+
   const handleMenuCloseAndLogout = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
@@ -77,7 +89,7 @@ const AccountMenuMobile = () => {
     >
       <NotificationsButton onResponsive={true} />
 
-      <StyleMenuItem>
+      <StyleMenuItem onClick={handleFavoritesMenuClose}>
         <IconButton
           style={{ backgroundColor: "transparent" }}
           size="large"
@@ -125,7 +137,7 @@ const AccountMenuMobile = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <StyleMenuItem onClick={handleMenuClose}>Profile</StyleMenuItem>
+      <StyleMenuItem onClick={handleProfileMenuClose}>Profile</StyleMenuItem>
       <StyleMenuItem onClick={handleMenuCloseAndLogout}>Logout</StyleMenuItem>
     </Menu>
   );

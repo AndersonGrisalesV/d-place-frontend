@@ -14,7 +14,12 @@ const StyleListItemButton = styled(ListItemButton)(({ theme }) => ({
   },
 }));
 
-export default function SideBarResponsive({ mode, setMode }) {
+export default function SideBarResponsive({
+  mode,
+  setMode,
+  onCloseResponsiveDrawer,
+  menuOption,
+}) {
   const [state, setState] = useState({
     left: false,
   });
@@ -29,14 +34,27 @@ export default function SideBarResponsive({ mode, setMode }) {
     setState({ ...state, [anchor]: open });
   };
 
+  const toggleResponsiveDrawer = (anchor, open) => {
+    setState({ ...state, [anchor]: open });
+  };
+
   const list = () => (
     <Box
       sx={{ width: 214 }}
       role="presentation"
       onKeyDown={toggleDrawer("left", false)}
     >
-      <ListComponent mode={mode} setMode={setMode} />
-      <NewButton onResponsive={true} />
+      <ListComponent
+        mode={mode}
+        setMode={setMode}
+        onCloseResponsiveDrawer={onCloseResponsiveDrawer}
+        onToggleResponsive={toggleResponsiveDrawer}
+      />
+      <NewButton
+        onResponsive={true}
+        onCloseResponsiveDrawer={onCloseResponsiveDrawer}
+        onToggleResponsive={toggleResponsiveDrawer}
+      />
     </Box>
   );
 

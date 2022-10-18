@@ -1,7 +1,8 @@
-import { Box, Modal, Stack, Typography } from "@mui/material";
 import React from "react";
+import { Box, Modal, Stack, Typography } from "@mui/material";
 import ButtonGobackNewPlace from "../ButtonGobackNewPlace";
 import ButtonYesCancelNewPlace from "../ButtonYesCancelNewPlace";
+import { useNavigate } from "react-router-dom";
 
 const styleModalCancel = {
   position: "absolute",
@@ -46,9 +47,11 @@ const styleModalCancel = {
 };
 
 const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
+  let navigate = useNavigate();
   const handleConfirmCancel = () => {
     // redirect
     onHandleClose();
+    navigate("/");
   };
 
   return (

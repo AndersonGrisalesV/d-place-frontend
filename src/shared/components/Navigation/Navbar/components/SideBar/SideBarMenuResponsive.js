@@ -30,7 +30,11 @@ const SideBarMenuResponsive = (props) => {
         style={{ backgroundColor: "transparent" }}
         sx={{ mr: 2 }}
       >
-        <SideBarResponsive setMode={props.setMode} mode={props.mode} />
+        <SideBarResponsive
+          setMode={props.setMode}
+          mode={props.mode}
+          onCloseResponsiveDrawer={props.onCloseResponsiveDrawer}
+        />
       </IconButton>
     </Box>
   );

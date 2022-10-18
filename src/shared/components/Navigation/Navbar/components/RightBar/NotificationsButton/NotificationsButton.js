@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Avatar,
   Badge,
@@ -25,9 +25,10 @@ const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
 
 const StyleStack = styled(Stack)(({ theme }) => ({
   "&:hover": {
-    color: theme.palette.mode === "dark" ? "" : "#da4453",
+    color:
+      theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
     [`${Typography}`]: {
-      color: theme.palette.mode === "dark" ? "" : "#da4453",
+      color: "#9b9b9bc7",
     },
   },
 }));
@@ -40,7 +41,11 @@ const NotificationsButton = ({ onResponsive }) => {
     setChangeResponsive(responsiveVariant);
   }, [responsiveVariant]);
 
+  const anchorRef = useRef();
   const [anchorEl, setAnchorEl] = useState(null);
+  useEffect(() => {
+    setTimeout(() => setAnchorEl(anchorRef?.current), 1);
+  }, [anchorRef]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

@@ -34,6 +34,13 @@ const AccountMenu = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+
+  const handleProfileMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    navigate("/profile");
+  };
+
   const handleMenuCloseAndLogout = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
@@ -58,7 +65,7 @@ const AccountMenu = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <StyleMenuItem onClick={handleMenuClose}>Profile</StyleMenuItem>
+      <StyleMenuItem onClick={handleProfileMenuClose}>Profile</StyleMenuItem>
       <StyleMenuItem onClick={handleMenuCloseAndLogout}>Logout</StyleMenuItem>
     </Menu>
   );
