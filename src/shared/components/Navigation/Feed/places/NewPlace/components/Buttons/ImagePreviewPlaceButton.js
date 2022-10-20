@@ -1,60 +1,100 @@
-import React from "react";
-import { Avatar, ImageList, ImageListItem, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  ImageListItem,
+  Stack,
+  styled,
+  Typography,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { Box } from "@mui/system";
 
+const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
+  color:
+    theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453c7",
+  "&:hover": {
+    backgroundColor: "transparent",
+    color: "#9b9b9bc7",
+  },
+}));
+
 const ImagePreviewPlaceButton = ({ imageUrl, selectedImageName }) => {
-  console.log(imageUrl);
+  const [removeImage, setRemoveImage] = useState(false);
+  const [sameImageUrl, setSameImageUrl] = useState("");
+
+  useEffect(() => {
+    setRemoveImage(false);
+  }, [imageUrl]);
+
+  // if (removeImage && sameImageUrl === imageUrl) {
+  //   setRemoveImage(false);
+  // }
+
+  const handleDeleteImage = () => {
+    setRemoveImage(true);
+    // setSameImageUrl(imageUrl);
+  };
+
   return (
     <React.Fragment>
-      <Typography
-        variant="h9"
-        fontWeight={300}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        Image Preview
-      </Typography>
-      <Box mt={2} textAlign="center">
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {/* <Avatar
-            src={imageUrl}
-            alt={selectedImageName}
+      {!removeImage && (
+        <React.Fragment>
+          <Typography
+            variant="h9"
+            fontWeight={300}
             sx={{
-              width: 150,
-              height: 150,
-              border: "1px solid rgb(118, 118, 118)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-          /> */}
-          {/* <ImageList
-            sx={{ width: "330px", height: "250px", paddingRight: "0px" }}
           >
-          */}
-          <ImageListItem
-            key={imageUrl}
-            style={{ gridColumnEnd: "4", objectFit: "contain" }}
-            sx={{ width: "330px", height: "250px", paddingRight: "0px" }}
-          >
-            <img
-              style={{ borderRadius: "2.2%" }}
-              src={imageUrl}
-              srcSet={imageUrl}
-              alt={selectedImageName}
-              loading="lazy"
-            />
-          </ImageListItem>
-          {/* 
+            Image Preview
+          </Typography>
+          <Box mt={2} textAlign="center">
+            <Stack direction="row" justifyContent="center">
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ImageListItem
+                  key={imageUrl}
+                  style={{
+                    gridColumnEnd: "4",
+                    objectFit: "contain",
+                  }}
+                  sx={{ width: "330px", height: "250px", paddingRight: "0px" }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "end",
+                      alignAitems: "flex-start",
+                      backgroundColor: "transparent",
+                    }}
+                  >
+                    <StyleCloseIcon
+                      onClick={handleDeleteImage}
+                      sx={{ cursor: "pointer" }}
+                    />
+                  </Box>
+                  <img
+                    style={{ borderRadius: "2.2%" }}
+                    src={imageUrl}
+                    srcSet={imageUrl}
+                    alt={selectedImageName}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+                {/* 
           </ImageList> */}
-        </Box>
-      </Box>
+              </Box>
+            </Stack>
+          </Box>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };
