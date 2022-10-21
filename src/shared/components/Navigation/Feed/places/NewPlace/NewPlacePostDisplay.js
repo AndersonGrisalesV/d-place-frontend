@@ -54,7 +54,7 @@ const NewPlacePostDisplay = () => {
   }, [selectedImage]);
 
   const formInputsHandler = (e) => {
-    console.log(e.target.value);
+    console.log("aqui" + e.target.value);
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();
@@ -164,6 +164,17 @@ const NewPlacePostDisplay = () => {
   ) {
     formIsValid = true;
   }
+
+  // const [removeImage, setRemoveImage] = useState(false);
+
+  // useEffect(() => {
+  //   setRemoveImage(false);
+  // }, [imageUrl]);
+
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+    setImageUrl(null);
+  };
 
   return (
     <CardWrapperNewPlacePostDisplay>
@@ -296,6 +307,7 @@ const NewPlacePostDisplay = () => {
                 <ImagePreviewPlaceButton
                   imageUrl={imageUrl}
                   selectedImageName={selectedImage.name}
+                  handleRemoveImage={handleRemoveImage}
                 />
               )}
             </React.Fragment>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Stack, styled } from "@mui/material";
 
 const StyleButtonImage = styled(Button)(({ theme }) => ({
@@ -10,6 +10,11 @@ const StyleButtonImage = styled(Button)(({ theme }) => ({
 }));
 
 const ImageUploadPlaceButton = ({ formInputsHandler }) => {
+  const handleChangeImageUploadPlaceButton = (e) => {
+    formInputsHandler(e);
+  };
+
+  const handleClickImageUploadPlaceButton = (e) => {};
   return (
     <Stack direction="row" spacing={1} justifyContent="space-between">
       <input
@@ -17,7 +22,8 @@ const ImageUploadPlaceButton = ({ formInputsHandler }) => {
         type="file"
         id="select-image"
         style={{ display: "none" }}
-        onChange={formInputsHandler}
+        onClick={handleChangeImageUploadPlaceButton}
+        onChange={handleChangeImageUploadPlaceButton}
         name="image"
       />
       <label htmlFor="select-image" style={{ marginLeft: "0px" }}>
