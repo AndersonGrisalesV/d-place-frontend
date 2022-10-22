@@ -8,6 +8,8 @@ import ButtonSendComment from "./components/Buttons/ButtonSendComment";
 import { LoginContext } from "../../../../../../context/login-context";
 import useFocusBlurHook from "../../../../../../../shared/hooks/use-my-input";
 import styled from "@emotion/styled";
+import LoginButton from "../../../../Navbar/components/RightBar/LoginButtons/LoginButton";
+import ButtonCancelSendComment from "./components/Buttons/ButtonCancelSendComment";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -35,6 +37,10 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
   };
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const formInputsHandler = (e) => {
     setFormInputs({
@@ -94,6 +100,18 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
 
     // setTimeout(navigate("/"), 8000);
   };
+
+  const CancelSendComment = () => {
+    resetCommentInput();
+  };
+
+  let cancelSendCommentIsValid = false;
+
+  if (commentInputHasError) {
+    cancelSendCommentIsValid = true;
+  } else if (formIsValid) {
+    cancelSendCommentIsValid = true;
+  }
 
   const comments = (
     <React.Fragment>
@@ -163,7 +181,7 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
                   sx: {
                     fontSize: {
                       sps: "9px",
-                      ps: "10pxr",
+                      ps: "10px",
                       ts: "12px",
                       sls: "12px",
                       sms: "14px",
@@ -176,6 +194,24 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
                       lgs: "14px",
                     },
                     fontWeight: "500",
+                  },
+                }}
+                FormHelperTextProps={{
+                  sx: {
+                    fontSize: {
+                      sps: "9px",
+                      ps: "10px",
+                      ts: "12px",
+                      sls: "12px",
+                      sms: "14px",
+                      sc: "14px",
+                      nsc: "14px",
+                      ns: "14px",
+                      msc: "14px",
+                      mns: "14px",
+                      ms: "14px",
+                      lgs: "14px",
+                    },
                   },
                 }}
                 onChange={(e) => {
@@ -193,6 +229,14 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
               />
               <Stack direction="row" spacing={0} justifyContent="center">
                 <ButtonSendComment formIsValid={formIsValid} />
+                <ButtonCancelSendComment
+                  cancelSendCommentIsValid={cancelSendCommentIsValid}
+                  open={open}
+                  close={handleClose}
+                  onHandleOpen={handleOpen}
+                  onHandleClose={handleClose}
+                  CancelSendComment={CancelSendComment}
+                />
               </Stack>
             </Stack>
           </form>
@@ -222,7 +266,7 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
               },
             }}
           >
-            You must be logged in to leave a comment
+            Please {<LoginButton OnComment={true} />} to comment
           </Typography>
         )}
       </CardContentComments>

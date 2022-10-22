@@ -33,6 +33,20 @@ const ImagePreviewPlaceButton = ({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            fontSize: {
+              sps: "11px",
+              ps: "13px",
+              ts: "13px",
+              sls: "14px",
+              sms: "15px",
+              sc: "15px",
+              nsc: "15px",
+              ns: "15px",
+              msc: "15px",
+              mns: "15px",
+              ms: "15px",
+              lgs: "15px",
+            },
           }}
         >
           Image Preview
@@ -53,9 +67,8 @@ const ImagePreviewPlaceButton = ({
                   objectFit: "contain",
                 }}
                 sx={{
-                  width: "330px",
-                  height: "250px",
                   paddingRight: "0px",
+                  borderRadius: "18%",
                 }}
               >
                 <Box
@@ -68,16 +81,46 @@ const ImagePreviewPlaceButton = ({
                 >
                   <StyleCloseIcon
                     onClick={handleRemoveImage}
-                    sx={{ cursor: "pointer" }}
+                    sx={{
+                      cursor: "pointer",
+                      width: {
+                        sps: "16px",
+                        ps: "17px",
+                        ts: "18px",
+                        sls: "20px",
+                        sms: "24px",
+                        sc: "24px",
+                        nsc: "150px",
+                        ns: "24px",
+                        msc: "24px",
+                        mns: "24px",
+                        ms: "24px",
+                        lgs: "24px",
+                      },
+                      height: {
+                        sps: "16px",
+                        ps: "17px",
+                        ts: "18px",
+                        sls: "20px",
+                        sms: "24px",
+                        sc: "24px",
+                        nsc: "24px",
+                        ns: "24px",
+                        msc: "24px",
+                        mns: "24px",
+                        ms: "24px",
+                        lgs: "24px",
+                      },
+                    }}
                   />
                 </Box>
                 <img
-                  style={{ borderRadius: "2.2%" }}
+                  style={{ borderRadius: "2.2%", maxHeight: "800px" }}
                   src={imageUrl}
                   srcSet={imageUrl}
                   alt={selectedImageName}
                   loading="lazy"
-                />
+                ></img>
               </ImageListItem>
             </Box>
           </Stack>

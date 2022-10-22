@@ -216,6 +216,62 @@ const LoginRegister = () => {
                 autoComplete="current-name"
                 size="small"
                 name="name"
+                InputLabelProps={{
+                  sx: {
+                    fontSize: {
+                      sps: "11px",
+                      ps: "12px",
+                      ts: "14px",
+                      sls: "14px",
+                      sms: "16px",
+                      sc: "16px",
+                      nsc: "16px",
+                      ns: "16px",
+                      msc: "16px",
+                      mns: "16px",
+                      ms: "16px",
+                      lgs: "16px",
+                    },
+                  },
+                }}
+                InputProps={{
+                  inputProps: {
+                    sx: {
+                      fontSize: {
+                        sps: "11px",
+                        ps: "12px",
+                        ts: "14px",
+                        sls: "14px",
+                        sms: "16px",
+                        sc: "16px",
+                        nsc: "16px",
+                        ns: "16px",
+                        msc: "16px",
+                        mns: "16px",
+                        ms: "16px",
+                        lgs: "16px",
+                      },
+                    },
+                  },
+                }}
+                FormHelperTextProps={{
+                  sx: {
+                    fontSize: {
+                      sps: "9px",
+                      ps: "10px",
+                      ts: "12px",
+                      sls: "12px",
+                      sms: "14px",
+                      sc: "14px",
+                      nsc: "14px",
+                      ns: "14px",
+                      msc: "14px",
+                      mns: "14px",
+                      ms: "14px",
+                      lgs: "14px",
+                    },
+                  },
+                }}
                 onChange={(e) => {
                   formInputsHandler(e);
                   nameChangeHandler(e);
@@ -235,6 +291,62 @@ const LoginRegister = () => {
               autoComplete="current-email"
               size="small"
               name="email"
+              InputLabelProps={{
+                sx: {
+                  fontSize: {
+                    sps: "11px",
+                    ps: "12px",
+                    ts: "14px",
+                    sls: "14px",
+                    sms: "16px",
+                    sc: "16px",
+                    nsc: "16px",
+                    ns: "16px",
+                    msc: "16px",
+                    mns: "16px",
+                    ms: "16px",
+                    lgs: "16px",
+                  },
+                },
+              }}
+              InputProps={{
+                inputProps: {
+                  sx: {
+                    fontSize: {
+                      sps: "11px",
+                      ps: "12px",
+                      ts: "14px",
+                      sls: "14px",
+                      sms: "16px",
+                      sc: "16px",
+                      nsc: "16px",
+                      ns: "16px",
+                      msc: "16px",
+                      mns: "16px",
+                      ms: "16px",
+                      lgs: "16px",
+                    },
+                  },
+                },
+              }}
+              FormHelperTextProps={{
+                sx: {
+                  fontSize: {
+                    sps: "9px",
+                    ps: "10px",
+                    ts: "12px",
+                    sls: "12px",
+                    sms: "14px",
+                    sc: "14px",
+                    nsc: "14px",
+                    ns: "14px",
+                    msc: "14px",
+                    mns: "14px",
+                    ms: "14px",
+                    lgs: "14px",
+                  },
+                },
+              }}
               onChange={(e) => {
                 formInputsHandler(e);
                 emailChangeHandler(e);
@@ -251,6 +363,62 @@ const LoginRegister = () => {
               autoComplete="current-password"
               size="small"
               name="password"
+              InputLabelProps={{
+                sx: {
+                  fontSize: {
+                    sps: "11px",
+                    ps: "12px",
+                    ts: "14px",
+                    sls: "14px",
+                    sms: "16px",
+                    sc: "16px",
+                    nsc: "16px",
+                    ns: "16px",
+                    msc: "16px",
+                    mns: "16px",
+                    ms: "16px",
+                    lgs: "16px",
+                  },
+                },
+              }}
+              InputProps={{
+                inputProps: {
+                  sx: {
+                    fontSize: {
+                      sps: "11px",
+                      ps: "12px",
+                      ts: "14px",
+                      sls: "14px",
+                      sms: "16px",
+                      sc: "16px",
+                      nsc: "16px",
+                      ns: "16px",
+                      msc: "16px",
+                      mns: "16px",
+                      ms: "16px",
+                      lgs: "16px",
+                    },
+                  },
+                },
+              }}
+              FormHelperTextProps={{
+                sx: {
+                  fontSize: {
+                    sps: "9px",
+                    ps: "10px",
+                    ts: "12px",
+                    sls: "12px",
+                    sms: "14px",
+                    sc: "14px",
+                    nsc: "14px",
+                    ns: "14px",
+                    msc: "14px",
+                    mns: "14px",
+                    ms: "14px",
+                    lgs: "14px",
+                  },
+                },
+              }}
               onChange={(e) => {
                 formInputsHandler(e);
                 passwordChangeHandler(e);
@@ -273,6 +441,62 @@ const LoginRegister = () => {
                 autoComplete="current-confirmPassword"
                 size="small"
                 name="confirmPassword"
+                InputLabelProps={{
+                  sx: {
+                    fontSize: {
+                      sps: "11px",
+                      ps: "12px",
+                      ts: "14px",
+                      sls: "14px",
+                      sms: "16px",
+                      sc: "16px",
+                      nsc: "16px",
+                      ns: "16px",
+                      msc: "16px",
+                      mns: "16px",
+                      ms: "16px",
+                      lgs: "16px",
+                    },
+                  },
+                }}
+                InputProps={{
+                  inputProps: {
+                    sx: {
+                      fontSize: {
+                        sps: "11px",
+                        ps: "12px",
+                        ts: "14px",
+                        sls: "14px",
+                        sms: "16px",
+                        sc: "16px",
+                        nsc: "16px",
+                        ns: "16px",
+                        msc: "16px",
+                        mns: "16px",
+                        ms: "16px",
+                        lgs: "16px",
+                      },
+                    },
+                  },
+                }}
+                FormHelperTextProps={{
+                  sx: {
+                    fontSize: {
+                      sps: "9px",
+                      ps: "10px",
+                      ts: "12px",
+                      sls: "12px",
+                      sms: "14px",
+                      sc: "14px",
+                      nsc: "14px",
+                      ns: "14px",
+                      msc: "14px",
+                      mns: "14px",
+                      ms: "14px",
+                      lgs: "14px",
+                    },
+                  },
+                }}
                 onChange={(e) => {
                   formInputsHandler(e);
                   confirmPasswordChangeHandler(e);

@@ -18,11 +18,36 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const LoginButton = () => {
+const StyleButtonOnComment = styled(Button)(({ theme }) => ({
+  minWidth: "51px",
+  padding: "0px",
+  margin: "0px",
+  backgroundColor:
+    theme.palette.mode === "dark" ? "transparent" : "transparent",
+  color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
+  "&:hover": {
+    backgroundColor: "transparent",
+    color: "#9b9b9bc7",
+  },
+}));
+
+const LoginButton = ({ OnComment = false }) => {
   const handleLogin = () => {};
 
-  const login = useContext(LoginContext);
-  return (
+  const buttonLeaveAComment = OnComment ? (
+    <Box>
+      <NavLink to="/loginregister" style={{ textDecoration: "none" }}>
+        <StyleButtonOnComment
+          sx={{
+            textTransform: "none",
+            bgcolor: `${buttonColor}`,
+          }}
+        >
+          Log in
+        </StyleButtonOnComment>
+      </NavLink>
+    </Box>
+  ) : (
     <Box>
       <NavLink to="/loginregister" style={{ textDecoration: "none" }}>
         <StyleButton
@@ -36,6 +61,9 @@ const LoginButton = () => {
       </NavLink>
     </Box>
   );
+
+  const login = useContext(LoginContext);
+  return <React.Fragment>{buttonLeaveAComment}</React.Fragment>;
 };
 
 export default LoginButton;

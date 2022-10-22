@@ -9,6 +9,7 @@ import { LoginContext } from "../../../../../context/login-context";
 import ButtonCancelPostPlace from "./components/Buttons/ButtonCancelPostPlace";
 import ImageUploadPlaceButton from "./components/Buttons/ImageUploadPlaceButton";
 import ImagePreviewPlaceButton from "./components/Buttons/ImagePreviewPlaceButton";
+import ButtonPostPlace from "./components/Buttons/ButtonPostPlace";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -35,7 +36,8 @@ const NewPlacePostDisplay = () => {
     title: "",
     description: "",
     address: "",
-    imageUrl: "",
+    image: "",
+    // imageUrl: "",
   };
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
@@ -192,11 +194,49 @@ const NewPlacePostDisplay = () => {
               autoComplete="title-text"
               size="small"
               name="title"
-              inputProps={{
+              InputLabelProps={{
+                sx: {
+                  fontSize: {
+                    sps: "11px",
+                    ps: "12px",
+                    ts: "14px",
+                    sls: "14px",
+                    sms: "16px",
+                    sc: "16px",
+                    nsc: "16px",
+                    ns: "16px",
+                    msc: "16px",
+                    mns: "16px",
+                    ms: "16px",
+                    lgs: "16px",
+                  },
+                },
+              }}
+              InputProps={{
+                inputProps: {
+                  sx: {
+                    fontSize: {
+                      sps: "11px",
+                      ps: "12px",
+                      ts: "14px",
+                      sls: "14px",
+                      sms: "16px",
+                      sc: "16px",
+                      nsc: "16px",
+                      ns: "16px",
+                      msc: "16px",
+                      mns: "16px",
+                      ms: "16px",
+                      lgs: "16px",
+                    },
+                  },
+                },
+              }}
+              FormHelperTextProps={{
                 sx: {
                   fontSize: {
                     sps: "9px",
-                    ps: "10pxr",
+                    ps: "10px",
                     ts: "12px",
                     sls: "12px",
                     sms: "14px",
@@ -208,7 +248,6 @@ const NewPlacePostDisplay = () => {
                     ms: "14px",
                     lgs: "14px",
                   },
-                  fontWeight: "500",
                 },
               }}
               onChange={(e) => {
@@ -230,11 +269,49 @@ const NewPlacePostDisplay = () => {
               autoComplete="description-text"
               size="small"
               name="description"
-              inputProps={{
+              InputLabelProps={{
+                sx: {
+                  fontSize: {
+                    sps: "11px",
+                    ps: "12px",
+                    ts: "14px",
+                    sls: "14px",
+                    sms: "16px",
+                    sc: "16px",
+                    nsc: "16px",
+                    ns: "16px",
+                    msc: "16px",
+                    mns: "16px",
+                    ms: "16px",
+                    lgs: "16px",
+                  },
+                },
+              }}
+              InputProps={{
+                inputProps: {
+                  sx: {
+                    fontSize: {
+                      sps: "11px",
+                      ps: "12px",
+                      ts: "14px",
+                      sls: "14px",
+                      sms: "16px",
+                      sc: "16px",
+                      nsc: "16px",
+                      ns: "16px",
+                      msc: "16px",
+                      mns: "16px",
+                      ms: "16px",
+                      lgs: "16px",
+                    },
+                  },
+                },
+              }}
+              FormHelperTextProps={{
                 sx: {
                   fontSize: {
                     sps: "9px",
-                    ps: "10pxr",
+                    ps: "10px",
                     ts: "12px",
                     sls: "12px",
                     sms: "14px",
@@ -246,7 +323,6 @@ const NewPlacePostDisplay = () => {
                     ms: "14px",
                     lgs: "14px",
                   },
-                  fontWeight: "500",
                 },
               }}
               onChange={(e) => {
@@ -269,11 +345,49 @@ const NewPlacePostDisplay = () => {
               autoComplete="address-text"
               size="small"
               name="address"
-              inputProps={{
+              InputLabelProps={{
+                sx: {
+                  fontSize: {
+                    sps: "11px",
+                    ps: "12px",
+                    ts: "14px",
+                    sls: "14px",
+                    sms: "16px",
+                    sc: "16px",
+                    nsc: "16px",
+                    ns: "16px",
+                    msc: "16px",
+                    mns: "16px",
+                    ms: "16px",
+                    lgs: "16px",
+                  },
+                },
+              }}
+              InputProps={{
+                inputProps: {
+                  sx: {
+                    fontSize: {
+                      sps: "11px",
+                      ps: "12px",
+                      ts: "14px",
+                      sls: "14px",
+                      sms: "16px",
+                      sc: "16px",
+                      nsc: "16px",
+                      ns: "16px",
+                      msc: "16px",
+                      mns: "16px",
+                      ms: "16px",
+                      lgs: "16px",
+                    },
+                  },
+                },
+              }}
+              FormHelperTextProps={{
                 sx: {
                   fontSize: {
                     sps: "9px",
-                    ps: "10pxr",
+                    ps: "10px",
                     ts: "12px",
                     sls: "12px",
                     sms: "14px",
@@ -285,7 +399,6 @@ const NewPlacePostDisplay = () => {
                     ms: "14px",
                     lgs: "14px",
                   },
-                  fontWeight: "500",
                 },
               }}
               onChange={(e) => {
@@ -312,7 +425,7 @@ const NewPlacePostDisplay = () => {
               )}
             </React.Fragment>
             <Stack direction="row" spacing={0} justifyContent="center">
-              {/* <ButtonPostPlace formIsValid={formIsValid} /> */}
+              <ButtonPostPlace formIsValid={formIsValid} />
               <ButtonCancelPostPlace
                 open={open}
                 close={handleClose}
