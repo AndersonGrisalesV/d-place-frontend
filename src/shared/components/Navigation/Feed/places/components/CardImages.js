@@ -4,7 +4,7 @@ import { CardMedia } from "@mui/material";
 const CardImages = ({ DUMMY_PLACES }) => {
   return (
     <CardMedia
-      sx={{ maxHeight: "800px", objectFit: "contain" }}
+      sx={{ height: "100%", objectFit: "contain" }}
       component="img"
       height="194"
       image={DUMMY_PLACES.imageUrl}

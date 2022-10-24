@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Avatar,
   Box,
@@ -9,17 +9,15 @@ import {
   Stack,
   TextField,
   Typography,
-  Modal,
 } from "@mui/material";
 import ButtonEditDeleteComments from "./Buttons/ButtonEditDeleteComments";
-import styled from "@emotion/styled";
 import { LoginContext } from "../../../../../../../context/login-context";
-
 import ButtonSendComment from "./Buttons/ButtonSendComment";
 import ButtonCancelComment from "./Buttons/ButtonCancelComment";
-import ButtonGoback from "./Buttons/ButtonGoback";
-import ButtonYesCancel from "./Buttons/ButtonYesCancel";
-import ButtonYesDelete from "./Buttons/ButtonYesDelete";
+import ModalCancelEditComment from "./Buttons/Modals/ModalCancelEditComment";
+import ModalCancelDeleteComment from "./Buttons/Modals/ModalCancelDeleteComment";
+import useFocusBlurHook from "../../../../../../../hooks/use-my-input";
+import styled from "@emotion/styled";
 
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",
@@ -55,94 +53,60 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const styleModalCancel = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: {
-    sps: "210px",
-    ps: "290px",
-    ts: "351px",
-    sls: "400px",
-    sms: "600px",
-    sc: "388px",
-    nsc: "388px",
-    ns: "388px",
-    msc: "388px",
-    mns: "388px",
-    ms: "388px",
-    lgs: "388px",
-  },
-  height: {
-    sps: "15rem",
-    ps: "20rem",
-    ts: "22rem",
-    sls: "23rem",
-    sms: "24rem",
-    sc: "5.6rem",
-    nsc: "5.6rem",
-    ns: "5.6rem",
-    msc: "5.6rem",
-    mns: "5.6rem",
-    ms: "5.6rem",
-    lgs: "5.6rem",
-  },
-  bgcolor: "background.paper",
-  borderRadius: "8px",
-  boxShadow: 24,
-  p: 4,
-  paddingLeft: "0px",
-  paddingRight: "0px",
-  paddingBottom: "0px",
-};
-
-const styleModalDelete = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: {
-    sps: "210px",
-    ps: "290px",
-    ts: "351px",
-    sls: "400px",
-    sms: "600px",
-    sc: "509px",
-    nsc: "509px",
-    ns: "509px",
-    msc: "509px",
-    mns: "509px",
-    ms: "509px",
-    lgs: "509px",
-  },
-  height: {
-    sps: "15rem",
-    ps: "20rem",
-    ts: "22rem",
-    sls: "23rem",
-    sms: "24rem",
-    sc: "5.6rem",
-    nsc: "5.6rem",
-    ns: "5.6rem",
-    msc: "5.6rem",
-    mns: "5.6rem",
-    ms: "5.6rem",
-    lgs: "5.6rem",
-  },
-
-  bgcolor: "background.paper",
-  borderRadius: "8px",
-  boxShadow: 24,
-  p: 4,
-  paddingLeft: "0px",
-  paddingRight: "0px",
-  paddingBottom: "0px",
-};
-
 const CommentShow = ({ DUMMY_COMMENTS, onButton, onAddComment }) => {
   const login = useContext(LoginContext);
   // console.log("here" + `${onButton}`);
+
+  const [commentValue, setCommentValue] = useState(
+    `${DUMMY_COMMENTS.commentText}`
+  );
+
+  const initialFormInputs = {
+    commentText: `${DUMMY_COMMENTS.commentText}`,
+  };
+
+  const [formInputs, setFormInputs] = useState(initialFormInputs);
+
+  const formInputsHandler = (e) => {
+    console.log("hello " + e.target.value);
+    setFormInputs({
+      ...formInputs,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const {
+    defaultValue: commentInput = commentValue,
+    isValid: commentIsValid,
+    hasError: commentInputHasError,
+    valueChangeHandler: commentChangeHandler,
+    valueBlurHandler: commentBlurHandler,
+    reset: resetCommentInput,
+  } = useFocusBlurHook((value) => validateComment(value));
+
+  function validateComment(text) {
+    if (text.trim() !== "" && text.length < 378) {
+      return true;
+    }
+    return false;
+  }
+
+  let formIsValid = false;
+
+  if (login.isLoggedIn && commentIsValid) {
+    formIsValid = true;
+  }
+
+  let sendCommentIsValid = false;
+
+  if (formIsValid && !commentInputHasError) {
+    sendCommentIsValid = true;
+  }
+
+  const handleSendComment = (e) => {
+    console.log("hello" + formInputs.commentText);
+    resetCommentInput();
+  };
 
   const onSubmitEditCancelHandler = (e) => {
     e.preventDefault();
@@ -184,7 +148,7 @@ const CommentShow = ({ DUMMY_COMMENTS, onButton, onAddComment }) => {
   };
 
   const handleDeleteComment = () => {
-    // if(login && userowncomment){
+    // if(login && userowncomment){ deleete comment
     if (login) {
       handleOpen();
     }
@@ -380,34 +344,26 @@ const CommentShow = ({ DUMMY_COMMENTS, onButton, onAddComment }) => {
             <StyleTextField
               id="outlined-commentText-input"
               multiline
-              defaultValue={DUMMY_COMMENTS.commentText}
-              autoComplete="current-name"
+              defaultValue={commentInput}
+              autoComplete="current-commentText"
               size="small"
-              name="name"
-              // onChange={(e) => {
-              //    formInputsHandler(e);
-              //    nameChangeHandler(e);
-              // }}
-              // onBlur={nameBlurHandler}
-              // value={nameInput}
-              // error={nameInputHasError}
-              // helperText={
-              //   nameInputHasError ? "Name must be at least 5 letters" : ""
+              name="commentText"
+              onChange={(e) => {
+                formInputsHandler(e);
+                commentChangeHandler(e);
+              }}
+              onBlur={commentBlurHandler}
+              // value={commentInput}
+              error={commentInputHasError}
+              helperText={
+                commentInputHasError ? "Edit our comment to send it." : ""
+              }
             />
-
-            {/* <ButtonsWrapper> */}
-            {/* <LoginRegisterButton
-
-              // formIsValid={formIsValid}
-              // isLoginMode={isLoginMode}
-              /> */}
-            {/* <CreateAccountButton
-                switchModeHandler={switchModeHandler}
-                isLoginMode={isLoginMode}
-              /> */}
-            {/* </ButtonsWrapper> */}
             <Stack direction="row" spacing={0} justifyContent="end">
-              <ButtonSendComment />
+              <ButtonSendComment
+                sendCommentIsValid={sendCommentIsValid}
+                handleSendComment={handleSendComment}
+              />
               <ButtonCancelComment onHandleOpen={handleOpen} />
             </Stack>
           </Stack>
@@ -415,91 +371,17 @@ const CommentShow = ({ DUMMY_COMMENTS, onButton, onAddComment }) => {
       )}
 
       {editComment ? (
-        <div>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-confirm-cancel"
-            aria-describedby="modal-modal-confirm-cancel-edit"
-          >
-            <Stack>
-              <Box sx={styleModalCancel}>
-                <Stack>
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    <Typography
-                      sx={{ display: "inline" }}
-                      fontSize={17}
-                      fontWeight={600}
-                      variant="h6"
-                      color="text.primary"
-                    >
-                      Are you sure you want to cancel ?
-                    </Typography>
-                  </Stack>
-
-                  <p style={{ margin: "1px" }} />
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    <ButtonYesCancel onYesCancel={handleConfirmCancel} />
-                    <ButtonGoback onGoback={handleClose} />
-                  </Stack>
-                </Stack>
-              </Box>
-            </Stack>
-          </Modal>
-        </div>
+        <ModalCancelEditComment
+          open={open}
+          handleClose={handleClose}
+          handleConfirmCancel={handleConfirmCancel}
+        />
       ) : (
-        <div>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-confirm-cancel"
-            aria-describedby="modal-modal-confirm-cancel-edit"
-          >
-            <Stack>
-              <Box sx={styleModalDelete}>
-                <Stack>
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    <Typography
-                      sx={{ display: "inline" }}
-                      fontSize={17}
-                      fontWeight={600}
-                      variant="h6"
-                      color="text.primary"
-                    >
-                      Are you sure you want to delete this comment ?
-                    </Typography>
-                  </Stack>
-
-                  <p style={{ margin: "1px" }} />
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    <ButtonYesDelete onYesDelete={handleConfirmDelete} />
-                    <ButtonGoback onGoback={handleClose} />
-                  </Stack>
-                </Stack>
-              </Box>
-            </Stack>
-          </Modal>
-        </div>
+        <ModalCancelDeleteComment
+          open={open}
+          handleClose={handleClose}
+          handleConfirmDelete={handleConfirmDelete}
+        />
       )}
       {login.isLoggedIn && !editComment ? (
         buttonsShow

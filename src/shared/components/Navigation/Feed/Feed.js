@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Box } from "@mui/material";
 import { useLocation, useParams } from "react-router-dom";
 import Place from "./places/Place";
+import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
 
 const DUMMY_PLACES = [
   {
@@ -61,16 +62,10 @@ const DUMMY_PLACES = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzHQv_th9wq3ivQ1CVk7UZRxhbPq64oQrg5Q&usqp=CAU",
   },
 ];
-function ScrollToTop(props) {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return props.children;
-}
 
 const Feed = ({ onDetail = false, onMap = false }) => {
   const params = useParams();
+  const { pathname } = useLocation();
 
   const { placeId } = params;
   // console.log(placeId);
@@ -93,7 +88,7 @@ const Feed = ({ onDetail = false, onMap = false }) => {
 
   return (
     <Box flex={4} p={2} style={{ marginBottom: "100%" }}>
-      <ScrollToTop>
+      <ScrollToTop pathname={pathname}>
         {onDetail && !onMap ? (
           <React.Fragment>
             {/* <Place />

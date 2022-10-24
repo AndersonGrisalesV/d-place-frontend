@@ -108,8 +108,24 @@ const ButtonsWrapper = ({ onMap = false, DUMMY_PLACES }) => {
                       alignItems="center"
                     >
                       <Typography
-                        sx={{ display: "inline", paddingLeft: "24px" }}
-                        fontSize={17}
+                        sx={{
+                          display: "inline",
+                          paddingLeft: "24px",
+                          fontSize: {
+                            sps: "12px",
+                            ps: "13px",
+                            ts: "15px",
+                            sls: "15px",
+                            sms: "17px",
+                            sc: "17px",
+                            nsc: "17px",
+                            ns: "17px",
+                            msc: "17px",
+                            mns: "17px",
+                            ms: "17px",
+                            lgs: "17px",
+                          },
+                        }}
                         fontWeight={600}
                         variant="h6"
                         color="text.primary"

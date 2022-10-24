@@ -11,7 +11,11 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonSendComment = ({ DUMMY_PLACES, formIsValid }) => {
+const ButtonSendComment = ({
+  DUMMY_PLACES,
+  sendCommentIsValid,
+  handleSendComment,
+}) => {
   //   const login = useContext(LoginContext);
   let login = true;
 
@@ -22,7 +26,8 @@ const ButtonSendComment = ({ DUMMY_PLACES, formIsValid }) => {
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
             type="submit"
-            disabled={formIsValid ? false : true}
+            onClick={handleSendComment}
+            disabled={sendCommentIsValid ? false : true}
             sx={{
               fontWeight: 500,
               textTransform: "none",

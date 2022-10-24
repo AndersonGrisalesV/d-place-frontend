@@ -101,7 +101,7 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
     // setTimeout(navigate("/"), 8000);
   };
 
-  const CancelSendComment = () => {
+  const handleCancelSendComment = () => {
     resetCommentInput();
   };
 
@@ -227,7 +227,7 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
                     : ""
                 }
               />
-              <Stack direction="row" spacing={0} justifyContent="center">
+              <Stack direction="row" spacing={1} justifyContent="center">
                 <ButtonSendComment formIsValid={formIsValid} />
                 <ButtonCancelSendComment
                   cancelSendCommentIsValid={cancelSendCommentIsValid}
@@ -235,7 +235,7 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
                   close={handleClose}
                   onHandleOpen={handleOpen}
                   onHandleClose={handleClose}
-                  CancelSendComment={CancelSendComment}
+                  handleCancelSendComment={handleCancelSendComment}
                 />
               </Stack>
             </Stack>

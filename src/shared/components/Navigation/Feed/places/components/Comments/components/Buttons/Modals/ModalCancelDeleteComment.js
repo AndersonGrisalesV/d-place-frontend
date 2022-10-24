@@ -1,27 +1,27 @@
 import React from "react";
-import { Box, Modal, Stack, Typography } from "@mui/material";
-import ButtonGobackNewPlace from "../ButtonGobackNewPlace";
-import ButtonYesCancelNewPlace from "../ButtonYesCancelNewPlace";
-import { useNavigate } from "react-router-dom";
+import { Modal, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/system";
+import ButtonGoback from "../ButtonGoback";
+import ButtonYesDelete from "../ButtonYesDelete";
 
-const styleModalCancel = {
+const styleModalDelete = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: {
-    sps: "234px",
-    ps: "278px",
-    ts: "278px",
-    sls: "328px",
-    sms: "368px",
-    sc: "388px",
-    nsc: "388px",
-    ns: "388px",
-    msc: "388px",
-    mns: "388px",
-    ms: "388px",
-    lgs: "388px",
+    sps: "280px",
+    ps: "346px",
+    ts: "380px",
+    sls: "444px",
+    sms: "509px",
+    sc: "509px",
+    nsc: "509px",
+    ns: "509px",
+    msc: "509px",
+    mns: "509px",
+    ms: "509px",
+    lgs: "509px",
   },
   height: {
     sps: "4.1rem",
@@ -37,6 +37,7 @@ const styleModalCancel = {
     ms: "5.6rem",
     lgs: "5.6rem",
   },
+
   bgcolor: "background.paper",
   borderRadius: "8px",
   boxShadow: 24,
@@ -46,24 +47,21 @@ const styleModalCancel = {
   paddingBottom: "0px",
 };
 
-const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
-  let navigate = useNavigate();
-  const handleConfirmCancel = () => {
-    // redirect
-    onHandleClose();
-    navigate("/");
-  };
-
+const ModalCancelDeleteComment = ({
+  open,
+  handleClose,
+  handleConfirmDelete,
+}) => {
   return (
     <div>
       <Modal
         open={open}
-        onClose={close}
-        aria-labelledby="modal-modal-confirm-cancel"
-        aria-describedby="modal-modal-confirm-cancel-edit"
+        onClose={handleClose}
+        aria-labelledby="modal-modal-cancel-delete-comment"
+        aria-describedby="modal-modal-cancel-delete-comment"
       >
         <Stack>
-          <Box sx={styleModalCancel}>
+          <Box sx={styleModalDelete}>
             <Stack>
               <Stack
                 direction="row"
@@ -93,7 +91,7 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
                   variant="h6"
                   color="text.primary"
                 >
-                  Are you sure you want to cancel ?
+                  Are you sure you want to delete this comment ?
                 </Typography>
               </Stack>
 
@@ -104,8 +102,8 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <ButtonYesCancelNewPlace onYesCancel={handleConfirmCancel} />
-                <ButtonGobackNewPlace onGoback={close} />
+                <ButtonYesDelete onYesDelete={handleConfirmDelete} />
+                <ButtonGoback onGoback={handleClose} />
               </Stack>
             </Stack>
           </Box>
@@ -115,4 +113,4 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
   );
 };
 
-export default ModalCancel;
+export default ModalCancelDeleteComment;

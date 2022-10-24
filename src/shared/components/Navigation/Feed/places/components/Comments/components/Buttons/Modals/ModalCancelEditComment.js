@@ -1,8 +1,7 @@
 import React from "react";
 import { Box, Modal, Stack, Typography } from "@mui/material";
-import ButtonGobackNewPlace from "../ButtonGobackNewPlace";
-import ButtonYesCancelNewPlace from "../ButtonYesCancelNewPlace";
-import { useNavigate } from "react-router-dom";
+import ButtonGoback from "../ButtonGoback";
+import ButtonYesCancel from "../ButtonYesCancel";
 
 const styleModalCancel = {
   position: "absolute",
@@ -10,18 +9,18 @@ const styleModalCancel = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: {
-    sps: "234px",
-    ps: "278px",
-    ts: "278px",
-    sls: "328px",
-    sms: "368px",
-    sc: "388px",
-    nsc: "388px",
-    ns: "388px",
-    msc: "388px",
-    mns: "388px",
-    ms: "388px",
-    lgs: "388px",
+    sps: "257px",
+    ps: "267px",
+    ts: "287px",
+    sls: "331px",
+    sms: "396px",
+    sc: "396px",
+    nsc: "396px",
+    ns: "396px",
+    msc: "396px",
+    mns: "396px",
+    ms: "396px",
+    lgs: "396px",
   },
   height: {
     sps: "4.1rem",
@@ -46,19 +45,12 @@ const styleModalCancel = {
   paddingBottom: "0px",
 };
 
-const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
-  let navigate = useNavigate();
-  const handleConfirmCancel = () => {
-    // redirect
-    onHandleClose();
-    navigate("/");
-  };
-
+const ModalCancelEditComment = ({ open, handleClose, handleConfirmCancel }) => {
   return (
     <div>
       <Modal
         open={open}
-        onClose={close}
+        onClose={handleClose}
         aria-labelledby="modal-modal-confirm-cancel"
         aria-describedby="modal-modal-confirm-cancel-edit"
       >
@@ -104,8 +96,8 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <ButtonYesCancelNewPlace onYesCancel={handleConfirmCancel} />
-                <ButtonGobackNewPlace onGoback={close} />
+                <ButtonYesCancel onYesCancel={handleConfirmCancel} />
+                <ButtonGoback onGoback={handleClose} />
               </Stack>
             </Stack>
           </Box>
@@ -115,4 +107,4 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
   );
 };
 
-export default ModalCancel;
+export default ModalCancelEditComment;

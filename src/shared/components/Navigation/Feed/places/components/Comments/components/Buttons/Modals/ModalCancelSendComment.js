@@ -11,11 +11,11 @@ const styleModalCancel = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: {
-    sps: "210px",
-    ps: "290px",
-    ts: "351px",
-    sls: "400px",
-    sms: "600px",
+    sps: "244px",
+    ps: "288px",
+    ts: "288px",
+    sls: "328px",
+    sms: "368px",
     sc: "388px",
     nsc: "388px",
     ns: "388px",
@@ -25,11 +25,11 @@ const styleModalCancel = {
     lgs: "388px",
   },
   height: {
-    sps: "15rem",
-    ps: "20rem",
-    ts: "22rem",
-    sls: "23rem",
-    sms: "24rem",
+    sps: "4.1rem",
+    ps: "4.5rem",
+    ts: "4.6rem",
+    sls: "5rem",
+    sms: "5.6rem",
     sc: "5.6rem",
     nsc: "5.6rem",
     ns: "5.6rem",
@@ -79,8 +79,23 @@ const ModalCancelSendComment = ({
                 alignItems="center"
               >
                 <Typography
-                  sx={{ display: "inline" }}
-                  fontSize={17}
+                  sx={{
+                    display: "inline",
+                    fontSize: {
+                      sps: "12px",
+                      ps: "13px",
+                      ts: "13px",
+                      sls: "15px",
+                      sms: "17px",
+                      sc: "17px",
+                      nsc: "17px",
+                      ns: "17px",
+                      msc: "17px",
+                      mns: "17px",
+                      ms: "17px",
+                      lgs: "17px",
+                    },
+                  }}
                   fontWeight={600}
                   variant="h6"
                   color="text.primary"
