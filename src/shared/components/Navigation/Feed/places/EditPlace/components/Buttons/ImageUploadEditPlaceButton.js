@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { Stack } from "@mui/system";
-import { Button } from "@mui/material";
-import styled from "@emotion/styled";
+import { Button, Stack, styled } from "@mui/material";
 
 const StyleButtonImage = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
@@ -12,7 +10,21 @@ const StyleButtonImage = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ImageUploadButton = ({ formInputsHandler }) => {
+const ImageUploadEditPlaceButton = ({ formInputsHandler }) => {
+  const handleChangeImageUploadPlaceButton = (e) => {
+    if (e.target.files[0]) {
+      formInputsHandler(e);
+    }
+  };
+
+  const handleClickImageUploadPlaceButton = (e) => {
+    if (e.target.files[0]) {
+      formInputsHandler(e);
+
+      //   console.log(e.target.files[0]);
+      //   console.log(e.target.value);
+    }
+  };
   return (
     <Stack direction="row" spacing={1} justifyContent="space-between">
       <input
@@ -20,7 +32,8 @@ const ImageUploadButton = ({ formInputsHandler }) => {
         type="file"
         id="select-image"
         style={{ display: "none" }}
-        onChange={formInputsHandler}
+        onClick={handleClickImageUploadPlaceButton}
+        onChange={handleChangeImageUploadPlaceButton}
         name="image"
       />
       <label htmlFor="select-image" style={{ marginLeft: "0px" }}>
@@ -45,11 +58,11 @@ const ImageUploadButton = ({ formInputsHandler }) => {
             },
           }}
         >
-          Upload Image
+          Edit Image
         </StyleButtonImage>
       </label>
     </Stack>
   );
 };
 
-export default ImageUploadButton;
+export default ImageUploadEditPlaceButton;

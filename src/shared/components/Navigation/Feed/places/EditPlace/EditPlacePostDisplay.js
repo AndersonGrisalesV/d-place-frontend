@@ -1,19 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { Divider, Stack, TextField, Typography } from "@mui/material";
-import CardContentNewPlacePost from "./components/CardContentNewPlacePost";
-import CardWrapperNewPlacePostDisplay from "./components/CardWrapperNewPlacePostDisplay";
-import TitleNewPlacePost from "./components/TitleNewPlacePost";
-import ButtonCancelPostPlace from "./components/Buttons/ButtonCancelPostPlace";
-import ImageUploadPlaceButton from "./components/Buttons/ImageUploadPlaceButton";
-import ImagePreviewPlaceButton from "./components/Buttons/ImagePreviewPlaceButton";
-import ButtonPostPlace from "./components/Buttons/ButtonPostPlace";
+import CardWrapperEditPlacePostDisplay from "./components/CardWrapperEditPlacePostDisplay";
+import CardContentEditPlacePost from "./components/CardContentEditPlacePost";
+import TitleEditPlacePost from "./components/TitleEditPlacePost";
+// import CardContentNewPlacePost from "./components/CardContentNewPlacePost";
+// import CardWrapperNewPlacePostDisplay from "./components/CardWrapperNewPlacePostDisplay";
+// import TitleNewPlacePost from "./components/TitleNewPlacePost";
+// import ButtonCancelPostPlace from "./components/Buttons/ButtonCancelPostPlace";
+// import ImageUploadPlaceButton from "./components/Buttons/ImageUploadPlaceButton";
+// import ImagePreviewPlaceButton from "./components/Buttons/ImagePreviewPlaceButton";
+// import ButtonPostPlace from "./components/Buttons/ButtonPostPlace";
 
 import useFocusBlurHook from "../../../../../../shared/hooks/use-my-input";
 
 import { LoginContext } from "../../../../../context/login-context";
 
 import styled from "@emotion/styled";
+import ImageUploadEditPlaceButton from "./components/Buttons/ImageUploadEditPlaceButton";
+import ImagePreviewEditPlaceButton from "./components/Buttons/ImagePreviewEditPlaceButton";
+import ButtonEditPlace from "./components/Buttons/ButtonEditPlace";
+import ButtonCancelEditPlace from "./components/Buttons/ButtonCancelEditPlace";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -33,8 +41,15 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const NewPlacePostDisplay = () => {
+const EditPlacePostDisplay = ({ DUMMY_PLACES }) => {
   const login = useContext(LoginContext);
+  const params = useParams();
+
+  const { PlaceId } = params;
+
+  //   const result = DUMMY_PLACES[0].map((place) => place.placeId === PlaceId);
+
+  console.log(result);
 
   const initialFormInputs = {
     title: "",
@@ -60,7 +75,7 @@ const NewPlacePostDisplay = () => {
   }, [selectedImage]);
 
   const formInputsHandler = (e) => {
-    console.log("aqui" + e.target.value);
+    // console.log("aqui" + e.target.value);
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();
@@ -183,9 +198,9 @@ const NewPlacePostDisplay = () => {
   };
 
   return (
-    <CardWrapperNewPlacePostDisplay>
-      <CardContentNewPlacePost>
-        <TitleNewPlacePost />
+    <CardWrapperEditPlacePostDisplay>
+      <CardContentEditPlacePost>
+        <TitleEditPlacePost />
         <Divider variant="middle" sx={{ marginTop: "2px" }} />
         <br />
         <br />
@@ -419,9 +434,11 @@ const NewPlacePostDisplay = () => {
               }
             />
             <React.Fragment>
-              <ImageUploadPlaceButton formInputsHandler={formInputsHandler} />
+              <ImageUploadEditPlaceButton
+                formInputsHandler={formInputsHandler}
+              />
               {imageUrl && selectedImage && (
-                <ImagePreviewPlaceButton
+                <ImagePreviewEditPlaceButton
                   imageUrl={imageUrl}
                   selectedImageName={selectedImage.name}
                   handleRemoveImage={handleRemoveImage}
@@ -429,8 +446,8 @@ const NewPlacePostDisplay = () => {
               )}
             </React.Fragment>
             <Stack direction="row" spacing={0} justifyContent="center">
-              <ButtonPostPlace formIsValid={formIsValid} />
-              <ButtonCancelPostPlace
+              <ButtonEditPlace formIsValid={formIsValid} />
+              <ButtonCancelEditPlace
                 open={open}
                 close={handleClose}
                 onHandleOpen={handleOpen}
@@ -439,10 +456,10 @@ const NewPlacePostDisplay = () => {
             </Stack>
           </Stack>
         </form>
-      </CardContentNewPlacePost>
+      </CardContentEditPlacePost>
       {/* {successMessage ? showMessage : ""} */}
-    </CardWrapperNewPlacePostDisplay>
+    </CardWrapperEditPlacePostDisplay>
   );
 };
 
-export default NewPlacePostDisplay;
+export default EditPlacePostDisplay;

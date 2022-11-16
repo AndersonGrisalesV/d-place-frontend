@@ -1,6 +1,7 @@
-import styled from "@emotion/styled";
-import { Avatar, Box, Button, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+
+import { Avatar, Box, Button, Stack, Typography } from "@mui/material";
+import styled from "@emotion/styled";
 
 const StyleButton = styled(Button)(({ theme }) => ({
   border:
@@ -34,7 +35,7 @@ const UploadButton = ({ onUpload }) => {
     setSelectedImage(e.target.files[0]);
 
     reader.readAsDataURL(e.target.files[0]);
-    console.log(e.target.name);
+    // console.log(e.target.name);
     reader.onload = () => {
       // console.log(reader.result); //base64encoded string
       const baseResult = reader.result;

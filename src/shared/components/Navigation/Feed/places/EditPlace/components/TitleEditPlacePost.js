@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Divider, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
-const Title = ({ isLoginMode }) => {
+const TitleNewPlacePost = () => {
   return (
     <React.Fragment>
       <Typography
@@ -30,13 +30,10 @@ const Title = ({ isLoginMode }) => {
           },
         }}
       >
-        {isLoginMode ? "Login" : "Register"}
+        Edit Place
       </Typography>
-      <Divider variant="middle" />
-      <br />
-      <br />
     </React.Fragment>
   );
 };
 
-export default Title;
+export default TitleNewPlacePost;

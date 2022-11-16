@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import { Stack, TextField } from "@mui/material";
-import { LoginContext } from "../shared/context/login-context";
-import useFocusBlurHook from "../shared/hooks/use-my-input";
 import { useNavigate, useLocation } from "react-router-dom";
+
+import { Stack, TextField } from "@mui/material";
 import Title from "../shared/components/LoginRegister/components/Title";
 import CardContentLogin from "../shared/components/LoginRegister/components/CardContentLogin";
 import CardWrapperLogin from "../shared/components/LoginRegister/components/CardWrapperLogin";
@@ -11,8 +10,15 @@ import LoginRegisterButton from "../shared/components/LoginRegister/Buttons/Logi
 import ButtonsWrapper from "../shared/components/LoginRegister/Buttons/ButtonsWrapper";
 import ImageUploadButton from "../shared/components/LoginRegister/Buttons/ImageUploadButton";
 import ImagePreviewButton from "../shared/components/LoginRegister/Buttons/ImagePreviewButton";
-import styled from "@emotion/styled";
+
 import ScrollToTop from "../shared/util/ScollTop/ScrollToTop";
+
+import { LoginContext } from "../shared/context/login-context";
+
+import useFocusBlurHook from "../shared/hooks/use-my-input";
+import { useHttpClient } from "../shared/hooks/http-hook";
+
+import styled from "@emotion/styled";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -34,12 +40,16 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
 
 const LoginRegister = () => {
   const login = useContext(LoginContext);
-  const { pathname } = useLocation();
-  const passwordInputRef = useRef();
-  let navigate = useNavigate();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [isLoginMode, setIsLoginMode] = useState(true);
+
+  const { pathname } = useLocation();
+  let navigate = useNavigate();
+
   // const [successMessage, setSuccessMessage] = useState(false);
+
+  const passwordInputRef = useRef();
 
   const initialFormInputs = {
     name: "",
@@ -51,20 +61,54 @@ const LoginRegister = () => {
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
 
-  const onSubmitLoginRegisterHandler = (e) => {
+  const onSubmitLoginRegisterHandler = async (e) => {
     e.preventDefault();
 
-    console.log(formInputs);
     if (isLoginMode) {
-      login.login();
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:4000/api/users/login",
+          "POST",
+          JSON.stringify({
+            email: formInputs.email,
+            password: formInputs.password,
+          }),
+          {
+            "Content-Type": "Application/json",
+          }
+        );
+
+        login.login(responseData.user.id);
+      } catch (err) {
+        console.log(err);
+      }
+
+      // console.log(responseData)
     } else {
-      login.createAccount();
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:4000/api/users/register",
+          "POST",
+          JSON.stringify({
+            name: formInputs.name,
+            email: formInputs.email,
+            password: formInputs.password,
+            confirmPassword: formInputs.confirmPassword,
+            image: formInputs.image,
+          }),
+          {
+            "Content-Type": "Application/json",
+          }
+        );
+
+        login.createAccount(responseData.user.id);
+      } catch (err) {}
     }
     resetNameInput();
     resetEmailInput();
     resetPasswordInput();
     resetconfirmPasswordInput();
-    navigate("/");
+    navigate("/homepage");
     // setTimeout(navigate("/"), 8000);
   };
 
@@ -102,7 +146,6 @@ const LoginRegister = () => {
   }, [selectedImage]);
 
   const formInputsHandler = (e) => {
-    console.log(e.target.value);
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();

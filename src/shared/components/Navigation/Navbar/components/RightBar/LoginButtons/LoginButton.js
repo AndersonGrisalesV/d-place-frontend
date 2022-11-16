@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
+
 import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
 import { red } from "@mui/material/colors";
-import { LoginContext } from "../../../../../../context/login-context";
-import { NavLink } from "react-router-dom";
+
+// import { LoginContext } from "../../../../../../context/login-context";
+
 import styled from "@emotion/styled";
 
 const buttonColor = red["A400"];
@@ -32,11 +35,11 @@ const StyleButtonOnComment = styled(Button)(({ theme }) => ({
 }));
 
 const LoginButton = ({ OnComment = false }) => {
-  const handleLogin = () => {};
+  // const handleLogin = () => {};
 
   const buttonLeaveAComment = OnComment ? (
     <Box>
-      <NavLink to="/loginregister" style={{ textDecoration: "none" }}>
+      <NavLink to="/api/users/loginregister" style={{ textDecoration: "none" }}>
         <StyleButtonOnComment
           sx={{
             textTransform: "none",
@@ -49,7 +52,7 @@ const LoginButton = ({ OnComment = false }) => {
     </Box>
   ) : (
     <Box>
-      <NavLink to="/loginregister" style={{ textDecoration: "none" }}>
+      <NavLink to="/api/users/loginregister" style={{ textDecoration: "none" }}>
         <StyleButton
           sx={{
             textTransform: "none",
@@ -62,7 +65,7 @@ const LoginButton = ({ OnComment = false }) => {
     </Box>
   );
 
-  const login = useContext(LoginContext);
+  // const login = useContext(LoginContext);
   return <React.Fragment>{buttonLeaveAComment}</React.Fragment>;
 };
 

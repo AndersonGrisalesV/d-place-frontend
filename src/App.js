@@ -12,6 +12,7 @@ import { LoginContext } from "./shared/context/login-context";
 import LoginRegister from "./pages/LoginRegister";
 import PlaceDetail from "./pages/PlaceDetail";
 import NewPlace from "./pages/NewPlace";
+import EditPlace from "./pages/EditPlace";
 
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",
@@ -36,12 +37,13 @@ function App() {
   if (isLoggedIn) {
     routes = (
       <React.Fragment>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/homepage" element={<HomePage />} />
         {/* <Route path="/new" element={<NewPlacePage />} /> */}
-        <Route path="/favorites" element={<FavoritesPage />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/places/newPlace" element={<NewPlace />} />
-        <Route path="/places/:placeId" element={<PlaceDetail />} />
+        <Route path="/api/favorites" element={<FavoritesPage />} />
+        <Route path="api/users/profile" element={<Profile />} />
+        <Route path="/api/places/newPlace" element={<NewPlace />} />
+        <Route path="/api/places/editplace/:placeId" element={<EditPlace />} />
+        <Route path="/api/places/:placeId" element={<PlaceDetail />} />
         <Route path="*" element={<p>Not Found!</p>} />
       </React.Fragment>
     );
@@ -49,8 +51,8 @@ function App() {
     routes = (
       <React.Fragment>
         {/* <Route path="/new" element={<NewPlacePage />} /> */}
-        <Route path="/loginregister" element={<LoginRegister />} />
-        <Route path="/places/:placeId" element={<PlaceDetail />} />
+        <Route path="/api/users/loginregister" element={<LoginRegister />} />
+        <Route path="/api/places/:placeId" element={<PlaceDetail />} />
         <Route path="*" element={<p>Not found!</p>} />
       </React.Fragment>
     );
@@ -146,7 +148,7 @@ function App() {
                   />
                 )}
                 <Routes>
-                  <Route path="/" element={<HomePage />} />
+                  <Route path="/homepage" element={<HomePage />} />
                   {routes}
                 </Routes>
               </Stack>

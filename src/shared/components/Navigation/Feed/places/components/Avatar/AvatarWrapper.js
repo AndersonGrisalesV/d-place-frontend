@@ -1,10 +1,12 @@
-import { CardHeader } from "@mui/material";
 import React from "react";
+
 import AvatarComponent from "./AvatarComponent";
 import ButtonEdit from "../Buttons/ButtonEdit";
+import { CardHeader } from "@mui/material";
 
 const AvatarWrapper = ({ DUMMY_PLACES }) => {
   let isLoggedIn = true;
+  // const login = useContext(LoginContext);
 
   return (
     <CardHeader

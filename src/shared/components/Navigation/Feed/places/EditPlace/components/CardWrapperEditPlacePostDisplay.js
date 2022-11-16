@@ -1,11 +1,11 @@
 import React from "react";
 
 import { Box, Zoom } from "@mui/material";
-import CardWrapper from "../../Navigation/Feed/places/components/CardWrapper";
+import CardWrapperEditPlacePost from "./CardWrapperEditPlacePost";
 
-const CardWrapperLogin = (props) => {
+const CardWrapperEditPlacePostDisplay = (props) => {
   return (
-    <Box flex={8} p={8} m={1}>
+    <Box flex={8} p={8} m={1} sx={{ padding: "20px" }}>
       <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
         <Box
           sx={{
@@ -17,13 +17,13 @@ const CardWrapperLogin = (props) => {
             alignItems: "center",
           }}
         >
-          <CardWrapper sx={{ marginRight: "105px" }}>
+          <CardWrapperEditPlacePost sx={{ marginRight: "105px" }}>
             {props.children}
-          </CardWrapper>
+          </CardWrapperEditPlacePost>
         </Box>
       </Zoom>
     </Box>
   );
 };
 
-export default CardWrapperLogin;
+export default CardWrapperEditPlacePostDisplay;

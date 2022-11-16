@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Stack } from "@mui/material";
 import { NavLink, useParams } from "react-router-dom";
+
+import { Button, Stack } from "@mui/material";
 
 import styled from "@emotion/styled";
 
@@ -41,7 +42,7 @@ const ButtonDetails = ({ DUMMY_PLACES }) => {
         },
       }}
     >
-      <StyleNavLink to={`/places/${DUMMY_PLACES.placeId}`}>
+      <StyleNavLink to={`/api/places/${DUMMY_PLACES.placeId}`}>
         <StyleButton
           sx={{
             fontWeight: 500,
