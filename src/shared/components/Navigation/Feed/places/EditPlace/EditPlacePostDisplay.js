@@ -49,7 +49,7 @@ const EditPlacePostDisplay = ({ DUMMY_PLACES }) => {
 
   //   const result = DUMMY_PLACES[0].map((place) => place.placeId === PlaceId);
 
-  console.log(result);
+  // console.log(result);
 
   const initialFormInputs = {
     title: "",

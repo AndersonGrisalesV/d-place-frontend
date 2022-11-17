@@ -19,6 +19,9 @@ import useFocusBlurHook from "../shared/hooks/use-my-input";
 import { useHttpClient } from "../shared/hooks/http-hook";
 
 import styled from "@emotion/styled";
+import CardSkeletonLogin from "../shared/components/LoginRegister/components/CardSkeletonLogin";
+import LoadingSpinner from "../shared/components/LoadingSpinner/LoadingSpinner";
+import SnackBarResultLogin from "../shared/components/LoginRegister/components/SnackBarResultLogin";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -79,6 +82,7 @@ const LoginRegister = () => {
         );
 
         login.login(responseData.user.id);
+        navigate("/homepage");
       } catch (err) {
         console.log(err);
       }
@@ -102,13 +106,14 @@ const LoginRegister = () => {
         );
 
         login.createAccount(responseData.user.id);
+        navigate("/homepage");
       } catch (err) {}
     }
     resetNameInput();
     resetEmailInput();
     resetPasswordInput();
     resetconfirmPasswordInput();
-    navigate("/homepage");
+
     // setTimeout(navigate("/"), 8000);
   };
 
@@ -249,23 +254,102 @@ const LoginRegister = () => {
 
   return (
     <ScrollToTop pathname={pathname}>
-      <CardWrapperLogin>
-        <CardContentLogin>
-          <Title isLoginMode={isLoginMode} />
-          <form onSubmit={onSubmitLoginRegisterHandler}>
-            <Stack
-              direction="column"
-              spacing={4}
-              justifyContent="space-between"
-            >
-              {!isLoginMode && (
+      {error && <SnackBarResultLogin error={error} onClear={clearError} />}
+      {isLoading ? (
+        <LoadingSpinner asOverlay />
+      ) : (
+        <CardWrapperLogin>
+          <CardContentLogin>
+            <Title isLoginMode={isLoginMode} />
+            <form onSubmit={onSubmitLoginRegisterHandler}>
+              <Stack
+                direction="column"
+                spacing={4}
+                justifyContent="space-between"
+              >
+                {!isLoginMode && (
+                  <StyleTextField
+                    id="outlined-name-input"
+                    label="Name"
+                    type="text"
+                    autoComplete="current-name"
+                    size="small"
+                    name="name"
+                    InputLabelProps={{
+                      sx: {
+                        fontSize: {
+                          sps: "11px",
+                          ps: "12px",
+                          ts: "14px",
+                          sls: "14px",
+                          sms: "16px",
+                          sc: "16px",
+                          nsc: "16px",
+                          ns: "16px",
+                          msc: "16px",
+                          mns: "16px",
+                          ms: "16px",
+                          lgs: "16px",
+                        },
+                      },
+                    }}
+                    InputProps={{
+                      inputProps: {
+                        sx: {
+                          fontSize: {
+                            sps: "11px",
+                            ps: "12px",
+                            ts: "14px",
+                            sls: "14px",
+                            sms: "16px",
+                            sc: "16px",
+                            nsc: "16px",
+                            ns: "16px",
+                            msc: "16px",
+                            mns: "16px",
+                            ms: "16px",
+                            lgs: "16px",
+                          },
+                        },
+                      },
+                    }}
+                    FormHelperTextProps={{
+                      sx: {
+                        fontSize: {
+                          sps: "9px",
+                          ps: "10px",
+                          ts: "12px",
+                          sls: "12px",
+                          sms: "14px",
+                          sc: "14px",
+                          nsc: "14px",
+                          ns: "14px",
+                          msc: "14px",
+                          mns: "14px",
+                          ms: "14px",
+                          lgs: "14px",
+                        },
+                      },
+                    }}
+                    onChange={(e) => {
+                      formInputsHandler(e);
+                      nameChangeHandler(e);
+                    }}
+                    onBlur={nameBlurHandler}
+                    value={nameInput}
+                    error={nameInputHasError}
+                    helperText={
+                      nameInputHasError ? "Name must be at least 5 letters" : ""
+                    }
+                  />
+                )}
                 <StyleTextField
-                  id="outlined-name-input"
-                  label="Name"
-                  type="text"
-                  autoComplete="current-name"
+                  id="outlined-email-input"
+                  label="Email Address"
+                  type="email"
+                  autoComplete="current-email"
                   size="small"
-                  name="name"
+                  name="email"
                   InputLabelProps={{
                     sx: {
                       fontSize: {
@@ -324,173 +408,20 @@ const LoginRegister = () => {
                   }}
                   onChange={(e) => {
                     formInputsHandler(e);
-                    nameChangeHandler(e);
+                    emailChangeHandler(e);
                   }}
-                  onBlur={nameBlurHandler}
-                  value={nameInput}
-                  error={nameInputHasError}
-                  helperText={
-                    nameInputHasError ? "Name must be at least 5 letters" : ""
-                  }
+                  onBlur={emailBlurHandler}
+                  value={emailInput}
+                  error={emailInputHasError}
+                  helperText={emailInputHasError ? "Incorrect mail" : ""}
                 />
-              )}
-              <StyleTextField
-                id="outlined-email-input"
-                label="Email Address"
-                type="email"
-                autoComplete="current-email"
-                size="small"
-                name="email"
-                InputLabelProps={{
-                  sx: {
-                    fontSize: {
-                      sps: "11px",
-                      ps: "12px",
-                      ts: "14px",
-                      sls: "14px",
-                      sms: "16px",
-                      sc: "16px",
-                      nsc: "16px",
-                      ns: "16px",
-                      msc: "16px",
-                      mns: "16px",
-                      ms: "16px",
-                      lgs: "16px",
-                    },
-                  },
-                }}
-                InputProps={{
-                  inputProps: {
-                    sx: {
-                      fontSize: {
-                        sps: "11px",
-                        ps: "12px",
-                        ts: "14px",
-                        sls: "14px",
-                        sms: "16px",
-                        sc: "16px",
-                        nsc: "16px",
-                        ns: "16px",
-                        msc: "16px",
-                        mns: "16px",
-                        ms: "16px",
-                        lgs: "16px",
-                      },
-                    },
-                  },
-                }}
-                FormHelperTextProps={{
-                  sx: {
-                    fontSize: {
-                      sps: "9px",
-                      ps: "10px",
-                      ts: "12px",
-                      sls: "12px",
-                      sms: "14px",
-                      sc: "14px",
-                      nsc: "14px",
-                      ns: "14px",
-                      msc: "14px",
-                      mns: "14px",
-                      ms: "14px",
-                      lgs: "14px",
-                    },
-                  },
-                }}
-                onChange={(e) => {
-                  formInputsHandler(e);
-                  emailChangeHandler(e);
-                }}
-                onBlur={emailBlurHandler}
-                value={emailInput}
-                error={emailInputHasError}
-                helperText={emailInputHasError ? "Incorrect mail" : ""}
-              />
-              <StyleTextField
-                id="outlined-password-input"
-                label="Password"
-                type="password"
-                autoComplete="current-password"
-                size="small"
-                name="password"
-                InputLabelProps={{
-                  sx: {
-                    fontSize: {
-                      sps: "11px",
-                      ps: "12px",
-                      ts: "14px",
-                      sls: "14px",
-                      sms: "16px",
-                      sc: "16px",
-                      nsc: "16px",
-                      ns: "16px",
-                      msc: "16px",
-                      mns: "16px",
-                      ms: "16px",
-                      lgs: "16px",
-                    },
-                  },
-                }}
-                InputProps={{
-                  inputProps: {
-                    sx: {
-                      fontSize: {
-                        sps: "11px",
-                        ps: "12px",
-                        ts: "14px",
-                        sls: "14px",
-                        sms: "16px",
-                        sc: "16px",
-                        nsc: "16px",
-                        ns: "16px",
-                        msc: "16px",
-                        mns: "16px",
-                        ms: "16px",
-                        lgs: "16px",
-                      },
-                    },
-                  },
-                }}
-                FormHelperTextProps={{
-                  sx: {
-                    fontSize: {
-                      sps: "9px",
-                      ps: "10px",
-                      ts: "12px",
-                      sls: "12px",
-                      sms: "14px",
-                      sc: "14px",
-                      nsc: "14px",
-                      ns: "14px",
-                      msc: "14px",
-                      mns: "14px",
-                      ms: "14px",
-                      lgs: "14px",
-                    },
-                  },
-                }}
-                onChange={(e) => {
-                  formInputsHandler(e);
-                  passwordChangeHandler(e);
-                }}
-                onBlur={passwordBlurHandler}
-                value={passwordInput}
-                error={passwordInputHasError}
-                ref={passwordInputRef}
-                helperText={
-                  passwordInputHasError
-                    ? "Password must be at least 6 characters long"
-                    : ""
-                }
-              />
-              {!isLoginMode && (
                 <StyleTextField
-                  id="outlined-confirmpassword-input"
-                  label="Confirm Password"
+                  id="outlined-password-input"
+                  label="Password"
                   type="password"
-                  autoComplete="current-confirmPassword"
+                  autoComplete="current-password"
                   size="small"
-                  name="confirmPassword"
+                  name="password"
                   InputLabelProps={{
                     sx: {
                       fontSize: {
@@ -549,42 +480,123 @@ const LoginRegister = () => {
                   }}
                   onChange={(e) => {
                     formInputsHandler(e);
-                    confirmPasswordChangeHandler(e);
+                    passwordChangeHandler(e);
                   }}
-                  onBlur={confirmPasswordBlurHandler}
-                  value={confirmPasswordInput}
-                  error={confirmPasswordInputHasError}
+                  onBlur={passwordBlurHandler}
+                  value={passwordInput}
+                  error={passwordInputHasError}
+                  ref={passwordInputRef}
                   helperText={
-                    confirmPasswordInputHasError ? "Passwords don't match" : ""
+                    passwordInputHasError
+                      ? "Password must be at least 6 characters long"
+                      : ""
                   }
                 />
-              )}
-              {!isLoginMode && (
-                <React.Fragment>
-                  <ImageUploadButton formInputsHandler={formInputsHandler} />
-                  {imageUrl && selectedImage && (
-                    <ImagePreviewButton
-                      imageUrl={imageUrl}
-                      selectedImageName={selectedImage.name}
-                    />
-                  )}
-                </React.Fragment>
-              )}
-              <ButtonsWrapper>
-                <LoginRegisterButton
-                  formIsValid={formIsValid}
-                  isLoginMode={isLoginMode}
-                />
-                <CreateAccountButton
-                  switchModeHandler={switchModeHandler}
-                  isLoginMode={isLoginMode}
-                />
-              </ButtonsWrapper>
-            </Stack>
-          </form>
-        </CardContentLogin>
-        {/* {successMessage ? showMessage : ""} */}
-      </CardWrapperLogin>
+                {!isLoginMode && (
+                  <StyleTextField
+                    id="outlined-confirmpassword-input"
+                    label="Confirm Password"
+                    type="password"
+                    autoComplete="current-confirmPassword"
+                    size="small"
+                    name="confirmPassword"
+                    InputLabelProps={{
+                      sx: {
+                        fontSize: {
+                          sps: "11px",
+                          ps: "12px",
+                          ts: "14px",
+                          sls: "14px",
+                          sms: "16px",
+                          sc: "16px",
+                          nsc: "16px",
+                          ns: "16px",
+                          msc: "16px",
+                          mns: "16px",
+                          ms: "16px",
+                          lgs: "16px",
+                        },
+                      },
+                    }}
+                    InputProps={{
+                      inputProps: {
+                        sx: {
+                          fontSize: {
+                            sps: "11px",
+                            ps: "12px",
+                            ts: "14px",
+                            sls: "14px",
+                            sms: "16px",
+                            sc: "16px",
+                            nsc: "16px",
+                            ns: "16px",
+                            msc: "16px",
+                            mns: "16px",
+                            ms: "16px",
+                            lgs: "16px",
+                          },
+                        },
+                      },
+                    }}
+                    FormHelperTextProps={{
+                      sx: {
+                        fontSize: {
+                          sps: "9px",
+                          ps: "10px",
+                          ts: "12px",
+                          sls: "12px",
+                          sms: "14px",
+                          sc: "14px",
+                          nsc: "14px",
+                          ns: "14px",
+                          msc: "14px",
+                          mns: "14px",
+                          ms: "14px",
+                          lgs: "14px",
+                        },
+                      },
+                    }}
+                    onChange={(e) => {
+                      formInputsHandler(e);
+                      confirmPasswordChangeHandler(e);
+                    }}
+                    onBlur={confirmPasswordBlurHandler}
+                    value={confirmPasswordInput}
+                    error={confirmPasswordInputHasError}
+                    helperText={
+                      confirmPasswordInputHasError
+                        ? "Passwords don't match"
+                        : ""
+                    }
+                  />
+                )}
+                {!isLoginMode && (
+                  <React.Fragment>
+                    <ImageUploadButton formInputsHandler={formInputsHandler} />
+                    {imageUrl && selectedImage && (
+                      <ImagePreviewButton
+                        imageUrl={imageUrl}
+                        selectedImageName={selectedImage.name}
+                      />
+                    )}
+                  </React.Fragment>
+                )}
+                <ButtonsWrapper>
+                  <LoginRegisterButton
+                    formIsValid={formIsValid}
+                    isLoginMode={isLoginMode}
+                  />
+                  <CreateAccountButton
+                    switchModeHandler={switchModeHandler}
+                    isLoginMode={isLoginMode}
+                  />
+                </ButtonsWrapper>
+              </Stack>
+            </form>
+          </CardContentLogin>
+          {/* {successMessage ? showMessage : ""} */}
+        </CardWrapperLogin>
+      )}
     </ScrollToTop>
   );
 };
