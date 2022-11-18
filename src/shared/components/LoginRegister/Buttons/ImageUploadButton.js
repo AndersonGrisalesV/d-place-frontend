@@ -12,7 +12,21 @@ const StyleButtonImage = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ImageUploadButton = ({ formInputsHandler }) => {
+const ImageUploadButton = ({ formInputsHandler, isLoading }) => {
+  const handleChangeImageUploadPlaceButton = (e) => {
+    if (e.target.files[0]) {
+      formInputsHandler(e);
+    }
+  };
+
+  const handleClickImageUploadPlaceButton = (e) => {
+    if (e.target.files[0]) {
+      formInputsHandler(e);
+
+      // console.log(e.target.files[0]);
+      // console.log(e.target.value);
+    }
+  };
   return (
     <Stack direction="row" spacing={1} justifyContent="space-between">
       <input
@@ -20,11 +34,13 @@ const ImageUploadButton = ({ formInputsHandler }) => {
         type="file"
         id="select-image"
         style={{ display: "none" }}
-        onChange={formInputsHandler}
+        onClick={handleClickImageUploadPlaceButton}
+        onChange={handleChangeImageUploadPlaceButton}
         name="image"
       />
       <label htmlFor="select-image" style={{ marginLeft: "0px" }}>
         <StyleButtonImage
+          disabled={isLoading ? true : false}
           component="span"
           sx={{
             fontWeight: 500,

@@ -7,8 +7,8 @@
 .lds-dual-ring:after {
   content: " ";
   display: block;
-  width: 46px;
-  height: 46px;
+  width: 36px;
+  height: 36px;
   margin: 1px;
   border-radius: 50%;
   border-color: #da4453 transparent #da4453c7 transparent;

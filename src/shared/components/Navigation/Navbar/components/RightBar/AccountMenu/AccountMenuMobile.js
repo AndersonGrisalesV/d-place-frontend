@@ -50,20 +50,20 @@ const AccountMenuMobile = () => {
   const handleProfileMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    navigate("/profile");
+    navigate("/api/users/profile");
   };
 
   const handleFavoritesMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    navigate("/favorites");
+    navigate("/api/users/favorites");
   };
 
   const handleMenuCloseAndLogout = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
     login.logout();
-    navigate("/");
+    navigate("/homepage");
   };
 
   const handleMobileMenuOpen = (event) => {

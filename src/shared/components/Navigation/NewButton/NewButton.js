@@ -33,7 +33,7 @@ const NewButton = ({
         in={menuOption}
         style={{ transitionDelay: menuOption ? "200ms" : "0ms" }}
       >
-        <NavLink to="/places/newPlace">
+        <NavLink to="/api/places/newplace">
           <StyleFabButton
             sx={{
               color: "#fff",

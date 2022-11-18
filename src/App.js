@@ -39,8 +39,8 @@ function App() {
       <React.Fragment>
         <Route path="/homepage" element={<HomePage />} />
         {/* <Route path="/new" element={<NewPlacePage />} /> */}
-        <Route path="/api/favorites" element={<FavoritesPage />} />
-        <Route path="api/users/profile" element={<Profile />} />
+        <Route path="/api/users/favorites" element={<FavoritesPage />} />
+        <Route path="/api/users/profile" element={<Profile />} />
         <Route path="/api/places/newPlace" element={<NewPlace />} />
         <Route path="/api/places/editplace/:placeId" element={<EditPlace />} />
         <Route path="/api/places/:placeId" element={<PlaceDetail />} />

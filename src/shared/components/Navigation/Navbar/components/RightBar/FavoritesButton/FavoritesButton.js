@@ -24,7 +24,7 @@ const FavoritesButton = () => {
           },
         }}
       >
-        <NavLink to="/favorites">
+        <NavLink to="/api/users/favorites">
           <button className={styles["glow-on-hover"]}>Favorites</button>
         </NavLink>
       </Box>

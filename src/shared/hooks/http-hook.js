@@ -33,6 +33,9 @@ export const useHttpClient = () => {
         setIsLoading(false);
         return responseData;
       } catch (err) {
+        if (err.message == "Failed to fetch") {
+          err.message = "An unknown error occurred, try again."; //503 Service Unavailable
+        }
         setError(err.message);
         setIsLoading(false);
         throw err;

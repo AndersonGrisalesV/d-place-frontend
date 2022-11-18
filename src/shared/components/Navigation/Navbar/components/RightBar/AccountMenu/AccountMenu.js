@@ -38,14 +38,14 @@ const AccountMenu = () => {
   const handleProfileMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    navigate("/profile");
+    navigate("/api/users/profile");
   };
 
   const handleMenuCloseAndLogout = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
     login.logout();
-    navigate("/");
+    navigate("/homepage");
   };
 
   const menuId = "primary-search-account-menu";
