@@ -172,10 +172,10 @@ const ListItems = ({
         style={{ transitionDelay: true ? "100ms" : "0ms" }}
         {...(true ? { timeout: 500 } : {})}
       >
-        <StyleListItems disablePadding component={StyleNavLink} to="/">
+        <StyleListItems disablePadding component={StyleNavLink} to="/homepage">
           <ListItemButton
             component="ul"
-            href="/"
+            href="/homepage"
             onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
           >
             <ListItemIcon>
@@ -215,12 +215,12 @@ const ListItems = ({
             <StyleListItems
               disablePadding
               component={StyleNavLink}
-              to="/favorites"
+              to="/api/users/favorites"
               // className={(navData) => (navData.isActive ? classes.active : "")}
             >
               <ListItemButton
                 component="li"
-                href="/favorites"
+                href="/api/users/favorites"
                 onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
               >
                 <ListItemIcon>
@@ -240,11 +240,11 @@ const ListItems = ({
             <StyleListItems
               disablePadding
               component={StyleNavLink}
-              to="/profile"
+              to="/api/users/profile"
             >
               <ListItemButton
                 component="li"
-                href="/profile"
+                href="/api/users/profile"
                 onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
               >
                 <ListItemIcon>

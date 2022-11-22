@@ -14,6 +14,12 @@ import useFocusBlurHook from "../../../../../../shared/hooks/use-my-input";
 import { LoginContext } from "../../../../../context/login-context";
 
 import styled from "@emotion/styled";
+import { useHttpClient } from "../../../../../hooks/http-hook";
+import LoadingSpinnerWrapper from "../../../../LoadingSpinner/LoadingSpinnerWrapper";
+import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
+import ScrollToTop from "../../../../../util/ScollTop/ScrollToTop";
+import { useLocation } from "react-router-dom";
+import SnackBarResultLogin from "../../../../LoginRegister/components/SnackBarResultLogin";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -35,6 +41,10 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
 
 const NewPlacePostDisplay = () => {
   const login = useContext(LoginContext);
+
+  const { pathname } = useLocation();
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const initialFormInputs = {
     title: "",
@@ -128,16 +138,40 @@ const NewPlacePostDisplay = () => {
     return false;
   }
 
-  const onSubmitPostPlaceHandler = (e) => {
+  const onSubmitPostPlaceHandler = async (e) => {
     e.preventDefault();
 
-    if (formIsValid) {
+    if (login.isLoggedIn && formIsValid) {
       console.log(formInputs);
-      // send comment here
+
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:4000/api/places/newplace",
+          "POST",
+          JSON.stringify({
+            title: formInputs.title,
+            description: formInputs.description,
+            image: formInputs.image,
+            // postDate
+            address: formInputs.address,
+            creatorId: login.userId,
+          }),
+          {
+            "Content-Type": "Application/json",
+          }
+        );
+
+        // login.login(responseData.user.id);
+
+        // navigate("/homepage");
+      } catch (err) {}
+    } else {
     }
     resetTitleInput();
     resetDescriptionInput();
     resetAddressInput();
+    setImageUrl(null);
+    setSelectedImage(null);
 
     // const currentYear = new Date().getFullYear();
 
@@ -183,41 +217,29 @@ const NewPlacePostDisplay = () => {
   };
 
   return (
-    <CardWrapperNewPlacePostDisplay>
-      <CardContentNewPlacePost>
-        <TitleNewPlacePost />
-        <Divider variant="middle" sx={{ marginTop: "2px" }} />
-        <br />
-        <br />
-        <form onSubmit={onSubmitPostPlaceHandler}>
-          <Stack direction="column" spacing={4} justifyContent="space-between">
-            <StyleTextField
-              id="outlined-title-input"
-              label="Title"
-              type="text"
-              autoComplete="title-text"
-              size="small"
-              name="title"
-              InputLabelProps={{
-                sx: {
-                  fontSize: {
-                    sps: "11px",
-                    ps: "12px",
-                    ts: "14px",
-                    sls: "14px",
-                    sms: "16px",
-                    sc: "16px",
-                    nsc: "16px",
-                    ns: "16px",
-                    msc: "16px",
-                    mns: "16px",
-                    ms: "16px",
-                    lgs: "16px",
-                  },
-                },
-              }}
-              InputProps={{
-                inputProps: {
+    <ScrollToTop pathname={pathname}>
+      {error && <SnackBarResultLogin error={error} onClear={clearError} />}
+      <CardWrapperNewPlacePostDisplay>
+        <CardContentNewPlacePost>
+          <TitleNewPlacePost />
+          <Divider variant="middle" sx={{ marginTop: "2px" }} />
+          <br />
+          <br />
+          <form onSubmit={onSubmitPostPlaceHandler}>
+            <Stack
+              direction="column"
+              spacing={4}
+              justifyContent="space-between"
+            >
+              <StyleTextField
+                id="outlined-title-input"
+                disabled={isLoading ? true : false}
+                label="Title"
+                type="text"
+                autoComplete="title-text"
+                size="small"
+                name="title"
+                InputLabelProps={{
                   sx: {
                     fontSize: {
                       sps: "11px",
@@ -234,214 +256,245 @@ const NewPlacePostDisplay = () => {
                       lgs: "16px",
                     },
                   },
-                },
-              }}
-              FormHelperTextProps={{
-                sx: {
-                  fontSize: {
-                    sps: "9px",
-                    ps: "10px",
-                    ts: "12px",
-                    sls: "12px",
-                    sms: "14px",
-                    sc: "14px",
-                    nsc: "14px",
-                    ns: "14px",
-                    msc: "14px",
-                    mns: "14px",
-                    ms: "14px",
-                    lgs: "14px",
-                  },
-                },
-              }}
-              onChange={(e) => {
-                formInputsHandler(e);
-                titleChangeHandler(e);
-              }}
-              onBlur={titleBlurHandler}
-              value={titleInput}
-              error={titleInputHasError}
-              helperText={
-                titleInputHasError ? "Title cannot be empty or too long." : ""
-              }
-            />
-            <StyleTextField
-              id="outlined-description-input"
-              label="Description"
-              multiline
-              rows={4}
-              autoComplete="description-text"
-              size="small"
-              name="description"
-              InputLabelProps={{
-                sx: {
-                  fontSize: {
-                    sps: "11px",
-                    ps: "12px",
-                    ts: "14px",
-                    sls: "14px",
-                    sms: "16px",
-                    sc: "16px",
-                    nsc: "16px",
-                    ns: "16px",
-                    msc: "16px",
-                    mns: "16px",
-                    ms: "16px",
-                    lgs: "16px",
-                  },
-                },
-              }}
-              InputProps={{
-                inputProps: {
-                  sx: {
-                    fontSize: {
-                      sps: "11px",
-                      ps: "12px",
-                      ts: "14px",
-                      sls: "14px",
-                      sms: "16px",
-                      sc: "16px",
-                      nsc: "16px",
-                      ns: "16px",
-                      msc: "16px",
-                      mns: "16px",
-                      ms: "16px",
-                      lgs: "16px",
+                }}
+                InputProps={{
+                  inputProps: {
+                    sx: {
+                      fontSize: {
+                        sps: "11px",
+                        ps: "12px",
+                        ts: "14px",
+                        sls: "14px",
+                        sms: "16px",
+                        sc: "16px",
+                        nsc: "16px",
+                        ns: "16px",
+                        msc: "16px",
+                        mns: "16px",
+                        ms: "16px",
+                        lgs: "16px",
+                      },
                     },
                   },
-                },
-              }}
-              FormHelperTextProps={{
-                sx: {
-                  fontSize: {
-                    sps: "9px",
-                    ps: "10px",
-                    ts: "12px",
-                    sls: "12px",
-                    sms: "14px",
-                    sc: "14px",
-                    nsc: "14px",
-                    ns: "14px",
-                    msc: "14px",
-                    mns: "14px",
-                    ms: "14px",
-                    lgs: "14px",
-                  },
-                },
-              }}
-              onChange={(e) => {
-                formInputsHandler(e);
-                descriptionChangeHandler(e);
-              }}
-              onBlur={descriptionBlurHandler}
-              value={descriptionInput}
-              error={descriptionInputHasError}
-              helperText={
-                descriptionInputHasError
-                  ? "Description cannot be empty or too long."
-                  : ""
-              }
-            />
-            <StyleTextField
-              id="outlined-address-input"
-              label="Address"
-              type="text"
-              autoComplete="address-text"
-              size="small"
-              name="address"
-              InputLabelProps={{
-                sx: {
-                  fontSize: {
-                    sps: "11px",
-                    ps: "12px",
-                    ts: "14px",
-                    sls: "14px",
-                    sms: "16px",
-                    sc: "16px",
-                    nsc: "16px",
-                    ns: "16px",
-                    msc: "16px",
-                    mns: "16px",
-                    ms: "16px",
-                    lgs: "16px",
-                  },
-                },
-              }}
-              InputProps={{
-                inputProps: {
+                }}
+                FormHelperTextProps={{
                   sx: {
                     fontSize: {
-                      sps: "11px",
-                      ps: "12px",
-                      ts: "14px",
-                      sls: "14px",
-                      sms: "16px",
-                      sc: "16px",
-                      nsc: "16px",
-                      ns: "16px",
-                      msc: "16px",
-                      mns: "16px",
-                      ms: "16px",
-                      lgs: "16px",
+                      sps: "9px",
+                      ps: "10px",
+                      ts: "12px",
+                      sls: "12px",
+                      sms: "14px",
+                      sc: "14px",
+                      nsc: "14px",
+                      ns: "14px",
+                      msc: "14px",
+                      mns: "14px",
+                      ms: "14px",
+                      lgs: "14px",
                     },
                   },
-                },
-              }}
-              FormHelperTextProps={{
-                sx: {
-                  fontSize: {
-                    sps: "9px",
-                    ps: "10px",
-                    ts: "12px",
-                    sls: "12px",
-                    sms: "14px",
-                    sc: "14px",
-                    nsc: "14px",
-                    ns: "14px",
-                    msc: "14px",
-                    mns: "14px",
-                    ms: "14px",
-                    lgs: "14px",
-                  },
-                },
-              }}
-              onChange={(e) => {
-                formInputsHandler(e);
-                addressChangeHandler(e);
-              }}
-              onBlur={addressBlurHandler}
-              value={addressInput}
-              error={addressInputHasError}
-              helperText={
-                addressInputHasError
-                  ? "Address cannot be empty or too long."
-                  : ""
-              }
-            />
-            <React.Fragment>
-              <ImageUploadPlaceButton formInputsHandler={formInputsHandler} />
-              {imageUrl && selectedImage && (
-                <ImagePreviewPlaceButton
-                  imageUrl={imageUrl}
-                  selectedImageName={selectedImage.name}
-                  handleRemoveImage={handleRemoveImage}
-                />
-              )}
-            </React.Fragment>
-            <Stack direction="row" spacing={0} justifyContent="center">
-              <ButtonPostPlace formIsValid={formIsValid} />
-              <ButtonCancelPostPlace
-                open={open}
-                close={handleClose}
-                onHandleOpen={handleOpen}
-                onHandleClose={handleClose}
+                }}
+                onChange={(e) => {
+                  formInputsHandler(e);
+                  titleChangeHandler(e);
+                }}
+                onBlur={titleBlurHandler}
+                value={titleInput}
+                error={titleInputHasError}
+                helperText={
+                  titleInputHasError ? "Title cannot be empty or too long." : ""
+                }
               />
+              <StyleTextField
+                id="outlined-description-input"
+                disabled={isLoading ? true : false}
+                label="Description"
+                multiline
+                rows={4}
+                autoComplete="description-text"
+                size="small"
+                name="description"
+                InputLabelProps={{
+                  sx: {
+                    fontSize: {
+                      sps: "11px",
+                      ps: "12px",
+                      ts: "14px",
+                      sls: "14px",
+                      sms: "16px",
+                      sc: "16px",
+                      nsc: "16px",
+                      ns: "16px",
+                      msc: "16px",
+                      mns: "16px",
+                      ms: "16px",
+                      lgs: "16px",
+                    },
+                  },
+                }}
+                InputProps={{
+                  inputProps: {
+                    sx: {
+                      fontSize: {
+                        sps: "11px",
+                        ps: "12px",
+                        ts: "14px",
+                        sls: "14px",
+                        sms: "16px",
+                        sc: "16px",
+                        nsc: "16px",
+                        ns: "16px",
+                        msc: "16px",
+                        mns: "16px",
+                        ms: "16px",
+                        lgs: "16px",
+                      },
+                    },
+                  },
+                }}
+                FormHelperTextProps={{
+                  sx: {
+                    fontSize: {
+                      sps: "9px",
+                      ps: "10px",
+                      ts: "12px",
+                      sls: "12px",
+                      sms: "14px",
+                      sc: "14px",
+                      nsc: "14px",
+                      ns: "14px",
+                      msc: "14px",
+                      mns: "14px",
+                      ms: "14px",
+                      lgs: "14px",
+                    },
+                  },
+                }}
+                onChange={(e) => {
+                  formInputsHandler(e);
+                  descriptionChangeHandler(e);
+                }}
+                onBlur={descriptionBlurHandler}
+                value={descriptionInput}
+                error={descriptionInputHasError}
+                helperText={
+                  descriptionInputHasError
+                    ? "Description cannot be empty or too long."
+                    : ""
+                }
+              />
+              <StyleTextField
+                id="outlined-address-input"
+                disabled={isLoading ? true : false}
+                label="Address"
+                type="text"
+                autoComplete="address-text"
+                size="small"
+                name="address"
+                InputLabelProps={{
+                  sx: {
+                    fontSize: {
+                      sps: "11px",
+                      ps: "12px",
+                      ts: "14px",
+                      sls: "14px",
+                      sms: "16px",
+                      sc: "16px",
+                      nsc: "16px",
+                      ns: "16px",
+                      msc: "16px",
+                      mns: "16px",
+                      ms: "16px",
+                      lgs: "16px",
+                    },
+                  },
+                }}
+                InputProps={{
+                  inputProps: {
+                    sx: {
+                      fontSize: {
+                        sps: "11px",
+                        ps: "12px",
+                        ts: "14px",
+                        sls: "14px",
+                        sms: "16px",
+                        sc: "16px",
+                        nsc: "16px",
+                        ns: "16px",
+                        msc: "16px",
+                        mns: "16px",
+                        ms: "16px",
+                        lgs: "16px",
+                      },
+                    },
+                  },
+                }}
+                FormHelperTextProps={{
+                  sx: {
+                    fontSize: {
+                      sps: "9px",
+                      ps: "10px",
+                      ts: "12px",
+                      sls: "12px",
+                      sms: "14px",
+                      sc: "14px",
+                      nsc: "14px",
+                      ns: "14px",
+                      msc: "14px",
+                      mns: "14px",
+                      ms: "14px",
+                      lgs: "14px",
+                    },
+                  },
+                }}
+                onChange={(e) => {
+                  formInputsHandler(e);
+                  addressChangeHandler(e);
+                }}
+                onBlur={addressBlurHandler}
+                value={addressInput}
+                error={addressInputHasError}
+                helperText={
+                  addressInputHasError
+                    ? "Address cannot be empty or too long."
+                    : ""
+                }
+              />
+              <React.Fragment>
+                <ImageUploadPlaceButton
+                  formInputsHandler={formInputsHandler}
+                  isLoading={isLoading}
+                />
+                {imageUrl && selectedImage && (
+                  <ImagePreviewPlaceButton
+                    imageUrl={imageUrl}
+                    selectedImageName={selectedImage.name}
+                    handleRemoveImage={handleRemoveImage}
+                  />
+                )}
+              </React.Fragment>
+              {isLoading ? (
+                <LoadingSpinnerWrapper onNewPlace={true}>
+                  <LoadingSpinner />
+                </LoadingSpinnerWrapper>
+              ) : (
+                <Stack direction="row" spacing={0} justifyContent="center">
+                  <ButtonPostPlace formIsValid={formIsValid} />
+                  <ButtonCancelPostPlace
+                    open={open}
+                    close={handleClose}
+                    onHandleOpen={handleOpen}
+                    onHandleClose={handleClose}
+                  />
+                </Stack>
+              )}
             </Stack>
-          </Stack>
-        </form>
-      </CardContentNewPlacePost>
-      {/* {successMessage ? showMessage : ""} */}
-    </CardWrapperNewPlacePostDisplay>
+          </form>
+        </CardContentNewPlacePost>
+        {/* {successMessage ? showMessage : ""} */}
+      </CardWrapperNewPlacePostDisplay>
+    </ScrollToTop>
   );
 };
 

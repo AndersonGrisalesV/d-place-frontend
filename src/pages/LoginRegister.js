@@ -48,7 +48,11 @@ const LoginRegister = () => {
 
   const [isLoginMode, setIsLoginMode] = useState(true);
 
+  // let location = useLocation();
+  // const from =
+  //   location.pathname === "/api/users/loginregister" ? "/homepage" : -1;
   const { pathname } = useLocation();
+
   let navigate = useNavigate();
 
   // const [successMessage, setSuccessMessage] = useState(false);
@@ -68,6 +72,11 @@ const LoginRegister = () => {
   const onSubmitLoginRegisterHandler = async (e) => {
     e.preventDefault();
 
+    console.log(formInputs.image);
+    if (!formInputs.image) {
+      formInputs.image =
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
+    }
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
@@ -83,14 +92,14 @@ const LoginRegister = () => {
         );
 
         login.login(responseData.user.id);
+        // console.log(window.history.state.usr);
 
-        navigate("/homepage", {
-          state: {
-            onSuccess: true,
-            response: responseData.message,
-            user: responseData.user,
-          },
-        });
+        // if (window.history.state.usr != null) {
+        //   navigate("/homepage", { replace: true });
+        // } else {
+        //   window.history.go(-1);
+        // }
+        navigate("/homepage");
       } catch (err) {}
 
       // console.log(responseData)
@@ -126,8 +135,8 @@ const LoginRegister = () => {
     resetEmailInput();
     resetPasswordInput();
     resetconfirmPasswordInput();
-
-    // setTimeout(navigate("/"), 8000);
+    setImageUrl(null);
+    setSelectedImage(null);
   };
 
   const switchModeHandler = () => {
@@ -604,7 +613,7 @@ const LoginRegister = () => {
                 </React.Fragment>
               )}
               {isLoading ? (
-                <LoadingSpinnerWrapper>
+                <LoadingSpinnerWrapper onLogin={true}>
                   <LoadingSpinner />
                 </LoadingSpinnerWrapper>
               ) : (
@@ -622,7 +631,6 @@ const LoginRegister = () => {
             </Stack>
           </form>
         </CardContentLogin>
-        {/* {successMessage ? showMessage : ""} */}
       </CardWrapperLogin>
     </ScrollToTop>
   );

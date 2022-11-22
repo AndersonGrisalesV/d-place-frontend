@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
@@ -37,9 +37,20 @@ const StyleButtonOnComment = styled(Button)(({ theme }) => ({
 const LoginButton = ({ OnComment = false }) => {
   // const handleLogin = () => {};
 
+  const location = useLocation();
+  console.log(location);
+
   const buttonLeaveAComment = OnComment ? (
     <Box>
-      <NavLink to="/api/users/loginregister" style={{ textDecoration: "none" }}>
+      <NavLink
+        to={{
+          pathname: "/api/users/loginregister",
+          state: {
+            from: `${location}`,
+          },
+        }}
+        style={{ textDecoration: "none" }}
+      >
         <StyleButtonOnComment
           sx={{
             textTransform: "none",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box, Modal, Stack, Typography } from "@mui/material";
 import ButtonGobackNewPlace from "../ButtonGobackNewPlace";
 import ButtonYesCancelNewPlace from "../ButtonYesCancelNewPlace";
@@ -48,11 +48,13 @@ const styleModalCancel = {
 
 const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
   let navigate = useNavigate();
-  const handleConfirmCancel = () => {
+
+  const handleConfirmCancel = useCallback(() => {
     // redirect
+
     onHandleClose();
-    navigate("/");
-  };
+    navigate(-1);
+  }, [onHandleClose, navigate]);
 
   return (
     <div>

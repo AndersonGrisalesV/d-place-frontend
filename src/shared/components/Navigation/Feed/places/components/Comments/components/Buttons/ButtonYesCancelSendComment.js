@@ -1,7 +1,9 @@
-import { Button, Zoom } from "@mui/material";
-import { styled } from "@mui/system";
 import React, { useContext } from "react";
+import { Button, Zoom } from "@mui/material";
+
 import { LoginContext } from "../../../../../../../../context/login-context";
+
+import { styled } from "@mui/system";
 
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
@@ -12,8 +14,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
 }));
 
 const ButtonYesCancelSendComment = ({ onYesCancel }) => {
-  //  const login = useContext(LoginContext);
-  let login = true;
+  const login = useContext(LoginContext);
 
   return (
     <React.Fragment>
