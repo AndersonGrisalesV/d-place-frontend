@@ -1,14 +1,14 @@
 import React from "react";
 import { CardMedia } from "@mui/material";
 
-const CardImages = ({ DUMMY_PLACES }) => {
+const CardImages = ({ loadedPlaces }) => {
   return (
     <CardMedia
       sx={{ height: "100%", objectFit: "contain" }}
       component="img"
       height="194"
-      image={DUMMY_PLACES.imageUrl}
-      alt={DUMMY_PLACES.title}
+      image={loadedPlaces.imageUrl}
+      alt={loadedPlaces.title}
     />
   );
 };

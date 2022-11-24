@@ -47,10 +47,10 @@ const DUMMY_COMMENTS = [
   },
 ];
 
-const CommentsPost = ({ DUMMY_PLACES }) => {
+const CommentsPost = ({ loadedPlaces }) => {
   let placeComments;
   placeComments = DUMMY_COMMENTS.filter(
-    (place) => place.placeId === DUMMY_PLACES.placeId
+    (place) => place.placeId === loadedPlaces.placeId
   );
 
   // let editDeleteComments;

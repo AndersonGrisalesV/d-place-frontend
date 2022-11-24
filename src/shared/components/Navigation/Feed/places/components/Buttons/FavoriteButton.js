@@ -12,7 +12,7 @@ const StyleFavoriteBorderIcon = styled(FavoriteIcon)({
   },
 });
 
-const FavoriteButton = ({ DUMMY_PLACES }) => {
+const FavoriteButton = ({ loadedPlaces }) => {
   return (
     <IconButton
       aria-label="add to favorites"
@@ -20,7 +20,7 @@ const FavoriteButton = ({ DUMMY_PLACES }) => {
       title="Like"
     >
       <Checkbox
-        checked={DUMMY_PLACES.favorite ? true : false}
+        // checked={loadedPlaces.favorite ? true : false}
         style={{ backgroundColor: "transparent" }}
         icon={
           <FavoriteBorderIcon

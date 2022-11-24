@@ -18,19 +18,17 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
 }));
 
-const ButtonEdit = ({ DUMMY_PLACES }) => {
-  // const login = useContext(LoginContext);
+const ButtonEdit = ({ loadedPlaces }) => {
+  const login = useContext(LoginContext);
   const params = useParams();
   const { placeId } = params;
 
-  let login = true;
   // /api/places/editplace/:placeId"
   return (
     <React.Fragment>
-      {/* {login.isLoggedIn && ( */}
-      {login && (
+      {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
-          <StyleNavLink to={`/api/places/editplace/${DUMMY_PLACES.placeId}`}>
+          <StyleNavLink to={`/api/places/editplace/${loadedPlaces._id}`}>
             <StyleButton
               sx={{
                 fontWeight: 500,

@@ -9,7 +9,11 @@ const StyleButtonImage = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ImageUploadPlaceButton = ({ formInputsHandler, isLoading }) => {
+const ImageUploadPlaceButton = ({
+  formInputsHandler,
+  isLoading,
+  showSuccess,
+}) => {
   const handleChangeImageUploadPlaceButton = (e) => {
     if (e.target.files[0]) {
       formInputsHandler(e);
@@ -37,7 +41,7 @@ const ImageUploadPlaceButton = ({ formInputsHandler, isLoading }) => {
       />
       <label htmlFor="select-image" style={{ marginLeft: "0px" }}>
         <StyleButtonImage
-          disabled={isLoading ? true : false}
+          disabled={isLoading ? true : false || showSuccess ? true : false}
           component="span"
           sx={{
             fontWeight: 500,

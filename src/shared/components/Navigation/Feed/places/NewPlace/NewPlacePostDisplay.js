@@ -18,7 +18,7 @@ import { useHttpClient } from "../../../../../hooks/http-hook";
 import LoadingSpinnerWrapper from "../../../../LoadingSpinner/LoadingSpinnerWrapper";
 import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
 import ScrollToTop from "../../../../../util/ScollTop/ScrollToTop";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SnackBarResultLogin from "../../../../LoginRegister/components/SnackBarResultLogin";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
@@ -43,8 +43,11 @@ const NewPlacePostDisplay = () => {
   const login = useContext(LoginContext);
 
   const { pathname } = useLocation();
+  let navigate = useNavigate();
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const initialFormInputs = {
     title: "",
@@ -142,8 +145,14 @@ const NewPlacePostDisplay = () => {
     e.preventDefault();
 
     if (login.isLoggedIn && formIsValid) {
-      console.log(formInputs);
+      let date = new Date().toJSON();
 
+      if (!formInputs.image) {
+        formInputs.image =
+          "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
+      }
+
+      console.log(date);
       try {
         const responseData = await sendRequest(
           "http://localhost:4000/api/places/newplace",
@@ -152,7 +161,7 @@ const NewPlacePostDisplay = () => {
             title: formInputs.title,
             description: formInputs.description,
             image: formInputs.image,
-            // postDate
+            postDate: date,
             address: formInputs.address,
             creatorId: login.userId,
           }),
@@ -162,10 +171,12 @@ const NewPlacePostDisplay = () => {
         );
 
         // login.login(responseData.user.id);
-
-        // navigate("/homepage");
+        setShowSuccess(true);
+        setTimeout(() => {
+          setShowSuccess(false);
+          navigate("/homepage");
+        }, "910");
       } catch (err) {}
-    } else {
     }
     resetTitleInput();
     resetDescriptionInput();
@@ -219,6 +230,12 @@ const NewPlacePostDisplay = () => {
   return (
     <ScrollToTop pathname={pathname}>
       {error && <SnackBarResultLogin error={error} onClear={clearError} />}
+      {showSuccess && (
+        <SnackBarResultLogin
+          onSuccess={true}
+          message={"Place was created Successfully"}
+        />
+      )}
       <CardWrapperNewPlacePostDisplay>
         <CardContentNewPlacePost>
           <TitleNewPlacePost />
@@ -233,7 +250,9 @@ const NewPlacePostDisplay = () => {
             >
               <StyleTextField
                 id="outlined-title-input"
-                disabled={isLoading ? true : false}
+                disabled={
+                  isLoading ? true : false || showSuccess ? true : false
+                }
                 label="Title"
                 type="text"
                 autoComplete="title-text"
@@ -308,7 +327,9 @@ const NewPlacePostDisplay = () => {
               />
               <StyleTextField
                 id="outlined-description-input"
-                disabled={isLoading ? true : false}
+                disabled={
+                  isLoading ? true : false || showSuccess ? true : false
+                }
                 label="Description"
                 multiline
                 rows={4}
@@ -386,7 +407,9 @@ const NewPlacePostDisplay = () => {
               />
               <StyleTextField
                 id="outlined-address-input"
-                disabled={isLoading ? true : false}
+                disabled={
+                  isLoading ? true : false || showSuccess ? true : false
+                }
                 label="Address"
                 type="text"
                 autoComplete="address-text"
@@ -465,6 +488,7 @@ const NewPlacePostDisplay = () => {
                 <ImageUploadPlaceButton
                   formInputsHandler={formInputsHandler}
                   isLoading={isLoading}
+                  showSuccess={showSuccess}
                 />
                 {imageUrl && selectedImage && (
                   <ImagePreviewPlaceButton
@@ -482,6 +506,7 @@ const NewPlacePostDisplay = () => {
                 <Stack direction="row" spacing={0} justifyContent="center">
                   <ButtonPostPlace formIsValid={formIsValid} />
                   <ButtonCancelPostPlace
+                    showSuccess={showSuccess}
                     open={open}
                     close={handleClose}
                     onHandleOpen={handleOpen}
@@ -492,7 +517,6 @@ const NewPlacePostDisplay = () => {
             </Stack>
           </form>
         </CardContentNewPlacePost>
-        {/* {successMessage ? showMessage : ""} */}
       </CardWrapperNewPlacePostDisplay>
     </ScrollToTop>
   );

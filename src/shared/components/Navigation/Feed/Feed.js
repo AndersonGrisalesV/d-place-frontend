@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useLocation, useParams } from "react-router-dom";
 import Place from "./places/Place";
 import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
+import { useHttpClient } from "../../../hooks/http-hook";
 
 const DUMMY_PLACES = [
   {
@@ -70,20 +71,40 @@ const Feed = ({ onDetail = false, onMap = false }) => {
   const { placeId } = params;
   // console.log(placeId);
 
-  let loadedPlaces;
+  const [loadedPlaces, setLoadedPlaces] = useState();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:4000/homepage"
+        );
+        setLoadedPlaces(responseData.places);
+        console.log(responseData.places);
+      } catch (err) {}
+    };
+    fetchPlaces();
+  }, [sendRequest]);
+
+  let filterLoadedPlaces;
   if (onDetail && onMap) {
-    loadedPlaces = DUMMY_PLACES.filter((place) => place.placeId === placeId);
+    filterLoadedPlaces = loadedPlaces.filter((place) => place._id === placeId);
   }
 
   const places = (
-    <React.Fragment>
-      {DUMMY_PLACES.map((place) => (
-        <React.Fragment key={place.placeId}>
-          <Place DUMMY_PLACES={place} key={place.placeId} id={place.placeId} />
-          <br />
+    <>
+      {!isLoading && loadedPlaces && (
+        <React.Fragment>
+          {loadedPlaces.map((place) => (
+            <React.Fragment key={place._id}>
+              <Place loadedPlaces={place} key={place._id} id={place._id} />
+              <br />
+            </React.Fragment>
+          ))}
         </React.Fragment>
-      ))}
-    </React.Fragment>
+      )}
+    </>
   );
 
   return (
@@ -99,9 +120,9 @@ const Feed = ({ onDetail = false, onMap = false }) => {
             <Place
               onMap={true}
               onShowComments={onDetail}
-              DUMMY_PLACES={loadedPlaces[0]}
-              id={loadedPlaces[0].placeId}
-              key={loadedPlaces[0].placeId}
+              loadedPlaces={filterLoadedPlaces[0]}
+              id={filterLoadedPlaces[0]._id}
+              key={filterLoadedPlaces[0]._id}
             />
             <br />
           </React.Fragment>

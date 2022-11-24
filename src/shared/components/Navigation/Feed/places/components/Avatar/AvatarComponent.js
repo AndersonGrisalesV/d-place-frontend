@@ -2,11 +2,11 @@ import React from "react";
 
 import Avatar from "@mui/material/Avatar";
 
-const AvatarComponent = ({ DUMMY_PLACES }) => {
+const AvatarComponent = ({ loadedPlaces }) => {
   return (
     <Avatar
-      src={DUMMY_PLACES.creatorImageUrl ? DUMMY_PLACES.creatorImageUrl : ""}
-      title={DUMMY_PLACES.creatorName}
+      src={loadedPlaces.creatorId.image ? loadedPlaces.creatorId.image : ""}
+      title={loadedPlaces.creatorId.name}
       sx={{
         fontSize: {
           sps: "10px",
@@ -54,8 +54,8 @@ const AvatarComponent = ({ DUMMY_PLACES }) => {
       }}
       aria-label="recipe"
     >
-      {DUMMY_PLACES.creatorImageUrl === ""
-        ? DUMMY_PLACES.creatorName.charAt(0)
+      {loadedPlaces.creatorId.image === ""
+        ? loadedPlaces.creatorId.name.charAt(0)
         : ""}
     </Avatar>
   );

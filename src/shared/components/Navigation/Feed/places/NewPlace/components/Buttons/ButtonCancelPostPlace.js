@@ -20,6 +20,7 @@ const ButtonCancelPostPlace = ({
   close,
   onHandleOpen,
   onHandleClose,
+  showSuccess,
 }) => {
   // const login = useContext(LoginContext);
   let login = true;
@@ -30,6 +31,7 @@ const ButtonCancelPostPlace = ({
       {login && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
+            disabled={showSuccess ? true : false}
             // type="submit"
             onClick={onHandleOpen}
             sx={{

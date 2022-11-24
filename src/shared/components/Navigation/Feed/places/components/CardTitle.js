@@ -1,7 +1,7 @@
 import { CardContent, Typography } from "@mui/material";
 import React from "react";
 
-const CardTitle = ({ onMap = false, DUMMY_PLACES }) => {
+const CardTitle = ({ onMap = false, loadedPlaces }) => {
   return (
     <CardContent
       sx={{
@@ -30,7 +30,7 @@ const CardTitle = ({ onMap = false, DUMMY_PLACES }) => {
           },
         }}
       >
-        {DUMMY_PLACES.title}
+        {loadedPlaces.title}
       </Typography>
       {onMap && (
         <React.Fragment>
@@ -56,7 +56,7 @@ const CardTitle = ({ onMap = false, DUMMY_PLACES }) => {
               },
             }}
           >
-            {DUMMY_PLACES.description}
+            {loadedPlaces.description}
           </Typography>
         </React.Fragment>
       )}

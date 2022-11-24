@@ -6,8 +6,9 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import ErrorIcon from "@mui/icons-material/Error";
 import CloseIcon from "@mui/icons-material/Close";
-import styled from "@emotion/styled/macro";
 import { IconButton, Slide } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import styled from "@emotion/styled/macro";
 
 const StyleErrorIcon = styled(ErrorIcon)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#fff",
@@ -52,9 +53,16 @@ const StyleSnackBarError = styled(Snackbar)(({ theme }) => ({
   },
 }));
 
+const StyleSuccessIcon = styled(CheckCircleIcon)(({ theme }) => ({
+  color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#fff",
+  "&:hover": {
+    color: theme.palette.mode === "dark" ? "#fff" : "#da4453",
+  },
+}));
+
 const StyleAlertSuccess = styled(MuiAlert)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#fff",
-  backgroundColor: theme.palette.mode === "dark" ? "#121212" : "#da4453",
+  backgroundColor: theme.palette.mode === "dark" ? "#121212" : "#429E45",
   backgroundImage:
     theme.palette.mode === "dark"
       ? "linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))"
@@ -64,17 +72,17 @@ const StyleAlertSuccess = styled(MuiAlert)(({ theme }) => ({
   border:
     theme.palette.mode === "dark"
       ? "1px solid transparent"
-      : "1px solid #da4453",
+      : "1px solid #429E45",
   "&:hover": {
     boxShadow:
       "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
     border:
-      theme.palette.mode === "dark" ? "1px solid #fff" : "1px solid #da4453",
+      theme.palette.mode === "dark" ? "1px solid #fff" : "1px solid #429E45",
     backgroundColor: theme.palette.mode === "dark" ? "#121212" : "#fff",
 
-    color: theme.palette.mode === "dark" ? "#fff" : "#da4453",
-    [`${StyleErrorIcon}`]: {
-      color: theme.palette.mode === "dark" ? "#fff" : "#da4453",
+    color: theme.palette.mode === "dark" ? "#fff" : "#429E45",
+    [`${StyleSuccessIcon}`]: {
+      color: theme.palette.mode === "dark" ? "#fff" : "#429E45",
     },
   },
 }));
@@ -116,10 +124,12 @@ const SnackBarResultLogin = ({
     error = false;
     setErrorState(error ? true : false);
     setSuccessState(onSuccess ? true : false);
-    setChangeState(false);
-    onClear();
+    // setChangeState(false);
+    if (!onSuccess) {
+      onClear();
+    }
     if (reason === "clickaway") {
-      setChangeState(false);
+      // setChangeState(false);
       return;
     }
   };
@@ -209,7 +219,7 @@ const SnackBarResultLogin = ({
       ) : onSuccess ? (
         <StyleSnackBarSuccess
           open={successState}
-          // autoHideDuration={6000}
+          autoHideDuration={800}
           onClose={handleClose}
         >
           <StyleAlertSuccess
@@ -263,7 +273,7 @@ const SnackBarResultLogin = ({
               },
             }}
             icon={
-              <StyleErrorIcon
+              <StyleSuccessIcon
                 sx={{
                   fontSize: {
                     sps: "14px",
@@ -283,7 +293,7 @@ const SnackBarResultLogin = ({
               />
             }
           >
-            {message} {logUser.name}
+            {message}
           </StyleAlertSuccess>
         </StyleSnackBarSuccess>
       ) : null}

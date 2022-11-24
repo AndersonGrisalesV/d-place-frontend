@@ -65,7 +65,7 @@ const StyleContainerMap = styled(Box)(({ theme }) => ({
   width: "100%",
 }));
 
-const ButtonsWrapper = ({ onMap = false, DUMMY_PLACES }) => {
+const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -76,11 +76,11 @@ const ButtonsWrapper = ({ onMap = false, DUMMY_PLACES }) => {
       sx={{ paddingTop: "0px", paddingLeft: "0px", paddingBottom: "0px" }}
     >
       <Stack direction="row" spacing={-3}>
-        <FavoriteButton DUMMY_PLACES={DUMMY_PLACES} />
+        <FavoriteButton loadedPlaces={loadedPlaces} />
         <ShareButton />
       </Stack>
       {!onMap ? (
-        <ButtonDetails DUMMY_PLACES={DUMMY_PLACES} />
+        <ButtonDetails loadedPlaces={loadedPlaces} />
       ) : (
         <ButtonSeeMap onHandleOpen={handleOpen} />
       )}
@@ -130,7 +130,7 @@ const ButtonsWrapper = ({ onMap = false, DUMMY_PLACES }) => {
                         variant="h6"
                         color="text.primary"
                       >
-                        {DUMMY_PLACES.title}
+                        {loadedPlaces.title}
                       </Typography>
                     </Stack>
 
@@ -163,7 +163,7 @@ const ButtonsWrapper = ({ onMap = false, DUMMY_PLACES }) => {
                           },
                         }}
                       >
-                        {DUMMY_PLACES.address}
+                        {loadedPlaces.address}
                       </Typography>
                       <ButtonEdit />
                     </Stack>
@@ -187,7 +187,7 @@ const ButtonsWrapper = ({ onMap = false, DUMMY_PLACES }) => {
                       width: "100%",
                     }}
                   >
-                    <Map center={DUMMY_PLACES.location} zoom={16} />
+                    <Map center={loadedPlaces.location} zoom={16} />
                   </Box>
                 </Box>
               </Stack>
