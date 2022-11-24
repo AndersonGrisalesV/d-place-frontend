@@ -46,8 +46,8 @@ function App() {
         <Route path="/api/users/favorites" element={<FavoritesPage />} />
         <Route path="/api/users/profile" element={<Profile />} />
         <Route path="/api/places/newPlace" element={<NewPlace />} />
-        <Route path="/api/places/editplace/:placeId" element={<EditPlace />} />
-        <Route path="/api/places/:placeId" element={<PlaceDetail />} />
+        <Route path="/api/places/editplace/:pid" element={<EditPlace />} />
+        <Route path="/api/places/:pid" element={<PlaceDetail />} />
         <Route path="*" element={<p>Not Found!</p>} />
       </React.Fragment>
     );
@@ -56,7 +56,7 @@ function App() {
       <React.Fragment>
         {/* <Route path="/new" element={<NewPlacePage />} /> */}
         <Route path="/api/users/loginregister" element={<LoginRegister />} />
-        <Route path="/api/places/:placeId" element={<PlaceDetail />} />
+        <Route path="/api/places/:pid" element={<PlaceDetail />} />
         <Route path="*" element={<p>Not found!</p>} />
       </React.Fragment>
     );

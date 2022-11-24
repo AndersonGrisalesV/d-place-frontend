@@ -4,6 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 import Place from "./places/Place";
 import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
 import { useHttpClient } from "../../../hooks/http-hook";
+import PlaceGetById from "./places/NewPlace/components/PlaceGetById";
 
 const DUMMY_PLACES = [
   {
@@ -68,7 +69,7 @@ const Feed = ({ onDetail = false, onMap = false }) => {
   const params = useParams();
   const { pathname } = useLocation();
 
-  const { placeId } = params;
+  const { pid } = params;
   // console.log(placeId);
 
   const [loadedPlaces, setLoadedPlaces] = useState();
@@ -87,10 +88,10 @@ const Feed = ({ onDetail = false, onMap = false }) => {
     fetchPlaces();
   }, [sendRequest]);
 
-  let filterLoadedPlaces;
-  if (onDetail && onMap) {
-    filterLoadedPlaces = loadedPlaces.filter((place) => place._id === placeId);
-  }
+  // let filterLoadedPlaces;
+  // if (onDetail && onMap) {
+  //   // filterLoadedPlaces = loadedPlaces.map((place) => place._id === placeId);
+  // }
 
   const places = (
     <>
@@ -116,16 +117,14 @@ const Feed = ({ onDetail = false, onMap = false }) => {
           <br /> */}
           </React.Fragment>
         ) : onDetail && onMap ? (
-          <React.Fragment>
-            <Place
-              onMap={true}
-              onShowComments={onDetail}
-              loadedPlaces={filterLoadedPlaces[0]}
-              id={filterLoadedPlaces[0]._id}
-              key={filterLoadedPlaces[0]._id}
-            />
-            <br />
-          </React.Fragment>
+          <PlaceGetById
+            onMap={true}
+            onShowComments={onDetail}
+            placeId={pid}
+            //loadedPlaces={filterLoadedPlaces[0]}
+            //id={filterLoadedPlaces[0]._id}
+            //key={filterLoadedPlaces[0]._id}
+          />
         ) : (
           places
         )}

@@ -45,7 +45,7 @@ const EditPlacePostDisplay = ({ DUMMY_PLACES }) => {
   const login = useContext(LoginContext);
   const params = useParams();
 
-  const { PlaceId } = params;
+  const { pid } = params;
 
   //   const result = DUMMY_PLACES[0].map((place) => place.placeId === PlaceId);
 

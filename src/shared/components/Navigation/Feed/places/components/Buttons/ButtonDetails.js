@@ -17,7 +17,7 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
 }));
 
-const ButtonDetails = ({ loadedPlaces }) => {
+const ButtonDetails = ({ onPlaceId }) => {
   const params = useParams();
 
   const { placeId } = params;
@@ -42,7 +42,7 @@ const ButtonDetails = ({ loadedPlaces }) => {
         },
       }}
     >
-      <StyleNavLink to={`/api/places/${loadedPlaces._id}`}>
+      <StyleNavLink to={`/api/places/${onPlaceId}`}>
         <StyleButton
           sx={{
             fontWeight: 500,

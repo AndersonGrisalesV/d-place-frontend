@@ -61,8 +61,6 @@ const AvatarWrapper = ({ loadedPlaces }) => {
 
   let fetchedDate = addDays(loadedPlaces.postDate);
 
-  console.log(fetchedDate);
-
   return (
     <CardHeader
       avatar={<AvatarComponent loadedPlaces={loadedPlaces} />}

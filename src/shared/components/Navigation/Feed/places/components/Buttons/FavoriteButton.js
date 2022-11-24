@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Checkbox, IconButton } from "@mui/material";
 import styled from "@emotion/styled";
+import { LoginContext } from "../../../../../../context/login-context";
 
 const StyleFavoriteBorderIcon = styled(FavoriteIcon)({
   color: "#da4453",
@@ -12,7 +13,21 @@ const StyleFavoriteBorderIcon = styled(FavoriteIcon)({
   },
 });
 
-const FavoriteButton = ({ loadedPlaces }) => {
+const FavoriteButton = ({ isFavorite }) => {
+  // const login = useContext(LoginContext);
+
+  // let isFavorite = false;
+  // if (login.isLoggedIn) {
+  //   loadedPlaces.favoritesUserIds.map((favorite) => {
+  //     if (favorite === login.userId) {
+  //       return (isFavorite = true);
+  //     }
+  //     return (isFavorite = false);
+  //   });
+  // }
+
+  // console.log(isFavorite);
+  // 637fc05f6fb8981bc3ee8a32
   return (
     <IconButton
       aria-label="add to favorites"
@@ -20,7 +35,7 @@ const FavoriteButton = ({ loadedPlaces }) => {
       title="Like"
     >
       <Checkbox
-        // checked={loadedPlaces.favorite ? true : false}
+        checked={isFavorite}
         style={{ backgroundColor: "transparent" }}
         icon={
           <FavoriteBorderIcon

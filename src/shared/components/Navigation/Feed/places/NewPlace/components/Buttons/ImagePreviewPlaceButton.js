@@ -90,7 +90,7 @@ const ImagePreviewPlaceButton = ({
                         sls: "20px",
                         sms: "24px",
                         sc: "24px",
-                        nsc: "150px",
+                        nsc: "24px",
                         ns: "24px",
                         msc: "24px",
                         mns: "24px",

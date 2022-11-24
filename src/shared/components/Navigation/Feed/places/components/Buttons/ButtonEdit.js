@@ -20,13 +20,27 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
 
 const ButtonEdit = ({ loadedPlaces }) => {
   const login = useContext(LoginContext);
-  const params = useParams();
-  const { placeId } = params;
+
+  let isEdit = false;
+  let placeId;
+
+  if (login.isLoggedIn && loadedPlaces.creatorId._id === login.userId) {
+    console.log(loadedPlaces);
+    loadedPlaces.creatorId.places.map((samePlace) => {
+      console.log(samePlace);
+      if (samePlace === loadedPlaces._id) {
+        placeId = loadedPlaces._id;
+        return (isEdit = true);
+      }
+      placeId = "";
+      return (isEdit = false);
+    });
+  }
 
   // /api/places/editplace/:placeId"
   return (
     <React.Fragment>
-      {login.isLoggedIn && (
+      {login.isLoggedIn && isEdit && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleNavLink to={`/api/places/editplace/${loadedPlaces._id}`}>
             <StyleButton
@@ -48,18 +62,18 @@ const ButtonEdit = ({ loadedPlaces }) => {
                   lgs: "14px",
                 },
                 marginRight: {
-                  sps: "-10px",
-                  ps: "-9px",
-                  ts: "-3px",
-                  sls: "-4px",
-                  sms: "4px",
-                  sc: "4px",
-                  nsc: "4px",
-                  ns: "4px",
-                  msc: "4px",
-                  mns: "4px",
-                  ms: "4px",
-                  lgs: "4px",
+                  sps: "-2px",
+                  ps: "-1px",
+                  ts: "-2px",
+                  sls: "-3px",
+                  sms: "-2px",
+                  sc: "-2px",
+                  nsc: "-2px",
+                  ns: "-2px",
+                  msc: "-2px",
+                  mns: "-2px",
+                  ms: "-2px",
+                  lgs: "-2px",
                 },
               }}
             >

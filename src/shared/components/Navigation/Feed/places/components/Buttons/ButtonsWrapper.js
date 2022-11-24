@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -8,6 +8,7 @@ import {
   Modal,
   Stack,
   Typography,
+  Zoom,
 } from "@mui/material";
 import ButtonDetails from "./ButtonDetails";
 import FavoriteButton from "./FavoriteButton";
@@ -17,7 +18,11 @@ import Map from "../../../../../Map/Map";
 import ButtonEdit from "./ButtonEdit";
 import ButtonDeletePost from "./ButtonDeletePost";
 import Backdrop from "@mui/material/Backdrop";
+
+import { LoginContext } from "../../../../../../context/login-context";
+import { useParams } from "react-router-dom";
 import styled from "@emotion/styled";
+import ButtonCloseModal from "./ButtonCloseModal";
 
 const style = {
   position: "absolute",
@@ -42,9 +47,7 @@ const style = {
   borderRadius: "8px",
   boxShadow: 24,
   p: 4,
-  paddingLeft: "0px",
-  paddingRight: "0px",
-  paddingBottom: "0px",
+  padding: "0px",
 };
 
 const StyleContainerMap = styled(Box)(({ theme }) => ({
@@ -70,17 +73,32 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const login = useContext(LoginContext);
+
+  const params = useParams();
+
+  let isFavorite = false;
+
+  if (login.isLoggedIn) {
+    loadedPlaces.favoritesUserIds.map((favorite) => {
+      if (favorite === login.userId) {
+        return (isFavorite = true);
+      }
+      return (isFavorite = false);
+    });
+  }
+
   return (
     <CardActions
       disableSpacing
       sx={{ paddingTop: "0px", paddingLeft: "0px", paddingBottom: "0px" }}
     >
       <Stack direction="row" spacing={-3}>
-        <FavoriteButton loadedPlaces={loadedPlaces} />
+        <FavoriteButton isFavorite={isFavorite} />
         <ShareButton />
       </Stack>
       {!onMap ? (
-        <ButtonDetails loadedPlaces={loadedPlaces} />
+        <ButtonDetails onPlaceId={loadedPlaces._id} />
       ) : (
         <ButtonSeeMap onHandleOpen={handleOpen} />
       )}
@@ -101,6 +119,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
               <Stack>
                 <Box sx={style}>
                   <Stack>
+                    <ButtonCloseModal handleClose={handleClose} />
                     <Stack
                       direction="row"
                       spacing={2}
@@ -133,7 +152,6 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                         {loadedPlaces.title}
                       </Typography>
                     </Stack>
-
                     <p style={{ margin: "1px" }} />
                     <Stack
                       direction="row"
@@ -146,6 +164,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                         fontWeight={400}
                         color="text.secondary"
                         sx={{
+                          marginBottom: "10px",
                           paddingLeft: "24px",
                           fontSize: {
                             sps: "8px",
@@ -165,7 +184,9 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                       >
                         {loadedPlaces.address}
                       </Typography>
-                      <ButtonEdit />
+                      {login.isLoggedIn && (
+                        <ButtonEdit loadedPlaces={loadedPlaces} />
+                      )}
                     </Stack>
                   </Stack>
                   <Box
