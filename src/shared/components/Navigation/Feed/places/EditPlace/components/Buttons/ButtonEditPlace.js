@@ -12,7 +12,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonEditPlace = ({ formIsValid }) => {
+const ButtonEditPlace = ({ formState }) => {
   //   const login = useContext(LoginContext);
   let login = true;
 
@@ -23,7 +23,7 @@ const ButtonEditPlace = ({ formIsValid }) => {
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
             type="submit"
-            disabled={formIsValid ? false : true}
+            disabled={formState ? false : true}
             sx={{
               fontWeight: 500,
               textTransform: "none",

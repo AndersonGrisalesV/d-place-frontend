@@ -45,7 +45,7 @@ function App() {
         {/* <Route path="/new" element={<NewPlacePage />} /> */}
         <Route path="/api/users/favorites" element={<FavoritesPage />} />
         <Route path="/api/users/profile" element={<Profile />} />
-        <Route path="/api/places/newPlace" element={<NewPlace />} />
+        <Route path="/api/places/newplace" element={<NewPlace />} />
         <Route path="/api/places/editplace/:pid" element={<EditPlace />} />
         <Route path="/api/places/:pid" element={<PlaceDetail />} />
         <Route path="*" element={<p>Not Found!</p>} />

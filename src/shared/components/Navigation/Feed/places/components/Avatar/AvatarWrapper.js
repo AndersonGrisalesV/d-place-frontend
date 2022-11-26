@@ -24,27 +24,30 @@ const AvatarWrapper = ({ loadedPlaces }) => {
         month = "March";
       }
       if (month == "04") {
-        month = "March";
+        month = "April";
       }
       if (month == "05") {
-        month = "June";
+        month = "May";
       }
       if (month == "06") {
-        month = "July";
+        month = "June";
       }
       if (month == "07") {
-        month = "August";
+        month = "July";
       }
       if (month == "08") {
-        month = "September";
+        month = "August";
       }
       if (month == "09") {
-        month = "October";
+        month = "September";
       }
       if (month == "10") {
-        month = "November";
+        month = "October";
       }
       if (month == "11") {
+        month = "November";
+      }
+      if (month == "12") {
         month = "December";
       }
 
