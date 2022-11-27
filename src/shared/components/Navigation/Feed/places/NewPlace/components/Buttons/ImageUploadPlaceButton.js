@@ -62,7 +62,7 @@ const ImageUploadPlaceButton = ({
             },
           }}
         >
-          Upload Image
+          Select Image
         </StyleButtonImage>
       </label>
     </Stack>

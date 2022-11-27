@@ -61,7 +61,7 @@ const ImageUploadButton = ({ formInputsHandler, isLoading }) => {
             },
           }}
         >
-          Upload Image
+          Select Image
         </StyleButtonImage>
       </label>
     </Stack>

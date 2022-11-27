@@ -16,6 +16,7 @@ const ImageUploadEditPlaceButton = ({
   isLoading,
   showSuccess,
   setImageUrl,
+  showBlurImage,
 }) => {
   const handleChangeImageUploadPlaceButton = (e) => {
     if (e.target.files[0]) {
@@ -67,7 +68,7 @@ const ImageUploadEditPlaceButton = ({
             },
           }}
         >
-          Edit Image
+          Select Image
         </StyleButtonImage>
       </label>
     </Stack>

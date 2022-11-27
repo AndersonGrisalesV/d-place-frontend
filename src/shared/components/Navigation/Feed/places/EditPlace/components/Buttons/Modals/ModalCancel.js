@@ -53,7 +53,7 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
   const handleConfirmCancel = () => {
     // redirect
     onHandleClose();
-    navigate("/");
+    navigate("/homepage");
   };
 
   return (

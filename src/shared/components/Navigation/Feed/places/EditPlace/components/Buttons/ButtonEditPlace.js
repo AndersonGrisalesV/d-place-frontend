@@ -12,18 +12,16 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonEditPlace = ({ formState }) => {
-  //   const login = useContext(LoginContext);
-  let login = true;
+const ButtonEditPlace = ({ formIsValid }) => {
+  const login = useContext(LoginContext);
 
   return (
     <React.Fragment>
-      {/* {login.isLoggedIn && ( */}
-      {login && (
+      {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
             type="submit"
-            disabled={formState ? false : true}
+            disabled={formIsValid ? false : true}
             sx={{
               fontWeight: 500,
               textTransform: "none",

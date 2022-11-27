@@ -30,6 +30,7 @@ import LoadingSpinnerWrapper from "../../../../LoadingSpinner/LoadingSpinnerWrap
 import { useForm } from "../../../../../hooks/form-hook";
 import { useHttpClient } from "../../../../../hooks/http-hook";
 import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
+import ButtonDeletePlace from "./components/Buttons/ButtonDeletePlace";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -141,7 +142,7 @@ const EditPlacePostDisplay = () => {
               value: responseData.place.description,
               // isValid: true,
             },
-            imageUrl: {
+            image: {
               value: responseData.place.imageUrl,
               // isValid: true,
             },
@@ -181,6 +182,21 @@ const EditPlacePostDisplay = () => {
   }, [selectedImage, imageUrl]);
 
   const formInputsHandler = (e) => {
+    console.log(e.target.name);
+    if (e.target.name === "title" && showBlurTitle) {
+      setShowBlurTitle(false);
+    }
+    if (e.target.name === "description" && showBlurDescription) {
+      setShowBlurDescription(false);
+    }
+    if (e.target.name === "image" && showBlurImage) {
+      setShowImage(false);
+    }
+
+    if (e.target.name === "address" && showBlurAddress) {
+      setShowAddress(false);
+    }
+
     // console.log("aqui" + e.target.value);
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
@@ -201,8 +217,13 @@ const EditPlacePostDisplay = () => {
     }
   };
 
+  const [showBlurTitle, setShowBlurTitle] = useState(true);
+  const [showBlurDescription, setShowBlurDescription] = useState(true);
+  const [showBlurAddress, setShowAddress] = useState(true);
+  const [showBlurImage, setShowImage] = useState(true);
+
   const {
-    value: defaultValue,
+    value: titleInput,
     isValid: titleIsValid,
     hasError: titleInputHasError,
     valueChangeHandler: titleChangeHandler,
@@ -255,22 +276,43 @@ const EditPlacePostDisplay = () => {
     let date = new Date().toJSON();
     if (login.isLoggedIn && formInputs) {
       console.log(formInputs);
+
+      if (!formInputs.image) {
+        formInputs.image =
+          //Replace for a placeholder image
+          "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
+      }
+
+      if (showBlurTitle) {
+        formInputs.title = "same";
+      }
+      if (showBlurDescription) {
+        formInputs.description = "same";
+      }
+      if (showBlurImage) {
+        formInputs.image = "same";
+      }
+      if (showBlurAddress) {
+        formInputs.address = "same";
+      }
+
+      console.log(formInputs.image);
       try {
         await sendRequest(
           `http://localhost:4000/api/places/editplace/${pid}`,
           "PATCH",
           JSON.stringify({
-            title: formInputs.title.value,
-            description: formInputs.description.value,
+            title: formInputs.title,
+            description: formInputs.description,
             address: formInputs.address,
-            // image: formInputs.image,
+            image: formInputs.image,
             postDate: date,
           }),
           {
             "Content-Type": "Application/json",
           }
         );
-        navigate("/api/places/profile");
+        navigate(`/api/places/${pid}`);
       } catch (err) {}
     }
     resetTitleInput();
@@ -280,20 +322,21 @@ const EditPlacePostDisplay = () => {
 
   let formIsValid = false;
 
-  if (
-    login.isLoggedIn &&
-    titleIsValid &&
-    descriptionIsValid &&
-    addressIsValid
-  ) {
-    formIsValid = true;
+  if (login.isLoggedIn) {
+    if (!showBlurTitle && titleIsValid) {
+      formIsValid = true;
+    } else if (!showBlurDescription && descriptionIsValid) {
+      formIsValid = true;
+    } else if (!showBlurAddress && addressIsValid) {
+      formIsValid = true;
+    } else if (!showBlurImage) {
+      formIsValid = true;
+    }
+
+    if (!selectedImage && !imageUrl) {
+      formIsValid = false;
+    }
   }
-
-  // const [removeImage, setRemoveImage] = useState(false);
-
-  // useEffect(() => {
-  //   setRemoveImage(false);
-  // }, [imageUrl]);
 
   const handleRemoveImage = () => {
     setSelectedImage(null);
@@ -306,7 +349,7 @@ const EditPlacePostDisplay = () => {
 
   return (
     <ScrollToTop pathname={pathname}>
-      {error && <SnackBarResultLogin error={error} onClear={clearError} />}
+      {!error && <SnackBarResultLogin error={error} onClear={clearError} />}
       <React.Fragment>
         {!isLoading && loadedPlace && (
           // {showSuccess && (
@@ -399,7 +442,7 @@ const EditPlacePostDisplay = () => {
                       formInputsHandler(e);
                       titleChangeHandler(e);
                     }}
-                    onBlur={titleBlurHandler}
+                    onBlur={showBlurTitle ? false : titleBlurHandler}
                     // value={titleInput}
                     error={titleInputHasError}
                     helperText={
@@ -480,7 +523,9 @@ const EditPlacePostDisplay = () => {
                       formInputsHandler(e);
                       descriptionChangeHandler(e);
                     }}
-                    onBlur={descriptionBlurHandler}
+                    onBlur={
+                      showBlurDescription ? false : descriptionBlurHandler
+                    }
                     // value={descriptionInput}
                     error={descriptionInputHasError}
                     helperText={
@@ -560,7 +605,7 @@ const EditPlacePostDisplay = () => {
                       formInputsHandler(e);
                       addressChangeHandler(e);
                     }}
-                    onBlur={addressBlurHandler}
+                    onBlur={showBlurAddress ? false : addressBlurHandler}
                     // value={addressInput}
                     error={addressInputHasError}
                     helperText={
@@ -575,6 +620,7 @@ const EditPlacePostDisplay = () => {
                       isLoading={isLoading}
                       showSuccess={showSuccess}
                       setImageUrl={setImageUrl}
+                      showBlurImage={showBlurImage}
                     />
                     {imageUrl && selectedImage && (
                       <ImagePreviewEditPlaceButton
@@ -589,14 +635,29 @@ const EditPlacePostDisplay = () => {
                       <LoadingSpinner />
                     </LoadingSpinnerWrapper>
                   ) : (
-                    <Stack direction="row" spacing={0} justifyContent="center">
-                      <ButtonEditPlace formState={formState} />
-                      <ButtonCancelEditPlace
-                        open={open}
-                        close={handleClose}
-                        onHandleOpen={handleOpen}
-                        onHandleClose={handleClose}
-                      />
+                    <Stack
+                      spacing={2}
+                      direction="column"
+                      sx={{
+                        margin: "0px",
+                        padding: "0px",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Stack
+                        direction="row"
+                        spacing={0}
+                        justifyContent="center"
+                      >
+                        <ButtonEditPlace formIsValid={formIsValid} />
+                        <ButtonCancelEditPlace
+                          open={open}
+                          close={handleClose}
+                          onHandleOpen={handleOpen}
+                          onHandleClose={handleClose}
+                        />
+                      </Stack>
+                      <ButtonDeletePlace />
                     </Stack>
                   )}
                 </Stack>

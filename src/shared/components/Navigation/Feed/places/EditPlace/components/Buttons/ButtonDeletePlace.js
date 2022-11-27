@@ -1,18 +1,23 @@
 import React, { useContext } from "react";
 
+import { Button, Zoom } from "@mui/material";
+import ModalCancel from "./Modals/ModalCancel";
+
 import { LoginContext } from "../../../../../../../context/login-context";
 
-import { Button, styled, Zoom } from "@mui/material";
+import { styled } from "@mui/system";
 
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
+  border:
+    theme.palette.mode === "dark" ? "1px solid #fff" : "1px solid #da4453",
   "&:hover": {
     backgroundColor: "transparent",
     color: "#9b9b9bc7",
   },
 }));
 
-const ButtonYesCancelEditPlace = ({ onYesCancel }) => {
+const ButtonDeletePlace = ({ open, close, onHandleOpen, onHandleClose }) => {
   const login = useContext(LoginContext);
 
   return (
@@ -20,7 +25,7 @@ const ButtonYesCancelEditPlace = ({ onYesCancel }) => {
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
-            onClick={onYesCancel}
+            onClick={onHandleOpen}
             sx={{
               fontWeight: 500,
               textTransform: "none",
@@ -54,12 +59,22 @@ const ButtonYesCancelEditPlace = ({ onYesCancel }) => {
               },
             }}
           >
-            Cancel
+            DELETE PLACE
           </StyleButton>
         </Zoom>
       )}
+      <React.Fragment>
+        {open && (
+          <ModalCancel
+            open={open}
+            close={close}
+            onHandleOpen={onHandleOpen}
+            onHandleClose={onHandleClose}
+          />
+        )}
+      </React.Fragment>
     </React.Fragment>
   );
 };
 
-export default ButtonYesCancelEditPlace;
+export default ButtonDeletePlace;
