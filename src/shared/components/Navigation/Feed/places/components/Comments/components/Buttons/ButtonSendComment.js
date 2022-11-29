@@ -11,23 +11,16 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonSendComment = ({
-  DUMMY_PLACES,
-  sendCommentIsValid,
-  handleSendComment,
-}) => {
-  //   const login = useContext(LoginContext);
-  let login = true;
+const ButtonSendComment = ({ formIsValid }) => {
+  const login = useContext(LoginContext);
 
   return (
     <React.Fragment>
-      {/* {login.isLoggedIn && ( */}
-      {login && (
+      {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
             type="submit"
-            onClick={handleSendComment}
-            disabled={sendCommentIsValid ? false : true}
+            disabled={formIsValid ? false : true}
             sx={{
               fontWeight: 500,
               textTransform: "none",

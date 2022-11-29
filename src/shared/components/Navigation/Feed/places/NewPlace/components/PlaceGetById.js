@@ -8,6 +8,7 @@ import SnackBarResultLogin from "../../../../../LoginRegister/components/SnackBa
 const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
   const [loadedPlace, setLoadedPlace] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [refreshpage, setRefreshPage] = useState(false);
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -22,6 +23,29 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
     fetchPlaces();
   }, [sendRequest, placeId]);
 
+  useEffect(() => {
+    if (refreshpage) {
+      const fetchPlaces = async () => {
+        try {
+          const responseData = await sendRequest(
+            `http://localhost:4000/api/places/${refreshpage}`
+          );
+          setLoadedPlace(responseData.place);
+          console.log(responseData.place);
+          setRefreshPage(false);
+        } catch (err) {}
+      };
+      fetchPlaces();
+    }
+  }, [sendRequest, refreshpage]);
+
+  const refresPlaceCommentsHandler = (deletedPlaceId) => {
+    setRefreshPage(deletedPlaceId);
+    // setLoadedPlace((prevPlace) =>
+    //   prevPlace.filter((place) => place.id === deletedPlaceId)
+    // );
+  };
+
   return (
     <>
       {error && <SnackBarResultLogin error={error} onClear={clearError} />}
@@ -34,6 +58,7 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
             loadedPlaces={loadedPlace}
             id={loadedPlace._id}
             key={loadedPlace._id}
+            onRefreshPlaceComments={refresPlaceCommentsHandler}
           />
           <br />
         </React.Fragment>

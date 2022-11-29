@@ -184,26 +184,6 @@ const NewPlacePostDisplay = () => {
     resetAddressInput();
     setImageUrl(null);
     setSelectedImage(null);
-
-    // const currentYear = new Date().getFullYear();
-
-    // const currentMonth = new Date().getMonth() + 1;
-
-    // const currentDay = new Date().getDate();
-    // const monthAndDay = [currentMonth, currentDay].join(" ");
-    // const completeDAte = [monthAndDay, currentYear].join(",");
-
-    // onAddComment();
-    // Math.random().toString(),
-    // completeDAte,
-    // commentText,
-    // placeId,
-    // title,
-    // creatorId,
-    // creatorName,
-    // creatorImageUrl
-
-    // setTimeout(navigate("/"), 8000);
   };
 
   let formIsValid = false;

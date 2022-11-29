@@ -11,14 +11,12 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonYesDelete = ({ DUMMY_PLACES, onYesDelete }) => {
-  //   const login = useContext(LoginContext);
-  let login = true;
+const ButtonYesDelete = ({ onYesDelete }) => {
+  const login = useContext(LoginContext);
 
   return (
     <React.Fragment>
-      {/* {login.isLoggedIn && ( */}
-      {login && (
+      {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
             onClick={onYesDelete}

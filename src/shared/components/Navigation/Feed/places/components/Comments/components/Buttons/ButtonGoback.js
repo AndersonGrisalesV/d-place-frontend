@@ -12,13 +12,11 @@ const StyleButton = styled(Button)(({ theme }) => ({
 }));
 
 const ButtonGoback = ({ onGoback }) => {
-  // const login = useContext(LoginContext);
-  let login = true;
+  const login = useContext(LoginContext);
 
   return (
     <React.Fragment>
-      {/* {login.isLoggedIn && ( */}
-      {login && (
+      {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
             onClick={onGoback}

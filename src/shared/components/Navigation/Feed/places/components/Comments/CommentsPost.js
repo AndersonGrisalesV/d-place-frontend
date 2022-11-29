@@ -47,18 +47,18 @@ const DUMMY_COMMENTS = [
   },
 ];
 
-const CommentsPost = ({ loadedPlaces }) => {
-  let placeComments;
-  placeComments = DUMMY_COMMENTS.filter(
-    (place) => place.placeId === loadedPlaces.placeId
-  );
+const CommentsPost = ({ loadedPlaces, onRefreshPlaceComments }) => {
+  // let placeComments;
+  // placeComments = DUMMY_COMMENTS.filter(
+  //   (place) => place.placeId === loadedPlaces.placeId
+  // );
 
   // let editDeleteComments;
   // editDeleteComments = DUMMY_COMMENTS.filter(
   //   (comment) => comment.creatorId === DUMMY_PLACES.creatorId
   // );
 
-  console.log(placeComments);
+  console.log(loadedPlaces);
   // console.log(editDeleteComments[0]);
 
   // const [commentsList, setCommentsList] = useState(DUMMY_COMMENTS);
@@ -93,7 +93,9 @@ const CommentsPost = ({ loadedPlaces }) => {
   return (
     <React.Fragment>
       <CommentsDisplay
-        DUMMY_COMMENTS={placeComments}
+        onPlaceComments={loadedPlaces.comments}
+        onPlaceId={loadedPlaces.id}
+        onRefreshPlaceComments={onRefreshPlaceComments}
         // onAddComment={addCommentHandler}
       />
     </React.Fragment>

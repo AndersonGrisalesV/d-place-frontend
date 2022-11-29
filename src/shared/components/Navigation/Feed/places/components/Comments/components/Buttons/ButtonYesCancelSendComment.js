@@ -18,8 +18,7 @@ const ButtonYesCancelSendComment = ({ onYesCancel }) => {
 
   return (
     <React.Fragment>
-      {/* {login.isLoggedIn && ( */}
-      {login && (
+      {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
             onClick={onYesCancel}

@@ -16,19 +16,16 @@ const ButtonCancelSendComment = ({
   close,
   onHandleOpen,
   onHandleClose,
-  CancelSendComment,
+  handleCancelSendComment,
   cancelSendCommentIsValid,
 }) => {
-  // const login = useContext(LoginContext);
-  let login = true;
+  const login = useContext(LoginContext);
 
   return (
     <React.Fragment>
-      {/* {login.isLoggedIn && ( */}
-      {login && (
+      {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
-            // type="submit"
             onClick={onHandleOpen}
             disabled={cancelSendCommentIsValid ? false : true}
             sx={{
@@ -75,7 +72,7 @@ const ButtonCancelSendComment = ({
             close={close}
             onHandleOpen={onHandleOpen}
             onHandleClose={onHandleClose}
-            CancelSendComment={CancelSendComment}
+            CancelSendComment={handleCancelSendComment}
           />
         )}
       </React.Fragment>

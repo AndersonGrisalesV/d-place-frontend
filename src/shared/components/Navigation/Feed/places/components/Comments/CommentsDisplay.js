@@ -10,6 +10,8 @@ import useFocusBlurHook from "../../../../../../../shared/hooks/use-my-input";
 import styled from "@emotion/styled";
 import LoginButton from "../../../../Navbar/components/RightBar/LoginButtons/LoginButton";
 import ButtonCancelSendComment from "./components/Buttons/ButtonCancelSendComment";
+import { useHttpClient } from "../../../../../../hooks/http-hook";
+import { useNavigate } from "react-router-dom";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -29,8 +31,19 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
+const CommentsDisplay = ({
+  onPlaceComments,
+  onPlaceId,
+  onAddComment,
+  onRefreshPlaceComments,
+}) => {
   const login = useContext(LoginContext);
+
+  let navigate = useNavigate();
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const initialFormInputs = {
     comment: "",
@@ -71,34 +84,38 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
     formIsValid = true;
   }
 
-  const onSubmitAddCommentHandler = (e) => {
+  const onSubmitAddCommentHandler = async (e) => {
     e.preventDefault();
 
-    if (formIsValid) {
-      console.log(formInputs);
+    if (login.isLoggedIn && formIsValid) {
+      // console.log(formInputs);
       // send comment here
+      let date = new Date().toJSON();
+
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:4000/api/places/${onPlaceId}/newcomment`,
+          "POST",
+          JSON.stringify({
+            commentText: formInputs.comment,
+            postCommentDate: date,
+            placeId: onPlaceId,
+            creatorId: login.userId,
+          }),
+          {
+            "Content-Type": "Application/json",
+          }
+        );
+
+        setShowSuccess(true);
+        onRefreshPlaceComments(onPlaceId);
+        setTimeout(() => {
+          setShowSuccess(false);
+          // navigate(0);
+        }, "910");
+      } catch (err) {}
     }
     resetCommentInput();
-
-    // const currentYear = new Date().getFullYear();
-
-    // const currentMonth = new Date().getMonth() + 1;
-
-    // const currentDay = new Date().getDate();
-    // const monthAndDay = [currentMonth, currentDay].join(" ");
-    // const completeDAte = [monthAndDay, currentYear].join(",");
-
-    // onAddComment();
-    // Math.random().toString(),
-    // completeDAte,
-    // commentText,
-    // placeId,
-    // title,
-    // creatorId,
-    // creatorName,
-    // creatorImageUrl
-
-    // setTimeout(navigate("/"), 8000);
   };
 
   const handleCancelSendComment = () => {
@@ -115,12 +132,13 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
 
   const comments = (
     <React.Fragment>
-      {DUMMY_COMMENTS.map((comment) => (
-        <React.Fragment key={comment.commentId}>
+      {onPlaceComments.map((comment) => (
+        <React.Fragment key={comment._id}>
           <CommentShow
-            DUMMY_COMMENTS={comment}
-            key={comment.commentId}
-            id={comment.commentId}
+            onRefreshPlaceComments={onRefreshPlaceComments}
+            onPlaceComments={comment}
+            key={comment._id}
+            id={comment._id}
           />
         </React.Fragment>
       ))}
@@ -270,7 +288,6 @@ const CommentsDisplay = ({ DUMMY_COMMENTS, onAddComment }) => {
           </Typography>
         )}
       </CardContentComments>
-      {/* {successMessage ? showMessage : ""} */}
     </CardWrapperCommentsDisplay>
   );
 };

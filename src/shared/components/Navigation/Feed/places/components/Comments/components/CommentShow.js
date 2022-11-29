@@ -18,6 +18,7 @@ import ModalCancelEditComment from "./Buttons/Modals/ModalCancelEditComment";
 import ModalCancelDeleteComment from "./Buttons/Modals/ModalCancelDeleteComment";
 import useFocusBlurHook from "../../../../../../../hooks/use-my-input";
 import styled from "@emotion/styled";
+import { useHttpClient } from "../../../../../../../hooks/http-hook";
 
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",
@@ -53,16 +54,81 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const CommentShow = ({ DUMMY_COMMENTS, onButton, onAddComment }) => {
+const CommentShow = ({
+  onPlaceComments,
+  onRefreshPlaceComments,
+  onButton,
+  onAddComment,
+}) => {
   const login = useContext(LoginContext);
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
   // console.log("here" + `${onButton}`);
+  console.log(onPlaceComments);
+
+  const addDays = (date) => {
+    let year;
+    let month;
+    let day;
+
+    const monthName = (month) => {
+      if (month == "01") {
+        month = "January";
+      }
+      if (month == "02") {
+        month = "February";
+      }
+      if (month == "03") {
+        month = "March";
+      }
+      if (month == "04") {
+        month = "April";
+      }
+      if (month == "05") {
+        month = "May";
+      }
+      if (month == "06") {
+        month = "June";
+      }
+      if (month == "07") {
+        month = "July";
+      }
+      if (month == "08") {
+        month = "August";
+      }
+      if (month == "09") {
+        month = "September";
+      }
+      if (month == "10") {
+        month = "October";
+      }
+      if (month == "11") {
+        month = "November";
+      }
+      if (month == "12") {
+        month = "December";
+      }
+
+      return month;
+    };
+
+    month = date.substring(5, 7);
+    month = monthName(month);
+    day = date.substring(8, 10);
+    year = date.substring(0, 4);
+
+    return { month, day, year };
+  };
+
+  let fetchedDate = addDays(onPlaceComments.postCommentDate);
 
   const [commentValue, setCommentValue] = useState(
-    `${DUMMY_COMMENTS.commentText}`
+    `${onPlaceComments.commentText}`
   );
 
   const initialFormInputs = {
-    commentText: `${DUMMY_COMMENTS.commentText}`,
+    commentText: `${onPlaceComments.commentText}`,
   };
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
@@ -149,12 +215,27 @@ const CommentShow = ({ DUMMY_COMMENTS, onButton, onAddComment }) => {
 
   const handleDeleteComment = () => {
     // if(login && userowncomment){ deleete comment
-    if (login) {
+    if (login.isLoggedIn) {
       handleOpen();
     }
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async (e) => {
+    e.preventDefault();
+    try {
+      await sendRequest(
+        `http://localhost:4000/api/places/${onPlaceComments.placeId}/deletecomment/${onPlaceComments._id}`,
+        "DELETE"
+      );
+      setTimeout(() => {
+        // onShowSuccess(false);
+        onRefreshPlaceComments(onPlaceComments.placeId);
+      }, "910");
+      // Reload page
+      // console.log("DELETING");
+      // onDelete(onPlaceComments.placeId);
+    } catch (err) {}
+
     handleClose();
   };
 
@@ -184,6 +265,7 @@ const CommentShow = ({ DUMMY_COMMENTS, onButton, onAddComment }) => {
         >
           <ListItemAvatar
             sx={{
+              paddingTop: "2px",
               marginTop: "0px",
               display: {
                 sps: "none",
@@ -249,12 +331,12 @@ const CommentShow = ({ DUMMY_COMMENTS, onButton, onAddComment }) => {
                   lgs: "40px",
                 },
               }}
-              title={DUMMY_COMMENTS.creatorName}
-              alt={DUMMY_COMMENTS.creatorName}
-              src={DUMMY_COMMENTS.creatorImageUrl}
+              title={onPlaceComments.creatorId.name}
+              alt={onPlaceComments.creatorId.name}
+              src={onPlaceComments.creatorId.image}
             >
-              {DUMMY_COMMENTS.creatorImageUrl === ""
-                ? DUMMY_COMMENTS.creatorName.charAt(0)
+              {onPlaceComments.creatorId.image === ""
+                ? onPlaceComments.creatorId.name.charAt(0)
                 : ""}
             </Avatar>
           </ListItemAvatar>
@@ -282,7 +364,7 @@ const CommentShow = ({ DUMMY_COMMENTS, onButton, onAddComment }) => {
                   },
                 }}
               >
-                {DUMMY_COMMENTS.creatorName}
+                {onPlaceComments.creatorId.name}
               </Typography>
             }
             secondary={
@@ -331,9 +413,9 @@ const CommentShow = ({ DUMMY_COMMENTS, onButton, onAddComment }) => {
                   variant="body2"
                   color="text.primary"
                 >
-                  {DUMMY_COMMENTS.postCommentDate}
+                  {`${fetchedDate.month} ${fetchedDate.day}, ${fetchedDate.year}`}
                 </Typography>
-                {`${DUMMY_COMMENTS.commentText}`}
+                {`${onPlaceComments.commentText}`}
               </Typography>
             }
           />

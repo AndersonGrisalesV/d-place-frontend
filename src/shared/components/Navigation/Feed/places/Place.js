@@ -3,7 +3,12 @@ import { Box, Zoom } from "@mui/material";
 import CardPlace from "./components/CardPlace";
 import CommentsPost from "./components/Comments/CommentsPost";
 
-const Place = ({ onMap = false, loadedPlaces, onShowComments = false }) => {
+const Place = ({
+  onMap = false,
+  loadedPlaces,
+  onShowComments = false,
+  onRefreshPlaceComments,
+}) => {
   return (
     <React.Fragment>
       <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
@@ -36,7 +41,10 @@ const Place = ({ onMap = false, loadedPlaces, onShowComments = false }) => {
       </Zoom>
       {onShowComments && (
         <React.Fragment>
-          <CommentsPost loadedPlaces={loadedPlaces} />
+          <CommentsPost
+            loadedPlaces={loadedPlaces}
+            onRefreshPlaceComments={onRefreshPlaceComments}
+          />
         </React.Fragment>
       )}
     </React.Fragment>
