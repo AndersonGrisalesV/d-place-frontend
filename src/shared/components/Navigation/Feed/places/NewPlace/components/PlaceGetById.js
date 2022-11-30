@@ -9,6 +9,10 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
   const [loadedPlace, setLoadedPlace] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [refreshpage, setRefreshPage] = useState(false);
+  const [deletedComment, setDeletedComment] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showErrorCreatingComment, setShowErrorCreatingComment] =
+    useState(false);
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -39,6 +43,8 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
     }
   }, [sendRequest, refreshpage]);
 
+  let errorControl = <SnackBarResultLogin error={error} onClear={clearError} />;
+
   const refresPlaceCommentsHandler = (deletedPlaceId) => {
     setRefreshPage(deletedPlaceId);
     // setLoadedPlace((prevPlace) =>
@@ -46,9 +52,49 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
     // );
   };
 
+  // const handleDeletedComments = (deletedCommentId) => {
+  //   setLoadedPlace((prevPlace) =>
+  //     prevPlace.comments.filter((place) => place._id !== deletedCommentId)
+  //   );
+  //   console.log(loadedPlace);
+  // };
+
+  const handleErrorDeletingComment = (err, showErr) => {
+    setDeletedComment(err);
+    if (showErr) {
+      setShowErrorCreatingComment(err);
+
+      setTimeout(() => {
+        setShowErrorCreatingComment(false);
+      }, "2000");
+    } else {
+      setShowSuccess(true);
+
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, "2000");
+    }
+  };
+
   return (
     <>
       {error && <SnackBarResultLogin error={error} onClear={clearError} />}
+      {deletedComment ? (
+        <SnackBarResultLogin error={deletedComment} onClear={clearError} />
+      ) : null}
+      {showSuccess && (
+        <SnackBarResultLogin
+          onSuccess={true}
+          onDuration={6000}
+          message={"Your comment was deleted successfully"}
+        />
+      )}
+      {showErrorCreatingComment && (
+        <SnackBarResultLogin
+          onDuration={6000}
+          message={showErrorCreatingComment}
+        />
+      )}
 
       {!isLoading && loadedPlace && (
         <React.Fragment>
@@ -59,6 +105,8 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
             id={loadedPlace._id}
             key={loadedPlace._id}
             onRefreshPlaceComments={refresPlaceCommentsHandler}
+            // onDeletedComments={handleDeletedComments}
+            onErrorDeleteComment={handleErrorDeletingComment}
           />
           <br />
         </React.Fragment>

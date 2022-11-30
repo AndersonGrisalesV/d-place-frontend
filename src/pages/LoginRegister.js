@@ -47,6 +47,7 @@ const LoginRegister = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // let location = useLocation();
   // const from =
@@ -98,7 +99,12 @@ const LoginRegister = () => {
         // } else {
         //   window.history.go(-1);
         // }
-        navigate("/homepage");
+
+        setShowSuccess(true);
+        setTimeout(() => {
+          setShowSuccess(false);
+          navigate("/homepage");
+        }, "910");
       } catch (err) {}
 
       // console.log(responseData)
@@ -280,8 +286,20 @@ const LoginRegister = () => {
 
   return (
     <ScrollToTop pathname={pathname}>
-      {error && <SnackBarResultLogin error={error} onClear={clearError} />}
-
+      {error && (
+        <SnackBarResultLogin
+          onDuration={6000}
+          error={error}
+          onClear={clearError}
+        />
+      )}
+      {showSuccess && (
+        <SnackBarResultLogin
+          onSuccess={true}
+          onDuration={800}
+          message={"The place was created successfully"}
+        />
+      )}
       <CardWrapperLogin>
         <CardContentLogin>
           <Title isLoginMode={isLoginMode} />

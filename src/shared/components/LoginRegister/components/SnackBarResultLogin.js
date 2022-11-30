@@ -107,6 +107,7 @@ const SnackBarResultLogin = ({
   setChangeState,
   message,
   logUser,
+  onDuration,
 }) => {
   useEffect(() => {
     setErrorState(error ? true : false);
@@ -123,7 +124,7 @@ const SnackBarResultLogin = ({
   const handleClose = (event, reason) => {
     error = false;
     setErrorState(error ? true : false);
-    setSuccessState(onSuccess ? true : false);
+    setSuccessState(onSuccess ? false : true);
     // setChangeState(false);
     if (!onSuccess) {
       onClear();
@@ -139,7 +140,7 @@ const SnackBarResultLogin = ({
       {error ? (
         <StyleSnackBarError
           open={errorState}
-          // autoHideDuration={6000}
+          autoHideDuration={onDuration}
           onClose={handleClose}
         >
           <StyleAlertError
@@ -219,7 +220,7 @@ const SnackBarResultLogin = ({
       ) : onSuccess ? (
         <StyleSnackBarSuccess
           open={successState}
-          autoHideDuration={800}
+          autoHideDuration={onDuration}
           onClose={handleClose}
         >
           <StyleAlertSuccess

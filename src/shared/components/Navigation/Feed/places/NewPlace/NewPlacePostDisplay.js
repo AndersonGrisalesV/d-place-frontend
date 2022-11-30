@@ -214,7 +214,8 @@ const NewPlacePostDisplay = () => {
       {showSuccess && (
         <SnackBarResultLogin
           onSuccess={true}
-          message={"Place was created Successfully"}
+          onDuration={800}
+          message={"The place was created successfully"}
         />
       )}
       <CardWrapperNewPlacePostDisplay>

@@ -8,6 +8,8 @@ const Place = ({
   loadedPlaces,
   onShowComments = false,
   onRefreshPlaceComments,
+  onDeletedComments,
+  onErrorDeleteComment,
 }) => {
   return (
     <React.Fragment>
@@ -44,6 +46,8 @@ const Place = ({
           <CommentsPost
             loadedPlaces={loadedPlaces}
             onRefreshPlaceComments={onRefreshPlaceComments}
+            onDeletedComments={onDeletedComments}
+            onErrorDeleteComment={onErrorDeleteComment}
           />
         </React.Fragment>
       )}

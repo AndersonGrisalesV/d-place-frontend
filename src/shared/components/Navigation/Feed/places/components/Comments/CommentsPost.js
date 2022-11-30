@@ -47,7 +47,12 @@ const DUMMY_COMMENTS = [
   },
 ];
 
-const CommentsPost = ({ loadedPlaces, onRefreshPlaceComments }) => {
+const CommentsPost = ({
+  loadedPlaces,
+  onRefreshPlaceComments,
+  onDeletedComments,
+  onErrorDeleteComment,
+}) => {
   // let placeComments;
   // placeComments = DUMMY_COMMENTS.filter(
   //   (place) => place.placeId === loadedPlaces.placeId
@@ -96,6 +101,8 @@ const CommentsPost = ({ loadedPlaces, onRefreshPlaceComments }) => {
         onPlaceComments={loadedPlaces.comments}
         onPlaceId={loadedPlaces.id}
         onRefreshPlaceComments={onRefreshPlaceComments}
+        onDeletedComments={onDeletedComments}
+        onErrorDeleteComment={onErrorDeleteComment}
         // onAddComment={addCommentHandler}
       />
     </React.Fragment>

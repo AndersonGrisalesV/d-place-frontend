@@ -36,6 +36,8 @@ const CommentsDisplay = ({
   onPlaceId,
   onAddComment,
   onRefreshPlaceComments,
+  onDeletedComments,
+  onErrorDeleteComment,
 }) => {
   const login = useContext(LoginContext);
 
@@ -85,6 +87,7 @@ const CommentsDisplay = ({
   }
 
   const onSubmitAddCommentHandler = async (e) => {
+    onErrorDeleteComment(error, true);
     e.preventDefault();
 
     if (login.isLoggedIn && formIsValid) {
@@ -113,7 +116,12 @@ const CommentsDisplay = ({
           setShowSuccess(false);
           // navigate(0);
         }, "910");
-      } catch (err) {}
+      } catch (err) {
+        setTimeout(() => {
+          onErrorDeleteComment(err.message, true);
+          onRefreshPlaceComments(onPlaceId);
+        }, "910");
+      }
     }
     resetCommentInput();
   };
@@ -136,6 +144,8 @@ const CommentsDisplay = ({
         <React.Fragment key={comment._id}>
           <CommentShow
             onRefreshPlaceComments={onRefreshPlaceComments}
+            onDeletedComments={onDeletedComments}
+            onErrorDeleteComment={onErrorDeleteComment}
             onPlaceComments={comment}
             key={comment._id}
             id={comment._id}
