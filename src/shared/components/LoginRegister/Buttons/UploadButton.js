@@ -59,6 +59,7 @@ const UploadButton = ({ onUpload }) => {
         />
         <label htmlFor="select-image" style={{ marginLeft: "0px" }}>
           <StyleButton
+            disabled={isLoading ? true : false || showSuccess ? true : false}
             component="span"
             sx={{
               fontWeight: 500,

@@ -11,6 +11,7 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
   const [refreshpage, setRefreshPage] = useState(false);
   const [deletedComment, setDeletedComment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccessCreating, setShowSuccessCreating] = useState(false);
   const [showErrorCreatingComment, setShowErrorCreatingComment] =
     useState(false);
 
@@ -43,8 +44,6 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
     }
   }, [sendRequest, refreshpage]);
 
-  let errorControl = <SnackBarResultLogin error={error} onClear={clearError} />;
-
   const refresPlaceCommentsHandler = (deletedPlaceId) => {
     setRefreshPage(deletedPlaceId);
     // setLoadedPlace((prevPlace) =>
@@ -59,29 +58,61 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
   //   console.log(loadedPlace);
   // };
 
-  const handleErrorDeletingComment = (err, showErr) => {
-    setDeletedComment(err);
-    if (showErr) {
-      setShowErrorCreatingComment(err);
+  const handleErrorDeletingComment = (
+    err,
+    showErr,
+    errorDeletingComment,
+    showSucc
+  ) => {
+    // setDeletedComment(err);
+    // if (showErr) {
+    //   setShowErrorCreatingComment(err);
 
+    //   setTimeout(() => {
+    //     setShowErrorCreatingComment(false);
+    //     setDeletedComment(null);
+    //   }, "6000");
+    // }
+    if (showErr === "created") {
+      setShowSuccessCreating(true);
       setTimeout(() => {
-        setShowErrorCreatingComment(false);
-      }, "2000");
-    } else {
-      setShowSuccess(true);
+        setShowSuccessCreating(false);
+        setDeletedComment(null);
+      }, "6000");
+    }
 
+    if (showSucc) {
+      setShowSuccess(true);
       setTimeout(() => {
         setShowSuccess(false);
-      }, "2000");
+        setDeletedComment(null);
+      }, "6000");
+    }
+    if (errorDeletingComment === "errorDeleting") {
+      setDeletedComment(true);
+      setTimeout(() => {
+        setDeletedComment(false);
+        setDeletedComment(null);
+      }, "6000");
     }
   };
 
   return (
     <>
-      {error && <SnackBarResultLogin error={error} onClear={clearError} />}
-      {deletedComment ? (
-        <SnackBarResultLogin error={deletedComment} onClear={clearError} />
-      ) : null}
+      {error && !showErrorCreatingComment && (
+        <SnackBarResultLogin
+          error={error}
+          onDuration={6000}
+          onClear={clearError}
+        />
+      )}
+      {deletedComment && (
+        <SnackBarResultLogin
+          onDuration={6000}
+          error={"Something went wrong, try again"}
+          onClear={clearError}
+        />
+      )}
       {showSuccess && (
         <SnackBarResultLogin
           onSuccess={true}
@@ -92,7 +123,16 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
       {showErrorCreatingComment && (
         <SnackBarResultLogin
           onDuration={6000}
+          onClear={clearError}
           message={showErrorCreatingComment}
+        />
+      )}
+      {showSuccessCreating && (
+        <SnackBarResultLogin
+          onSuccess={true}
+          onDuration={6000}
+          onClear={clearError}
+          message={"Your comment was created successfully"}
         />
       )}
 

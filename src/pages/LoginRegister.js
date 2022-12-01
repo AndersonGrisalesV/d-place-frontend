@@ -48,6 +48,7 @@ const LoginRegister = () => {
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   // let location = useLocation();
   // const from =
@@ -91,7 +92,6 @@ const LoginRegister = () => {
           }
         );
 
-        login.login(responseData.user.id);
         // console.log(window.history.state.usr);
 
         // if (window.history.state.usr != null) {
@@ -100,14 +100,17 @@ const LoginRegister = () => {
         //   window.history.go(-1);
         // }
 
+        setSuccessMessage(`Welcome back ${responseData.user.name}`);
         setShowSuccess(true);
         setTimeout(() => {
-          setShowSuccess(false);
+          login.login(responseData.user.id);
           navigate("/homepage");
         }, "910");
+        setTimeout(() => {
+          setShowSuccess(false);
+          setSuccessMessage(null);
+        }, "930");
       } catch (err) {}
-
-      // console.log(responseData)
     } else {
       try {
         const responseData = await sendRequest(
@@ -125,15 +128,24 @@ const LoginRegister = () => {
           }
         );
 
-        login.createAccount(responseData.user.id);
+        setSuccessMessage(`Welcome to Dplace ${responseData.user.name}`);
+        setShowSuccess(true);
+        setTimeout(() => {
+          login.createAccount(responseData.user.id);
+          navigate("/homepage");
+        }, "910");
+        setTimeout(() => {
+          setShowSuccess(false);
+          setSuccessMessage(null);
+        }, "930");
 
-        navigate("/homepage", {
-          state: {
-            onSuccess: true,
-            response: responseData.message,
-            user: responseData.user,
-          },
-        });
+        // navigate("/homepage", {
+        //   state: {
+        //     onSuccess: true,
+        //     response: responseData.message,
+        //     user: responseData.user,
+        //   },
+        // });
       } catch (err) {}
     }
     resetNameInput();
@@ -297,7 +309,7 @@ const LoginRegister = () => {
         <SnackBarResultLogin
           onSuccess={true}
           onDuration={800}
-          message={"The place was created successfully"}
+          message={`${successMessage}`}
         />
       )}
       <CardWrapperLogin>
@@ -312,7 +324,9 @@ const LoginRegister = () => {
               {!isLoginMode && (
                 <StyleTextField
                   id="outlined-name-input"
-                  disabled={isLoading ? true : false}
+                  disabled={
+                    isLoading ? true : false || showSuccess ? true : false
+                  }
                   label="Name"
                   type="text"
                   autoComplete="current-name"
@@ -388,7 +402,9 @@ const LoginRegister = () => {
               )}
               <StyleTextField
                 id="outlined-email-input"
-                disabled={isLoading ? true : false}
+                disabled={
+                  isLoading ? true : false || showSuccess ? true : false
+                }
                 label="Email Address"
                 type="email"
                 autoComplete="current-email"
@@ -461,7 +477,9 @@ const LoginRegister = () => {
               />
               <StyleTextField
                 id="outlined-password-input"
-                disabled={isLoading ? true : false}
+                disabled={
+                  isLoading ? true : false || showSuccess ? true : false
+                }
                 label="Password"
                 type="password"
                 autoComplete="current-password"
@@ -540,7 +558,9 @@ const LoginRegister = () => {
               {!isLoginMode && (
                 <StyleTextField
                   id="outlined-confirmpassword-input"
-                  disabled={isLoading ? true : false}
+                  disabled={
+                    isLoading ? true : false || showSuccess ? true : false
+                  }
                   label="Confirm Password"
                   type="password"
                   autoComplete="current-confirmPassword"
@@ -617,6 +637,7 @@ const LoginRegister = () => {
               {!isLoginMode && (
                 <React.Fragment>
                   <ImageUploadButton
+                    showSuccess={showSuccess}
                     formInputsHandler={formInputsHandler}
                     isLoading={isLoading}
                   />
@@ -640,6 +661,7 @@ const LoginRegister = () => {
                     isLoginMode={isLoginMode}
                   />
                   <CreateAccountButton
+                    showSuccess={showSuccess}
                     switchModeHandler={switchModeHandler}
                     isLoginMode={isLoginMode}
                   />

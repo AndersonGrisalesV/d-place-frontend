@@ -227,7 +227,7 @@ const CommentShow = ({
   };
 
   const handleConfirmDelete = async (e) => {
-    onErrorDeleteComment(error);
+    // onErrorDeleteComment(null, null, "errorDeleting", null);
     e.preventDefault();
     try {
       await sendRequest(
@@ -239,13 +239,14 @@ const CommentShow = ({
         // onDeletedComments(onPlaceComments._id);
         // onShowSuccess(false);
         onRefreshPlaceComments(onPlaceComments.placeId);
+        onErrorDeleteComment(null, null, null, true);
       }, "910");
       setTimeout(() => {
         setShowSuccess(false);
       }, "930");
     } catch (err) {
       setTimeout(() => {
-        onErrorDeleteComment(err.message);
+        onErrorDeleteComment(err.message, null, "errorDeleting", null);
         onRefreshPlaceComments(onPlaceComments.placeId);
       }, "910");
     }

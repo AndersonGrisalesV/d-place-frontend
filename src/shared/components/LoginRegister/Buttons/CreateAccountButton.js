@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button } from "@mui/material";
+import { Button, Zoom } from "@mui/material";
 import styled from "@emotion/styled";
 
 const StyleButton = styled(Button)(({ theme }) => ({
@@ -11,34 +11,43 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const CreateAccountButton = ({ switchModeHandler, isLoginMode }) => {
+const CreateAccountButton = ({
+  switchModeHandler,
+  isLoginMode,
+  showSuccess,
+}) => {
   return (
-    <StyleButton
-      onClick={switchModeHandler}
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontWeight: 500,
-        textTransform: "none",
-        fontSize: {
-          sps: "10px",
-          ps: "12px",
-          ts: "12px",
-          sls: "13px",
-          sms: "14px",
-          sc: "14px",
-          nsc: "14px",
-          ns: "14px",
-          msc: "14px",
-          mns: "14px",
-          ms: "14px",
-          lgs: "14px",
-        },
-      }}
-    >
-      {isLoginMode ? "Create an Account" : "Go back"}
-    </StyleButton>
+    <React.Fragment>
+      <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
+        <StyleButton
+          onClick={switchModeHandler}
+          disabled={showSuccess ? true : false}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontWeight: 500,
+            textTransform: "none",
+            fontSize: {
+              sps: "10px",
+              ps: "12px",
+              ts: "12px",
+              sls: "13px",
+              sms: "14px",
+              sc: "14px",
+              nsc: "14px",
+              ns: "14px",
+              msc: "14px",
+              mns: "14px",
+              ms: "14px",
+              lgs: "14px",
+            },
+          }}
+        >
+          {isLoginMode ? "Create an Account" : "Go back"}
+        </StyleButton>
+      </Zoom>
+    </React.Fragment>
   );
 };
 

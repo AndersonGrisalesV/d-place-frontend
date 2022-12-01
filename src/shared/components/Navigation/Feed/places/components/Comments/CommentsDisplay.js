@@ -87,7 +87,7 @@ const CommentsDisplay = ({
   }
 
   const onSubmitAddCommentHandler = async (e) => {
-    onErrorDeleteComment(error, true);
+    // onErrorDeleteComment(error, true, null, null);
     e.preventDefault();
 
     if (login.isLoggedIn && formIsValid) {
@@ -97,7 +97,7 @@ const CommentsDisplay = ({
 
       try {
         const responseData = await sendRequest(
-          `http://localhost:4000/api/places/${onPlaceId}/newcomment`,
+          `http://localhost:4000/api/placess/${onPlaceId}/newcomment`,
           "POST",
           JSON.stringify({
             commentText: formInputs.comment,
@@ -109,16 +109,26 @@ const CommentsDisplay = ({
             "Content-Type": "Application/json",
           }
         );
-
         setShowSuccess(true);
+        onErrorDeleteComment(null, "created", null, null);
         onRefreshPlaceComments(onPlaceId);
+        // setTimeout(() => {
+        //   // onDeletedComments(onPlaceComments._id);
+        //   // onShowSuccess(false);
+        // }, "910");
         setTimeout(() => {
           setShowSuccess(false);
-          // navigate(0);
-        }, "910");
+        }, "930");
+
+        // setShowSuccess(true);
+        // onRefreshPlaceComments(onPlaceId);
+        // setTimeout(() => {
+        //   setShowSuccess(false);
+        //   // navigate(0);
+        // }, "910");
       } catch (err) {
         setTimeout(() => {
-          onErrorDeleteComment(err.message, true);
+          onErrorDeleteComment(err.message, null, "errorDeleting", null);
           onRefreshPlaceComments(onPlaceId);
         }, "910");
       }
