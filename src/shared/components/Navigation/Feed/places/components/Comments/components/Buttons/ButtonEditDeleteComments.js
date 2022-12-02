@@ -13,7 +13,6 @@ const StyleButton = styled(Button)(({ theme }) => ({
 
 const ButtonEditDeleteComments = ({
   onButtonName = false,
-  DUMMY_PLACES,
   onEdit,
   onDelete,
 }) => {

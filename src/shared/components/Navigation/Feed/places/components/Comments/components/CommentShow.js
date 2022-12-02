@@ -141,6 +141,9 @@ const CommentShow = ({
 
   const formInputsHandler = (e) => {
     console.log("hello " + e.target.value);
+    if (e.target.name === "commentText" && showBlurComment) {
+      setShowBlurComment(false);
+    }
     setFormInputs({
       ...formInputs,
       [e.target.name]: e.target.value,
@@ -163,27 +166,61 @@ const CommentShow = ({
     return false;
   }
 
-  let formIsValid = false;
-
-  if (login.isLoggedIn && commentIsValid) {
-    formIsValid = true;
-  }
-
-  let sendCommentIsValid = false;
-
-  if (formIsValid && !commentInputHasError) {
-    sendCommentIsValid = true;
-  }
-
   const handleSendComment = (e) => {
     console.log("hello" + formInputs.commentText);
     resetCommentInput();
   };
 
-  const onSubmitEditCancelHandler = (e) => {
+  const onSubmitEditHandler = async (e) => {
     e.preventDefault();
 
-    // setTimeout(navigate("/"), 8000);
+    let date = new Date().toJSON();
+    if (login.isLoggedIn && formInputs) {
+      if (showBlurComment) {
+        formInputs.commentText = "same";
+      }
+      try {
+        await sendRequest(
+          `http://localhost:4000/api/places/${onPlaceComments.placeId}/editcomment/${onPlaceComments._id}`,
+          "PATCH",
+          JSON.stringify({
+            commentText: formInputs.commentText,
+            postCommentDate: date,
+          }),
+          {
+            "Content-Type": "Application/json",
+          }
+        );
+        setShowSuccess(true);
+
+        onErrorDeleteComment(
+          null,
+          null,
+          "edited",
+          "Your comment was edited successfully"
+        );
+
+        onRefreshPlaceComments(onPlaceComments.placeId);
+        // setTimeout(() => {
+        //   // onErrorDeleteComment(null, "created", null, null);
+        // }, "910");
+        setTimeout(() => {
+          setShowSuccess(false);
+        }, "930");
+        // navigate(`/api/places/${pid}`);
+      } catch (err) {
+        setTimeout(() => {
+          onErrorDeleteComment(
+            err,
+            "errorEdit",
+            null,
+            "Something went wrong, try again"
+          );
+
+          onRefreshPlaceComments(onPlaceComments.placeId);
+        }, "910");
+      }
+    }
   };
 
   const [open, setOpen] = useState(false);
@@ -206,10 +243,11 @@ const CommentShow = ({
   // );
 
   const [editComment, setEditComment] = useState(false);
+  const [showBlurComment, setShowBlurComment] = useState(true);
 
   const handleEditComment = () => {
     // if(login && userowncomment){
-    if (login) {
+    if (login.isLoggedIn) {
       setEditComment((eComment) => !eComment);
     }
   };
@@ -227,32 +265,60 @@ const CommentShow = ({
   };
 
   const handleConfirmDelete = async (e) => {
-    // onErrorDeleteComment(null, null, "errorDeleting", null);
     e.preventDefault();
     try {
       await sendRequest(
         `http://localhost:4000/api/places/${onPlaceComments.placeId}/deletecomment/${onPlaceComments._id}`,
         "DELETE"
       );
+
       setShowSuccess(true);
-      setTimeout(() => {
-        // onDeletedComments(onPlaceComments._id);
-        // onShowSuccess(false);
-        onRefreshPlaceComments(onPlaceComments.placeId);
-        onErrorDeleteComment(null, null, null, true);
-      }, "910");
+
+      onErrorDeleteComment(
+        null,
+        null,
+        "deleted",
+        "Your comment was deleted successfully"
+      );
+
+      onRefreshPlaceComments(onPlaceComments.placeId);
       setTimeout(() => {
         setShowSuccess(false);
       }, "930");
     } catch (err) {
       setTimeout(() => {
-        onErrorDeleteComment(err.message, null, "errorDeleting", null);
+        onErrorDeleteComment(
+          err,
+          "errorDelete",
+          null,
+          "Something went wrong, try again"
+        );
+
         onRefreshPlaceComments(onPlaceComments.placeId);
       }, "910");
     }
 
     handleClose();
   };
+
+  let formIsValid = false;
+
+  if (login.isLoggedIn) {
+    if (!showBlurComment && commentIsValid) {
+      formIsValid = true;
+    }
+  }
+
+  let sendCommentIsValid = false;
+
+  if (formIsValid && !commentInputHasError) {
+    sendCommentIsValid = true;
+  }
+
+  let isEdit = false;
+  if (login.isLoggedIn && onPlaceComments.creatorId._id === login.userId) {
+    isEdit = true;
+  }
 
   const buttonsShow = (
     <Stack direction="row" spacing={0} justifyContent="end">
@@ -442,7 +508,7 @@ const CommentShow = ({
               />
             </StyledListItem>
           ) : (
-            <form onSubmit={onSubmitEditCancelHandler}>
+            <form onSubmit={onSubmitEditHandler}>
               <Stack
                 direction="column"
                 spacing={4}
@@ -454,24 +520,30 @@ const CommentShow = ({
                     isLoading ? true : false || showSuccess ? true : false
                   }
                   multiline
-                  defaultValue={commentInput}
+                  // defaultValue={commentInput}
                   autoComplete="current-commentText"
                   size="small"
                   name="commentText"
+                  defaultValue={`${onPlaceComments.commentText}`}
                   onChange={(e) => {
                     formInputsHandler(e);
                     commentChangeHandler(e);
                   }}
-                  onBlur={commentBlurHandler}
-                  // value={commentInput}
+                  onBlur={showBlurComment ? "" : commentBlurHandler}
+                  // value={titleInput}
                   error={commentInputHasError}
+                  // onBlur={commentBlurHandler}
+                  // value={commentInput}
+                  // error={commentInputHasError}
                   helperText={
-                    commentInputHasError ? "Edit our comment to send it." : ""
+                    commentInputHasError
+                      ? "Edit your comment to send it. (Cannot be empty)"
+                      : ""
                   }
                 />
                 <Stack direction="row" spacing={0} justifyContent="end">
                   <ButtonSendComment
-                    sendCommentIsValid={sendCommentIsValid}
+                    formIsValid={formIsValid}
                     handleSendComment={handleSendComment}
                   />
                   <ButtonCancelComment onHandleOpen={handleOpen} />
@@ -493,7 +565,7 @@ const CommentShow = ({
               handleConfirmDelete={handleConfirmDelete}
             />
           )}
-          {login.isLoggedIn && !editComment ? (
+          {login.isLoggedIn && !editComment && isEdit ? (
             buttonsShow
           ) : (
             <React.Fragment>

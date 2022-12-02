@@ -97,7 +97,7 @@ const CommentsDisplay = ({
 
       try {
         const responseData = await sendRequest(
-          `http://localhost:4000/api/placess/${onPlaceId}/newcomment`,
+          `http://localhost:4000/api/places/${onPlaceId}/newcomment`,
           "POST",
           JSON.stringify({
             commentText: formInputs.comment,
@@ -109,26 +109,28 @@ const CommentsDisplay = ({
             "Content-Type": "Application/json",
           }
         );
+
         setShowSuccess(true);
-        onErrorDeleteComment(null, "created", null, null);
+        onErrorDeleteComment(
+          null,
+          null,
+          "created",
+          "Your comment was created successfully"
+        );
+
         onRefreshPlaceComments(onPlaceId);
-        // setTimeout(() => {
-        //   // onDeletedComments(onPlaceComments._id);
-        //   // onShowSuccess(false);
-        // }, "910");
+
         setTimeout(() => {
           setShowSuccess(false);
         }, "930");
-
-        // setShowSuccess(true);
-        // onRefreshPlaceComments(onPlaceId);
-        // setTimeout(() => {
-        //   setShowSuccess(false);
-        //   // navigate(0);
-        // }, "910");
       } catch (err) {
         setTimeout(() => {
-          onErrorDeleteComment(err.message, null, "errorDeleting", null);
+          onErrorDeleteComment(
+            err,
+            "errorCreate",
+            null,
+            "Something went wrong, try again"
+          );
           onRefreshPlaceComments(onPlaceId);
         }, "910");
       }

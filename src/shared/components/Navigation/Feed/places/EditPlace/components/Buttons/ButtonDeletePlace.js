@@ -17,7 +17,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonDeletePlace = ({ open, close, onHandleOpen, onHandleClose }) => {
+const ButtonDeletePlace = ({ onDelete }) => {
   const login = useContext(LoginContext);
 
   return (
@@ -25,7 +25,7 @@ const ButtonDeletePlace = ({ open, close, onHandleOpen, onHandleClose }) => {
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
-            onClick={onHandleOpen}
+            onClick={onDelete}
             sx={{
               fontWeight: 500,
               textTransform: "none",
@@ -63,16 +63,6 @@ const ButtonDeletePlace = ({ open, close, onHandleOpen, onHandleClose }) => {
           </StyleButton>
         </Zoom>
       )}
-      <React.Fragment>
-        {open && (
-          <ModalCancel
-            open={open}
-            close={close}
-            onHandleOpen={onHandleOpen}
-            onHandleClose={onHandleClose}
-          />
-        )}
-      </React.Fragment>
     </React.Fragment>
   );
 };

@@ -12,8 +12,8 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
   const [deletedComment, setDeletedComment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showSuccessCreating, setShowSuccessCreating] = useState(false);
-  const [showErrorCreatingComment, setShowErrorCreatingComment] =
-    useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showSuccessEditing, setShowSuccessEditing] = useState(false);
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -46,52 +46,36 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
 
   const refresPlaceCommentsHandler = (deletedPlaceId) => {
     setRefreshPage(deletedPlaceId);
-    // setLoadedPlace((prevPlace) =>
-    //   prevPlace.filter((place) => place.id === deletedPlaceId)
-    // );
   };
 
-  // const handleDeletedComments = (deletedCommentId) => {
-  //   setLoadedPlace((prevPlace) =>
-  //     prevPlace.comments.filter((place) => place._id !== deletedCommentId)
-  //   );
-  //   console.log(loadedPlace);
-  // };
-
   const handleErrorDeletingComment = (
-    err,
+    errDatabase = null,
     showErr,
-    errorDeletingComment,
-    showSucc
+    showSucc,
+    msg
   ) => {
-    // setDeletedComment(err);
-    // if (showErr) {
-    //   setShowErrorCreatingComment(err);
+    // console.log(errDatabase);
 
-    //   setTimeout(() => {
-    //     setShowErrorCreatingComment(false);
-    //     setDeletedComment(null);
-    //   }, "6000");
-    // }
-    if (showErr === "created") {
-      setShowSuccessCreating(true);
-      setTimeout(() => {
-        setShowSuccessCreating(false);
-        setDeletedComment(null);
-      }, "6000");
-    }
-
-    if (showSucc) {
-      setShowSuccess(true);
+    if (
+      showSucc === "created" ||
+      showSucc === "deleted" ||
+      showSucc === "edited"
+    ) {
+      setShowSuccess(msg);
       setTimeout(() => {
         setShowSuccess(false);
         setDeletedComment(null);
       }, "6000");
     }
-    if (errorDeletingComment === "errorDeleting") {
-      setDeletedComment(true);
+
+    if (
+      showErr === "errorCreate" ||
+      showErr === "errorDelete" ||
+      showErr === "errorEdit"
+    ) {
+      setShowError(msg);
       setTimeout(() => {
-        setDeletedComment(false);
+        setShowError(false);
         setDeletedComment(null);
       }, "6000");
     }
@@ -99,17 +83,10 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
 
   return (
     <>
-      {error && !showErrorCreatingComment && (
+      {error && !showError && (
         <SnackBarResultLogin
           error={error}
           onDuration={6000}
-          onClear={clearError}
-        />
-      )}
-      {deletedComment && (
-        <SnackBarResultLogin
-          onDuration={6000}
-          error={"Something went wrong, try again"}
           onClear={clearError}
         />
       )}
@@ -117,22 +94,15 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
         <SnackBarResultLogin
           onSuccess={true}
           onDuration={6000}
-          message={"Your comment was deleted successfully"}
+          onClear={clearError}
+          message={showSuccess}
         />
       )}
-      {showErrorCreatingComment && (
+      {showError && (
         <SnackBarResultLogin
           onDuration={6000}
           onClear={clearError}
-          message={showErrorCreatingComment}
-        />
-      )}
-      {showSuccessCreating && (
-        <SnackBarResultLogin
-          onSuccess={true}
-          onDuration={6000}
-          onClear={clearError}
-          message={"Your comment was created successfully"}
+          error={showError}
         />
       )}
 
