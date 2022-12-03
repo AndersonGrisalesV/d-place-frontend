@@ -170,13 +170,13 @@ const NewPlacePostDisplay = () => {
             "Content-Type": "Application/json",
           }
         );
+        // navigate(`/homepage`, { state: { editPlace: "edited" } });
 
-        // login.login(responseData.user.id);
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
           navigate("/homepage");
-        }, "910");
+        }, "2000");
       } catch (err) {}
     }
     resetTitleInput();
@@ -214,7 +214,7 @@ const NewPlacePostDisplay = () => {
       {showSuccess && (
         <SnackBarResultLogin
           onSuccess={true}
-          onDuration={800}
+          onDuration={2000}
           message={"The place was created successfully"}
         />
       )}
@@ -467,35 +467,40 @@ const NewPlacePostDisplay = () => {
                 }
               />
               <React.Fragment>
-                <ImageUploadPlaceButton
-                  formInputsHandler={formInputsHandler}
-                  isLoading={isLoading}
-                  showSuccess={showSuccess}
-                />
-                {imageUrl && selectedImage && (
-                  <ImagePreviewPlaceButton
-                    imageUrl={imageUrl}
-                    selectedImageName={selectedImage.name}
-                    handleRemoveImage={handleRemoveImage}
-                  />
+                {isLoading || showSuccess ? (
+                  <LoadingSpinnerWrapper onNewPlace={true}>
+                    <LoadingSpinner />
+                  </LoadingSpinnerWrapper>
+                ) : (
+                  <React.Fragment>
+                    <React.Fragment>
+                      <ImageUploadPlaceButton
+                        formInputsHandler={formInputsHandler}
+                        isLoading={isLoading}
+                        showSuccess={showSuccess}
+                      />
+                      {imageUrl && selectedImage && (
+                        <ImagePreviewPlaceButton
+                          imageUrl={imageUrl}
+                          selectedImageName={selectedImage.name}
+                          handleRemoveImage={handleRemoveImage}
+                        />
+                      )}
+                    </React.Fragment>
+
+                    <Stack direction="row" spacing={0} justifyContent="center">
+                      <ButtonPostPlace formIsValid={formIsValid} />
+                      <ButtonCancelPostPlace
+                        showSuccess={showSuccess}
+                        open={open}
+                        close={handleClose}
+                        onHandleOpen={handleOpen}
+                        onHandleClose={handleClose}
+                      />
+                    </Stack>
+                  </React.Fragment>
                 )}
               </React.Fragment>
-              {isLoading ? (
-                <LoadingSpinnerWrapper onNewPlace={true}>
-                  <LoadingSpinner />
-                </LoadingSpinnerWrapper>
-              ) : (
-                <Stack direction="row" spacing={0} justifyContent="center">
-                  <ButtonPostPlace formIsValid={formIsValid} />
-                  <ButtonCancelPostPlace
-                    showSuccess={showSuccess}
-                    open={open}
-                    close={handleClose}
-                    onHandleOpen={handleOpen}
-                    onHandleClose={handleClose}
-                  />
-                </Stack>
-              )}
             </Stack>
           </form>
         </CardContentNewPlacePost>

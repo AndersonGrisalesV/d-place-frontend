@@ -21,26 +21,10 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
 const ButtonEdit = ({ loadedPlaces }) => {
   const login = useContext(LoginContext);
 
-  let isEdit = false;
-  let placeId;
-
-  if (login.isLoggedIn && loadedPlaces.creatorId._id === login.userId) {
-    console.log(loadedPlaces);
-    loadedPlaces.creatorId.places.map((samePlace) => {
-      console.log(samePlace);
-      if (samePlace === loadedPlaces._id) {
-        placeId = loadedPlaces._id;
-        return (isEdit = true);
-      }
-      placeId = "";
-      return (isEdit = false);
-    });
-  }
-
   // /api/places/editplace/:placeId"
   return (
     <React.Fragment>
-      {login.isLoggedIn && isEdit && (
+      {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleNavLink to={`/api/places/editplace/${loadedPlaces._id}`}>
             <StyleButton

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useLocation, useParams } from "react-router-dom";
 import Place from "./places/Place";
 import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
 import { useHttpClient } from "../../../hooks/http-hook";
 import PlaceGetById from "./places/NewPlace/components/PlaceGetById";
+import { LoginContext } from "../../../context/login-context";
 
 // const DUMMY_PLACES = [
 //   {
@@ -65,7 +66,8 @@ import PlaceGetById from "./places/NewPlace/components/PlaceGetById";
 //   },
 // ];
 
-const Feed = ({ onDetail = false, onMap = false }) => {
+const Feed = ({ onDetail = false, onMap = false, onProfile = false }) => {
+  const login = useContext(LoginContext);
   const params = useParams();
   const { pathname } = useLocation();
 
@@ -81,32 +83,61 @@ const Feed = ({ onDetail = false, onMap = false }) => {
         const responseData = await sendRequest(
           "http://localhost:4000/homepage"
         );
-        setLoadedPlaces(responseData.places);
+
+        setLoadedPlaces(responseData.places.reverse());
         console.log(responseData.places);
       } catch (err) {}
     };
     fetchPlaces();
   }, [sendRequest]);
 
-  // let filterLoadedPlaces;
-  // if (onDetail && onMap) {
-  //   // filterLoadedPlaces = loadedPlaces.map((place) => place._id === placeId);
-  // }
+  let placesProfileSearching;
 
-  const places = (
-    <>
-      {!isLoading && loadedPlaces && (
-        <React.Fragment>
-          {loadedPlaces.map((place) => (
-            <React.Fragment key={place._id}>
-              <Place loadedPlaces={place} key={place._id} id={place._id} />
-              <br />
-            </React.Fragment>
-          ))}
-        </React.Fragment>
-      )}
-    </>
-  );
+  if (onProfile) {
+    placesProfileSearching = (
+      <>
+        {!isLoading && loadedPlaces && (
+          <React.Fragment>
+            {loadedPlaces.map((place) => {
+              let userPlaces;
+              if (place.creatorId._id === login.userId) {
+                userPlaces = (
+                  <React.Fragment key={place._id}>
+                    <Place
+                      loadedPlaces={place}
+                      key={place._id}
+                      id={place._id}
+                    />
+                    <br />
+                  </React.Fragment>
+                );
+              }
+              return userPlaces;
+            })}
+          </React.Fragment>
+        )}
+      </>
+    );
+  }
+
+  let places;
+
+  if (!onProfile) {
+    places = (
+      <>
+        {!isLoading && loadedPlaces && (
+          <React.Fragment>
+            {loadedPlaces.map((place) => (
+              <React.Fragment key={place._id}>
+                <Place loadedPlaces={place} key={place._id} id={place._id} />
+                <br />
+              </React.Fragment>
+            ))}
+          </React.Fragment>
+        )}
+      </>
+    );
+  }
 
   return (
     <Box flex={4} p={2} style={{ marginBottom: "100%" }}>
@@ -126,7 +157,13 @@ const Feed = ({ onDetail = false, onMap = false }) => {
             //key={filterLoadedPlaces[0]._id}
           />
         ) : (
-          places
+          <React.Fragment>
+            {!placesProfileSearching && onProfile ? (
+              <p>You don't have places</p>
+            ) : (
+              placesProfileSearching
+            )}
+          </React.Fragment>
         )}
       </ScrollToTop>
     </Box>

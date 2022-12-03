@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import AvatarComponent from "./AvatarComponent";
 import ButtonEdit from "../Buttons/ButtonEdit";
@@ -64,11 +64,32 @@ const AvatarWrapper = ({ loadedPlaces }) => {
 
   let fetchedDate = addDays(loadedPlaces.postDate);
 
+  const [isEdit, setIsEdit] = useState(false);
+  let placeId;
+
+  useEffect(() => {
+    // console.log(loadedPlaces._id);
+    if (login.isLoggedIn && loadedPlaces.creatorId._id === login.userId) {
+      // loadedPlaces.creatorId.places.map((samePlace) => {
+      //   console.log(samePlace);
+      //   if (samePlace === loadedPlaces._id) {
+      //     placeId = loadedPlaces._id;
+      //     return (isEdit = true);
+      //   }
+      // placeId = "";
+      setIsEdit(true);
+    }
+  }, [loadedPlaces, login]);
+
   return (
     <CardHeader
       avatar={<AvatarComponent loadedPlaces={loadedPlaces} />}
       action={
-        login.isLoggedIn ? <ButtonEdit loadedPlaces={loadedPlaces} /> : ""
+        login.isLoggedIn && isEdit ? (
+          <ButtonEdit loadedPlaces={loadedPlaces} />
+        ) : (
+          ""
+        )
       }
       title={loadedPlaces.creatorId.name}
       subheader={`${fetchedDate.month} ${fetchedDate.day}, ${fetchedDate.year}`}

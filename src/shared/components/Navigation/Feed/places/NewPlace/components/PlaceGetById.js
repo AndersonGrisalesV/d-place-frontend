@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Place from "../../Place";
 
 import { useHttpClient } from "../../../../../../hooks/http-hook";
@@ -11,9 +11,30 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
   const [refreshpage, setRefreshPage] = useState(false);
   const [deletedComment, setDeletedComment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [showSuccessCreating, setShowSuccessCreating] = useState(false);
+  const [postShowSuccess, setPostSuccess] = useState(false);
+
+  let { state } = useLocation();
+  let stateAux = state;
+  useEffect(() => {
+    if (stateAux) {
+      if (stateAux.editPlace === "edited") {
+        // setPostSuccess(postShowSuccess.editPlace);
+        setPostSuccess(stateAux.editPlace);
+      }
+    }
+    // if (postShowSuccess === "edited") {
+    //   setPostSuccess(postShowSuccess.editPlace);
+    // } else {
+    //   setPostSuccess(null);
+    // }
+  }, [stateAux]);
+
+  setTimeout(() => {
+    stateAux = null;
+    setPostSuccess(null);
+  }, "6000");
+
   const [showError, setShowError] = useState(false);
-  const [showSuccessEditing, setShowSuccessEditing] = useState(false);
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -103,6 +124,15 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
           onDuration={6000}
           onClear={clearError}
           error={showError}
+        />
+      )}
+
+      {postShowSuccess && (
+        <SnackBarResultLogin
+          onSuccess={true}
+          onDuration={6000}
+          onClear={clearError}
+          message={"Your post was updated successfully"}
         />
       )}
 
