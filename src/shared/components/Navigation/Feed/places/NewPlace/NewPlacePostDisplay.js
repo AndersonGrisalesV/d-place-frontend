@@ -73,7 +73,7 @@ const NewPlacePostDisplay = () => {
   }, [selectedImage]);
 
   const formInputsHandler = (e) => {
-    console.log("aqui" + e.target.value);
+    // console.log("aqui" + e.target.value);
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();
@@ -153,7 +153,7 @@ const NewPlacePostDisplay = () => {
           "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
       }
 
-      console.log(date);
+      // console.log(date);
       try {
         const responseData = await sendRequest(
           "http://localhost:4000/api/places/newplace",

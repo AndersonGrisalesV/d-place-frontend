@@ -1,48 +1,38 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 
-import Place from "./places/Place";
-import PlaceGetById from "./places/NewPlace/components/PlaceGetById";
-import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
 import { Box } from "@mui/material";
+import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
+import Place from "./places/Place";
 
 import { useHttpClient } from "../../../hooks/http-hook";
 
-import { LoginContext } from "../../../context/login-context";
-
-const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
-  const login = useContext(LoginContext);
+const FavoritePlaces = ({ onFilterSearch = null }) => {
   const params = useParams();
   const { pathname } = useLocation();
 
-  const { pid } = params;
+  const { uid } = params;
 
   const [loadedPlaces, setLoadedPlaces] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [dataStatus, setDataStatus] = useState(false);
-  const [emptySearch, setEmptySearch] = useState(false);
-
-  let navigate = useNavigate();
 
   useEffect(() => {
     setDataStatus(true);
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:4000/homepage"
+          `http://localhost:4000/api/users/favorites/${uid}`
         );
 
-        setLoadedPlaces(responseData.places.reverse());
+        setLoadedPlaces(responseData.places);
       } catch (err) {}
     };
     fetchPlaces();
-  }, [sendRequest]);
+  }, [sendRequest, uid]);
 
   useEffect(() => {
     console.log(onFilterSearch);
-    // if (onFilterSearch === "") {
-    //   setEmptySearch(true);
-    // }
   }, [onFilterSearch]);
 
   let filteredPlaces;
@@ -68,7 +58,6 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
                   </React.Fragment>
                 );
               }
-              console.log(filtered);
               return filtered;
             })}
           </React.Fragment>
@@ -77,10 +66,9 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
     );
   }
 
-  let places;
-
+  let placesFavorites;
   if (loadedPlaces && dataStatus) {
-    places = (
+    placesFavorites = (
       <>
         {!isLoading && loadedPlaces && (
           <React.Fragment>
@@ -99,32 +87,21 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
   return (
     <Box flex={4} p={2} style={{ marginBottom: "100%" }}>
       <ScrollToTop pathname={pathname}>
-        {onDetail && !onMap ? (
-          <React.Fragment>
-            {/* <Place />
-          <br /> */}
-          </React.Fragment>
-        ) : onDetail && onMap ? (
-          <PlaceGetById onMap={true} onShowComments={onDetail} placeId={pid} />
+        {onFilterSearch ? (
+          filteredPlaces
         ) : (
           <React.Fragment>
-            {onFilterSearch ? (
-              filteredPlaces
-            ) : (
+            {!isLoading ? (
               <React.Fragment>
-                {!isLoading ? (
+                {loadedPlaces ? (
+                  placesFavorites
+                ) : (
                   <React.Fragment>
-                    {loadedPlaces ? (
-                      places
-                    ) : (
-                      <React.Fragment>
-                        {dataStatus ? <p>There are not places to show</p> : ""}
-                      </React.Fragment>
-                    )}
+                    {dataStatus ? <p>You don't have favorite places</p> : ""}
                   </React.Fragment>
-                ) : null}
+                )}
               </React.Fragment>
-            )}
+            ) : null}
           </React.Fragment>
         )}
       </ScrollToTop>
@@ -132,4 +109,4 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
   );
 };
 
-export default Feed;
+export default FavoritePlaces;

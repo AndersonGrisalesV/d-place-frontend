@@ -1,11 +1,14 @@
 import React from "react";
 
-import Feed from "../shared/components/Navigation/Feed/Feed";
+import FavoritePlaces from "../shared/components/Navigation/Feed/FavoritePlaces";
 
-const HomePage = () => {
+const HomePage = ({ onFilterSearch }) => {
   return (
     <React.Fragment>
-      <Feed bgcolor={"backgroundColor"} />
+      <FavoritePlaces
+        bgcolor={"backgroundColor"}
+        onFilterSearch={onFilterSearch}
+      />
     </React.Fragment>
   );
 };

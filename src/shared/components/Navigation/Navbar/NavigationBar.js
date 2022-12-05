@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -39,7 +39,7 @@ export default function NavigationBar(props) {
 
           <AppName />
 
-          <SearchBar />
+          <SearchBar onSearch={props.onSearch} />
 
           {login.isLoggedIn ? (
             <React.Fragment>

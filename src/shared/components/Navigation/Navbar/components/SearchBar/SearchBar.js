@@ -3,6 +3,7 @@ import { Box, Zoom } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -44,7 +45,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch }) => {
+  let navigate = useNavigate();
+  // const clearSearchBar = (e) => {
+  //   onSearch(e);
+  //   e.target.value = "";
+  // };
+
   return (
     <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
       <Box
@@ -73,7 +80,20 @@ const SearchBar = () => {
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
-          <StyledInputBase placeholder="Search" />
+          <StyledInputBase
+            placeholder="Search"
+            onChange={onSearch}
+            onKeyPress={(ev) => {
+              console.log(`Pressed keyCode ${ev.key}`);
+              if (ev.key === "Enter") {
+                navigate("/homepage");
+                // clearSearchBar(ev);
+                // clearSearchBar(ev);
+
+                // ev.preventDefault();
+              }
+            }}
+          />
         </Search>
       </Box>
     </Zoom>

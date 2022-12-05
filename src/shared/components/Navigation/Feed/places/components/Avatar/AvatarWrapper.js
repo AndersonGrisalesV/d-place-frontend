@@ -68,7 +68,7 @@ const AvatarWrapper = ({ loadedPlaces }) => {
   let placeId;
 
   useEffect(() => {
-    // console.log(loadedPlaces._id);
+    // console.log(loadedPlaces);
     if (login.isLoggedIn && loadedPlaces.creatorId._id === login.userId) {
       // loadedPlaces.creatorId.places.map((samePlace) => {
       //   console.log(samePlace);

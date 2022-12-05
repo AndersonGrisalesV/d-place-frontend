@@ -71,7 +71,7 @@ const CommentShow = ({
   const [showSuccess, setShowSuccess] = useState(false);
 
   // console.log("here" + `${onButton}`);
-  console.log(onPlaceComments);
+  // console.log(onPlaceComments);
 
   const addDays = (date) => {
     let year;
@@ -140,7 +140,7 @@ const CommentShow = ({
   const [formInputs, setFormInputs] = useState(initialFormInputs);
 
   const formInputsHandler = (e) => {
-    console.log("hello " + e.target.value);
+    // console.log("hello " + e.target.value);
     if (e.target.name === "commentText" && showBlurComment) {
       setShowBlurComment(false);
     }
@@ -167,7 +167,7 @@ const CommentShow = ({
   }
 
   const handleSendComment = (e) => {
-    console.log("hello" + formInputs.commentText);
+    // console.log("hello" + formInputs.commentText);
     resetCommentInput();
   };
 

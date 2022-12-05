@@ -24,8 +24,8 @@ const ImageUploadPlaceButton = ({
     if (e.target.files[0]) {
       formInputsHandler(e);
 
-      console.log(e.target.files[0]);
-      console.log(e.target.value);
+      // console.log(e.target.files[0]);
+      // console.log(e.target.value);
     }
   };
   return (

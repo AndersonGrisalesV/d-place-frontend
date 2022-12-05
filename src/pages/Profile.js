@@ -1,11 +1,14 @@
 import React from "react";
 
-import Feed from "../shared/components/Navigation/Feed/Feed";
+import ProfilePlaces from "../shared/components/Navigation/Feed/ProfilePlaces";
 
-const Profile = () => {
+const Profile = ({ onFilterSearch }) => {
   return (
     <React.Fragment>
-      <Feed bgcolor={"backgroundColor"} onProfile={true} />
+      <ProfilePlaces
+        bgcolor={"backgroundColor"}
+        onFilterSearch={onFilterSearch}
+      />
     </React.Fragment>
   );
 };

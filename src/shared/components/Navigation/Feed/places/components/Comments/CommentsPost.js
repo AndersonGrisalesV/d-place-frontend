@@ -63,7 +63,7 @@ const CommentsPost = ({
   //   (comment) => comment.creatorId === DUMMY_PLACES.creatorId
   // );
 
-  console.log(loadedPlaces);
+  // console.log(loadedPlaces);
   // console.log(editDeleteComments[0]);
 
   // const [commentsList, setCommentsList] = useState(DUMMY_COMMENTS);

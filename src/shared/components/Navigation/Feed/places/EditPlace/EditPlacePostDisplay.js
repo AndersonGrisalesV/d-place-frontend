@@ -239,7 +239,7 @@ const EditPlacePostDisplay = () => {
   }, [selectedImage, imageUrl]);
 
   const formInputsHandler = (e) => {
-    console.log(e.target.name);
+    // console.log(e.target.name);
     if (e.target.name === "title" && showBlurTitle) {
       setShowBlurTitle(false);
     }
@@ -338,7 +338,7 @@ const EditPlacePostDisplay = () => {
 
     let date = new Date().toJSON();
     if (login.isLoggedIn && formInputs) {
-      console.log(formInputs);
+      // console.log(formInputs);
 
       if (!formInputs.image) {
         formInputs.image =
@@ -359,7 +359,7 @@ const EditPlacePostDisplay = () => {
         formInputs.address = "same";
       }
 
-      console.log(formInputs.image);
+      // console.log(formInputs.image);
       try {
         await sendRequest(
           `http://localhost:4000/api/places/editplace/${pid}`,

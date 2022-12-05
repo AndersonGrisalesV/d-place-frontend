@@ -22,6 +22,14 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(false);
 
+  const [searchBar, setSearchBar] = useState();
+
+  const handleSearchBar = (e) => {
+    console.log(e.target.value);
+
+    setSearchBar(e.target.value);
+  };
+
   const login = useCallback((uid) => {
     setIsLoggedIn(true);
     setUserId(uid);
@@ -43,8 +51,14 @@ function App() {
       <React.Fragment>
         <Route path="/homepage" element={<HomePage />} />
         {/* <Route path="/new" element={<NewPlacePage />} /> */}
-        <Route path="/api/users/favorites" element={<FavoritesPage />} />
-        <Route path="/api/users/profile" element={<Profile />} />
+        <Route
+          path="/api/users/favorites/:uid"
+          element={<FavoritesPage onFilterSearch={searchBar} />}
+        />
+        <Route
+          path="/api/users/profile/:uid"
+          element={<Profile onFilterSearch={searchBar} />}
+        />
         <Route path="/api/places/newplace" element={<NewPlace />} />
         <Route path="/api/places/editplace/:pid" element={<EditPlace />} />
         <Route path="/api/places/:pid" element={<PlaceDetail />} />
@@ -133,6 +147,7 @@ function App() {
               setMode={setMode}
               mode={mode}
               onOption={handleBurgerMenu}
+              onSearch={handleSearchBar}
             />
 
             <div style={{ margin: 0, padding: 0 }}>
@@ -153,7 +168,10 @@ function App() {
                   />
                 )}
                 <Routes>
-                  <Route path="/homepage" element={<HomePage />} />
+                  <Route
+                    path="/homepage"
+                    element={<HomePage onFilterSearch={searchBar} />}
+                  />
                   {routes}
                 </Routes>
               </Stack>

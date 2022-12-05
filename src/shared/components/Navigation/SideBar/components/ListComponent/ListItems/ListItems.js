@@ -215,12 +215,12 @@ const ListItems = ({
             <StyleListItems
               disablePadding
               component={StyleNavLink}
-              to="/api/users/favorites"
+              to={`/api/users/favorites/${login.userId}`}
               // className={(navData) => (navData.isActive ? classes.active : "")}
             >
               <ListItemButton
                 component="li"
-                href="/api/users/favorites"
+                href={`/api/users/favorites/${login.userId}`}
                 onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
               >
                 <ListItemIcon>
@@ -240,11 +240,11 @@ const ListItems = ({
             <StyleListItems
               disablePadding
               component={StyleNavLink}
-              to="/api/users/profile"
+              to={`/api/users/profile/${login.userId}`}
             >
               <ListItemButton
                 component="li"
-                href="/api/users/profile"
+                href={`/api/users/profile/${login.userId}`}
                 onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
               >
                 <ListItemIcon>

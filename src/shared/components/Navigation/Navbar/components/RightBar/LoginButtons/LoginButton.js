@@ -38,7 +38,7 @@ const LoginButton = ({ OnComment = false }) => {
   // const handleLogin = () => {};
 
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
 
   const buttonLeaveAComment = OnComment ? (
     <Box>

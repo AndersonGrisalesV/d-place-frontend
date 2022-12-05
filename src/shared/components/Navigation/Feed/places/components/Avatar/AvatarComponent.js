@@ -3,6 +3,7 @@ import React from "react";
 import Avatar from "@mui/material/Avatar";
 
 const AvatarComponent = ({ loadedPlaces }) => {
+  // console.log(loadedPlaces);
   return (
     <Avatar
       src={loadedPlaces.creatorId.image ? loadedPlaces.creatorId.image : ""}

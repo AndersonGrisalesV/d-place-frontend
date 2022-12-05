@@ -74,7 +74,7 @@ const LoginRegister = () => {
   const onSubmitLoginRegisterHandler = async (e) => {
     e.preventDefault();
 
-    console.log(formInputs.image);
+    // console.log(formInputs.image);
     if (!formInputs.image) {
       formInputs.image = "";
     }

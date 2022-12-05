@@ -43,7 +43,7 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
           `http://localhost:4000/api/places/${placeId}`
         );
         setLoadedPlace(responseData.place);
-        console.log(responseData.place);
+        // console.log(responseData.place);
       } catch (err) {}
     };
     fetchPlaces();
@@ -57,7 +57,7 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
             `http://localhost:4000/api/places/${refreshpage}`
           );
           setLoadedPlace(responseData.place);
-          console.log(responseData.place);
+          // console.log(responseData.place);
           setRefreshPage(false);
         } catch (err) {}
       };
