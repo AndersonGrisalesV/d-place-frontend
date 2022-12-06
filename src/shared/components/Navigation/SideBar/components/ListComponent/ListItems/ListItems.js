@@ -105,6 +105,7 @@ const ListItems = ({
   setMode,
   onCloseResponsiveDrawer = false,
   onToggleResponsive,
+  onClearSearchBar,
 }) => {
   const login = useContext(LoginContext);
   let navigate = useNavigate();
@@ -165,6 +166,10 @@ const ListItems = ({
     onToggleResponsive("left", false);
   };
 
+  const handleClear = () => {
+    onClearSearchBar();
+  };
+
   return (
     <>
       <Grow
@@ -176,7 +181,9 @@ const ListItems = ({
           <ListItemButton
             component="ul"
             href="/homepage"
-            onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
+            onClick={
+              (onCloseResponsiveDrawer ? handleDrawerClose : null, handleClear)
+            }
           >
             <ListItemIcon>
               <StyleHomeIcon />

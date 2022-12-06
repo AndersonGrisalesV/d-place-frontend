@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import { Button, Stack } from "@mui/material";
 
@@ -18,10 +18,6 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
 }));
 
 const ButtonDetails = ({ onPlaceId }) => {
-  const params = useParams();
-
-  const { placeId } = params;
-
   return (
     <Stack
       direction="row"

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 
 import Place from "./places/Place";
 import PlaceGetById from "./places/NewPlace/components/PlaceGetById";
@@ -8,10 +8,7 @@ import { Box } from "@mui/material";
 
 import { useHttpClient } from "../../../hooks/http-hook";
 
-import { LoginContext } from "../../../context/login-context";
-
 const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
-  const login = useContext(LoginContext);
   const params = useParams();
   const { pathname } = useLocation();
 
@@ -21,8 +18,7 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [dataStatus, setDataStatus] = useState(false);
   const [emptySearch, setEmptySearch] = useState(false);
-
-  let navigate = useNavigate();
+  const [counter, setCounter] = useState(false);
 
   useEffect(() => {
     setDataStatus(true);
@@ -38,14 +34,8 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
     fetchPlaces();
   }, [sendRequest]);
 
-  useEffect(() => {
-    console.log(onFilterSearch);
-    // if (onFilterSearch === "") {
-    //   setEmptySearch(true);
-    // }
-  }, [onFilterSearch]);
-
   let filteredPlaces;
+  let count = 0;
 
   if (onFilterSearch) {
     filteredPlaces = (
@@ -57,6 +47,7 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
               if (
                 place.title.toLowerCase().includes(onFilterSearch.toLowerCase())
               ) {
+                count++;
                 filtered = (
                   <React.Fragment key={place._id}>
                     <Place
@@ -68,14 +59,30 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
                   </React.Fragment>
                 );
               }
-              console.log(filtered);
               return filtered;
             })}
           </React.Fragment>
         )}
       </>
     );
+    if (count === 0) {
+      count--;
+    }
   }
+
+  useEffect(() => {
+    if (count < 0) {
+      setCounter(true);
+    } else {
+      setCounter(false);
+    }
+    if (counter && count < 0) {
+      setEmptySearch(true);
+      console.log("empty");
+    } else {
+      setEmptySearch(false);
+    }
+  }, [onFilterSearch, counter, count]);
 
   let places;
 
@@ -109,7 +116,13 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
         ) : (
           <React.Fragment>
             {onFilterSearch ? (
-              filteredPlaces
+              <React.Fragment>
+                {filteredPlaces && !emptySearch ? (
+                  filteredPlaces
+                ) : (
+                  <p>No places found!</p>
+                )}
+              </React.Fragment>
             ) : (
               <React.Fragment>
                 {!isLoading ? (

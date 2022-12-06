@@ -7,6 +7,7 @@ const ListComponent = ({
   setMode,
   onCloseResponsiveDrawer,
   onToggleResponsive,
+  onClearSearchBar,
 }) => {
   return (
     <List sx={{ padding: "0px", paddingTop: "12px" }}>
@@ -15,6 +16,7 @@ const ListComponent = ({
         setMode={setMode}
         onCloseResponsiveDrawer={onCloseResponsiveDrawer}
         onToggleResponsive={onToggleResponsive}
+        onClearSearchBar={onClearSearchBar}
       />
     </List>
   );

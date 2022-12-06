@@ -44,7 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchBarResponsive = () => {
+const SearchBarResponsive = ({ onSearch, onClear }) => {
   return (
     <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
       <Box
@@ -73,7 +73,17 @@ const SearchBarResponsive = () => {
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
-          <StyledInputBase placeholder="Search" />
+          <StyledInputBase
+            placeholder="Search"
+            onChange={onSearch}
+            onKeyPress={(ev) => {
+              console.log(`Pressed keyCode ${ev.key}`);
+              if (ev.key === "Enter") {
+                onClear(ev);
+                ev.preventDefault();
+              }
+            }}
+          />
         </Search>
       </Box>
     </Zoom>

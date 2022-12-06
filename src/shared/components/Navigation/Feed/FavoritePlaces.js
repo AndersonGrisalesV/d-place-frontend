@@ -16,6 +16,8 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
   const [loadedPlaces, setLoadedPlaces] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [dataStatus, setDataStatus] = useState(false);
+  const [emptySearch, setEmptySearch] = useState(false);
+  const [counter, setCounter] = useState(false);
 
   useEffect(() => {
     setDataStatus(true);
@@ -36,6 +38,7 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
   }, [onFilterSearch]);
 
   let filteredPlaces;
+  let count = 0;
 
   if (onFilterSearch) {
     filteredPlaces = (
@@ -47,6 +50,7 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
               if (
                 place.title.toLowerCase().includes(onFilterSearch.toLowerCase())
               ) {
+                count++;
                 filtered = (
                   <React.Fragment key={place._id}>
                     <Place
@@ -64,7 +68,24 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
         )}
       </>
     );
+    if (count === 0) {
+      count--;
+    }
   }
+
+  useEffect(() => {
+    if (count < 0) {
+      setCounter(true);
+    } else {
+      setCounter(false);
+    }
+    if (counter && count < 0) {
+      setEmptySearch(true);
+      console.log("empty");
+    } else {
+      setEmptySearch(false);
+    }
+  }, [onFilterSearch, counter, count]);
 
   let placesFavorites;
   if (loadedPlaces && dataStatus) {
@@ -88,7 +109,13 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
     <Box flex={4} p={2} style={{ marginBottom: "100%" }}>
       <ScrollToTop pathname={pathname}>
         {onFilterSearch ? (
-          filteredPlaces
+          <React.Fragment>
+            {filteredPlaces && !emptySearch ? (
+              filteredPlaces
+            ) : (
+              <p>No places found!</p>
+            )}
+          </React.Fragment>
         ) : (
           <React.Fragment>
             {!isLoading ? (

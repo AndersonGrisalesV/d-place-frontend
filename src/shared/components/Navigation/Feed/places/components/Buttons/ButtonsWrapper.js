@@ -87,6 +87,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
       return (isFavorite = false);
     });
   }
+  console.log(loadedPlaces);
 
   return (
     <CardActions
@@ -184,9 +185,10 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                       >
                         {loadedPlaces.address}
                       </Typography>
-                      {login.isLoggedIn && (
-                        <ButtonEdit loadedPlaces={loadedPlaces} />
-                      )}
+                      {login.isLoggedIn &&
+                        login.userId === loadedPlaces.creatorId._id && (
+                          <ButtonEdit loadedPlaces={loadedPlaces} />
+                        )}
                     </Stack>
                   </Stack>
                   <Box

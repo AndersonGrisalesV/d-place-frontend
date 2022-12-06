@@ -39,7 +39,11 @@ export default function NavigationBar(props) {
 
           <AppName />
 
-          <SearchBar onSearch={props.onSearch} />
+          <SearchBar
+            onSearch={props.onSearch}
+            onClear={props.onClear}
+        
+          />
 
           {login.isLoggedIn ? (
             <React.Fragment>
@@ -76,7 +80,10 @@ export default function NavigationBar(props) {
             onCloseResponsiveDrawer={true}
           />
 
-          <SearchBarResponsive />
+          <SearchBarResponsive
+            onSearch={props.onSearch}
+            onClear={props.onClear}
+          />
 
           <AccountMenuMobile />
         </StyleToolbar>

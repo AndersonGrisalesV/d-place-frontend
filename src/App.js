@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box, createTheme, Stack, ThemeProvider } from "@mui/material";
 import NavigationBar from "./shared/components/Navigation/Navbar/NavigationBar";
 import styled from "@emotion/styled";
 import HomePage from "./pages/HomePage";
 import FavoritesPage from "./pages/FavoritesPage";
 import SideBar from "./shared/components/Navigation/SideBar/SideBar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import AppStyles from "./App.css";
 import Profile from "./pages/Profile";
 import { LoginContext } from "./shared/context/login-context";
@@ -13,6 +13,8 @@ import LoginRegister from "./pages/LoginRegister";
 import PlaceDetail from "./pages/PlaceDetail";
 import NewPlace from "./pages/NewPlace";
 import EditPlace from "./pages/EditPlace";
+import { useHttpClient } from "./shared/hooks/http-hook";
+import Place from "./shared/components/Navigation/Feed/places/Place";
 
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",
@@ -22,12 +24,79 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(false);
 
+  let navigate = useNavigate();
+
   const [searchBar, setSearchBar] = useState();
 
-  const handleSearchBar = (e) => {
-    console.log(e.target.value);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedPlaces, setLoadedPlaces] = useState();
 
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:4000/homepage"
+        );
+
+        setLoadedPlaces(responseData.places.reverse());
+      } catch (err) {}
+    };
+    fetchPlaces();
+  }, [sendRequest]);
+
+  const handleSearchBar = (e) => {
     setSearchBar(e.target.value);
+    // console.log("here" + e.target.value);
+  };
+
+  let filteredPlaces;
+  let count = 0;
+  let placeSearched;
+
+  const clearSearchBar = (e) => {
+    filteredPlaces = (
+      <>
+        {!isLoading && loadedPlaces && (
+          <React.Fragment>
+            {loadedPlaces.map((place) => {
+              let filtered;
+              if (
+                place.title.toLowerCase().includes(e.target.value.toLowerCase())
+              ) {
+                if (count === 0) {
+                  placeSearched = place.id;
+                }
+                count++;
+              }
+              return filtered;
+            })}
+          </React.Fragment>
+        )}
+      </>
+    );
+
+    if (count === 0) {
+      count--;
+    }
+
+    e.target.value = "";
+    setSearchBar("");
+
+    navigate(`/api/places/${placeSearched}`);
+
+    if (placeSearched === undefined) {
+      setTimeout(() => {
+        navigate("/homepage");
+      }, "2000");
+    }
+  };
+
+  const [clearSBar, setClearSBar] = useState(false);
+
+  const handlleSideBarCleanSearchBar = () => {
+    // navigate("/homepage");
+    setSearchBar("");
+    // setClearSBar(true);
   };
 
   const login = useCallback((uid) => {
@@ -49,8 +118,10 @@ function App() {
   if (isLoggedIn) {
     routes = (
       <React.Fragment>
-        <Route path="/homepage" element={<HomePage />} />
-        {/* <Route path="/new" element={<NewPlacePage />} /> */}
+        <Route
+          path="/homepage"
+          element={<HomePage onFilterSearch={searchBar} />}
+        />
         <Route
           path="/api/users/favorites/:uid"
           element={<FavoritesPage onFilterSearch={searchBar} />}
@@ -61,16 +132,21 @@ function App() {
         />
         <Route path="/api/places/newplace" element={<NewPlace />} />
         <Route path="/api/places/editplace/:pid" element={<EditPlace />} />
-        <Route path="/api/places/:pid" element={<PlaceDetail />} />
+        <Route
+          path="/api/places/:pid"
+          element={<PlaceDetail onFilterSearch={searchBar} />}
+        />
         <Route path="*" element={<p>Not Found!</p>} />
       </React.Fragment>
     );
   } else {
     routes = (
       <React.Fragment>
-        {/* <Route path="/new" element={<NewPlacePage />} /> */}
         <Route path="/api/users/loginregister" element={<LoginRegister />} />
-        <Route path="/api/places/:pid" element={<PlaceDetail />} />
+        <Route
+          path="/api/places/:pid"
+          element={<PlaceDetail onFilterSearch={searchBar} />}
+        />
         <Route path="*" element={<p>Not found!</p>} />
       </React.Fragment>
     );
@@ -148,6 +224,7 @@ function App() {
               mode={mode}
               onOption={handleBurgerMenu}
               onSearch={handleSearchBar}
+              onClear={clearSearchBar}
             />
 
             <div style={{ margin: 0, padding: 0 }}>
@@ -158,6 +235,7 @@ function App() {
                     mode={mode}
                     setMode={setMode}
                     onOption={handleBurgerMenu}
+                    onClearSearchBar={handlleSideBarCleanSearchBar}
                   />
                 ) : (
                   <SideBar
