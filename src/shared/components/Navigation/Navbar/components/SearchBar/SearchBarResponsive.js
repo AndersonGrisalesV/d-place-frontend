@@ -1,7 +1,8 @@
-import React from "react";
-import { Box, Zoom } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Stack, Zoom } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
 import InputBase from "@mui/material/InputBase";
 
 const Search = styled("div")(({ theme }) => ({
@@ -44,7 +45,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchBarResponsive = ({ onSearch, onClear }) => {
+const SearchBarResponsive = ({ onSearch, onClear, onShowCloseButton }) => {
+  const [erasedDataSearch, setErasedDataSearch] = useState(false);
+  useEffect(() => {}, [onShowCloseButton]);
+
+  const handleCloseSearch = () => {
+    onSearch(null, "clean");
+  };
+  const changeHandler = (e) => {
+    if (e.target.value === "") {
+      setErasedDataSearch(true);
+    } else {
+      setErasedDataSearch(false);
+    }
+  };
+
   return (
     <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
       <Box
@@ -73,17 +88,36 @@ const SearchBarResponsive = ({ onSearch, onClear }) => {
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search"
-            onChange={onSearch}
-            onKeyPress={(ev) => {
-              console.log(`Pressed keyCode ${ev.key}`);
-              if (ev.key === "Enter") {
-                onClear(ev);
-                ev.preventDefault();
-              }
+          <Stack
+            spacing={0}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "row",
             }}
-          />
+          >
+            <StyledInputBase
+              // sx={{ margin: "0px", padding: "0px" }}
+              placeholder="Search"
+              onChange={(e) => {
+                onSearch(e, null);
+                changeHandler(e);
+              }}
+              onKeyPress={(ev) => {
+                console.log(`Pressed keyCode ${ev.key}`);
+                if (ev.key === "Enter") {
+                  onClear(ev);
+                  ev.preventDefault();
+                }
+              }}
+            />
+            {onShowCloseButton && !erasedDataSearch ? (
+              <CloseIcon
+                onClick={handleCloseSearch}
+                sx={{ cursor: "pointer" }}
+              />
+            ) : null}
+          </Stack>
         </Search>
       </Box>
     </Zoom>

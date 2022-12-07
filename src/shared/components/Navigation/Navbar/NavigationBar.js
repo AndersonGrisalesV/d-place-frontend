@@ -42,14 +42,14 @@ export default function NavigationBar(props) {
           <SearchBar
             onSearch={props.onSearch}
             onClear={props.onClear}
-        
+            onShowCloseButton={props.onShowCloseButton}
           />
 
           {login.isLoggedIn ? (
             <React.Fragment>
               <FavoritesButton />
               <NotificationsButton onResponsive={false} />
-              <AccountMenu />
+              <AccountMenu onClearSearchBar={props.onClearSearchBar} />
             </React.Fragment>
           ) : (
             <Box
@@ -78,14 +78,16 @@ export default function NavigationBar(props) {
             setMode={props.setMode}
             mode={props.mode}
             onCloseResponsiveDrawer={true}
+            onClearSearchBar={props.onClearSearchBar}
           />
 
           <SearchBarResponsive
             onSearch={props.onSearch}
             onClear={props.onClear}
+            onShowCloseButton={props.onShowCloseButton}
           />
 
-          <AccountMenuMobile />
+          <AccountMenuMobile onClearSearchBar={props.onClearSearchBar} />
         </StyleToolbar>
       </AppBar>
     </Grow>

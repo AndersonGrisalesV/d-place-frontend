@@ -2,9 +2,11 @@ import React, { useContext, useState } from "react";
 import { Box } from "@mui/system";
 import { IconButton, Menu, MenuItem, Zoom } from "@mui/material";
 import { AccountCircleOutlined } from "@mui/icons-material";
-import { LoginContext } from "../../../../../../context/login-context";
+
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled/macro";
+import AvatarComponent from "./Avatar/AvatarComponent";
+import { LoginContext } from "../../../../../../context/login-context";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {
@@ -16,7 +18,7 @@ const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   },
 }));
 
-const AccountMenu = () => {
+const AccountMenu = ({ onClearSearchBar }) => {
   const login = useContext(LoginContext);
   let navigate = useNavigate();
 
@@ -38,13 +40,14 @@ const AccountMenu = () => {
   const handleProfileMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    navigate("/api/users/profile");
+    navigate(`/api/users/profile/${login.userId}`);
   };
 
   const handleMenuCloseAndLogout = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
     login.logout();
+    onClearSearchBar();
+    handleMobileMenuClose();
     navigate("/homepage");
   };
 
@@ -72,7 +75,7 @@ const AccountMenu = () => {
 
   return (
     <React.Fragment>
-      {login ? (
+      {login.isLoggedIn ? (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <Box
             sx={{
@@ -101,8 +104,15 @@ const AccountMenu = () => {
               onClick={handleProfileMenuOpen}
               color="inherit"
               title="Account"
+              style={{
+                padding: "0px",
+                paddingRight: "12px",
+                paddingLeft: "12px",
+              }}
             >
-              <AccountCircleOutlined />
+              <AvatarComponent />
+
+              {/* <AccountCircleOutlined /> */}
             </IconButton>
             {renderMenu}
           </Box>

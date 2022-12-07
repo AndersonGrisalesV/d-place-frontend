@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ListItem from "@mui/material/ListItem";
 import {
   Grow,
@@ -106,6 +106,7 @@ const ListItems = ({
   onCloseResponsiveDrawer = false,
   onToggleResponsive,
   onClearSearchBar,
+  onResponsive = false,
 }) => {
   const login = useContext(LoginContext);
   let navigate = useNavigate();
@@ -113,6 +114,8 @@ const ListItems = ({
   const [anchorEl, setAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
+
+  // useEffect(() => {}, [onResponsive]);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -124,9 +127,12 @@ const ListItems = ({
   };
 
   const handleLogout = () => {
+    setAnchorEl(null);
     login.logout();
+    onClearSearchBar();
     onToggleResponsive("left", false);
-    navigate("/");
+
+    navigate("/homepage");
   };
 
   const menuId = "primary-search-account-menu";
@@ -163,7 +169,9 @@ const ListItems = ({
   );
 
   const handleDrawerClose = () => {
+    setAnchorEl(null);
     onToggleResponsive("left", false);
+    handleClear();
   };
 
   const handleClear = () => {
@@ -181,9 +189,7 @@ const ListItems = ({
           <ListItemButton
             component="ul"
             href="/homepage"
-            onClick={
-              (onCloseResponsiveDrawer ? handleDrawerClose : null, handleClear)
-            }
+            onClick={onCloseResponsiveDrawer ? handleDrawerClose : handleClear}
           >
             <ListItemIcon>
               <StyleHomeIcon />
@@ -228,7 +234,9 @@ const ListItems = ({
               <ListItemButton
                 component="li"
                 href={`/api/users/favorites/${login.userId}`}
-                onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
+                onClick={
+                  onCloseResponsiveDrawer ? handleDrawerClose : handleClear
+                }
               >
                 <ListItemIcon>
                   <StyleFavoriteIcon />
@@ -252,7 +260,9 @@ const ListItems = ({
               <ListItemButton
                 component="li"
                 href={`/api/users/profile/${login.userId}`}
-                onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
+                onClick={
+                  onCloseResponsiveDrawer ? handleDrawerClose : handleClear
+                }
               >
                 <ListItemIcon>
                   <StyleAccountCircleIcon />

@@ -19,6 +19,7 @@ export default function SideBarResponsive({
   setMode,
   onCloseResponsiveDrawer,
   menuOption,
+  onClearSearchBar,
 }) {
   const [state, setState] = useState({
     left: false,
@@ -49,6 +50,7 @@ export default function SideBarResponsive({
         setMode={setMode}
         onCloseResponsiveDrawer={onCloseResponsiveDrawer}
         onToggleResponsive={toggleResponsiveDrawer}
+        onClearSearchBar={onClearSearchBar}
       />
       <NewButton
         onResponsive={true}
@@ -60,15 +62,19 @@ export default function SideBarResponsive({
 
   return (
     <React.Fragment key={"left"}>
-      <StyleListItemButton
+      {/* <StyleListItemButton
         size="medium"
         color="inherit"
         aria-label="open drawer"
-        sx={{ mr: 2 }}
+        sx={{ mr: 2, backgroundColor: "transparent" }}
         onClick={toggleDrawer("left", true)}
       >
-        <MenuIcon />
-      </StyleListItemButton>
+        <MenuIcon sx={{ backgroundColor: "transparent" }} />
+      </StyleListItemButton> */}
+      <MenuIcon
+        sx={{ backgroundColor: "transparent" }}
+        onClick={toggleDrawer("left", true)}
+      />
 
       <Drawer
         anchor={"left"}

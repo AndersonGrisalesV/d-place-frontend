@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import { Box, Zoom } from "@mui/material";
+import { Box, Stack, Zoom } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
 import { styled, alpha } from "@mui/material/styles";
+import ButtonCloseModal from "../../../Feed/places/components/Buttons/ButtonCloseModal";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -45,7 +47,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchBar = ({ onSearch, onClear }) => {
+const SearchBar = ({ onSearch, onClear, onShowCloseButton }) => {
+  const [erasedDataSearch, setErasedDataSearch] = useState(false);
+
+  useEffect(() => {}, [onShowCloseButton]);
+
+  const handleCloseSearch = () => {
+    onSearch(null, "clean");
+  };
+  const changeHandler = (e) => {
+    if (e.target.value === "") {
+      setErasedDataSearch(true);
+    } else {
+      setErasedDataSearch(false);
+    }
+  };
+
   return (
     <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
       <Box
@@ -74,17 +91,36 @@ const SearchBar = ({ onSearch, onClear }) => {
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search"
-            onChange={onSearch}
-            onKeyPress={(ev) => {
-              console.log(`Pressed keyCode ${ev.key}`);
-              if (ev.key === "Enter") {
-                onClear(ev);
-                ev.preventDefault();
-              }
+          <Stack
+            spacing={0}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "row",
             }}
-          />
+          >
+            <StyledInputBase
+              // sx={{ margin: "0px", padding: "0px" }}
+              placeholder="Search"
+              onChange={(e) => {
+                onSearch(e, null);
+                changeHandler(e);
+              }}
+              onKeyPress={(ev) => {
+                console.log(`Pressed keyCode ${ev.key}`);
+                if (ev.key === "Enter") {
+                  onClear(ev);
+                  ev.preventDefault();
+                }
+              }}
+            />
+            {onShowCloseButton && !erasedDataSearch ? (
+              <CloseIcon
+                onClick={handleCloseSearch}
+                sx={{ cursor: "pointer" }}
+              />
+            ) : null}
+          </Stack>
         </Search>
       </Box>
     </Zoom>

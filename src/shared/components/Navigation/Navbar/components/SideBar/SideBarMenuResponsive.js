@@ -34,6 +34,7 @@ const SideBarMenuResponsive = (props) => {
           setMode={props.setMode}
           mode={props.mode}
           onCloseResponsiveDrawer={props.onCloseResponsiveDrawer}
+          onClearSearchBar={props.onClearSearchBar}
         />
       </IconButton>
     </Box>

@@ -10,6 +10,7 @@ import NotificationsButton from "../NotificationsButton/NotificationsButton";
 import { LoginContext } from "../../../../../../context/login-context";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled/macro";
+import AvatarComponent from "./Avatar/AvatarComponent";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {
@@ -24,7 +25,7 @@ const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   },
 }));
 
-const AccountMenuMobile = () => {
+const AccountMenuMobile = ({ onClearSearchBar }) => {
   const login = useContext(LoginContext);
   let navigate = useNavigate();
 
@@ -50,19 +51,20 @@ const AccountMenuMobile = () => {
   const handleProfileMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    navigate("/api/users/profile");
+    navigate(`/api/users/profile/${login.userId}`);
   };
 
   const handleFavoritesMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    navigate("/api/users/favorites");
+    navigate(`/api/users/favorites/${login.userId}`);
   };
 
   const handleMenuCloseAndLogout = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
     login.logout();
+    onClearSearchBar();
+    handleMobileMenuClose();
     navigate("/homepage");
   };
 
@@ -172,7 +174,7 @@ const AccountMenuMobile = () => {
             color="inherit"
             title="Account"
           >
-            <AccountCircleOutlined />
+            <AvatarComponent />
           </IconButton>
           {renderMobileMenu}
           {renderMenu}

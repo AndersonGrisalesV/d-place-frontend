@@ -56,7 +56,7 @@ const NewButton = ({
         style={{ transitionDelay: menuOption ? "200ms" : "0ms" }}
         {...(true ? { timeout: 500 } : {})}
       >
-        <NavLink to="/places/newPlace">
+        <NavLink to="/api/places/newPlace">
           <StyleFabButton
             sx={{
               color: "#fff",

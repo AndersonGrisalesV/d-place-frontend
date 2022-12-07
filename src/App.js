@@ -27,6 +27,8 @@ function App() {
   let navigate = useNavigate();
 
   const [searchBar, setSearchBar] = useState();
+  const [storedInputSearch, setStoredInputSearch] = useState(null);
+  const [showCloseButton, setShowCloseButton] = useState(false);
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedPlaces, setLoadedPlaces] = useState();
@@ -44,8 +46,16 @@ function App() {
     fetchPlaces();
   }, [sendRequest]);
 
-  const handleSearchBar = (e) => {
-    setSearchBar(e.target.value);
+  const handleSearchBar = (e, cleaner = null) => {
+    setShowCloseButton(true);
+    if (e === null && cleaner === "clean") {
+      setSearchBar("");
+      storedInputSearch.target.value = "";
+      setShowCloseButton(false);
+    } else {
+      setStoredInputSearch(e);
+      setSearchBar(e.target.value);
+    }
     // console.log("here" + e.target.value);
   };
 
@@ -81,6 +91,7 @@ function App() {
 
     e.target.value = "";
     setSearchBar("");
+    setShowCloseButton(false);
 
     navigate(`/api/places/${placeSearched}`);
 
@@ -91,11 +102,11 @@ function App() {
     }
   };
 
-  const [clearSBar, setClearSBar] = useState(false);
-
   const handlleSideBarCleanSearchBar = () => {
     // navigate("/homepage");
     setSearchBar("");
+    storedInputSearch.target.value = "";
+    setShowCloseButton(false);
     // setClearSBar(true);
   };
 
@@ -225,6 +236,8 @@ function App() {
               onOption={handleBurgerMenu}
               onSearch={handleSearchBar}
               onClear={clearSearchBar}
+              onClearSearchBar={handlleSideBarCleanSearchBar}
+              onShowCloseButton={showCloseButton}
             />
 
             <div style={{ margin: 0, padding: 0 }}>
@@ -243,6 +256,7 @@ function App() {
                     mode={mode}
                     setMode={setMode}
                     onOption={handleBurgerMenu}
+                    onClearSearchBar={handlleSideBarCleanSearchBar}
                   />
                 )}
                 <Routes>
