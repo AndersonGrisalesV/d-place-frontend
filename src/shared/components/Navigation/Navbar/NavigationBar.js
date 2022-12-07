@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import AppName from "./components/SideBar/AppName";
 import HamburgerMenu from "./components/SideBar/HamburgerMenu";
 import SearchBar from "./components/SearchBar/SearchBar";
-import SearchBarResponsive from "./components/SearchBar/SearchBarResponsive";
+
 import AccountMenu from "./components/RightBar/AccountMenu/AccountMenu";
 import AccountMenuMobile from "./components/RightBar/AccountMenu/AccountMenuMobile";
 import SideBarMenuResponsive from "./components/SideBar/SideBarMenuResponsive";
@@ -39,41 +39,6 @@ export default function NavigationBar(props) {
 
           <AppName />
 
-          <SearchBar
-            onSearch={props.onSearch}
-            onClear={props.onClear}
-            onShowCloseButton={props.onShowCloseButton}
-          />
-
-          {login.isLoggedIn ? (
-            <React.Fragment>
-              <FavoritesButton />
-              <NotificationsButton onResponsive={false} />
-              <AccountMenu onClearSearchBar={props.onClearSearchBar} />
-            </React.Fragment>
-          ) : (
-            <Box
-              sx={{
-                display: {
-                  sps: "none",
-                  ps: "none",
-                  ts: "none",
-                  sls: "none",
-                  sms: "none",
-                  sc: "none",
-                  nsc: "none",
-                  ns: "flex",
-                  msc: "flex",
-                  mns: "flex",
-                  ms: "flex",
-                  lgs: "flex",
-                },
-              }}
-            >
-              <LoginButton />
-            </Box>
-          )}
-
           <SideBarMenuResponsive
             setMode={props.setMode}
             mode={props.mode}
@@ -81,11 +46,48 @@ export default function NavigationBar(props) {
             onClearSearchBar={props.onClearSearchBar}
           />
 
-          <SearchBarResponsive
-            onSearch={props.onSearch}
-            onClear={props.onClear}
-            onShowCloseButton={props.onShowCloseButton}
-          />
+          {login.isLoggedIn ? (
+            <React.Fragment>
+              <SearchBar
+                onSearch={props.onSearch}
+                onClear={props.onClear}
+                onShowCloseButton={props.onShowCloseButton}
+              />
+
+              <FavoritesButton />
+              <NotificationsButton onResponsive={false} />
+              <AccountMenu onClearSearchBar={props.onClearSearchBar} />
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <SearchBar
+                onSearch={props.onSearch}
+                onClear={props.onClear}
+                onShowCloseButton={props.onShowCloseButton}
+              />
+
+              <Box
+                sx={{
+                  display: {
+                    sps: "none",
+                    ps: "none",
+                    ts: "none",
+                    sls: "none",
+                    sms: "none",
+                    sc: "none",
+                    nsc: "none",
+                    ns: "flex",
+                    msc: "flex",
+                    mns: "flex",
+                    ms: "flex",
+                    lgs: "flex",
+                  },
+                }}
+              >
+                <LoginButton />
+              </Box>
+            </React.Fragment>
+          )}
 
           <AccountMenuMobile onClearSearchBar={props.onClearSearchBar} />
         </StyleToolbar>

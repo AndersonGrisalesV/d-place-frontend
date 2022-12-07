@@ -7,10 +7,11 @@ import {
 import Box from "@mui/material/Box";
 import LoginButton from "../LoginButtons/LoginButton";
 import NotificationsButton from "../NotificationsButton/NotificationsButton";
-import { LoginContext } from "../../../../../../context/login-context";
+
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled/macro";
 import AvatarComponent from "./Avatar/AvatarComponent";
+import { LoginContext } from "../../../../../../context/login-context";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {

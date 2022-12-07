@@ -24,6 +24,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(false);
 
+  const [newNotification, setNewNotification] = useState(false);
+
   let navigate = useNavigate();
 
   const [searchBar, setSearchBar] = useState();
@@ -105,7 +107,9 @@ function App() {
   const handlleSideBarCleanSearchBar = () => {
     // navigate("/homepage");
     setSearchBar("");
-    storedInputSearch.target.value = "";
+    if (storedInputSearch) {
+      storedInputSearch.target.value = "";
+    }
     setShowCloseButton(false);
     // setClearSBar(true);
   };
@@ -113,6 +117,8 @@ function App() {
   const login = useCallback((uid) => {
     setIsLoggedIn(true);
     setUserId(uid);
+
+    setNewNotification(true);
   }, []);
 
   const createAccount = useCallback((uid) => {
@@ -123,6 +129,10 @@ function App() {
   const logout = useCallback(() => {
     setIsLoggedIn(false);
     setUserId(null);
+  }, []);
+
+  const notification = useCallback(() => {
+    setNewNotification((preNewNotification) => !preNewNotification);
   }, []);
 
   let routes;
@@ -219,6 +229,8 @@ function App() {
         createAccount: createAccount,
         userId: userId,
         logout: logout,
+        notification: notification,
+        newNotification: newNotification,
       }}
     >
       <div>
@@ -238,6 +250,7 @@ function App() {
               onClear={clearSearchBar}
               onClearSearchBar={handlleSideBarCleanSearchBar}
               onShowCloseButton={showCloseButton}
+              onCurrent={storedInputSearch}
             />
 
             <div style={{ margin: 0, padding: 0 }}>

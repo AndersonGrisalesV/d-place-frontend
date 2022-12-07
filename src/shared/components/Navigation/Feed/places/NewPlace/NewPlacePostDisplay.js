@@ -176,6 +176,7 @@ const NewPlacePostDisplay = () => {
         setTimeout(() => {
           setShowSuccess(false);
           navigate("/homepage");
+          login.notification();
         }, "2000");
       } catch (err) {}
     }

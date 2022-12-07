@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { Box, Stack, Zoom } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+  ListItemIcon,
+  Stack,
+  Zoom,
+} from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
@@ -72,13 +79,13 @@ const SearchBar = ({ onSearch, onClear, onShowCloseButton }) => {
         justifyContent="center"
         sx={{
           display: {
-            sps: "none",
-            ps: "none",
-            ts: "none",
-            sls: "none",
-            sms: "none",
-            sc: "none",
-            nsc: "none",
+            sps: "flex",
+            ps: "flex",
+            ts: "flex",
+            sls: "flex",
+            sms: "flex",
+            sc: "flex",
+            nsc: "flex",
             ns: "flex",
             msc: "flex",
             mns: "flex",
@@ -87,7 +94,11 @@ const SearchBar = ({ onSearch, onClear, onShowCloseButton }) => {
           },
         }}
       >
-        <Search>
+        <Search
+          sx={{
+            minwidth: "40%",
+          }}
+        >
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
@@ -100,7 +111,6 @@ const SearchBar = ({ onSearch, onClear, onShowCloseButton }) => {
             }}
           >
             <StyledInputBase
-              // sx={{ margin: "0px", padding: "0px" }}
               placeholder="Search"
               onChange={(e) => {
                 onSearch(e, null);
@@ -114,12 +124,14 @@ const SearchBar = ({ onSearch, onClear, onShowCloseButton }) => {
                 }
               }}
             />
-            {onShowCloseButton && !erasedDataSearch ? (
-              <CloseIcon
-                onClick={handleCloseSearch}
-                sx={{ cursor: "pointer" }}
-              />
-            ) : null}
+            <ListItemIcon sx={{ minWidth: "37px" }}>
+              {onShowCloseButton && !erasedDataSearch ? (
+                <CloseIcon
+                  onClick={handleCloseSearch}
+                  sx={{ cursor: "pointer", color: "#fff" }}
+                />
+              ) : null}
+            </ListItemIcon>
           </Stack>
         </Search>
       </Box>
