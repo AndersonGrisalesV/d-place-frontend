@@ -90,7 +90,10 @@ const AccountMenuMobile = ({ onClearSearchBar }) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <NotificationsButton onResponsive={true} />
+      <NotificationsButton
+        onResponsive={true}
+        onCloseMenuResponsive={handleMobileMenuClose}
+      />
 
       <StyleMenuItem onClick={handleFavoritesMenuClose}>
         <IconButton

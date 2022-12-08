@@ -5,7 +5,9 @@ import {
   Typography,
   Zoom,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useHttpClient } from "../../../../../hooks/http-hook";
 
 function srcset(image, size, rows = 1, cols = 1) {
   return {
@@ -16,57 +18,87 @@ function srcset(image, size, rows = 1, cols = 1) {
   };
 }
 
-const itemData = [
-  {
-    img: "https://sportshub.cbsistatic.com/i/2022/08/06/0f0ba3a3-6248-40e9-93de-3fab636b15aa/bleach-thousand-poster.png",
-    title: "Bleach",
-    rows: 2,
-    cols: 2,
-  },
-  {
-    img: "https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2021%2F08%2Fbleach-20th-anniversary-special-manga-chapter-new-details-info-000.jpg?w=960&cbr=1&q=90&fit=max",
-    title: "IchigoAndRukia",
-  },
-  {
-    img: "https://animenewsandfacts.com/wp-content/uploads/2020/03/bleach_kurosaki_ichigo_hollow_mask_6426_by_afran67_d7yrxg9-fullview-1.jpg?ezimgfmt=rs:372x225/rscb186/ngcb186/notWebP",
-    title: "Hollow mask",
-  },
-];
-
 const LatestPhotos = () => {
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedPlaces, setLoadedPlaces] = useState();
+
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:4000/homepage"
+        );
+
+        setLoadedPlaces(responseData.places.reverse());
+      } catch (err) {}
+    };
+    fetchPlaces();
+  }, [sendRequest]);
+
+  let images;
+  let count = 0;
+
+  console.log(loadedPlaces);
+
+  const imageLinkHandler = (e, id) => {
+    navigate(`/api/places/${id}`);
+  };
+
   return (
-    <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
-      <CardContent sx={{ paddingTop: "0px", paddingBottom: "0px" }}>
-        <Typography variant="h6" fontWeight={400} mt={2} mb={2}>
-          Latest Photos
-        </Typography>
-        <div>
-          <ImageList
-            variant="quilted"
-            cols={1}
-            rowHeight={80}
-            gap={5}
-            sx={{ width: "330px", height: "250px", paddingRight: "0px" }}
-          >
-            {itemData.map((item) => (
-              <ImageListItem
-                key={item.img}
-                cols={item.cols || 1}
-                rows={item.rows || 1}
-                sx={{ borderRadius: "18%" }}
+    <React.Fragment>
+      {!isLoading && loadedPlaces ? (
+        <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
+          <CardContent sx={{ paddingTop: "0px", paddingBottom: "0px" }}>
+            <Typography variant="h6" fontWeight={400} mt={2} mb={2}>
+              Latest Photos
+            </Typography>
+            <div>
+              <ImageList
+                variant="quilted"
+                cols={1}
+                rowHeight={80}
+                gap={5}
+                sx={{ width: "330px", height: "250px", paddingRight: "0px" }}
               >
-                <img
-                  style={{ borderRadius: "2.2%" }}
-                  {...srcset(item.img, 121, item.rows, item.cols)}
-                  alt={item.title}
-                  loading="lazy"
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-        </div>
-      </CardContent>
-    </Zoom>
+                {loadedPlaces.map((place) => {
+                  if (count <= 2) {
+                    count++;
+                    images = (
+                      <ImageListItem
+                        key={place._id}
+                        id={place._id}
+                        cols={count === 1 ? 2 : 1}
+                        rows={count === 1 ? 2 : 1}
+                        sx={{ borderRadius: "18%", cursor: "pointer" }}
+                        onClick={(e) => imageLinkHandler(e, place.id)}
+                      >
+                        <img
+                          style={{ borderRadius: "2.2%" }}
+                          {...srcset(
+                            place.imageUrl,
+                            121,
+                            place.rows,
+                            place.cols
+                          )}
+                          alt={place.title}
+                          loading="lazy"
+                        />
+                      </ImageListItem>
+                    );
+
+                    return images;
+                  }
+                  return null;
+                })}
+              </ImageList>
+            </div>
+          </CardContent>
+        </Zoom>
+      ) : null}
+      {/* //here goes skeleton, inside null */}
+    </React.Fragment>
   );
 };
 

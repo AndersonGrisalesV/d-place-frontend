@@ -39,10 +39,11 @@ const StyleStack = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const NotificationsButton = ({ onResponsive }) => {
+const NotificationsButton = ({ onResponsive, onCloseMenuResponsive }) => {
   const login = useContext(LoginContext);
   const responsiveVariant = onResponsive;
   const [changeResponsive, setChangeResponsive] = useState(responsiveVariant);
+  const [showPopover, setShowPopover] = useState(false);
 
   let navigate = useNavigate();
 
@@ -84,6 +85,7 @@ const NotificationsButton = ({ onResponsive }) => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     setShowNotification(false);
+
     // console.log(loadedPlaces);
     // setTimeout(() => {
     //   login.notification();
@@ -92,6 +94,7 @@ const NotificationsButton = ({ onResponsive }) => {
 
   const handleClickResponsive = (event) => {
     setAnchorEl(event.currentTarget);
+    setShowPopover(true);
     setShowNotification(false);
   };
 
@@ -101,7 +104,11 @@ const NotificationsButton = ({ onResponsive }) => {
 
   const handleNewPost = () => {
     navigate(`api/places/${loadedPlaces.slice(0, 1)[0]._id}`);
-    setAnchorEl(null);
+    handleClose();
+    onCloseMenuResponsive();
+    setShowPopover(false);
+
+    // onCloseMenuResponsive();
   };
 
   const open = Boolean(anchorEl);
@@ -176,15 +183,13 @@ const NotificationsButton = ({ onResponsive }) => {
                     }
                     color="error"
                   >
-                    <NotificationsOutlinedIcon
-                      onClick={handleClickResponsive}
-                    />
-                    {PopoverComponent}
+                    <NotificationsOutlinedIcon />
                   </Badge>
                 ) : null}
               </IconButton>
               <p>Notifications</p>
             </StyleMenuItem>
+            {PopoverComponent}
           </Box>
         </Zoom>
       ) : (

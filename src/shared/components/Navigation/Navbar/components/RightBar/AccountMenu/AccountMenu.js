@@ -107,7 +107,7 @@ const AccountMenu = ({ onClearSearchBar }) => {
               style={{
                 padding: "0px",
                 paddingRight: "12px",
-                paddingLeft: "12px",
+                paddingLeft: "5px",
               }}
             >
               <AvatarComponent />
