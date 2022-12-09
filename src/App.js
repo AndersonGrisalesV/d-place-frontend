@@ -7,7 +7,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import SideBar from "./shared/components/Navigation/SideBar/SideBar";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import AppStyles from "./App.css";
-import Profile from "./pages/Profile";
+import MyPlaces from "./pages/MyPlaces";
 import { LoginContext } from "./shared/context/login-context";
 import LoginRegister from "./pages/LoginRegister";
 import PlaceDetail from "./pages/PlaceDetail";
@@ -135,21 +135,36 @@ function App() {
     setNewNotification((preNewNotification) => !preNewNotification);
   }, []);
 
+  const [clearListItems, setListItems] = useState(false);
+
+  const listItemsActiveOptionsNotListed = () => {
+    setListItems(true);
+  };
+
+  const listItemsActiveOptionsNotListedRevertState = () => {
+    setListItems(false);
+  };
+
   let routes;
   if (isLoggedIn) {
     routes = (
       <React.Fragment>
         <Route
           path="/homepage"
-          element={<HomePage onFilterSearch={searchBar} />}
+          element={
+            <HomePage
+              onFilterSearch={searchBar}
+              onClearListItems={setListItems}
+            />
+          }
         />
         <Route
           path="/api/users/favorites/:uid"
           element={<FavoritesPage onFilterSearch={searchBar} />}
         />
         <Route
-          path="/api/users/profile/:uid"
-          element={<Profile onFilterSearch={searchBar} />}
+          path="/api/users/myplaces/:uid"
+          element={<MyPlaces onFilterSearch={searchBar} />}
         />
         <Route path="/api/places/newplace" element={<NewPlace />} />
         <Route path="/api/places/editplace/:pid" element={<EditPlace />} />
@@ -262,6 +277,10 @@ function App() {
                     setMode={setMode}
                     onOption={handleBurgerMenu}
                     onClearSearchBar={handlleSideBarCleanSearchBar}
+                    clearSelectedItem={clearListItems}
+                    onCleanStateSelectedItem={
+                      listItemsActiveOptionsNotListedRevertState
+                    }
                   />
                 ) : (
                   <SideBar
@@ -270,12 +289,21 @@ function App() {
                     setMode={setMode}
                     onOption={handleBurgerMenu}
                     onClearSearchBar={handlleSideBarCleanSearchBar}
+                    clearSelectedItem={clearListItems}
+                    onCleanStateSelectedItem={
+                      listItemsActiveOptionsNotListedRevertState
+                    }
                   />
                 )}
                 <Routes>
                   <Route
                     path="/homepage"
-                    element={<HomePage onFilterSearch={searchBar} />}
+                    element={
+                      <HomePage
+                        onFilterSearch={searchBar}
+                        onClearListItems={listItemsActiveOptionsNotListed}
+                      />
+                    }
                   />
                   {routes}
                 </Routes>

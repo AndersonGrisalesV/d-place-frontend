@@ -68,7 +68,7 @@ const StyleContainerMap = styled(Box)(({ theme }) => ({
   width: "100%",
 }));
 
-const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
+const ButtonsWrapper = ({ onMap = false, loadedPlaces, onClearListItems }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -99,7 +99,10 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
         <ShareButton />
       </Stack>
       {!onMap ? (
-        <ButtonDetails onPlaceId={loadedPlaces._id} />
+        <ButtonDetails
+          onPlaceId={loadedPlaces._id}
+          onClearListItems={onClearListItems}
+        />
       ) : (
         <ButtonSeeMap onHandleOpen={handleOpen} />
       )}

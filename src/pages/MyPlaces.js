@@ -2,7 +2,7 @@ import React from "react";
 
 import ProfilePlaces from "../shared/components/Navigation/Feed/ProfilePlaces";
 
-const Profile = ({ onFilterSearch }) => {
+const MyPlaces = ({ onFilterSearch }) => {
   return (
     <React.Fragment>
       <ProfilePlaces
@@ -13,4 +13,4 @@ const Profile = ({ onFilterSearch }) => {
   );
 };
 
-export default Profile;
+export default MyPlaces;

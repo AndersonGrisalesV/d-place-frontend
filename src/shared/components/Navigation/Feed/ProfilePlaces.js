@@ -24,7 +24,7 @@ const ProfilePlaces = ({ onFilterSearch = null }) => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:4000/api/users/profile/${uid}`
+          `http://localhost:4000/api/users/myplaces/${uid}`
         );
 
         setLoadedPlaces(responseData.places);

@@ -20,6 +20,7 @@ import ModeSwitch from "../../ModeSwitch/ModeSwitch";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../../../../context/login-context";
 import classes from "./ListItems.module.css";
+import CollectionsOutlinedIcon from "@mui/icons-material/CollectionsOutlined";
 import styled from "@emotion/styled/macro";
 
 const StyleHomeIcon = styled(HomeOutlined)(({ theme }) => ({
@@ -57,10 +58,207 @@ const StyleLogoutIcon = styled(Logout)(({ theme }) => ({
   },
 }));
 
+const StyleMyplacesIcon = styled(CollectionsOutlinedIcon)(({ theme }) => ({
+  color: theme.palette.mode === "dark" ? "" : "#00000091",
+  "&:hover": {
+    color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
+  },
+}));
+
 const StyleListItemText = styled(ListItemText)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "" : "#000000",
   "&:hover": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
+  },
+}));
+
+const StyleListItemsHomepage = styled(ListItem)(({ theme }) => ({
+  "&:hover": {
+    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    [`${StyleHomeIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleFavoriteIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleAccountCircleIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleSettingsIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleLogoutIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleMyplacesIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+  },
+  "&.Mui-selected": {
+    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    [`${StyleHomeIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+  },
+}));
+
+const StyleListItemsFavorites = styled(ListItem)(({ theme }) => ({
+  "&:hover": {
+    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    [`${StyleHomeIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleFavoriteIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleAccountCircleIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleSettingsIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleLogoutIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleMyplacesIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+  },
+  "&.Mui-selected": {
+    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    [`${StyleFavoriteIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+  },
+}));
+
+const StyleListItemsMyPlaces = styled(ListItem)(({ theme }) => ({
+  "&:hover": {
+    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    [`${StyleHomeIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleFavoriteIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleAccountCircleIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleSettingsIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleLogoutIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleMyplacesIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+  },
+  "&.Mui-selected": {
+    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    [`${StyleMyplacesIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+  },
+}));
+
+const StyleListItemsProfile = styled(ListItem)(({ theme }) => ({
+  "&:hover": {
+    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    [`${StyleHomeIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleFavoriteIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleAccountCircleIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleSettingsIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleLogoutIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleMyplacesIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+  },
+  "&.Mui-selected": {
+    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    [`${StyleAccountCircleIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+  },
+}));
+
+const StyleListItemsSettings = styled(ListItem)(({ theme }) => ({
+  "&:hover": {
+    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    [`${StyleHomeIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleFavoriteIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleAccountCircleIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleSettingsIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleLogoutIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleMyplacesIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+  },
+  "&.Mui-selected": {
+    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    [`${StyleSettingsIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleListItemText}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
   },
 }));
 
@@ -81,6 +279,9 @@ const StyleListItems = styled(ListItem)(({ theme }) => ({
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     },
     [`${StyleLogoutIcon}`]: {
+      color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    },
+    [`${StyleMyplacesIcon}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     },
     [`${StyleListItemText}`]: {
@@ -107,6 +308,8 @@ const ListItems = ({
   onToggleResponsive,
   onClearSearchBar,
   onResponsive = false,
+  clearSelectedItem = false,
+  onCleanStateSelectedItem,
 }) => {
   const login = useContext(LoginContext);
   let navigate = useNavigate();
@@ -119,6 +322,7 @@ const ListItems = ({
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
+    setSelectedIndex(5);
   };
 
   const handleMenuClose = () => {
@@ -127,12 +331,11 @@ const ListItems = ({
   };
 
   const handleLogout = () => {
+    navigate("/homepage");
     setAnchorEl(null);
     login.logout();
     onClearSearchBar();
     onToggleResponsive("left", false);
-
-    navigate("/homepage");
   };
 
   const menuId = "primary-search-account-menu";
@@ -178,6 +381,66 @@ const ListItems = ({
     onClearSearchBar();
   };
 
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    switch (window.location.pathname) {
+      case "/homepage":
+        setSelectedIndex(0);
+        break;
+      case `/api/users/favorites/${login.userId}`:
+        setSelectedIndex(1);
+        break;
+      case `/api/users/myplaces/${login.userId}`:
+        setSelectedIndex(2);
+        break;
+      case `/api/users/profile/${login.userId}`:
+        setSelectedIndex(3);
+        break;
+      case `/api/places/${login.userId}`:
+        setSelectedIndex(4);
+        break;
+      default:
+        break;
+    }
+  }, [login.userId]);
+
+  const [clearListItem, setClearListItem] = useState(false);
+
+  useEffect(() => {
+    if (clearSelectedItem) {
+      switch (window.location.pathname) {
+        case `/api/places/63910186cc8878ac591ae2f2`:
+          setClearListItem(true);
+          onCleanStateSelectedItem();
+          break;
+        default:
+          break;
+      }
+    }
+    // if (clearSelectedItem) {
+    //   setSelectedIndex(4);
+    //   setClearListItem(true);
+    // }
+  }, [clearSelectedItem, login.userId, onCleanStateSelectedItem]);
+
+  const activeStateHandler = (e, index) => {
+    if (clearListItem) {
+      setClearListItem(false);
+    }
+
+    setSelectedIndex(index);
+
+    // if (clearListItem) {
+    //   setSelectedIndex(4);
+
+    //   setClearListItem(false);
+    // } else {
+    // }
+  };
+
+  useEffect(() => {}, [clearListItem]);
+
   return (
     <>
       <Grow
@@ -185,7 +448,13 @@ const ListItems = ({
         style={{ transitionDelay: true ? "100ms" : "0ms" }}
         {...(true ? { timeout: 500 } : {})}
       >
-        <StyleListItems disablePadding component={StyleNavLink} to="/homepage">
+        <StyleListItemsHomepage
+          disablePadding
+          component={StyleNavLink}
+          to="/homepage"
+          selected={selectedIndex === 0 && !clearListItem ? true : null}
+          onClick={(e) => activeStateHandler(e, 0)}
+        >
           <ListItemButton
             component="ul"
             href="/homepage"
@@ -196,7 +465,7 @@ const ListItems = ({
             </ListItemIcon>
             <StyleListItemText primary="Homepage" />
           </ListItemButton>
-        </StyleListItems>
+        </StyleListItemsHomepage>
       </Grow>
 
       {!login.isLoggedIn ? (
@@ -205,14 +474,17 @@ const ListItems = ({
           style={{ transitionDelay: true ? "100ms" : "0ms" }}
           {...(true ? { timeout: 500 } : {})}
         >
-          <StyleListItems disablePadding>
+          <StyleListItemsSettings
+            disablePadding
+            selected={selectedIndex === 5 ? true : null}
+          >
             <ListItemButton component="div" onClick={handleProfileMenuOpen}>
               <ListItemIcon>
                 <StyleSettingsIcon />
               </ListItemIcon>
               <StyleListItemText primary="Settings" />
             </ListItemButton>
-          </StyleListItems>
+          </StyleListItemsSettings>
         </Grow>
       ) : (
         ""
@@ -225,11 +497,12 @@ const ListItems = ({
             style={{ transitionDelay: true ? "100ms" : "0ms" }}
             {...(true ? { timeout: 500 } : {})}
           >
-            <StyleListItems
+            <StyleListItemsFavorites
               disablePadding
               component={StyleNavLink}
               to={`/api/users/favorites/${login.userId}`}
-              // className={(navData) => (navData.isActive ? classes.active : "")}
+              selected={selectedIndex === 1 ? true : null}
+              onClick={(e) => activeStateHandler(e, 1)}
             >
               <ListItemButton
                 component="li"
@@ -244,7 +517,7 @@ const ListItems = ({
 
                 <StyleListItemText primary="Favorites" />
               </ListItemButton>
-            </StyleListItems>
+            </StyleListItemsFavorites>
           </Grow>
 
           <Grow
@@ -252,10 +525,39 @@ const ListItems = ({
             style={{ transitionDelay: true ? "100ms" : "0ms" }}
             {...(true ? { timeout: 500 } : {})}
           >
-            <StyleListItems
+            <StyleListItemsMyPlaces
+              disablePadding
+              component={StyleNavLink}
+              to={`/api/users/myplaces/${login.userId}`}
+              selected={selectedIndex === 2 && !clearListItem ? true : null}
+              onClick={(e) => activeStateHandler(e, 2)}
+            >
+              <ListItemButton
+                component="li"
+                href={`/api/users/myplaces/${login.userId}`}
+                onClick={
+                  onCloseResponsiveDrawer ? handleDrawerClose : handleClear
+                }
+              >
+                <ListItemIcon>
+                  <StyleMyplacesIcon />
+                </ListItemIcon>
+                <StyleListItemText primary="My places" />
+              </ListItemButton>
+            </StyleListItemsMyPlaces>
+          </Grow>
+
+          <Grow
+            in={true}
+            style={{ transitionDelay: true ? "100ms" : "0ms" }}
+            {...(true ? { timeout: 500 } : {})}
+          >
+            <StyleListItemsProfile
               disablePadding
               component={StyleNavLink}
               to={`/api/users/profile/${login.userId}`}
+              selected={selectedIndex === 3 ? true : null}
+              onClick={(e) => activeStateHandler(e, 3)}
             >
               <ListItemButton
                 component="li"
@@ -269,7 +571,7 @@ const ListItems = ({
                 </ListItemIcon>
                 <StyleListItemText primary="Profile" />
               </ListItemButton>
-            </StyleListItems>
+            </StyleListItemsProfile>
           </Grow>
 
           <Grow
@@ -277,14 +579,17 @@ const ListItems = ({
             style={{ transitionDelay: true ? "100ms" : "0ms" }}
             {...(true ? { timeout: 500 } : {})}
           >
-            <StyleListItems disablePadding>
+            <StyleListItemsSettings
+              disablePadding
+              selected={selectedIndex === 5 ? true : null}
+            >
               <ListItemButton component="ul" onClick={handleProfileMenuOpen}>
                 <ListItemIcon>
                   <StyleSettingsIcon />
                 </ListItemIcon>
                 <StyleListItemText primary="Settings" />
               </ListItemButton>
-            </StyleListItems>
+            </StyleListItemsSettings>
           </Grow>
 
           <Grow

@@ -17,7 +17,12 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
 }));
 
-const ButtonDetails = ({ onPlaceId }) => {
+const ButtonDetails = ({ onPlaceId, onClearListItems }) => {
+  const cleanListItemsHandler = () => {
+    onClearListItems();
+    console.log(onClearListItems);
+  };
+
   return (
     <Stack
       direction="row"
@@ -40,6 +45,7 @@ const ButtonDetails = ({ onPlaceId }) => {
     >
       <StyleNavLink to={`/api/places/${onPlaceId}`}>
         <StyleButton
+          onClick={cleanListItemsHandler}
           sx={{
             fontWeight: 500,
             textTransform: "none",

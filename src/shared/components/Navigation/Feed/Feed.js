@@ -8,7 +8,12 @@ import { Box } from "@mui/material";
 
 import { useHttpClient } from "../../../hooks/http-hook";
 
-const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
+const Feed = ({
+  onDetail = false,
+  onMap = false,
+  onFilterSearch = null,
+  onClearListItems,
+}) => {
   const params = useParams();
   const { pathname } = useLocation();
 
@@ -93,7 +98,12 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
           <React.Fragment>
             {loadedPlaces.map((place) => (
               <React.Fragment key={place._id}>
-                <Place loadedPlaces={place} key={place._id} id={place._id} />
+                <Place
+                  loadedPlaces={place}
+                  key={place._id}
+                  id={place._id}
+                  onClearListItems={onClearListItems}
+                />
                 <br />
               </React.Fragment>
             ))}

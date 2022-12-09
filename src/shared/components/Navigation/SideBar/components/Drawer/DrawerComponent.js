@@ -45,7 +45,14 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const DrawerComponent = ({ mode, setMode, menuOption, onClearSearchBar }) => {
+const DrawerComponent = ({
+  mode,
+  setMode,
+  menuOption,
+  onClearSearchBar,
+  clearSelectedItem,
+  onCleanStateSelectedItem,
+}) => {
   return (
     <Drawer variant="permanent" open={menuOption}>
       <DrawerHeaderComponent menuOption={menuOption} />
@@ -53,6 +60,8 @@ const DrawerComponent = ({ mode, setMode, menuOption, onClearSearchBar }) => {
         mode={mode}
         setMode={setMode}
         onClearSearchBar={onClearSearchBar}
+        clearSelectedItem={clearSelectedItem}
+        onCleanStateSelectedItem={onCleanStateSelectedItem}
       />
       <NewButton menuOption={menuOption} />
     </Drawer>
