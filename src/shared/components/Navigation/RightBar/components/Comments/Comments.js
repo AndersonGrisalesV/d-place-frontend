@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
@@ -11,6 +11,7 @@ import { CardContent, Zoom } from "@mui/material";
 import { useHttpClient } from "../../../../../hooks/http-hook";
 import AvatarComment from "./AvatarComment";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../../../../context/login-context";
 
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",
@@ -20,6 +21,8 @@ const StyledListItem = styled(ListItem)({
 const Comments = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedPlaces, setLoadedPlaces] = useState();
+
+  const login = useContext(LoginContext);
 
   let navigate = useNavigate();
 
@@ -47,14 +50,17 @@ const Comments = () => {
 
   const firstpPlaceLinkHandler = () => {
     navigate(`/api/places/${latestComment0.placeId._id}`);
+    login.listItemsNotListed(latestComment0.placeId._id);
   };
 
   const secondPlaceLinkHandler = () => {
     navigate(`/api/places/${latestComment1.placeId._id}`);
+    login.listItemsNotListed(latestComment1.placeId._id);
   };
 
   const thirdpPlaceLinkHandler = () => {
     navigate(`/api/places/${latestComment2.placeId._id}`);
+    login.listItemsNotListed(latestComment2.placeId._id);
   };
 
   return (

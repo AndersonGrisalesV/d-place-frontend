@@ -2,14 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import DrawerComponent from "./components/Drawer/DrawerComponent";
 
-const SideBar = ({
-  mode,
-  setMode,
-  menuOption = true,
-  onClearSearchBar,
-  clearSelectedItem,
-  onCleanStateSelectedItem,
-}) => {
+const SideBar = ({ mode, setMode, menuOption = true, onClearSearchBar }) => {
   return (
     <Box
       flex={1}
@@ -38,8 +31,6 @@ const SideBar = ({
           setMode={setMode}
           menuOption={menuOption}
           onClearSearchBar={onClearSearchBar}
-          clearSelectedItem={clearSelectedItem}
-          onCleanStateSelectedItem={onCleanStateSelectedItem}
         ></DrawerComponent>
       </Box>
     </Box>

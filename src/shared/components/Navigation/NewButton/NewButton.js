@@ -25,6 +25,12 @@ const NewButton = ({
 
   const handleDrawerClose = () => {
     onToggleResponsive("left", false);
+    login.listItemsNotListed("newplace");
+  };
+
+  const cleanListItemsHandler = () => {
+    login.listItemsNotListed("newplace");
+    // console.log(onClearListItems);
   };
 
   if (login.isLoggedIn && menuOption && !onResponsive) {
@@ -35,6 +41,7 @@ const NewButton = ({
       >
         <NavLink to="/api/places/newplace">
           <StyleFabButton
+            onClick={cleanListItemsHandler}
             sx={{
               color: "#fff",
               background: "#da4453",
@@ -58,6 +65,7 @@ const NewButton = ({
       >
         <NavLink to="/api/places/newPlace">
           <StyleFabButton
+            onClick={cleanListItemsHandler}
             sx={{
               color: "#fff",
               background: "#da4453",

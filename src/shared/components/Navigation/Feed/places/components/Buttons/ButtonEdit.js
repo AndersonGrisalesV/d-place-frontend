@@ -21,13 +21,17 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
 const ButtonEdit = ({ loadedPlaces }) => {
   const login = useContext(LoginContext);
 
-  // /api/places/editplace/:placeId"
+  const cleanListItemsHandler = () => {
+    login.listItemsNotListed(loadedPlaces._id);
+  };
+
   return (
     <React.Fragment>
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleNavLink to={`/api/places/editplace/${loadedPlaces._id}`}>
             <StyleButton
+              onClick={cleanListItemsHandler}
               sx={{
                 fontWeight: 500,
                 textTransform: "none",

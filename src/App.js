@@ -15,6 +15,7 @@ import NewPlace from "./pages/NewPlace";
 import EditPlace from "./pages/EditPlace";
 import { useHttpClient } from "./shared/hooks/http-hook";
 import Place from "./shared/components/Navigation/Feed/places/Place";
+import { SignalWifiStatusbarNull } from "@mui/icons-material";
 
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",
@@ -135,15 +136,20 @@ function App() {
     setNewNotification((preNewNotification) => !preNewNotification);
   }, []);
 
-  const [clearListItems, setListItems] = useState(false);
+  const [clearListItems, setClearListItems] = useState(false);
+  const [pidCleanListItems, setPidCleanListItems] = useState(null);
 
-  const listItemsActiveOptionsNotListed = () => {
-    setListItems(true);
-  };
+  const listItemsNotListed = useCallback((pid) => {
+    setClearListItems(true);
+    if (pid !== "") {
+      setPidCleanListItems(pid);
+    }
+  }, []);
 
-  const listItemsActiveOptionsNotListedRevertState = () => {
-    setListItems(false);
-  };
+  const listItemsCleanListed = useCallback(() => {
+    setClearListItems(false);
+    setPidCleanListItems(null);
+  }, []);
 
   let routes;
   if (isLoggedIn) {
@@ -151,12 +157,7 @@ function App() {
       <React.Fragment>
         <Route
           path="/homepage"
-          element={
-            <HomePage
-              onFilterSearch={searchBar}
-              onClearListItems={setListItems}
-            />
-          }
+          element={<HomePage onFilterSearch={searchBar} />}
         />
         <Route
           path="/api/users/favorites/:uid"
@@ -246,6 +247,10 @@ function App() {
         logout: logout,
         notification: notification,
         newNotification: newNotification,
+        listItemsNotListed: listItemsNotListed,
+        listItemsCleanListed: listItemsCleanListed,
+        pidCleanListItems: pidCleanListItems,
+        clearListItems: clearListItems,
       }}
     >
       <div>
@@ -277,10 +282,6 @@ function App() {
                     setMode={setMode}
                     onOption={handleBurgerMenu}
                     onClearSearchBar={handlleSideBarCleanSearchBar}
-                    clearSelectedItem={clearListItems}
-                    onCleanStateSelectedItem={
-                      listItemsActiveOptionsNotListedRevertState
-                    }
                   />
                 ) : (
                   <SideBar
@@ -289,21 +290,12 @@ function App() {
                     setMode={setMode}
                     onOption={handleBurgerMenu}
                     onClearSearchBar={handlleSideBarCleanSearchBar}
-                    clearSelectedItem={clearListItems}
-                    onCleanStateSelectedItem={
-                      listItemsActiveOptionsNotListedRevertState
-                    }
                   />
                 )}
                 <Routes>
                   <Route
                     path="/homepage"
-                    element={
-                      <HomePage
-                        onFilterSearch={searchBar}
-                        onClearListItems={listItemsActiveOptionsNotListed}
-                      />
-                    }
+                    element={<HomePage onFilterSearch={searchBar} />}
                   />
                   {routes}
                 </Routes>

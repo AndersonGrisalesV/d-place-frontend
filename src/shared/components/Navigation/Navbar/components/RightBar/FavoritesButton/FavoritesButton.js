@@ -8,6 +8,11 @@ import { LoginContext } from "../../../../../../context/login-context";
 const FavoritesButton = () => {
   const login = useContext(LoginContext);
 
+  const cleanListItemsHandler = () => {
+    login.listItemsNotListed(login.userId);
+    // console.log(onClearListItems);
+  };
+
   return (
     <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
       <Box
@@ -28,7 +33,10 @@ const FavoritesButton = () => {
           },
         }}
       >
-        <NavLink to={`/api/users/favorites/${login.userId}`}>
+        <NavLink
+          to={`/api/users/favorites/${login.userId}`}
+          onClick={cleanListItemsHandler}
+        >
           <button className={styles["glow-on-hover"]}>Favorites</button>
         </NavLink>
       </Box>

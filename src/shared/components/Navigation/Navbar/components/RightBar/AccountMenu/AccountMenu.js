@@ -38,6 +38,7 @@ const AccountMenu = ({ onClearSearchBar }) => {
   };
 
   const handleProfileMenuClose = () => {
+    login.listItemsNotListed();
     setAnchorEl(null);
     handleMobileMenuClose();
     navigate(`/api/users/profile/${login.userId}`);
@@ -111,8 +112,6 @@ const AccountMenu = ({ onClearSearchBar }) => {
               }}
             >
               <AvatarComponent />
-
-              {/* <AccountCircleOutlined /> */}
             </IconButton>
             {renderMenu}
           </Box>

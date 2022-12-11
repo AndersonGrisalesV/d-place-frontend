@@ -8,8 +8,6 @@ const ListComponent = ({
   onCloseResponsiveDrawer,
   onToggleResponsive,
   onClearSearchBar,
-  clearSelectedItem,
-  onCleanStateSelectedItem,
 }) => {
   return (
     <List sx={{ padding: "0px", paddingTop: "12px" }}>
@@ -19,8 +17,6 @@ const ListComponent = ({
         onCloseResponsiveDrawer={onCloseResponsiveDrawer}
         onToggleResponsive={onToggleResponsive}
         onClearSearchBar={onClearSearchBar}
-        clearSelectedItem={clearSelectedItem}
-        onCleanStateSelectedItem={onCleanStateSelectedItem}
       />
     </List>
   );

@@ -53,6 +53,7 @@ const AccountMenuMobile = ({ onClearSearchBar }) => {
     setAnchorEl(null);
     handleMobileMenuClose();
     navigate(`/api/users/profile/${login.userId}`);
+    login.listItemsNotListed();
   };
 
   const handleFavoritesMenuClose = () => {

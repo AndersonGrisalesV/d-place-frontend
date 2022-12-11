@@ -308,8 +308,6 @@ const ListItems = ({
   onToggleResponsive,
   onClearSearchBar,
   onResponsive = false,
-  clearSelectedItem = false,
-  onCleanStateSelectedItem,
 }) => {
   const login = useContext(LoginContext);
   let navigate = useNavigate();
@@ -319,13 +317,16 @@ const ListItems = ({
   const isMenuOpen = Boolean(anchorEl);
 
   // useEffect(() => {}, [onResponsive]);
+  const [settingsSelectedItem, setSettingsSelecteditem] = useState(0);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
-    setSelectedIndex(5);
+    setSettingsSelecteditem(5);
+    // setSelectedIndex(5);
   };
 
   const handleMenuClose = () => {
+    setSettingsSelecteditem(0);
     setAnchorEl(null);
     onToggleResponsive("left", false);
   };
@@ -388,7 +389,7 @@ const ListItems = ({
       case "/homepage":
         setSelectedIndex(0);
         break;
-      case `/api/users/favorites/${login.userId}`:
+      case `/api/users/favorites/${login.pidCleanListItems}`: //here we use pidCleanListItems instead oflogin.userId because there is a conflict between favorites and profile
         setSelectedIndex(1);
         break;
       case `/api/users/myplaces/${login.userId}`:
@@ -397,23 +398,35 @@ const ListItems = ({
       case `/api/users/profile/${login.userId}`:
         setSelectedIndex(3);
         break;
-      case `/api/places/${login.userId}`:
+      case `/api/places/${login.pidCleanListItems}`:
         setSelectedIndex(4);
         break;
       default:
+        setSettingsSelecteditem(0);
         break;
     }
-  }, [login.userId]);
+  }, [login.userId, login.pidCleanListItems, login.clearListItems]);
 
   const [clearListItem, setClearListItem] = useState(false);
 
   useEffect(() => {
-    if (clearSelectedItem) {
+    if (login.clearListItems) {
       switch (window.location.pathname) {
-        case `/api/places/63910186cc8878ac591ae2f2`:
+        case `/api/places/${login.pidCleanListItems}`:
           setClearListItem(true);
-          onCleanStateSelectedItem();
           break;
+        case `/api/places/editplace/${login.pidCleanListItems}`:
+          setClearListItem(true);
+          break;
+        case `/api/places/places/${login.pidCleanListItems}`:
+          setClearListItem(true);
+          break;
+        // case `/api/users/favorites/${login.userId}`:
+        //   setClearListItem(true);
+        //   break;
+        // case `/api/users/profile/${login.userId}`:
+        //   setClearListItem(true);
+        //   break;
         default:
           break;
       }
@@ -422,12 +435,11 @@ const ListItems = ({
     //   setSelectedIndex(4);
     //   setClearListItem(true);
     // }
-  }, [clearSelectedItem, login.userId, onCleanStateSelectedItem]);
+  }, [login.pidCleanListItems, login.clearListItems, login.userId]);
 
   const activeStateHandler = (e, index) => {
-    if (clearListItem) {
-      setClearListItem(false);
-    }
+    setClearListItem(false);
+    login.listItemsCleanListed();
 
     setSelectedIndex(index);
 
@@ -581,7 +593,7 @@ const ListItems = ({
           >
             <StyleListItemsSettings
               disablePadding
-              selected={selectedIndex === 5 ? true : null}
+              selected={settingsSelectedItem === 5 ? true : null}
             >
               <ListItemButton component="ul" onClick={handleProfileMenuOpen}>
                 <ListItemIcon>

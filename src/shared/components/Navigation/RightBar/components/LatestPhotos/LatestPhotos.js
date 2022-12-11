@@ -5,8 +5,9 @@ import {
   Typography,
   Zoom,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../../../../context/login-context";
 import { useHttpClient } from "../../../../../hooks/http-hook";
 
 function srcset(image, size, rows = 1, cols = 1) {
@@ -19,6 +20,8 @@ function srcset(image, size, rows = 1, cols = 1) {
 }
 
 const LatestPhotos = () => {
+  const login = useContext(LoginContext);
+
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedPlaces, setLoadedPlaces] = useState();
 
@@ -44,6 +47,7 @@ const LatestPhotos = () => {
 
   const imageLinkHandler = (e, id) => {
     navigate(`/api/places/${id}`);
+    login.listItemsNotListed(id);
   };
 
   return (

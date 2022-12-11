@@ -10,7 +10,6 @@ const Place = ({
   onRefreshPlaceComments,
   onDeletedComments,
   onErrorDeleteComment,
-  onClearListItems,
 }) => {
   return (
     <React.Fragment>
@@ -39,11 +38,7 @@ const Place = ({
             // },
           }}
         >
-          <CardPlace
-            onMap={onMap}
-            loadedPlaces={loadedPlaces}
-            onClearListItems={onClearListItems}
-          />
+          <CardPlace onMap={onMap} loadedPlaces={loadedPlaces} />
         </Box>
       </Zoom>
       {onShowComments && (
