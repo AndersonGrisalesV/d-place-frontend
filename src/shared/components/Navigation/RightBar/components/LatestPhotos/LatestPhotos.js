@@ -81,7 +81,7 @@ const LatestPhotos = () => {
                         <img
                           style={{ borderRadius: "2.2%" }}
                           {...srcset(
-                            place.imageUrl,
+                            place.imageUrl.url,
                             121,
                             place.rows,
                             place.cols

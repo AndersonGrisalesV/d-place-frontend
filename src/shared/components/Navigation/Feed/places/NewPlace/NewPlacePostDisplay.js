@@ -21,6 +21,8 @@ import ScrollToTop from "../../../../../util/ScollTop/ScrollToTop";
 import { useLocation, useNavigate } from "react-router-dom";
 import SnackBarResultLogin from "../../../../LoginRegister/components/SnackBarResultLogin";
 
+const formData = require("form-data");
+
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
@@ -148,29 +150,42 @@ const NewPlacePostDisplay = () => {
       let date = new Date().toJSON();
 
       if (!formInputs.image) {
-        formInputs.image =
+        formInputs.image = {
           //Replace for a placeholder image
-          "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
+          public_id: "345",
+          url: formInputs.image,
+        };
       }
 
-      // console.log(date);
+      // console.log(formInputs.image);
       try {
-        const responseData = await sendRequest(
+        const myForm = new FormData();
+        myForm.append("title", formInputs.title);
+        myForm.append("description", formInputs.description);
+        myForm.append("image", formInputs.image);
+        myForm.append("postDate", date);
+        myForm.append("address", formInputs.address);
+        myForm.append("creatorId", login.userId);
+        await sendRequest(
           "http://localhost:4000/api/places/newplace",
           "POST",
-          JSON.stringify({
-            title: formInputs.title,
-            description: formInputs.description,
-            image: formInputs.image,
-            postDate: date,
-            address: formInputs.address,
-            creatorId: login.userId,
-          }),
-          {
-            "Content-Type": "Application/json",
-          }
+          myForm
         );
-        // navigate(`/homepage`, { state: { editPlace: "edited" } });
+        // const responseData = await sendRequest(
+        //   "http://localhost:4000/api/places/newplace",
+        //   "POST",
+        //   JSON.stringify({
+        //     title: formInputs.title,
+        //     description: formInputs.description,
+        //     image: formInputs.image,
+        //     postDate: date,
+        //     address: formInputs.address,
+        //     creatorId: login.userId,
+        //   }),
+        //   {
+        //     "Content-Type": "Application/json",
+        //   }
+        // );
 
         setShowSuccess(true);
         setTimeout(() => {
@@ -178,7 +193,13 @@ const NewPlacePostDisplay = () => {
           navigate("/homepage");
           login.notification();
         }, "2000");
-      } catch (err) {}
+      } catch (err) {
+        setTimeout(() => {
+          setShowSuccess(false);
+          navigate("/homepage");
+          login.notification();
+        }, "2000");
+      }
     }
     resetTitleInput();
     resetDescriptionInput();
@@ -225,7 +246,10 @@ const NewPlacePostDisplay = () => {
           <Divider variant="middle" sx={{ marginTop: "2px" }} />
           <br />
           <br />
-          <form onSubmit={onSubmitPostPlaceHandler}>
+          <form
+            onSubmit={onSubmitPostPlaceHandler}
+            encType="multipart/form-data"
+          >
             <Stack
               direction="column"
               spacing={4}

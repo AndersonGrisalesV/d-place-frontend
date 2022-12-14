@@ -41,26 +41,45 @@ const Comments = () => {
 
   let regex = /[a-zA-Z0-9]/g;
 
-  const latestComment0 = !isLoading && loadedPlaces ? loadedPlaces[0] : null;
-  const latestComment1 = !isLoading && loadedPlaces ? loadedPlaces[1] : null;
-  const latestComment2 = !isLoading && loadedPlaces ? loadedPlaces[2] : null;
+  let latestComment0;
+  let latestComment1;
+  let latestComment2;
+
+  if (!isLoading && loadedPlaces) {
+    if (loadedPlaces[0] !== undefined) {
+      latestComment0 = !isLoading && loadedPlaces ? loadedPlaces[0] : null;
+    }
+    if (loadedPlaces[1] !== undefined) {
+      latestComment1 = !isLoading && loadedPlaces ? loadedPlaces[1] : null;
+    }
+    if (loadedPlaces[2] !== undefined) {
+      latestComment2 = !isLoading && loadedPlaces ? loadedPlaces[2] : null;
+    }
+  }
 
   console.log(loadedPlaces);
   console.log(latestComment0);
 
   const firstpPlaceLinkHandler = () => {
-    navigate(`/api/places/${latestComment0.placeId._id}`);
-    login.listItemsNotListed(latestComment0.placeId._id);
+    if (loadedPlaces[0] !== undefined) {
+      navigate(`/api/places/${latestComment0.placeId._id}`);
+
+      login.listItemsNotListed(latestComment0.placeId._id);
+    }
   };
 
   const secondPlaceLinkHandler = () => {
-    navigate(`/api/places/${latestComment1.placeId._id}`);
-    login.listItemsNotListed(latestComment1.placeId._id);
+    if (loadedPlaces[1] !== undefined) {
+      navigate(`/api/places/${latestComment1.placeId._id}`);
+      login.listItemsNotListed(latestComment1.placeId._id);
+    }
   };
 
   const thirdpPlaceLinkHandler = () => {
-    navigate(`/api/places/${latestComment2.placeId._id}`);
-    login.listItemsNotListed(latestComment2.placeId._id);
+    if (loadedPlaces[2] !== undefined) {
+      navigate(`/api/places/${latestComment2.placeId._id}`);
+      login.listItemsNotListed(latestComment2.placeId._id);
+    }
   };
 
   return (
@@ -86,98 +105,107 @@ const Comments = () => {
                 Latest Comments
               </Typography>
 
-              <StyledListItem
-                alignItems="flex-start"
-                bgcolor={"background.paper"}
-              >
-                <ListItemAvatar sx={{ marginTop: "18px" }}>
-                  <AvatarComment loadedPlace={latestComment0} />
-                </ListItemAvatar>
-                <ListItemText
-                  onClick={firstpPlaceLinkHandler}
-                  sx={{ cursor: "pointer" }}
-                  primary={latestComment0.placeId.title}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: "inline" }}
-                        fontSize={13}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        {latestComment0.creatorId.name}
-                      </Typography>
-                      {` — ${
-                        latestComment0.commentText.match(regex).length >= 64
-                          ? latestComment0.commentText.slice(0, 64).trimEnd() +
-                            "…"
-                          : latestComment0.commentText
-                      }`}
-                    </React.Fragment>
-                  }
-                />
-              </StyledListItem>
+              {loadedPlaces[0] !== undefined && (
+                <StyledListItem
+                  alignItems="flex-start"
+                  bgcolor={"background.paper"}
+                >
+                  <ListItemAvatar sx={{ marginTop: "18px" }}>
+                    <AvatarComment loadedPlace={latestComment0} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    onClick={firstpPlaceLinkHandler}
+                    sx={{ cursor: "pointer" }}
+                    primary={latestComment0.placeId.title}
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          fontSize={13}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {latestComment0.creatorId.name}
+                        </Typography>
+                        {` — ${
+                          latestComment0.commentText.match(regex).length >= 64
+                            ? latestComment0.commentText
+                                .slice(0, 64)
+                                .trimEnd() + "…"
+                            : latestComment0.commentText
+                        }`}
+                      </React.Fragment>
+                    }
+                  />
+                </StyledListItem>
+              )}
               <Divider variant="middle" />
-              <StyledListItem alignItems="flex-start">
-                <ListItemAvatar sx={{ marginTop: "18px" }}>
-                  <AvatarComment loadedPlace={latestComment1} />
-                </ListItemAvatar>
-                <ListItemText
-                  onClick={secondPlaceLinkHandler}
-                  sx={{ cursor: "pointer" }}
-                  primary={latestComment1.placeId.title}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: "inline" }}
-                        fontSize={13}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        {latestComment1.creatorId.name}
-                      </Typography>
-                      {` — ${
-                        latestComment1.commentText.match(regex).length >= 64
-                          ? latestComment1.commentText.slice(0, 64).trimEnd() +
-                            "…"
-                          : latestComment1.commentText
-                      }`}
-                    </React.Fragment>
-                  }
-                />
-              </StyledListItem>
+              {loadedPlaces[1] !== undefined && (
+                <StyledListItem alignItems="flex-start">
+                  <ListItemAvatar sx={{ marginTop: "18px" }}>
+                    <AvatarComment loadedPlace={latestComment1} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    onClick={secondPlaceLinkHandler}
+                    sx={{ cursor: "pointer" }}
+                    primary={latestComment1.placeId.title}
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          fontSize={13}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {latestComment1.creatorId.name}
+                        </Typography>
+                        {` — ${
+                          latestComment1.commentText.match(regex).length >= 64
+                            ? latestComment1.commentText
+                                .slice(0, 64)
+                                .trimEnd() + "…"
+                            : latestComment1.commentText
+                        }`}
+                      </React.Fragment>
+                    }
+                  />
+                </StyledListItem>
+              )}
               <Divider variant="middle" />
-              <StyledListItem alignItems="flex-start">
-                <ListItemAvatar sx={{ marginTop: "18px" }}>
-                  <AvatarComment loadedPlace={latestComment2} />
-                </ListItemAvatar>
-                <ListItemText
-                  onClick={thirdpPlaceLinkHandler}
-                  sx={{ cursor: "pointer" }}
-                  primary={latestComment2.placeId.title}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: "inline" }}
-                        fontSize={13}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        {latestComment2.creatorId.name}
-                      </Typography>
-                      {` — ${
-                        latestComment2.commentText.match(regex).length >= 64
-                          ? latestComment2.commentText.slice(0, 64).trimEnd() +
-                            "…"
-                          : latestComment2.commentText
-                      }`}
-                    </React.Fragment>
-                  }
-                />
-              </StyledListItem>
+              {loadedPlaces[2] !== undefined && (
+                <StyledListItem alignItems="flex-start">
+                  <ListItemAvatar sx={{ marginTop: "18px" }}>
+                    <AvatarComment loadedPlace={latestComment2} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    onClick={thirdpPlaceLinkHandler}
+                    sx={{ cursor: "pointer" }}
+                    primary={latestComment2.placeId.title}
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          fontSize={13}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {latestComment2.creatorId.name}
+                        </Typography>
+                        {` — ${
+                          latestComment2.commentText.match(regex).length >= 64
+                            ? latestComment2.commentText
+                                .slice(0, 64)
+                                .trimEnd() + "…"
+                            : latestComment2.commentText
+                        }`}
+                      </React.Fragment>
+                    }
+                  />
+                </StyledListItem>
+              )}
             </List>
           </CardContent>
         </Zoom>

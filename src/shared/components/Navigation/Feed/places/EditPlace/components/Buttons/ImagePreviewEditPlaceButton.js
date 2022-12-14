@@ -117,7 +117,7 @@ const ImagePreviewEditPlaceButton = ({
                 </Box>
                 <img
                   style={{ borderRadius: "2.2%", maxHeight: "800px" }}
-                  src={imageUrl}
+                  src={imageUrl.url}
                   srcSet={imageUrl}
                   alt={selectedImageName}
                   loading="lazy"

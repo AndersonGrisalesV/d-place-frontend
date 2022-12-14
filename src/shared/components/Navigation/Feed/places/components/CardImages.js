@@ -7,7 +7,7 @@ const CardImages = ({ loadedPlaces }) => {
       sx={{ height: "100%", objectFit: "contain" }}
       component="img"
       height="194"
-      image={loadedPlaces.imageUrl}
+      image={loadedPlaces.imageUrl.url}
       alt={loadedPlaces.title}
     />
   );
