@@ -45,15 +45,49 @@ const Comments = () => {
   let latestComment1;
   let latestComment2;
 
+  let finalComment0;
+  let finalComment1;
+  let finalComment2;
+
   if (!isLoading && loadedPlaces) {
     if (loadedPlaces[0] !== undefined) {
       latestComment0 = !isLoading && loadedPlaces ? loadedPlaces[0] : null;
+
+      finalComment0 = latestComment0.commentText.trimEnd() + "…";
+
+      if (latestComment0.commentText.match(regex).length >= 64) {
+        finalComment0 = latestComment0.commentText.slice(0, 64).trimEnd() + "…";
+      }
+      if (latestComment0.commentText.includes(" ") === false) {
+        finalComment0 = latestComment0.commentText.slice(0, 20).trimEnd() + "…";
+      }
     }
+
     if (loadedPlaces[1] !== undefined) {
       latestComment1 = !isLoading && loadedPlaces ? loadedPlaces[1] : null;
+
+      finalComment1 = latestComment1.commentText.trimEnd() + "…";
+      console.log("this one" + latestComment1.commentText.includes(" "));
+
+      if (latestComment1.commentText.match(regex).length >= 64) {
+        finalComment1 = latestComment1.commentText.slice(0, 64).trimEnd() + "…";
+      }
+      if (latestComment1.commentText.includes(" ") === false) {
+        finalComment1 = latestComment1.commentText.slice(0, 20).trimEnd() + "…";
+      }
     }
+
     if (loadedPlaces[2] !== undefined) {
       latestComment2 = !isLoading && loadedPlaces ? loadedPlaces[2] : null;
+
+      finalComment2 = latestComment2.commentText.trimEnd() + "…";
+
+      if (latestComment2.commentText.match(regex).length >= 64) {
+        finalComment2 = latestComment2.commentText.slice(0, 64).trimEnd() + "…";
+      }
+      if (latestComment2.commentText.includes(" ") === false) {
+        finalComment2 = latestComment2.commentText.slice(0, 20).trimEnd() + "…";
+      }
     }
   }
 
@@ -63,7 +97,6 @@ const Comments = () => {
   const firstpPlaceLinkHandler = () => {
     if (loadedPlaces[0] !== undefined) {
       navigate(`/api/places/${latestComment0.placeId._id}`);
-
       login.listItemsNotListed(latestComment0.placeId._id);
     }
   };
@@ -126,15 +159,9 @@ const Comments = () => {
                           variant="body2"
                           color="text.primary"
                         >
-                          {latestComment0.creatorId.name}
+                          {`${latestComment0.creatorId.name}`}
                         </Typography>
-                        {` — ${
-                          latestComment0.commentText.match(regex).length >= 64
-                            ? latestComment0.commentText
-                                .slice(0, 64)
-                                .trimEnd() + "…"
-                            : latestComment0.commentText
-                        }`}
+                        {` — ${finalComment0}`}
                       </React.Fragment>
                     }
                   />
@@ -159,15 +186,9 @@ const Comments = () => {
                           variant="body2"
                           color="text.primary"
                         >
-                          {latestComment1.creatorId.name}
+                          {`${latestComment1.creatorId.name}`}
                         </Typography>
-                        {` — ${
-                          latestComment1.commentText.match(regex).length >= 64
-                            ? latestComment1.commentText
-                                .slice(0, 64)
-                                .trimEnd() + "…"
-                            : latestComment1.commentText
-                        }`}
+                        {` — ${finalComment1}`}
                       </React.Fragment>
                     }
                   />
@@ -192,15 +213,9 @@ const Comments = () => {
                           variant="body2"
                           color="text.primary"
                         >
-                          {latestComment2.creatorId.name}
+                          {`${latestComment2.creatorId.name}`}
                         </Typography>
-                        {` — ${
-                          latestComment2.commentText.match(regex).length >= 64
-                            ? latestComment2.commentText
-                                .slice(0, 64)
-                                .trimEnd() + "…"
-                            : latestComment2.commentText
-                        }`}
+                        {` — ${finalComment2}`}
                       </React.Fragment>
                     }
                   />

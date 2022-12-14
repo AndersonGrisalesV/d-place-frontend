@@ -27,7 +27,7 @@ const ProfilePlaces = ({ onFilterSearch = null }) => {
           `http://localhost:4000/api/users/myplaces/${uid}`
         );
 
-        setLoadedPlaces(responseData.places);
+        setLoadedPlaces(responseData.places.reverse());
       } catch (err) {}
     };
     fetchPlaces();

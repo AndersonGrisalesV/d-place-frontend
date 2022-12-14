@@ -361,20 +361,32 @@ const EditPlacePostDisplay = () => {
 
       // console.log(formInputs.image);
       try {
+        const myForm = new FormData();
+        myForm.append("title", formInputs.title);
+        myForm.append("description", formInputs.description);
+        myForm.append("image", formInputs.image);
+        myForm.append("postDate", date);
+        myForm.append("address", formInputs.address);
         await sendRequest(
           `http://localhost:4000/api/places/editplace/${pid}`,
           "PATCH",
-          JSON.stringify({
-            title: formInputs.title,
-            description: formInputs.description,
-            address: formInputs.address,
-            image: formInputs.image,
-            postDate: date,
-          }),
-          {
-            "Content-Type": "Application/json",
-          }
+          myForm
         );
+
+        // await sendRequest(
+        //   `http://localhost:4000/api/places/editplace/${pid}`,
+        //   "PATCH",
+        //   JSON.stringify({
+        //     title: formInputs.title,
+        //     description: formInputs.description,
+        //     address: formInputs.address,
+        //     image: formInputs.image,
+        //     postDate: date,
+        //   }),
+        //   {
+        //     "Content-Type": "Application/json",
+        //   }
+        // );
 
         // navigate(`/api/places/${pid}`, { state: { editPlace: "edited" } });
 
@@ -432,7 +444,11 @@ const EditPlacePostDisplay = () => {
           <CardWrapperEditPlacePostDisplay>
             <CardContentEditPlacePost>
               <TitleEditPlacePost />
-              <Divider variant="middle" sx={{ marginTop: "2px" }} />
+              <Divider
+                variant="middle"
+                sx={{ marginTop: "2px" }}
+                encType="multipart/form-data"
+              />
               <br />
               <br />
               <form onSubmit={onSubmitPostPlaceHandler}>

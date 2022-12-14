@@ -27,7 +27,7 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
           `http://localhost:4000/api/users/favorites/${uid}`
         );
 
-        setLoadedPlaces(responseData.places);
+        setLoadedPlaces(responseData.places.reverse());
       } catch (err) {}
     };
     fetchPlaces();

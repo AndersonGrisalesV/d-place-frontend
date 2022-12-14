@@ -502,7 +502,11 @@ const CommentShow = ({
                     >
                       {`${fetchedDate.month} ${fetchedDate.day}, ${fetchedDate.year}`}
                     </Typography>
-                    {`${onPlaceComments.commentText}`}
+                    {`${
+                      onPlaceComments.commentText.includes(" ") === false
+                        ? onPlaceComments.commentText.slice(0, 72) + "…"
+                        : onPlaceComments.commentText
+                    }`}
                   </Typography>
                 }
               />

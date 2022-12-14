@@ -80,7 +80,8 @@ const NewPlacePostDisplay = () => {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
-      reader.onload = () => {
+
+      reader.onloadend = () => {
         // console.log(reader.result); //base64encoded string
         setFormInputs({
           ...formInputs,
