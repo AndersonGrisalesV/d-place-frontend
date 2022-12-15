@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { Box } from "@mui/system";
 import {
   Avatar,
+  Button,
   ImageListItem,
   Stack,
   styled,
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Box } from "@mui/system";
 
 const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
   color:
@@ -19,7 +20,7 @@ const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
   },
 }));
 
-const ImagePreviewButton = ({
+const ImagePreviewEditProfileButton = ({
   imageUrl,
   selectedImageName,
   handleRemoveImage,
@@ -62,7 +63,7 @@ const ImagePreviewButton = ({
               }}
             >
               <ImageListItem
-                key={imageUrl.url}
+                key={imageUrl}
                 style={{
                   gridColumnEnd: "4",
                   objectFit: "contain",
@@ -91,7 +92,7 @@ const ImagePreviewButton = ({
                         sls: "20px",
                         sms: "24px",
                         sc: "24px",
-                        nsc: "24px",
+                        nsc: "150px",
                         ns: "24px",
                         msc: "24px",
                         mns: "24px",
@@ -124,7 +125,7 @@ const ImagePreviewButton = ({
                     }}
                   >
                     <Avatar
-                      src={imageUrl}
+                      src={imageUrl.url}
                       alt={selectedImageName}
                       sx={{
                         width: {
@@ -162,7 +163,7 @@ const ImagePreviewButton = ({
                 </Box>
                 {/* <img
                   style={{ borderRadius: "2.2%", maxHeight: "800px" }}
-                  src={imageUrl}
+                  src={imageUrl.url}
                   srcSet={imageUrl}
                   alt={selectedImageName}
                   loading="lazy"
@@ -173,80 +174,7 @@ const ImagePreviewButton = ({
         </Box>
       </React.Fragment>
     </React.Fragment>
-
-    // <React.Fragment>
-    //   <Typography
-    //     variant="h9"
-    //     fontWeight={300}
-    //     sx={{
-    //       display: "flex",
-    //       justifyContent: "center",
-    //       alignItems: "center",
-    //       fontSize: {
-    //         sps: "11px",
-    //         ps: "13px",
-    //         ts: "13px",
-    //         sls: "14px",
-    //         sms: "15px",
-    //         sc: "15px",
-    //         nsc: "15px",
-    //         ns: "15px",
-    //         msc: "15px",
-    //         mns: "15px",
-    //         ms: "15px",
-    //         lgs: "15px",
-    //       },
-    //     }}
-    //   >
-    //     Image Preview
-    //   </Typography>
-    //   <Box mt={2} textAlign="center">
-    //     <Box
-    //       sx={{
-    //         display: "flex",
-    //         justifyContent: "center",
-    //         alignItems: "center",
-    //       }}
-    //     >
-    //       <Avatar
-    //         src={imageUrl}
-    //         alt={selectedImageName}
-    //         sx={{
-    //           width: {
-    //             sps: "60px",
-    //             ps: "90px",
-    //             ts: "90px",
-    //             sls: "120px",
-    //             sms: "150px",
-    //             sc: "150px",
-    //             nsc: "150px",
-    //             ns: "150px",
-    //             msc: "150px",
-    //             mns: "150px",
-    //             ms: "150px",
-    //             lgs: "150px",
-    //           },
-    //           height: {
-    //             sps: "60px",
-    //             ps: "90px",
-    //             ts: "90px",
-    //             sls: "120px",
-    //             sms: "150px",
-    //             sc: "150px",
-    //             nsc: "150px",
-    //             ns: "150px",
-    //             msc: "150px",
-    //             mns: "150px",
-    //             ms: "150px",
-    //             lgs: "150px",
-    //           },
-    //           border: "1px solid rgb(118, 118, 118)",
-    //         }}
-    //       />
-    //     </Box>
-    //   </Box>
-    // </React.Fragment>
   );
 };
 
-export default ImagePreviewButton;
+export default ImagePreviewEditProfileButton;

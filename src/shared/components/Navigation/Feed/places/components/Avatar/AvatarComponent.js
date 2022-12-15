@@ -6,7 +6,11 @@ const AvatarComponent = ({ loadedPlaces }) => {
   // console.log(loadedPlaces);
   return (
     <Avatar
-      src={loadedPlaces.creatorId.image ? loadedPlaces.creatorId.image : ""}
+      src={
+        loadedPlaces.creatorId.imageUrl.url
+          ? loadedPlaces.creatorId.imageUrl.url
+          : ""
+      }
       title={loadedPlaces.creatorId.name}
       sx={{
         fontSize: {
@@ -55,7 +59,7 @@ const AvatarComponent = ({ loadedPlaces }) => {
       }}
       aria-label="recipe"
     >
-      {loadedPlaces.creatorId.image === ""
+      {loadedPlaces.creatorId.imageUrl.url === ""
         ? loadedPlaces.creatorId.name.charAt(0)
         : ""}
     </Avatar>

@@ -153,8 +153,8 @@ const NewPlacePostDisplay = () => {
       if (!formInputs.image) {
         formInputs.image = {
           //Replace for a placeholder image
-          public_id: "345",
-          url: formInputs.image,
+          public_id: "1234",
+          url: "",
         };
       }
 

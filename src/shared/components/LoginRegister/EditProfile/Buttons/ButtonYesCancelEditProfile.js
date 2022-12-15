@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import { Button, styled, Zoom } from "@mui/material";
-import { LoginContext } from "../../../../../../../context/login-context";
+import { LoginContext } from "../../../../context/login-context";
 
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
@@ -11,7 +11,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonGobackEditPlace = ({ onGoback }) => {
+const ButtonYesCancelEditProfile = ({ onYesCancel }) => {
   const login = useContext(LoginContext);
 
   return (
@@ -19,7 +19,7 @@ const ButtonGobackEditPlace = ({ onGoback }) => {
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
-            onClick={onGoback}
+            onClick={onYesCancel}
             sx={{
               fontWeight: 500,
               textTransform: "none",
@@ -53,7 +53,7 @@ const ButtonGobackEditPlace = ({ onGoback }) => {
               },
             }}
           >
-            Go back
+            Cancel
           </StyleButton>
         </Zoom>
       )}
@@ -61,4 +61,4 @@ const ButtonGobackEditPlace = ({ onGoback }) => {
   );
 };
 
-export default ButtonGobackEditPlace;
+export default ButtonYesCancelEditProfile;

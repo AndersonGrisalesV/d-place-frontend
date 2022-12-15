@@ -78,6 +78,7 @@ const LoginRegister = () => {
     if (!formInputs.image) {
       formInputs.image = "";
     }
+
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
@@ -113,20 +114,32 @@ const LoginRegister = () => {
       } catch (err) {}
     } else {
       try {
+        const myForm = new FormData();
+        myForm.append("name", formInputs.name);
+        myForm.append("email", formInputs.email);
+        myForm.append("password", formInputs.password);
+        myForm.append("confirmPassword", formInputs.confirmPassword);
+        myForm.append("image", formInputs.image);
         const responseData = await sendRequest(
           "http://localhost:4000/api/users/register",
           "POST",
-          JSON.stringify({
-            name: formInputs.name,
-            email: formInputs.email,
-            password: formInputs.password,
-            confirmPassword: formInputs.confirmPassword,
-            image: formInputs.image,
-          }),
-          {
-            "Content-Type": "Application/json",
-          }
+          myForm
         );
+
+        // const responseData = await sendRequest(
+        //   "http://localhost:4000/api/users/register",
+        //   "POST",
+        //   JSON.stringify({
+        //     name: formInputs.name,
+        //     email: formInputs.email,
+        //     password: formInputs.password,
+        //     confirmPassword: formInputs.confirmPassword,
+        //     image: formInputs.image,
+        //   }),
+        //   {
+        //     "Content-Type": "Application/json",
+        //   }
+        // );
 
         setSuccessMessage(`Welcome to Dplace ${responseData.user.name}`);
         setShowSuccess(true);
@@ -315,7 +328,10 @@ const LoginRegister = () => {
       <CardWrapperLogin>
         <CardContentLogin>
           <Title isLoginMode={isLoginMode} />
-          <form onSubmit={onSubmitLoginRegisterHandler}>
+          <form
+            onSubmit={onSubmitLoginRegisterHandler}
+            encType="multipart/form-data"
+          >
             <Stack
               direction="column"
               spacing={4}

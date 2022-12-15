@@ -1,17 +1,22 @@
 import React, { useContext } from "react";
 
-import { Button, styled, Zoom } from "@mui/material";
-import { LoginContext } from "../../../../../../../context/login-context";
+import { Button, Zoom } from "@mui/material";
+import ModalCancel from "./Modals/ModalCancel";
+
+import { styled } from "@mui/system";
+import { LoginContext } from "../../../../context/login-context";
 
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
+  border:
+    theme.palette.mode === "dark" ? "1px solid #fff" : "1px solid #da4453",
   "&:hover": {
     backgroundColor: "transparent",
     color: "#9b9b9bc7",
   },
 }));
 
-const ButtonGobackEditPlace = ({ onGoback }) => {
+const ButtonDeleteProfile = ({ onDelete }) => {
   const login = useContext(LoginContext);
 
   return (
@@ -19,7 +24,7 @@ const ButtonGobackEditPlace = ({ onGoback }) => {
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
-            onClick={onGoback}
+            onClick={onDelete}
             sx={{
               fontWeight: 500,
               textTransform: "none",
@@ -53,7 +58,7 @@ const ButtonGobackEditPlace = ({ onGoback }) => {
               },
             }}
           >
-            Go back
+            DELETE PROFILE
           </StyleButton>
         </Zoom>
       )}
@@ -61,4 +66,4 @@ const ButtonGobackEditPlace = ({ onGoback }) => {
   );
 };
 
-export default ButtonGobackEditPlace;
+export default ButtonDeleteProfile;

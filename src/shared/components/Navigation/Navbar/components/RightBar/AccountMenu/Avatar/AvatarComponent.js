@@ -17,7 +17,7 @@ const AvatarComponent = () => {
       const fetchPlaces = async () => {
         try {
           const responseData = await sendRequest(
-            `http://localhost:4000/api/users/${login.userId}`
+            `http://localhost:4000/api/users/profile/${login.userId}`
           );
           console.log(responseData.user);
           setLoadedPlace(responseData.user);
@@ -33,7 +33,7 @@ const AvatarComponent = () => {
       {!isLoading && loadedPlace ? (
         <React.Fragment>
           <Avatar
-            src={loadedPlace.image ? loadedPlace.image : ""}
+            src={loadedPlace.imageUrl.url ? loadedPlace.imageUrl.url : ""}
             title={loadedPlace.name}
             sx={{
               fontSize: {
@@ -82,7 +82,7 @@ const AvatarComponent = () => {
             }}
             aria-label="recipe"
           >
-            {loadedPlace.image === "" ? loadedPlace.name.charAt(0) : ""}
+            {loadedPlace.imageUrl.url === "" ? loadedPlace.name.charAt(0) : ""}
           </Avatar>
         </React.Fragment>
       ) : (

@@ -5,7 +5,11 @@ import Avatar from "@mui/material/Avatar";
 const AvatarComment = ({ loadedPlace }) => {
   return (
     <Avatar
-      src={loadedPlace.creatorId.image ? loadedPlace.creatorId.image : ""}
+      src={
+        loadedPlace.creatorId.imageUrl.url
+          ? loadedPlace.creatorId.imageUrl.url
+          : ""
+      }
       title={loadedPlace.creatorId.name}
       sx={{
         fontSize: {
@@ -54,7 +58,7 @@ const AvatarComment = ({ loadedPlace }) => {
       }}
       aria-label="recipe"
     >
-      {loadedPlace.creatorId.image === ""
+      {loadedPlace.creatorId.imageUrl.url === ""
         ? loadedPlace.creatorId.name.charAt(0)
         : ""}
     </Avatar>

@@ -1,7 +1,10 @@
 import React, { useContext } from "react";
 
-import { Button, styled, Zoom } from "@mui/material";
-import { LoginContext } from "../../../../../../../context/login-context";
+import { Button, Zoom } from "@mui/material";
+
+import { styled } from "@mui/system";
+import { LoginContext } from "../../../../context/login-context";
+import ModalCancel from "./Modals/ModalCancel";
 
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
@@ -11,7 +14,12 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonGobackEditPlace = ({ onGoback }) => {
+const ButtonCancelEditProfile = ({
+  open,
+  close,
+  onHandleOpen,
+  onHandleClose,
+}) => {
   const login = useContext(LoginContext);
 
   return (
@@ -19,7 +27,7 @@ const ButtonGobackEditPlace = ({ onGoback }) => {
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
-            onClick={onGoback}
+            onClick={onHandleOpen}
             sx={{
               fontWeight: 500,
               textTransform: "none",
@@ -53,12 +61,22 @@ const ButtonGobackEditPlace = ({ onGoback }) => {
               },
             }}
           >
-            Go back
+            Cancel
           </StyleButton>
         </Zoom>
       )}
+      <React.Fragment>
+        {open && (
+          <ModalCancel
+            open={open}
+            close={close}
+            onHandleOpen={onHandleOpen}
+            onHandleClose={onHandleClose}
+          />
+        )}
+      </React.Fragment>
     </React.Fragment>
   );
 };
 
-export default ButtonGobackEditPlace;
+export default ButtonCancelEditProfile;

@@ -16,6 +16,7 @@ import EditPlace from "./pages/EditPlace";
 import { useHttpClient } from "./shared/hooks/http-hook";
 import Place from "./shared/components/Navigation/Feed/places/Place";
 import { SignalWifiStatusbarNull } from "@mui/icons-material";
+import EditProfile from "./shared/components/LoginRegister/EditProfile/EditProfile";
 
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",
@@ -166,6 +167,10 @@ function App() {
         <Route
           path="/api/users/myplaces/:uid"
           element={<MyPlaces onFilterSearch={searchBar} />}
+        />
+        <Route
+          path="/api/users/profile/:uid"
+          element={<EditProfile onFilterSearch={searchBar} />}
         />
         <Route path="/api/places/newplace" element={<NewPlace />} />
         <Route path="/api/places/editplace/:pid" element={<EditPlace />} />

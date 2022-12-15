@@ -1,8 +1,8 @@
 import React from "react";
 import { Modal, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
-import ButtonYesDelete from "../../../../components/Comments/components/Buttons/ButtonYesDelete";
-import ButtonGoback from "../../../../components/Comments/components/Buttons/ButtonGoback";
+import ButtonYesDelete from "../../../../Navigation/Feed/places/components/Comments/components/Buttons/ButtonYesDelete";
+import ButtonGoback from "../../../../Navigation/Feed/places/components/Comments/components/Buttons/ButtonGoback";
 
 const styleModalDelete = {
   position: "absolute",
@@ -47,14 +47,14 @@ const styleModalDelete = {
   paddingBottom: "0px",
 };
 
-const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
+const ModalDeleteProfile = ({ open, handleClose, handleConfirmDelete }) => {
   return (
     <div>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-cancel-delete-place"
-        aria-describedby="modal-modal-cancel-delete-place"
+        aria-labelledby="modal-modal-cancel-delete-profile"
+        aria-describedby="modal-modal-cancel-delete-profile"
       >
         <Stack>
           <Box sx={styleModalDelete}>
@@ -87,7 +87,7 @@ const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
                   variant="h6"
                   color="text.primary"
                 >
-                  Are you sure you want to delete this place ?
+                  Are you sure you want to delete your profile ?
                 </Typography>
               </Stack>
 
@@ -109,4 +109,4 @@ const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
   );
 };
 
-export default ModalDeletePlace;
+export default ModalDeleteProfile;

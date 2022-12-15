@@ -1,27 +1,29 @@
-import React from "react";
-import { Modal, Typography } from "@mui/material";
-import { Box, Stack } from "@mui/system";
-import ButtonYesDelete from "../../../../components/Comments/components/Buttons/ButtonYesDelete";
-import ButtonGoback from "../../../../components/Comments/components/Buttons/ButtonGoback";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
-const styleModalDelete = {
+import { Box, Modal, Stack, Typography } from "@mui/material";
+
+import ButtonYesCancelEditProfile from "../ButtonYesCancelEditProfile";
+import ButtonGobackEditProfile from "../ButtonGobackEditProfile";
+
+const styleModalCancel = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: {
-    sps: "280px",
-    ps: "346px",
-    ts: "380px",
-    sls: "444px",
-    sms: "509px",
-    sc: "509px",
-    nsc: "509px",
-    ns: "509px",
-    msc: "509px",
-    mns: "509px",
-    ms: "509px",
-    lgs: "509px",
+    sps: "234px",
+    ps: "278px",
+    ts: "278px",
+    sls: "328px",
+    sms: "368px",
+    sc: "388px",
+    nsc: "388px",
+    ns: "388px",
+    msc: "388px",
+    mns: "388px",
+    ms: "388px",
+    lgs: "388px",
   },
   height: {
     sps: "4.1rem",
@@ -37,7 +39,6 @@ const styleModalDelete = {
     ms: "5.6rem",
     lgs: "5.6rem",
   },
-
   bgcolor: "background.paper",
   borderRadius: "8px",
   boxShadow: 24,
@@ -47,17 +48,25 @@ const styleModalDelete = {
   paddingBottom: "0px",
 };
 
-const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
+const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
+  let navigate = useNavigate();
+  const handleConfirmCancel = () => {
+    // redirect
+
+    onHandleClose();
+    navigate("/homepage");
+  };
+
   return (
     <div>
       <Modal
         open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-cancel-delete-place"
-        aria-describedby="modal-modal-cancel-delete-place"
+        onClose={close}
+        aria-labelledby="modal-modal-confirm-cancel"
+        aria-describedby="modal-modal-confirm-cancel-edit"
       >
         <Stack>
-          <Box sx={styleModalDelete}>
+          <Box sx={styleModalCancel}>
             <Stack>
               <Stack
                 direction="row"
@@ -87,7 +96,7 @@ const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
                   variant="h6"
                   color="text.primary"
                 >
-                  Are you sure you want to delete this place ?
+                  Are you sure you want to cancel ?
                 </Typography>
               </Stack>
 
@@ -98,8 +107,8 @@ const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <ButtonYesDelete onYesDelete={handleConfirmDelete} />
-                <ButtonGoback onGoback={handleClose} />
+                <ButtonYesCancelEditProfile onYesCancel={handleConfirmCancel} />
+                <ButtonGobackEditProfile onGoback={close} />
               </Stack>
             </Stack>
           </Box>
@@ -109,4 +118,4 @@ const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
   );
 };
 
-export default ModalDeletePlace;
+export default ModalCancel;
