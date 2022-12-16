@@ -48,10 +48,10 @@ const EditProfile = () => {
   const { pathname } = useLocation();
   let navigate = useNavigate();
 
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
   const [loadedUser, setLoadedUser] = useState();
   const [showSuccess, setShowSuccess] = useState(false);
-
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [successMessage, setSuccessMessage] = useState(null);
 
@@ -65,6 +65,7 @@ const EditProfile = () => {
   const { uid } = params;
 
   const passwordInputRef = useRef();
+  const confirmPasswordInputRef = useRef();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -96,6 +97,8 @@ const EditProfile = () => {
   const handleOpenDeletePlace = () => setOpenDeleteProfile(true);
   const handleCloseDeletePlace = () => setOpenDeleteProfile(false);
 
+  const [deletePlace, setDeletePlace] = useState(false);
+
   const handleOpenModalDeleteProfile = () => {
     // handleCloseDeletePlace();
     // setDeletePlace((ePlace) => !ePlace);
@@ -106,21 +109,21 @@ const EditProfile = () => {
 
   const handleConfirmDeleteProfile = async (e) => {
     e.preventDefault();
-    // try {
-    //   await sendRequest(
-    //     `http://localhost:4000/api/places/deleteplace/${uid}`,
-    //     "DELETE"
-    //   );
+    try {
+      await sendRequest(
+        `http://localhost:4000/api/users/deleteprofile/${uid}`,
+        "DELETE"
+      );
 
-    //   setShowSuccess("The place was deleted successfully");
-    //   setTimeout(() => {
-    //     navigate("/homepage");
-    //   }, "1000");
-    //   setTimeout(() => {
-    //     // navigate("/homepage");
-    //     setShowSuccess(false);
-    //   }, "2000");
-    // } catch (err) {}
+      setShowSuccess("The place was deleted successfully");
+      setTimeout(() => {
+        navigate("/homepage");
+      }, "1000");
+      setTimeout(() => {
+        // navigate("/homepage");
+        setShowSuccess(false);
+      }, "2000");
+    } catch (err) {}
 
     handleCloseDeletePlace();
   };
@@ -132,7 +135,7 @@ const EditProfile = () => {
           `http://localhost:4000/api/users/profile/${uid}`
         );
         setLoadedUser(responseData.user);
-        console.log(responseData.user);
+        // console.log(responseData.user);
         // console.log(responseData.place);
 
         setFormInputs(
@@ -160,6 +163,7 @@ const EditProfile = () => {
           },
           true
         );
+
         setImageUrl(responseData.user.imageUrl);
         setSelectedImage(responseData.user.imageUrl);
         // console.log(formInputs.title);
@@ -168,90 +172,7 @@ const EditProfile = () => {
     fetchPlace();
   }, [sendRequest, uid, setFormData, setImageUrl, setSelectedImage]);
 
-  const onSubmitLoginRegisterHandler = async (e) => {
-    e.preventDefault();
-
-    // console.log(formInputs.image);
-    if (!formInputs.image) {
-      formInputs.image = "";
-    }
-
-    try {
-      const responseData = await sendRequest(
-        "http://localhost:4000/api/users/login",
-        "POST",
-        JSON.stringify({
-          email: formInputs.email,
-          password: formInputs.password,
-        }),
-        {
-          "Content-Type": "Application/json",
-        }
-      );
-
-      // console.log(window.history.state.usr);
-
-      // if (window.history.state.usr != null) {
-      //   navigate("/homepage", { replace: true });
-      // } else {
-      //   window.history.go(-1);
-      // }
-
-      setSuccessMessage(`Welcome back ${responseData.user.name}`);
-      setShowSuccess(true);
-      setTimeout(() => {
-        login.login(responseData.user.id);
-        navigate("/homepage");
-      }, "910");
-      setTimeout(() => {
-        setShowSuccess(false);
-        setSuccessMessage(null);
-      }, "930");
-    } catch (err) {}
-
-    try {
-      const responseData = await sendRequest(
-        "http://localhost:4000/api/users/register",
-        "POST",
-        JSON.stringify({
-          name: formInputs.name,
-          email: formInputs.email,
-          password: formInputs.password,
-          confirmPassword: formInputs.confirmPassword,
-          image: formInputs.image,
-        }),
-        {
-          "Content-Type": "Application/json",
-        }
-      );
-
-      setSuccessMessage(`Welcome to Dplace ${responseData.user.name}`);
-      setShowSuccess(true);
-      setTimeout(() => {
-        login.createAccount(responseData.user.id);
-        navigate("/homepage");
-      }, "910");
-      setTimeout(() => {
-        setShowSuccess(false);
-        setSuccessMessage(null);
-      }, "930");
-
-      // navigate("/homepage", {
-      //   state: {
-      //     onSuccess: true,
-      //     response: responseData.message,
-      //     user: responseData.user,
-      //   },
-      // });
-    } catch (err) {}
-
-    resetNameInput();
-    resetEmailInput();
-    resetPasswordInput();
-    resetconfirmPasswordInput();
-    setImageUrl(null);
-    setSelectedImage(null);
-  };
+  // console.log(formInputs);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -266,6 +187,26 @@ const EditProfile = () => {
   }, [selectedImage, imageUrl]);
 
   const formInputsHandler = (e) => {
+    if (e.target.name === "name" && showBlurName) {
+      setShowBlurName(false);
+    }
+
+    if (e.target.name === "email" && showBlurEmail) {
+      setShowBlurEmail(false);
+    }
+
+    if (e.target.name === "password" && showBlurPassword) {
+      setShowPassword(false);
+    }
+
+    if (e.target.name === "confirmPassword" && showBlurConfirmPassword) {
+      setShowConfirmPassword(false);
+    }
+
+    if (e.target.name === "image" && showBlurImage) {
+      setShowImage(false);
+    }
+
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();
@@ -300,6 +241,13 @@ const EditProfile = () => {
     reset: resetNameInput,
   } = useFocusBlurHook((value) => validateNameAndLastName(value));
 
+  function validateNameAndLastName(text) {
+    if (text.trim() !== "" && text.length > 4) {
+      return true;
+    }
+    return false;
+  }
+
   const {
     value: emailInput,
     isValid: emailIsValid,
@@ -308,6 +256,13 @@ const EditProfile = () => {
     valueBlurHandler: emailBlurHandler,
     reset: resetEmailInput,
   } = useFocusBlurHook((value) => ValidateEmail(value));
+
+  function ValidateEmail(mail) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+      return true;
+    }
+    return false;
+  }
 
   const {
     value: passwordInput,
@@ -318,6 +273,13 @@ const EditProfile = () => {
     reset: resetPasswordInput,
   } = useFocusBlurHook((value) => ValidatePassword(value));
 
+  function ValidatePassword(password) {
+    if (password.trim() !== "" && password.length > 5) {
+      return true;
+    }
+    return false;
+  }
+
   const {
     value: confirmPasswordInput,
     isValid: confirmPasswordIsValid,
@@ -327,8 +289,12 @@ const EditProfile = () => {
     reset: resetconfirmPasswordInput,
   } = useFocusBlurHook((value) => ValidatePasswordAndConfirmPassword(value));
 
-  function validateNameAndLastName(text) {
-    if (text.trim() !== "" && text.length > 4) {
+  function ValidatePasswordAndConfirmPassword(password) {
+    if (
+      password.trim() !== "" &&
+      password.length > 5 &&
+      passwordInputRef.current.value === confirmPasswordInputRef.current.value
+    ) {
       return true;
     }
     return false;
@@ -340,44 +306,86 @@ const EditProfile = () => {
     }
   };
 
-  function ValidateEmail(mail) {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
-      return true;
-    }
-    return false;
-  }
+  const onSubmitLoginRegisterHandler = async (e) => {
+    e.preventDefault();
+    if (login.isLoggedIn && formInputs) {
+      console.log(formInputs);
+      if (!formInputs.image) {
+        formInputs.image = {
+          //Replace for a placeholder image
+          public_id: "1234",
+          url: "",
+        };
+      }
 
-  function ValidatePassword(password) {
-    if (password.trim() !== "" && password.length > 5) {
-      return true;
-    }
-    return false;
-  }
+      if (showBlurName) {
+        formInputs.name = "same";
+      }
+      if (showBlurEmail) {
+        formInputs.email = "same";
+      }
+      if (showBlurPassword) {
+        formInputs.password = "same";
+      }
+      if (showBlurConfirmPassword) {
+        formInputs.confirmPassword = "same";
+      }
+      if (showBlurImage) {
+        formInputs.image = "same";
+      }
 
-  function ValidatePasswordAndConfirmPassword(password) {
-    if (
-      password.trim() !== "" &&
-      password.length > 5 &&
-      passwordInput.length > 5 &&
-      passwordInput === password.trim()
-    ) {
-      return true;
+      try {
+        const myForm = new FormData();
+        myForm.append("name", formInputs.name);
+        myForm.append("email", formInputs.email);
+        myForm.append("password", formInputs.password);
+        myForm.append("confirmPassword", formInputs.confirmPassword);
+        myForm.append("image", formInputs.image);
+        const responseData = await sendRequest(
+          `http://localhost:4000/api/users/profile/editprofile/${uid}`,
+          "PATCH",
+          myForm
+        );
+
+        setSuccessMessage(`Welcome back ${responseData.user.name}`);
+        setShowSuccess(true);
+        setTimeout(() => {
+          navigate("/homepage");
+        }, "910");
+        setTimeout(() => {
+          setShowSuccess(false);
+          setSuccessMessage(null);
+        }, "930");
+      } catch (err) {}
     }
-    return false;
-  }
+
+    resetNameInput();
+    resetEmailInput();
+    resetPasswordInput();
+    resetconfirmPasswordInput();
+    setImageUrl(null);
+    setSelectedImage(null);
+  };
 
   let formIsValid = false;
 
-  // if (
-  //   (isLoginMode && emailIsValid && passwordIsValid) ||
-  //   (!isLoginMode &&
-  //     nameIsValid &&
-  //     emailIsValid &&
-  //     passwordIsValid &&
-  //     confirmPasswordIsValid)
-  // ) {
-  //   formIsValid = true;
-  // }
+  if (login.isLoggedIn) {
+    if (!showBlurName && nameIsValid) {
+      formIsValid = true;
+    } else if (!showBlurEmail && emailIsValid) {
+      formIsValid = true;
+    } else if (!showBlurPassword && passwordIsValid) {
+      formIsValid = true;
+    } else if (!showBlurConfirmPassword && confirmPasswordIsValid) {
+      formIsValid = true;
+    } else if (!showBlurImage) {
+      formIsValid = true;
+    }
+
+    if (!selectedImage && !imageUrl) {
+      formIsValid = false;
+    }
+  }
 
   const handleRemoveImage = () => {
     setSelectedImage(null);
@@ -405,7 +413,10 @@ const EditProfile = () => {
           <CardWrapperLogin>
             <CardContentLogin>
               <Title />
-              <form onSubmit={onSubmitLoginRegisterHandler}>
+              <form
+                onSubmit={onSubmitLoginRegisterHandler}
+                encType="multipart/form-data"
+              >
                 <Stack
                   direction="column"
                   spacing={4}
@@ -418,7 +429,7 @@ const EditProfile = () => {
                     }
                     label="Name"
                     type="text"
-                    autoComplete="current-name"
+                    autoComplete="name-text"
                     size="small"
                     name="name"
                     InputLabelProps={{
@@ -497,7 +508,7 @@ const EditProfile = () => {
                     }
                     label="Email Address"
                     type="email"
-                    autoComplete="current-email"
+                    autoComplete="email-text"
                     size="small"
                     name="email"
                     InputLabelProps={{
@@ -721,6 +732,7 @@ const EditProfile = () => {
                     onBlur={
                       showBlurConfirmPassword ? "" : confirmPasswordBlurHandler
                     }
+                    ref={confirmPasswordInputRef}
                     // value={confirmPasswordInput}
                     error={confirmPasswordInputHasError}
                     helperText={

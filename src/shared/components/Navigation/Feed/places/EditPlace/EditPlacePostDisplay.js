@@ -341,9 +341,11 @@ const EditPlacePostDisplay = () => {
       // console.log(formInputs);
 
       if (!formInputs.image) {
-        formInputs.image =
+        formInputs.image = {
           //Replace for a placeholder image
-          "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
+          public_id: "1234",
+          url: "",
+        };
       }
 
       if (showBlurTitle) {
@@ -444,14 +446,13 @@ const EditPlacePostDisplay = () => {
           <CardWrapperEditPlacePostDisplay>
             <CardContentEditPlacePost>
               <TitleEditPlacePost />
-              <Divider
-                variant="middle"
-                sx={{ marginTop: "2px" }}
+              <Divider variant="middle" sx={{ marginTop: "2px" }} />
+              <br />
+              <br />
+              <form
+                onSubmit={onSubmitPostPlaceHandler}
                 encType="multipart/form-data"
-              />
-              <br />
-              <br />
-              <form onSubmit={onSubmitPostPlaceHandler}>
+              >
                 <Stack
                   direction="column"
                   spacing={4}

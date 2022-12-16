@@ -125,7 +125,7 @@ const ImagePreviewEditProfileButton = ({
                     }}
                   >
                     <Avatar
-                      src={imageUrl.url}
+                      src={imageUrl}
                       alt={selectedImageName}
                       sx={{
                         width: {
