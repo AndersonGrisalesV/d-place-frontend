@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
-import { Stack, TextField } from "@mui/material";
+import { Divider, Stack, TextField } from "@mui/material";
 
 import styled from "@emotion/styled";
 
@@ -23,6 +23,7 @@ import ButtonEditProfile from "./Buttons/ButtonEditProfile";
 import ButtonCancelEditProfile from "./Buttons/ButtonCancelEditProfile";
 import ButtonDeleteProfile from "./Buttons/ButtonDeleteProfile";
 import ModalDeleteProfile from "./Buttons/Modals/ModalDeleteProfile";
+import ButtonChangePassword from "./Buttons/ButtonChangePassword";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -53,6 +54,9 @@ const EditProfile = () => {
   const [loadedUser, setLoadedUser] = useState();
   const [showSuccess, setShowSuccess] = useState(false);
 
+  const [showpassMatchError, setShowpassMatchError] = useState(false);
+  const [showErrorPassword, setShowErrorPassword] = useState(false);
+
   const [successMessage, setSuccessMessage] = useState(null);
 
   const [formInputs, setFormInputs] = useState(null);
@@ -64,8 +68,7 @@ const EditProfile = () => {
 
   const { uid } = params;
 
-  const passwordInputRef = useRef();
-  const confirmPasswordInputRef = useRef();
+  const oldPasswordInputRef = useRef();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -195,6 +198,10 @@ const EditProfile = () => {
       setShowBlurEmail(false);
     }
 
+    if (e.target.name === "oldPassword" && showBlurPassword) {
+      setShowOldPassword(false);
+    }
+
     if (e.target.name === "password" && showBlurPassword) {
       setShowPassword(false);
     }
@@ -228,6 +235,7 @@ const EditProfile = () => {
 
   const [showBlurName, setShowBlurName] = useState(true);
   const [showBlurEmail, setShowBlurEmail] = useState(true);
+  const [showBlurOldPassword, setShowOldPassword] = useState(true);
   const [showBlurPassword, setShowPassword] = useState(true);
   const [showBlurConfirmPassword, setShowConfirmPassword] = useState(true);
   const [showBlurImage, setShowImage] = useState(true);
@@ -265,6 +273,15 @@ const EditProfile = () => {
   }
 
   const {
+    value: oldPasswordInput,
+    isValid: oldPasswordIsValid,
+    hasError: oldPasswordInputHasError,
+    valueChangeHandler: oldPasswordChangeHandler,
+    valueBlurHandler: oldPasswordBlurHandler,
+    reset: resetOldPasswordInput,
+  } = useFocusBlurHook((value) => ValidatePassword(value));
+
+  const {
     value: passwordInput,
     isValid: passwordIsValid,
     hasError: passwordInputHasError,
@@ -293,7 +310,8 @@ const EditProfile = () => {
     if (
       password.trim() !== "" &&
       password.length > 5 &&
-      passwordInputRef.current.value === confirmPasswordInputRef.current.value
+      passwordInput.length > 5 &&
+      passwordInput === password.trim()
     ) {
       return true;
     }
@@ -308,8 +326,21 @@ const EditProfile = () => {
 
   const onSubmitLoginRegisterHandler = async (e) => {
     e.preventDefault();
+    if (loadedUser.password !== oldPasswordInput) {
+      setShowpassMatchError(true);
+      setShowErrorPassword(`Your old password didn't match, please try again.`);
+      resetOldPasswordInput();
+      resetPasswordInput();
+      resetconfirmPasswordInput();
+
+      setTimeout(() => {
+        setShowpassMatchError(false);
+        setShowErrorPassword(null);
+      }, "5090");
+      return;
+    }
     if (login.isLoggedIn && formInputs) {
-      console.log(formInputs);
+      // console.log(formInputs);
       if (!formInputs.image) {
         formInputs.image = {
           //Replace for a placeholder image
@@ -347,10 +378,13 @@ const EditProfile = () => {
           myForm
         );
 
-        setSuccessMessage(`Welcome back ${responseData.user.name}`);
+        setSuccessMessage(
+          `${responseData.user.name}'s profile edited successfully`
+        );
         setShowSuccess(true);
         setTimeout(() => {
           navigate("/homepage");
+          // refresh page
         }, "910");
         setTimeout(() => {
           setShowSuccess(false);
@@ -361,6 +395,7 @@ const EditProfile = () => {
 
     resetNameInput();
     resetEmailInput();
+    resetOldPasswordInput();
     resetPasswordInput();
     resetconfirmPasswordInput();
     setImageUrl(null);
@@ -374,9 +409,12 @@ const EditProfile = () => {
       formIsValid = true;
     } else if (!showBlurEmail && emailIsValid) {
       formIsValid = true;
-    } else if (!showBlurPassword && passwordIsValid) {
-      formIsValid = true;
-    } else if (!showBlurConfirmPassword && confirmPasswordIsValid) {
+    } else if (
+      !showBlurPassword &&
+      passwordIsValid &&
+      !showBlurConfirmPassword &&
+      confirmPasswordIsValid
+    ) {
       formIsValid = true;
     } else if (!showBlurImage) {
       formIsValid = true;
@@ -392,6 +430,12 @@ const EditProfile = () => {
     setImageUrl(null);
   };
 
+  const [changePassword, setChangePassword] = useState(false);
+
+  const changePasswordHandler = () => {
+    setChangePassword((prevPassword) => !prevPassword);
+  };
+
   return (
     <ScrollToTop pathname={pathname}>
       {error && (
@@ -399,6 +443,13 @@ const EditProfile = () => {
           onDuration={6000}
           error={error}
           onClear={clearError}
+        />
+      )}
+      {showpassMatchError && (
+        <SnackBarResultLogin
+          onDuration={6000}
+          onClear={clearError}
+          error={`${showErrorPassword}`}
         />
       )}
       {showSuccess && (
@@ -577,170 +628,261 @@ const EditProfile = () => {
                     error={emailInputHasError}
                     helperText={emailInputHasError ? "Incorrect mail" : ""}
                   />
-                  <StyleTextField
-                    id="outlined-password-input"
-                    disabled={
-                      isLoading ? true : false || showSuccess ? true : false
-                    }
-                    label="Password"
-                    type="password"
-                    autoComplete="current-password"
-                    size="small"
-                    name="password"
-                    InputLabelProps={{
-                      sx: {
-                        fontSize: {
-                          sps: "11px",
-                          ps: "12px",
-                          ts: "14px",
-                          sls: "14px",
-                          sms: "16px",
-                          sc: "16px",
-                          nsc: "16px",
-                          ns: "16px",
-                          msc: "16px",
-                          mns: "16px",
-                          ms: "16px",
-                          lgs: "16px",
-                        },
-                      },
-                    }}
-                    InputProps={{
-                      inputProps: {
-                        sx: {
-                          fontSize: {
-                            sps: "11px",
-                            ps: "12px",
-                            ts: "14px",
-                            sls: "14px",
-                            sms: "16px",
-                            sc: "16px",
-                            nsc: "16px",
-                            ns: "16px",
-                            msc: "16px",
-                            mns: "16px",
-                            ms: "16px",
-                            lgs: "16px",
-                          },
-                        },
-                      },
-                    }}
-                    FormHelperTextProps={{
-                      sx: {
-                        fontSize: {
-                          sps: "9px",
-                          ps: "10px",
-                          ts: "12px",
-                          sls: "12px",
-                          sms: "14px",
-                          sc: "14px",
-                          nsc: "14px",
-                          ns: "14px",
-                          msc: "14px",
-                          mns: "14px",
-                          ms: "14px",
-                          lgs: "14px",
-                        },
-                      },
-                    }}
-                    defaultValue={`${loadedUser.password}`}
-                    onChange={(e) => {
-                      formInputsHandler(e);
-                      passwordChangeHandler(e);
-                    }}
-                    onBlur={showBlurPassword ? "" : passwordBlurHandler}
-                    // value={passwordInput}
-                    error={passwordInputHasError}
-                    ref={passwordInputRef}
-                    helperText={
-                      passwordInputHasError
-                        ? "Password must be at least 6 characters long"
-                        : ""
-                    }
+                  <ButtonChangePassword
+                    onChangePassword={changePasswordHandler}
                   />
-                  <StyleTextField
-                    id="outlined-confirmpassword-input"
-                    disabled={
-                      isLoading ? true : false || showSuccess ? true : false
-                    }
-                    label="Confirm Password"
-                    type="password"
-                    autoComplete="current-confirmPassword"
-                    size="small"
-                    name="confirmPassword"
-                    InputLabelProps={{
-                      sx: {
-                        fontSize: {
-                          sps: "11px",
-                          ps: "12px",
-                          ts: "14px",
-                          sls: "14px",
-                          sms: "16px",
-                          sc: "16px",
-                          nsc: "16px",
-                          ns: "16px",
-                          msc: "16px",
-                          mns: "16px",
-                          ms: "16px",
-                          lgs: "16px",
-                        },
-                      },
-                    }}
-                    InputProps={{
-                      inputProps: {
-                        sx: {
-                          fontSize: {
-                            sps: "11px",
-                            ps: "12px",
-                            ts: "14px",
-                            sls: "14px",
-                            sms: "16px",
-                            sc: "16px",
-                            nsc: "16px",
-                            ns: "16px",
-                            msc: "16px",
-                            mns: "16px",
-                            ms: "16px",
-                            lgs: "16px",
+                  {changePassword ? (
+                    <React.Fragment>
+                      <Divider variant="middle" />
+                      <StyleTextField
+                        id="outlined-password-input"
+                        disabled={
+                          isLoading ? true : false || showSuccess ? true : false
+                        }
+                        label="Old Password"
+                        type="password"
+                        autoComplete="old-password"
+                        size="small"
+                        name="password"
+                        InputLabelProps={{
+                          sx: {
+                            fontSize: {
+                              sps: "11px",
+                              ps: "12px",
+                              ts: "14px",
+                              sls: "14px",
+                              sms: "16px",
+                              sc: "16px",
+                              nsc: "16px",
+                              ns: "16px",
+                              msc: "16px",
+                              mns: "16px",
+                              ms: "16px",
+                              lgs: "16px",
+                            },
                           },
-                        },
-                      },
-                    }}
-                    FormHelperTextProps={{
-                      sx: {
-                        fontSize: {
-                          sps: "9px",
-                          ps: "10px",
-                          ts: "12px",
-                          sls: "12px",
-                          sms: "14px",
-                          sc: "14px",
-                          nsc: "14px",
-                          ns: "14px",
-                          msc: "14px",
-                          mns: "14px",
-                          ms: "14px",
-                          lgs: "14px",
-                        },
-                      },
-                    }}
-                    defaultValue={`${loadedUser.confirmPassword}`}
-                    onChange={(e) => {
-                      formInputsHandler(e);
-                      confirmPasswordChangeHandler(e);
-                    }}
-                    onBlur={
-                      showBlurConfirmPassword ? "" : confirmPasswordBlurHandler
-                    }
-                    ref={confirmPasswordInputRef}
-                    // value={confirmPasswordInput}
-                    error={confirmPasswordInputHasError}
-                    helperText={
-                      confirmPasswordInputHasError
-                        ? "Passwords don't match"
-                        : ""
-                    }
-                  />
+                        }}
+                        InputProps={{
+                          inputProps: {
+                            sx: {
+                              fontSize: {
+                                sps: "11px",
+                                ps: "12px",
+                                ts: "14px",
+                                sls: "14px",
+                                sms: "16px",
+                                sc: "16px",
+                                nsc: "16px",
+                                ns: "16px",
+                                msc: "16px",
+                                mns: "16px",
+                                ms: "16px",
+                                lgs: "16px",
+                              },
+                            },
+                          },
+                        }}
+                        FormHelperTextProps={{
+                          sx: {
+                            fontSize: {
+                              sps: "9px",
+                              ps: "10px",
+                              ts: "12px",
+                              sls: "12px",
+                              sms: "14px",
+                              sc: "14px",
+                              nsc: "14px",
+                              ns: "14px",
+                              msc: "14px",
+                              mns: "14px",
+                              ms: "14px",
+                              lgs: "14px",
+                            },
+                          },
+                        }}
+                        // defaultValue={`${loadedUser.password}`}
+                        onChange={(e) => {
+                          formInputsHandler(e);
+                          oldPasswordChangeHandler(e);
+                        }}
+                        onBlur={
+                          showBlurOldPassword ? "" : oldPasswordBlurHandler
+                        }
+                        ref={oldPasswordInputRef}
+                        value={oldPasswordInput}
+                        error={oldPasswordInputHasError}
+                        helperText={
+                          oldPasswordInputHasError
+                            ? "Password must be at least 6 characters long"
+                            : ""
+                        }
+                      />
+
+                      <StyleTextField
+                        id="outlined-password-input"
+                        disabled={
+                          isLoading ? true : false || showSuccess ? true : false
+                        }
+                        label="New Password"
+                        type="password"
+                        autoComplete="new-password"
+                        size="small"
+                        name="password"
+                        InputLabelProps={{
+                          sx: {
+                            fontSize: {
+                              sps: "11px",
+                              ps: "12px",
+                              ts: "14px",
+                              sls: "14px",
+                              sms: "16px",
+                              sc: "16px",
+                              nsc: "16px",
+                              ns: "16px",
+                              msc: "16px",
+                              mns: "16px",
+                              ms: "16px",
+                              lgs: "16px",
+                            },
+                          },
+                        }}
+                        InputProps={{
+                          inputProps: {
+                            sx: {
+                              fontSize: {
+                                sps: "11px",
+                                ps: "12px",
+                                ts: "14px",
+                                sls: "14px",
+                                sms: "16px",
+                                sc: "16px",
+                                nsc: "16px",
+                                ns: "16px",
+                                msc: "16px",
+                                mns: "16px",
+                                ms: "16px",
+                                lgs: "16px",
+                              },
+                            },
+                          },
+                        }}
+                        FormHelperTextProps={{
+                          sx: {
+                            fontSize: {
+                              sps: "9px",
+                              ps: "10px",
+                              ts: "12px",
+                              sls: "12px",
+                              sms: "14px",
+                              sc: "14px",
+                              nsc: "14px",
+                              ns: "14px",
+                              msc: "14px",
+                              mns: "14px",
+                              ms: "14px",
+                              lgs: "14px",
+                            },
+                          },
+                        }}
+                        onChange={(e) => {
+                          formInputsHandler(e);
+                          passwordChangeHandler(e);
+                        }}
+                        onBlur={showBlurPassword ? "" : passwordBlurHandler}
+                        value={passwordInput}
+                        error={passwordInputHasError}
+                        helperText={
+                          passwordInputHasError
+                            ? "Password must be at least 6 characters long"
+                            : ""
+                        }
+                      />
+                      <StyleTextField
+                        id="outlined-confirmpassword-input"
+                        disabled={
+                          isLoading ? true : false || showSuccess ? true : false
+                        }
+                        label="Confirm New Password"
+                        type="password"
+                        autoComplete="confirm-new-Password"
+                        size="small"
+                        name="confirmPassword"
+                        InputLabelProps={{
+                          sx: {
+                            fontSize: {
+                              sps: "11px",
+                              ps: "12px",
+                              ts: "14px",
+                              sls: "14px",
+                              sms: "16px",
+                              sc: "16px",
+                              nsc: "16px",
+                              ns: "16px",
+                              msc: "16px",
+                              mns: "16px",
+                              ms: "16px",
+                              lgs: "16px",
+                            },
+                          },
+                        }}
+                        InputProps={{
+                          inputProps: {
+                            sx: {
+                              fontSize: {
+                                sps: "11px",
+                                ps: "12px",
+                                ts: "14px",
+                                sls: "14px",
+                                sms: "16px",
+                                sc: "16px",
+                                nsc: "16px",
+                                ns: "16px",
+                                msc: "16px",
+                                mns: "16px",
+                                ms: "16px",
+                                lgs: "16px",
+                              },
+                            },
+                          },
+                        }}
+                        FormHelperTextProps={{
+                          sx: {
+                            fontSize: {
+                              sps: "9px",
+                              ps: "10px",
+                              ts: "12px",
+                              sls: "12px",
+                              sms: "14px",
+                              sc: "14px",
+                              nsc: "14px",
+                              ns: "14px",
+                              msc: "14px",
+                              mns: "14px",
+                              ms: "14px",
+                              lgs: "14px",
+                            },
+                          },
+                        }}
+                        // defaultValue={`${loadedUser.confirmPassword}`}
+                        onChange={(e) => {
+                          formInputsHandler(e);
+                          confirmPasswordChangeHandler(e);
+                        }}
+                        onBlur={
+                          showBlurConfirmPassword
+                            ? ""
+                            : confirmPasswordBlurHandler
+                        }
+                        value={confirmPasswordInput}
+                        error={confirmPasswordInputHasError}
+                        helperText={
+                          confirmPasswordInputHasError
+                            ? "Passwords don't match"
+                            : ""
+                        }
+                      />
+                    </React.Fragment>
+                  ) : null}
                   <React.Fragment>
                     {isLoading || showSuccess ? (
                       <LoadingSpinnerWrapper onNewPlace={true}>
