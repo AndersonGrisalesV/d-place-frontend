@@ -39,7 +39,10 @@ const StyleStack = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const NotificationsButton = ({ onResponsive, onCloseMenuResponsive }) => {
+const NotificationsButton = ({
+  onResponsive,
+  onCloseMenuResponsive = null,
+}) => {
   const login = useContext(LoginContext);
   const responsiveVariant = onResponsive;
   const [changeResponsive, setChangeResponsive] = useState(responsiveVariant);
@@ -63,7 +66,8 @@ const NotificationsButton = ({ onResponsive, onCloseMenuResponsive }) => {
         );
 
         setLoadedPlaces(responseData.places.reverse());
-        console.log(responseData.places.reverse());
+        // console.log("aqui" + responseData.places.length())
+
         if (
           login.userId !==
           responseData.places.reverse().slice(0, 1)[0].creatorId._id
@@ -105,7 +109,9 @@ const NotificationsButton = ({ onResponsive, onCloseMenuResponsive }) => {
   const handleNewPost = () => {
     navigate(`api/places/${loadedPlaces.slice(0, 1)[0]._id}`);
     handleClose();
-    onCloseMenuResponsive();
+    if (onCloseMenuResponsive) {
+      onCloseMenuResponsive();
+    }
     setShowPopover(false);
 
     // onCloseMenuResponsive();
@@ -114,7 +120,9 @@ const NotificationsButton = ({ onResponsive, onCloseMenuResponsive }) => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const PopoverComponent = (
+  let PopoverComponent;
+
+  PopoverComponent = (
     <Popover
       id={id}
       open={open}

@@ -4,9 +4,12 @@ import AvatarComponent from "./AvatarComponent";
 import ButtonEdit from "../Buttons/ButtonEdit";
 import { CardHeader } from "@mui/material";
 import { LoginContext } from "../../../../../../context/login-context";
+import { useNavigate } from "react-router-dom";
 
 const AvatarWrapper = ({ loadedPlaces }) => {
   const login = useContext(LoginContext);
+
+  let navigate = useNavigate();
 
   const addDays = (date) => {
     let year;
@@ -81,9 +84,19 @@ const AvatarWrapper = ({ loadedPlaces }) => {
     }
   }, [loadedPlaces, login]);
 
+  const profileNavigationHandler = () => {
+    login.listItemsNotListed();
+    navigate(`/api/users/profile/${login.userId}`);
+  };
+
   return (
     <CardHeader
-      avatar={<AvatarComponent loadedPlaces={loadedPlaces} />}
+      avatar={
+        <AvatarComponent
+          loadedPlaces={loadedPlaces}
+          onProfileNavigation={profileNavigationHandler}
+        />
+      }
       action={
         login.isLoggedIn && isEdit ? (
           <ButtonEdit loadedPlaces={loadedPlaces} />

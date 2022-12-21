@@ -305,7 +305,7 @@ const ListItems = ({
   mode,
   setMode,
   onCloseResponsiveDrawer = false,
-  onToggleResponsive,
+  onToggleResponsive = null,
   onClearSearchBar,
   onResponsive = false,
 }) => {
@@ -328,7 +328,9 @@ const ListItems = ({
   const handleMenuClose = () => {
     setSettingsSelecteditem(0);
     setAnchorEl(null);
-    onToggleResponsive("left", false);
+    if (onToggleResponsive) {
+      onToggleResponsive("left", false);
+    }
   };
 
   const handleLogout = () => {
@@ -336,7 +338,9 @@ const ListItems = ({
     setAnchorEl(null);
     login.logout();
     onClearSearchBar();
-    onToggleResponsive("left", false);
+    if (onToggleResponsive) {
+      onToggleResponsive("left", false);
+    }
   };
 
   const menuId = "primary-search-account-menu";
@@ -374,7 +378,9 @@ const ListItems = ({
 
   const handleDrawerClose = () => {
     setAnchorEl(null);
-    onToggleResponsive("left", false);
+    if (onToggleResponsive) {
+      onToggleResponsive("left", false);
+    }
     handleClear();
   };
 

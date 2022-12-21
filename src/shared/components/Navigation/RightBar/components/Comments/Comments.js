@@ -90,9 +90,10 @@ const Comments = () => {
       }
     }
   }
-
-  console.log(loadedPlaces);
-  console.log(latestComment0);
+  const profileNavigationHandler = () => {
+    login.listItemsNotListed();
+    navigate(`/api/users/profile/${login.userId}`);
+  };
 
   const firstpPlaceLinkHandler = () => {
     if (loadedPlaces[0] !== undefined) {
@@ -144,7 +145,10 @@ const Comments = () => {
                   bgcolor={"background.paper"}
                 >
                   <ListItemAvatar sx={{ marginTop: "18px" }}>
-                    <AvatarComment loadedPlace={latestComment0} />
+                    <AvatarComment
+                      loadedPlace={latestComment0}
+                      onProfileNavigation={profileNavigationHandler}
+                    />
                   </ListItemAvatar>
                   <ListItemText
                     onClick={firstpPlaceLinkHandler}

@@ -8,8 +8,7 @@ import styled from "@emotion/styled";
 import Title from "./components/Title";
 import CardWrapperLogin from "../components/CardWrapperLogin";
 import CardContentLogin from "../components/CardContentLogin";
-import LoadingSpinnerWrapper from "../../LoadingSpinner/LoadingSpinnerWrapper";
-import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+
 import ImageEditProfileButton from "./Buttons/ImageEditProfileButton";
 import ImagePreviewEditProfileButton from "./Buttons/ImagePreviewEditProfileButton";
 import SnackBarResultLogin from "../components/SnackBarResultLogin";
@@ -24,6 +23,8 @@ import ButtonCancelEditProfile from "./Buttons/ButtonCancelEditProfile";
 import ButtonDeleteProfile from "./Buttons/ButtonDeleteProfile";
 import ModalDeleteProfile from "./Buttons/Modals/ModalDeleteProfile";
 import ButtonChangePassword from "./Buttons/ButtonChangePassword";
+import LoadingSpinnerWrapper from "../../LoadingSpinner/LoadingSpinnerWrapper";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -114,19 +115,22 @@ const EditProfile = () => {
     e.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:4000/api/users/deleteprofile/${uid}`,
+        `http://localhost:4000/api/users/profile/deleteprofile/${uid}`,
         "DELETE"
       );
 
-      setShowSuccess("The place was deleted successfully");
-      setTimeout(() => {
-        navigate("/homepage");
-      }, "1000");
+      setShowSuccess(`${loadedUser.name}'s profile was successfully deleted`);
+      login.logout();
+      // setTimeout(() => {
+      //   login.logout();
+      // }, "1900");
       setTimeout(() => {
         // navigate("/homepage");
         setShowSuccess(false);
       }, "2000");
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
 
     handleCloseDeletePlace();
   };
@@ -160,15 +164,15 @@ const EditProfile = () => {
               // isValid: true,
             },
             image: {
-              value: responseData.user.imageUrl,
+              value: responseData.user.imageUrl.url,
               // isValid: true,
             },
           },
           true
         );
 
-        setImageUrl(responseData.user.imageUrl);
-        setSelectedImage(responseData.user.imageUrl);
+        setImageUrl(responseData.user.imageUrl.url);
+        setSelectedImage(responseData.user.imageUrl.url);
         // console.log(formInputs.title);
       } catch (err) {}
     };
@@ -324,9 +328,13 @@ const EditProfile = () => {
     }
   };
 
+  const cleanListItemsHandler = () => {
+    login.listItemsNotListed();
+  };
+
   const onSubmitLoginRegisterHandler = async (e) => {
     e.preventDefault();
-    if (loadedUser.password !== oldPasswordInput) {
+    if (changePassword && loadedUser.password !== oldPasswordInput) {
       setShowpassMatchError(true);
       setShowErrorPassword(`Your old password didn't match, please try again.`);
       resetOldPasswordInput();
@@ -379,12 +387,15 @@ const EditProfile = () => {
         );
 
         setSuccessMessage(
-          `${responseData.user.name}'s profile edited successfully`
+          `${responseData.user.name}'s profile was successfully updated`
         );
         setShowSuccess(true);
         setTimeout(() => {
           navigate("/homepage");
-          // refresh page
+
+          cleanListItemsHandler();
+
+          // refresh page to change avatar in navigation bar
         }, "910");
         setTimeout(() => {
           setShowSuccess(false);
@@ -398,8 +409,6 @@ const EditProfile = () => {
     resetOldPasswordInput();
     resetPasswordInput();
     resetconfirmPasswordInput();
-    setImageUrl(null);
-    setSelectedImage(null);
   };
 
   let formIsValid = false;
@@ -544,7 +553,7 @@ const EditProfile = () => {
                       formInputsHandler(e);
                       nameChangeHandler(e);
                     }}
-                    onBlur={showBlurName ? "" : nameBlurHandler}
+                    onBlur={showBlurName ? null : nameBlurHandler}
                     // value={nameInput}
                     error={nameInputHasError}
                     helperText={
@@ -623,7 +632,7 @@ const EditProfile = () => {
                       formInputsHandler(e);
                       emailChangeHandler(e);
                     }}
-                    onBlur={showBlurEmail ? "" : emailBlurHandler}
+                    onBlur={showBlurEmail ? null : emailBlurHandler}
                     // value={emailInput}
                     error={emailInputHasError}
                     helperText={emailInputHasError ? "Incorrect mail" : ""}
@@ -706,7 +715,7 @@ const EditProfile = () => {
                           oldPasswordChangeHandler(e);
                         }}
                         onBlur={
-                          showBlurOldPassword ? "" : oldPasswordBlurHandler
+                          showBlurOldPassword ? null : oldPasswordBlurHandler
                         }
                         ref={oldPasswordInputRef}
                         value={oldPasswordInput}
@@ -719,7 +728,7 @@ const EditProfile = () => {
                       />
 
                       <StyleTextField
-                        id="outlined-password-input"
+                        id="outlined-new-password-input"
                         disabled={
                           isLoading ? true : false || showSuccess ? true : false
                         }
@@ -788,7 +797,7 @@ const EditProfile = () => {
                           formInputsHandler(e);
                           passwordChangeHandler(e);
                         }}
-                        onBlur={showBlurPassword ? "" : passwordBlurHandler}
+                        onBlur={showBlurPassword ? null : passwordBlurHandler}
                         value={passwordInput}
                         error={passwordInputHasError}
                         helperText={
@@ -885,7 +894,7 @@ const EditProfile = () => {
                   ) : null}
                   <React.Fragment>
                     {isLoading || showSuccess ? (
-                      <LoadingSpinnerWrapper onNewPlace={true}>
+                      <LoadingSpinnerWrapper>
                         <LoadingSpinner />
                       </LoadingSpinnerWrapper>
                     ) : (

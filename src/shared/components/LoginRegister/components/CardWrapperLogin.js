@@ -17,7 +17,10 @@ const CardWrapperLogin = (props) => {
             alignItems: "center",
           }}
         >
-          <CardWrapper sx={{ marginRight: "105px" }}>
+          <CardWrapper
+            bgcolor={"backgroundColor"}
+            sx={{ marginRight: "105px" }}
+          >
             {props.children}
           </CardWrapper>
         </Box>

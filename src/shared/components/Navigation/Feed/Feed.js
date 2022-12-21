@@ -127,7 +127,7 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
               <React.Fragment>
                 {!isLoading ? (
                   <React.Fragment>
-                    {loadedPlaces ? (
+                    {loadedPlaces && loadedPlaces.length > 0 ? (
                       places
                     ) : (
                       <React.Fragment>

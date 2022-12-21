@@ -200,7 +200,7 @@ const EditPlacePostDisplay = () => {
               // isValid: true,
             },
             image: {
-              value: responseData.place.imageUrl,
+              value: responseData.place.imageUrl.url,
               // isValid: true,
             },
             address: {
@@ -214,8 +214,8 @@ const EditPlacePostDisplay = () => {
           },
           true
         );
-        setImageUrl(responseData.place.imageUrl);
-        setSelectedImage(responseData.place.imageUrl);
+        setImageUrl(responseData.place.imageUrl.url);
+        setSelectedImage(responseData.place.imageUrl.url);
         // console.log(formInputs.title);
       } catch (err) {}
     };

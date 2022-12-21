@@ -21,8 +21,8 @@ const ButtonCloseModal = ({ handleClose }) => {
           alignAitems: "flex-start",
           backgroundColor: "transparent",
           marginRight: {
-            sps: "22px",
-            ps: "22px",
+            sps: "20px",
+            ps: "20px",
             ts: "19px",
             sls: "19px",
             sms: "17px",

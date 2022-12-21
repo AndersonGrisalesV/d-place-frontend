@@ -2,9 +2,10 @@ import React from "react";
 
 import Avatar from "@mui/material/Avatar";
 
-const AvatarComment = ({ loadedPlace }) => {
+const AvatarComment = ({ loadedPlace, onProfileNavigation }) => {
   return (
     <Avatar
+      onClick={onProfileNavigation}
       src={
         loadedPlace.creatorId.imageUrl.url
           ? loadedPlace.creatorId.imageUrl.url
@@ -12,6 +13,7 @@ const AvatarComment = ({ loadedPlace }) => {
       }
       title={loadedPlace.creatorId.name}
       sx={{
+        cursor: "pointer",
         fontSize: {
           sps: "10px",
           ps: "12px",

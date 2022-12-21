@@ -170,7 +170,7 @@ function App() {
         />
         <Route
           path="/api/users/profile/:uid"
-          element={<EditProfile onFilterSearch={searchBar} />}
+          element={<EditProfile onFilterSearch={searchBar}  bgcolor={"backgroundColor"} />}
         />
         <Route path="/api/places/newplace" element={<NewPlace />} />
         <Route path="/api/places/editplace/:pid" element={<EditPlace />} />

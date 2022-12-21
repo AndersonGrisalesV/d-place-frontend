@@ -5,6 +5,7 @@ import { CardContent } from "@mui/material";
 const CardContentLogin = (props) => {
   return (
     <CardContent
+      bgcolor={"backgroundColor"}
       sx={{
         width: {
           sps: "100px",

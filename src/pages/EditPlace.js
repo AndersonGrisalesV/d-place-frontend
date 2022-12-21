@@ -5,7 +5,7 @@ import EditPlacePost from "../shared/components/Navigation/Feed/places/EditPlace
 const EditPlace = () => {
   return (
     <React.Fragment>
-      <EditPlacePost />
+      <EditPlacePost bgcolor={"backgroundColor"} />
     </React.Fragment>
   );
 };

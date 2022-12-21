@@ -6,8 +6,8 @@ const AvatarNotification = ({ loadedPlaces }) => {
   return (
     <Avatar
       src={
-        loadedPlaces.slice(0, 1)[0].creatorId.image
-          ? loadedPlaces.slice(0, 1)[0].creatorId.image
+        loadedPlaces.slice(0, 1)[0].creatorId.imageUrl.url
+          ? loadedPlaces.slice(0, 1)[0].creatorId.imageUrl.url
           : ""
       }
       title={loadedPlaces.slice(0, 1)[0].creatorId.name}
@@ -60,7 +60,7 @@ const AvatarNotification = ({ loadedPlaces }) => {
       }}
       aria-label="recipe"
     >
-      {loadedPlaces.slice(0, 1)[0].creatorId.image === ""
+      {loadedPlaces.slice(0, 1)[0].creatorId.imageUrl.url === ""
         ? loadedPlaces.slice(0, 1)[0].creatorId.name.charAt(0)
         : ""}
     </Avatar>

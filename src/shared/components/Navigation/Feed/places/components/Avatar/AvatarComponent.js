@@ -2,10 +2,11 @@ import React from "react";
 
 import Avatar from "@mui/material/Avatar";
 
-const AvatarComponent = ({ loadedPlaces }) => {
+const AvatarComponent = ({ loadedPlaces, onProfileNavigation }) => {
   // console.log(loadedPlaces);
   return (
     <Avatar
+      onClick={onProfileNavigation}
       src={
         loadedPlaces.creatorId.imageUrl.url
           ? loadedPlaces.creatorId.imageUrl.url
@@ -13,6 +14,7 @@ const AvatarComponent = ({ loadedPlaces }) => {
       }
       title={loadedPlaces.creatorId.name}
       sx={{
+        cursor: "pointer",
         fontSize: {
           sps: "10px",
           ps: "12px",

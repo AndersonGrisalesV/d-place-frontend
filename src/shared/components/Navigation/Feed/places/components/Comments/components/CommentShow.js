@@ -71,7 +71,7 @@ const CommentShow = ({
   const [showSuccess, setShowSuccess] = useState(false);
 
   // console.log("here" + `${onButton}`);
-  // console.log(onPlaceComments);
+  console.log(onPlaceComments);
 
   const addDays = (date) => {
     let year;
@@ -420,9 +420,9 @@ const CommentShow = ({
                   }}
                   title={onPlaceComments.creatorId.name}
                   alt={onPlaceComments.creatorId.name}
-                  src={onPlaceComments.creatorId.image}
+                  src={onPlaceComments.creatorId.imageUrl.url}
                 >
-                  {onPlaceComments.creatorId.image === ""
+                  {onPlaceComments.creatorId.imageUrl.url === ""
                     ? onPlaceComments.creatorId.name.charAt(0)
                     : ""}
                 </Avatar>
