@@ -119,11 +119,14 @@ const EditProfile = () => {
         "DELETE"
       );
 
-      setShowSuccess(`${loadedUser.name}'s profile was successfully deleted`);
-      login.logout();
-      // setTimeout(() => {
-      //   login.logout();
-      // }, "1900");
+      setShowSuccess(true);
+      setSuccessMessage(
+        `${loadedUser.name}'s profile was successfully deleted`
+      );
+      setTimeout(() => {
+        login.logout();
+        navigate("/homepage");
+      }, "200");
       setTimeout(() => {
         // navigate("/homepage");
         setShowSuccess(false);
