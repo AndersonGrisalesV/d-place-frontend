@@ -407,6 +407,9 @@ const ListItems = ({
       case `/api/places/${login.pidCleanListItems}`:
         setSelectedIndex(4);
         break;
+      case `/api/users/loginregister`:
+        setSelectedIndex(6);
+        break;
       default:
         setSettingsSelecteditem(0);
         break;

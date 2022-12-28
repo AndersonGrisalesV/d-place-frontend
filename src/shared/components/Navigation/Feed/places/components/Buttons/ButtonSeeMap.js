@@ -16,18 +16,18 @@ const ButtonSeeMap = ({ onHandleOpen }) => {
       direction="row"
       sx={{
         paddingLeft: {
-          sps: "58px",
-          ps: "136px",
-          ts: "197px",
-          sls: "239px",
-          sms: "444px",
-          sc: "444px",
-          nsc: "444px",
-          ns: "444px",
-          msc: "444px",
-          mns: "444px",
-          ms: "444px",
-          lgs: "444px",
+          sps: "148px",
+          ps: "90px",
+          ts: "148px",
+          sls: "188px",
+          sms: "388px",
+          sc: "388px",
+          nsc: "388px",
+          ns: "388px",
+          msc: "388px",
+          mns: "388px",
+          ms: "388px",
+          lgs: "388px",
         },
       }}
     >

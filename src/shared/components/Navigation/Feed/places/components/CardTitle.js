@@ -1,7 +1,15 @@
 import { CardContent, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const CardTitle = ({ onMap = false, loadedPlaces }) => {
+  let navigate = useNavigate();
+
+  const handleNavigateToPost = () => {
+    if (loadedPlaces) {
+      navigate(`/api/places/${loadedPlaces.id}`);
+    }
+  };
   return (
     <CardContent
       sx={{
@@ -10,10 +18,13 @@ const CardTitle = ({ onMap = false, loadedPlaces }) => {
       }}
     >
       <Typography
+        onClick={handleNavigateToPost}
         variant="body1"
         fontWeight={400}
         color="text.primary"
         sx={{
+          cursor: "pointer",
+
           fontSize: {
             sps: "10px",
             ps: "11px",

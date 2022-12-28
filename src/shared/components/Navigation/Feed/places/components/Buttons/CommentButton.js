@@ -1,57 +1,38 @@
-import React, { useContext, useEffect, useState } from "react";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Checkbox, IconButton, Typography } from "@mui/material";
-import styled from "@emotion/styled";
+import React, { useContext } from "react";
+
+import { Checkbox, IconButton } from "@mui/material";
+
+import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
+import CommentIcon from "@mui/icons-material/Comment";
+
+import { yellow } from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../../../../context/login-context";
 
-const StyleFavoriteBorderIcon = styled(FavoriteIcon)({
-  color: "#da4453",
-  "&:hover": {
-    backgroundColor: "#db2d3f0f",
-    color: "#db2d3f",
-  },
-});
+const colorYellow = yellow[700];
 
-const FavoriteButton = ({
+const CommentButton = ({
   isFavorite = "",
   onFavoriteHandler,
   onChangeFavorite,
-  onLoadedPlaces,
+  onLoadedPlaces = false,
 }) => {
-  // const login = useContext(LoginContext);
+  let navigate = useNavigate();
+  const login = useContext(LoginContext);
 
-  // let isFavorite = false;
-  // if (login.isLoggedIn) {
-  //   loadedPlaces.favoritesUserIds.map((favorite) => {
-  //     if (favorite === login.userId) {
-  //       return (isFavorite = true);
-  //     }
-  //     return (isFavorite = false);
-  //   });
-  // }
-
-  // console.log(isFavorite);
-  // 637fc05f6fb8981bc3ee8a32
-
-  const [newFavorite, setNewFavorite] = useState(false);
-
-  useEffect(() => {
-    if (onChangeFavorite) {
-      if (onChangeFavorite.favorite === true) {
-        setNewFavorite(true);
-      } else {
-        setNewFavorite(false);
-      }
+  const handleNavigateToPost = () => {
+    if (onLoadedPlaces) {
+      login.listItemsNotListed(onLoadedPlaces.id);
+      navigate(`/api/places/${onLoadedPlaces.id}`);
     }
-  }, [onChangeFavorite]);
+  };
 
   return (
     <IconButton
-      aria-label="add to favorites"
+      aria-label="post comments"
       style={{ backgroundColor: "transparent" }}
-      title="Like"
-      onClick={onFavoriteHandler}
+      title="Comment"
+      onClick={handleNavigateToPost}
       sx={{
         fontSize: {
           sps: "10px",
@@ -70,10 +51,10 @@ const FavoriteButton = ({
       }}
     >
       <Checkbox
-        checked={onChangeFavorite ? newFavorite : isFavorite}
+        checked={onLoadedPlaces.comments.length >= 1 ? true : false}
         style={{ backgroundColor: "transparent" }}
         icon={
-          <FavoriteBorderIcon
+          <ModeCommentOutlinedIcon
             sx={{
               backgroundColor: "transparent",
               width: {
@@ -108,10 +89,10 @@ const FavoriteButton = ({
           />
         }
         checkedIcon={
-          <StyleFavoriteBorderIcon
+          <CommentIcon
             sx={{
               backgroundColor: "transparent",
-              color: "red",
+              color: `${colorYellow}`,
               width: {
                 sps: "15px",
                 ps: "16px",
@@ -144,13 +125,9 @@ const FavoriteButton = ({
           />
         }
       />
-      {onChangeFavorite === ""
-        ? onLoadedPlaces.favoritesUserIds.length
-        : onChangeFavorite.favorite
-        ? onLoadedPlaces.favoritesUserIds.length + 1
-        : onLoadedPlaces.favoritesUserIds.length}
+      {onLoadedPlaces ? onLoadedPlaces.comments.length : "0"}
     </IconButton>
   );
 };
 
-export default FavoriteButton;
+export default CommentButton;

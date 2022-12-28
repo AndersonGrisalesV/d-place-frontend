@@ -8,6 +8,7 @@ import { red } from "@mui/material/colors";
 // import { LoginContext } from "../../../../../../context/login-context";
 
 import styled from "@emotion/styled";
+import { LoginContext } from "../../../../../../context/login-context";
 
 const buttonColor = red["A400"];
 
@@ -36,12 +37,18 @@ const StyleButtonOnComment = styled(Button)(({ theme }) => ({
 
 const LoginButton = ({ OnComment = false }) => {
   // const handleLogin = () => {};
+  const login = useContext(LoginContext);
+
+  const cleanListItemsHandler = () => {
+    login.listItemsNotListed();
+    // console.log(onClearListItems);
+  };
 
   const location = useLocation();
   // console.log(location);
 
   const buttonLeaveAComment = OnComment ? (
-    <Box>
+    <Box onClick={cleanListItemsHandler}>
       <NavLink
         to={{
           pathname: "/api/users/loginregister",
@@ -55,6 +62,20 @@ const LoginButton = ({ OnComment = false }) => {
           sx={{
             textTransform: "none",
             bgcolor: `${buttonColor}`,
+            fontSize: {
+              sps: "10px",
+              ps: "12px",
+              ts: "12px",
+              sls: "13px",
+              sms: "14px",
+              sc: "14px",
+              nsc: "14px",
+              ns: "14px",
+              msc: "14px",
+              mns: "14px",
+              ms: "14px",
+              lgs: "14px",
+            },
           }}
         >
           Log in
@@ -62,7 +83,7 @@ const LoginButton = ({ OnComment = false }) => {
       </NavLink>
     </Box>
   ) : (
-    <Box>
+    <Box onClick={cleanListItemsHandler}>
       <NavLink to="/api/users/loginregister" style={{ textDecoration: "none" }}>
         <StyleButton
           sx={{

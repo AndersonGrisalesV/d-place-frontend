@@ -10,13 +10,21 @@ import styled from "@emotion/styled";
 import { CardContent, Zoom } from "@mui/material";
 import { useHttpClient } from "../../../../../hooks/http-hook";
 import AvatarComment from "./AvatarComment";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../../../context/login-context";
 
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",
   paddingLeft: "0px",
 });
+const StyleNavLink = styled(NavLink)(({ theme }) => ({
+  textDecoration: "none",
+  color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
+  "&:hover": {
+    backgroundColor: "transparent",
+    color: "#9b9b9bc7",
+  },
+}));
 
 const Comments = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -163,7 +171,16 @@ const Comments = () => {
                           variant="body2"
                           color="text.primary"
                         >
-                          {`${latestComment0.creatorId.name}`}
+                          <StyleNavLink
+                            to={
+                              login.isLoggedIn
+                                ? `/api/users/profile/${login.userId}`
+                                : `/api/users/loginregister`
+                            }
+                            // onClick={handleProfileVisit}
+                          >
+                            {`${latestComment0.creatorId.name}`}
+                          </StyleNavLink>
                         </Typography>
                         {` — ${finalComment0}`}
                       </React.Fragment>

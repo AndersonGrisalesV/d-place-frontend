@@ -2,9 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 
 import AvatarComponent from "./AvatarComponent";
 import ButtonEdit from "../Buttons/ButtonEdit";
-import { CardHeader } from "@mui/material";
+import { CardHeader, styled } from "@mui/material";
 import { LoginContext } from "../../../../../../context/login-context";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+
+const StyleNavLink = styled(NavLink)(({ theme }) => ({
+  textDecoration: "none",
+  color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
+  "&:hover": {
+    backgroundColor: "transparent",
+    color: "#9b9b9bc7",
+  },
+}));
 
 const AvatarWrapper = ({ loadedPlaces }) => {
   const login = useContext(LoginContext);
@@ -85,8 +94,21 @@ const AvatarWrapper = ({ loadedPlaces }) => {
   }, [loadedPlaces, login]);
 
   const profileNavigationHandler = () => {
-    login.listItemsNotListed();
-    navigate(`/api/users/profile/${login.userId}`);
+    if (login.isLoggedIn) {
+      login.listItemsNotListed(`/api/users/profile/${login.userId}`);
+      navigate(`/api/users/profile/${login.userId}`);
+    } else {
+      login.listItemsNotListed();
+      navigate("/api/users/loginregister");
+    }
+  };
+
+  const handleProfileVisit = () => {
+    if (login.isLoggedIn) {
+      login.listItemsNotListed(`/api/users/profile/${login.userId}`);
+    } else {
+      login.listItemsNotListed();
+    }
   };
 
   return (
@@ -104,7 +126,18 @@ const AvatarWrapper = ({ loadedPlaces }) => {
           ""
         )
       }
-      title={loadedPlaces.creatorId.name}
+      title={
+        <StyleNavLink
+          to={
+            login.isLoggedIn
+              ? `/api/users/profile/${login.userId}`
+              : `/api/users/loginregister`
+          }
+          onClick={handleProfileVisit}
+        >
+          {loadedPlaces.creatorId.name}
+        </StyleNavLink>
+      }
       subheader={`${fetchedDate.month} ${fetchedDate.day}, ${fetchedDate.year}`}
       titleTypographyProps={{
         fontWeight: "500",

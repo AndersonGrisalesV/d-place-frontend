@@ -31,18 +31,18 @@ const ButtonDetails = ({ onPlaceId }) => {
       direction="row"
       sx={{
         paddingLeft: {
-          sps: "51px",
-          ps: "124px",
-          ts: "185px",
-          sls: "226px",
-          sms: "427px",
-          sc: "427px",
-          nsc: "427px",
-          ns: "427px",
-          msc: "427px",
-          mns: "427px",
-          ms: "427px",
-          lgs: "427px",
+          sps: "139px",
+          ps: "78px",
+          ts: "136px",
+          sls: "174px",
+          sms: "371px",
+          sc: "371px",
+          nsc: "371px",
+          ns: "371px",
+          msc: "371px",
+          mns: "371px",
+          ms: "371px",
+          lgs: "371px",
         },
       }}
     >

@@ -1,5 +1,6 @@
 import React from "react";
 import ShareIcon from "@mui/icons-material/Share";
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import { Checkbox, IconButton } from "@mui/material";
 import { green } from "@mui/material/colors";
 
@@ -11,11 +12,27 @@ const ShareButton = () => {
       aria-label="share"
       style={{ backgroundColor: "transparent" }}
       title="Share"
+      sx={{
+        fontSize: {
+          sps: "10px",
+          ps: "12px",
+          ts: "12px",
+          sls: "13px",
+          sms: "14px",
+          sc: "14px",
+          nsc: "14px",
+          ns: "14px",
+          msc: "14px",
+          mns: "14px",
+          ms: "14px",
+          lgs: "14px",
+        },
+      }}
     >
       <Checkbox
         style={{ backgroundColor: "transparent" }}
         icon={
-          <ShareIcon
+          <ShareOutlinedIcon
             sx={{
               width: {
                 sps: "14px",
@@ -84,6 +101,7 @@ const ShareButton = () => {
           />
         }
       />
+      {"5"}
     </IconButton>
   );
 };

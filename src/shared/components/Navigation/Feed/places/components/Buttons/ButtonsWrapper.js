@@ -4,6 +4,7 @@ import {
   Button,
   CardActions,
   Fade,
+  IconButton,
   ListItemText,
   Modal,
   Stack,
@@ -24,6 +25,7 @@ import { useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 import ButtonCloseModal from "./ButtonCloseModal";
 import { useHttpClient } from "../../../../../../hooks/http-hook";
+import CommentButton from "./CommentButton";
 
 const style = {
   position: "absolute",
@@ -79,6 +81,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [changeFavorite, setChangeFavorite] = useState(null);
+  // const [showComments, setshowComments] = useState(null);
 
   const params = useParams();
 
@@ -94,25 +97,27 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   }
 
   const favoritehandler = async () => {
-    try {
-      // await sendRequest(
-      //   `http://localhost:4000/api/places/favoriteplace/${loadedPlaces._id}`,
-      //   "PATCH"
-      // );
+    if (login.isLoggedIn) {
+      try {
+        // await sendRequest(
+        //   `http://localhost:4000/api/places/favoriteplace/${loadedPlaces._id}`,
+        //   "PATCH"
+        // );
 
-      const responseData = await sendRequest(
-        `http://localhost:4000/api/places/favoriteplace/${loadedPlaces._id}`,
-        "PATCH",
-        JSON.stringify({
-          userId: login.userId,
-        }),
-        {
-          "Content-Type": "Application/json",
-        }
-      );
-      setChangeFavorite(responseData);
-    } catch (err) {
-      console.log(err);
+        const responseData = await sendRequest(
+          `http://localhost:4000/api/places/favoriteplace/${loadedPlaces._id}`,
+          "PATCH",
+          JSON.stringify({
+            userId: login.userId,
+          }),
+          {
+            "Content-Type": "Application/json",
+          }
+        );
+        setChangeFavorite(responseData);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   console.log(loadedPlaces);
@@ -122,192 +127,139 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
       disableSpacing
       sx={{ paddingTop: "0px", paddingLeft: "0px", paddingBottom: "0px" }}
     >
-      <Stack direction="row" spacing={0}>
-        <Stack
-          direction="row"
-          spacing={-4}
-          sx={{
-            placeItems: "flex-end",
-          }}
-        >
-          <FavoriteButton
-            onLoadedPlaces={loadedPlaces}
-            isFavorite={isFavorite}
-            onChangeFavorite={changeFavorite ? changeFavorite : ""}
-            onFavoriteHandler={favoritehandler}
-          />
+      <Stack direction="row" spacing={-2} sx={{ flexFlow: "wrap" }}>
+        <FavoriteButton
+          onLoadedPlaces={loadedPlaces}
+          isFavorite={isFavorite}
+          onChangeFavorite={changeFavorite ? changeFavorite : ""}
+          onFavoriteHandler={favoritehandler}
+        />
+        <CommentButton onLoadedPlaces={loadedPlaces} />
 
-          <Typography
-            variant="body1"
-            fontWeight={400}
-            color="text.primary"
-            style={{
-              marginBlockEnd: "7px",
-            }}
-            sx={{
-              marginLeft: {
-                sps: "10px",
-                ps: "11px",
-                ts: "13px",
-                sls: "-29px",
-                sms: "-32px",
-                sc: "-32px",
-                nsc: "-32px",
-                ns: "-32px",
-                msc: "-32px",
-                mns: "-32px",
-                ms: "-32px",
-                lgs: "-32px",
-              },
-              fontSize: {
-                sps: "10px",
-                ps: "11px",
-                ts: "13px",
-                sls: "9px",
-                sms: "10px",
-                sc: "10px",
-                nsc: "10px",
-                ns: "10px",
-                msc: "10px",
-                mns: "10px",
-                ms: "10px",
-                lgs: "10px",
-              },
-            }}
-          >
-            {changeFavorite === null
-              ? loadedPlaces.favoritesUserIds.length
-              : changeFavorite.favorite
-              ? loadedPlaces.favoritesUserIds.length + 1
-              : loadedPlaces.favoritesUserIds.length}
-          </Typography>
-        </Stack>
-
-        <Stack>
-          <ShareButton />
+        <ShareButton />
+        <Stack sx={{ display: "flex", justifyContent: "center" }}>
+          {!onMap ? (
+            <ButtonDetails onPlaceId={loadedPlaces._id} />
+          ) : (
+            <ButtonSeeMap onHandleOpen={handleOpen} />
+          )}
+          {onMap && (
+            <div>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-map"
+                aria-describedby="modal-modal-map-location"
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                  timeout: 500,
+                }}
+              >
+                <Fade in={open}>
+                  <Stack>
+                    <Box sx={style}>
+                      <Stack>
+                        <ButtonCloseModal handleClose={handleClose} />
+                        <Stack
+                          direction="row"
+                          spacing={2}
+                          justifyContent="space-between"
+                          alignItems="center"
+                        >
+                          <Typography
+                            sx={{
+                              display: "inline",
+                              paddingLeft: "24px",
+                              fontSize: {
+                                sps: "12px",
+                                ps: "13px",
+                                ts: "15px",
+                                sls: "15px",
+                                sms: "17px",
+                                sc: "17px",
+                                nsc: "17px",
+                                ns: "17px",
+                                msc: "17px",
+                                mns: "17px",
+                                ms: "17px",
+                                lgs: "17px",
+                              },
+                            }}
+                            fontWeight={600}
+                            variant="h6"
+                            color="text.primary"
+                          >
+                            {loadedPlaces.title}
+                          </Typography>
+                        </Stack>
+                        <p style={{ margin: "1px" }} />
+                        <Stack
+                          direction="row"
+                          spacing={2}
+                          justifyContent="space-between"
+                          alignItems="center"
+                        >
+                          <Typography
+                            variant="h6"
+                            fontWeight={400}
+                            color="text.secondary"
+                            sx={{
+                              marginBottom: "10px",
+                              paddingLeft: "24px",
+                              fontSize: {
+                                sps: "8px",
+                                ps: "9px",
+                                ts: "11px",
+                                sls: "11px",
+                                sms: "13px",
+                                sc: "13px",
+                                nsc: "13px",
+                                ns: "13px",
+                                msc: "13px",
+                                mns: "13px",
+                                ms: "13px",
+                                lgs: "13px",
+                              },
+                            }}
+                          >
+                            {loadedPlaces.address}
+                          </Typography>
+                          {login.isLoggedIn &&
+                            login.userId === loadedPlaces.creatorId._id && (
+                              <ButtonEdit loadedPlaces={loadedPlaces} />
+                            )}
+                        </Stack>
+                      </Stack>
+                      <Box
+                        sx={{
+                          height: {
+                            sps: "15rem",
+                            ps: "20rem",
+                            ts: "22rem",
+                            sls: "23rem",
+                            sms: "24rem",
+                            sc: "25rem",
+                            nsc: "25rem",
+                            ns: "25rem",
+                            msc: "25rem",
+                            mns: "25rem",
+                            ms: "25rem",
+                            lgs: "25rem",
+                          },
+                          width: "100%",
+                        }}
+                      >
+                        <Map center={loadedPlaces.location} zoom={16} />
+                      </Box>
+                    </Box>
+                  </Stack>
+                </Fade>
+              </Modal>
+            </div>
+          )}
         </Stack>
       </Stack>
-
-      {!onMap ? (
-        <ButtonDetails onPlaceId={loadedPlaces._id} />
-      ) : (
-        <ButtonSeeMap onHandleOpen={handleOpen} />
-      )}
-      {onMap && (
-        <div>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-map"
-            aria-describedby="modal-modal-map-location"
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={open}>
-              <Stack>
-                <Box sx={style}>
-                  <Stack>
-                    <ButtonCloseModal handleClose={handleClose} />
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Typography
-                        sx={{
-                          display: "inline",
-                          paddingLeft: "24px",
-                          fontSize: {
-                            sps: "12px",
-                            ps: "13px",
-                            ts: "15px",
-                            sls: "15px",
-                            sms: "17px",
-                            sc: "17px",
-                            nsc: "17px",
-                            ns: "17px",
-                            msc: "17px",
-                            mns: "17px",
-                            ms: "17px",
-                            lgs: "17px",
-                          },
-                        }}
-                        fontWeight={600}
-                        variant="h6"
-                        color="text.primary"
-                      >
-                        {loadedPlaces.title}
-                      </Typography>
-                    </Stack>
-                    <p style={{ margin: "1px" }} />
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Typography
-                        variant="h6"
-                        fontWeight={400}
-                        color="text.secondary"
-                        sx={{
-                          marginBottom: "10px",
-                          paddingLeft: "24px",
-                          fontSize: {
-                            sps: "8px",
-                            ps: "9px",
-                            ts: "11px",
-                            sls: "11px",
-                            sms: "13px",
-                            sc: "13px",
-                            nsc: "13px",
-                            ns: "13px",
-                            msc: "13px",
-                            mns: "13px",
-                            ms: "13px",
-                            lgs: "13px",
-                          },
-                        }}
-                      >
-                        {loadedPlaces.address}
-                      </Typography>
-                      {login.isLoggedIn &&
-                        login.userId === loadedPlaces.creatorId._id && (
-                          <ButtonEdit loadedPlaces={loadedPlaces} />
-                        )}
-                    </Stack>
-                  </Stack>
-                  <Box
-                    sx={{
-                      height: {
-                        sps: "15rem",
-                        ps: "20rem",
-                        ts: "22rem",
-                        sls: "23rem",
-                        sms: "24rem",
-                        sc: "25rem",
-                        nsc: "25rem",
-                        ns: "25rem",
-                        msc: "25rem",
-                        mns: "25rem",
-                        ms: "25rem",
-                        lgs: "25rem",
-                      },
-                      width: "100%",
-                    }}
-                  >
-                    <Map center={loadedPlaces.location} zoom={16} />
-                  </Box>
-                </Box>
-              </Stack>
-            </Fade>
-          </Modal>
-        </div>
-      )}
     </CardActions>
   );
 };
