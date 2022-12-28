@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Checkbox, IconButton } from "@mui/material";
+import { Checkbox, IconButton, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { LoginContext } from "../../../../../../context/login-context";
 
@@ -13,7 +13,11 @@ const StyleFavoriteBorderIcon = styled(FavoriteIcon)({
   },
 });
 
-const FavoriteButton = ({ isFavorite }) => {
+const FavoriteButton = ({
+  isFavorite = "",
+  onFavoriteHandler,
+  onChangeFavorite,
+}) => {
   // const login = useContext(LoginContext);
 
   // let isFavorite = false;
@@ -28,14 +32,28 @@ const FavoriteButton = ({ isFavorite }) => {
 
   // console.log(isFavorite);
   // 637fc05f6fb8981bc3ee8a32
+
+  const [newFavorite, setNewFavorite] = useState(false);
+
+  useEffect(() => {
+    if (onChangeFavorite) {
+      if (onChangeFavorite.favorite === true) {
+        setNewFavorite(true);
+      } else {
+        setNewFavorite(false);
+      }
+    }
+  }, [onChangeFavorite]);
+
   return (
     <IconButton
       aria-label="add to favorites"
       style={{ backgroundColor: "transparent" }}
       title="Like"
+      onClick={onFavoriteHandler}
     >
       <Checkbox
-        checked={isFavorite}
+        checked={onChangeFavorite ? newFavorite : isFavorite}
         style={{ backgroundColor: "transparent" }}
         icon={
           <FavoriteBorderIcon

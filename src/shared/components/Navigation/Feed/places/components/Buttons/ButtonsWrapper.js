@@ -23,6 +23,7 @@ import { LoginContext } from "../../../../../../context/login-context";
 import { useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 import ButtonCloseModal from "./ButtonCloseModal";
+import { useHttpClient } from "../../../../../../hooks/http-hook";
 
 const style = {
   position: "absolute",
@@ -75,6 +76,10 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
 
   const login = useContext(LoginContext);
 
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  const [changeFavorite, setChangeFavorite] = useState(null);
+
   const params = useParams();
 
   let isFavorite = false;
@@ -87,6 +92,29 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
       return (isFavorite = false);
     });
   }
+
+  const favoritehandler = async () => {
+    try {
+      // await sendRequest(
+      //   `http://localhost:4000/api/places/favoriteplace/${loadedPlaces._id}`,
+      //   "PATCH"
+      // );
+
+      const responseData = await sendRequest(
+        `http://localhost:4000/api/places/favoriteplace/${loadedPlaces._id}`,
+        "PATCH",
+        JSON.stringify({
+          userId: login.userId,
+        }),
+        {
+          "Content-Type": "Application/json",
+        }
+      );
+      setChangeFavorite(responseData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   console.log(loadedPlaces);
 
   return (
@@ -94,10 +122,72 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
       disableSpacing
       sx={{ paddingTop: "0px", paddingLeft: "0px", paddingBottom: "0px" }}
     >
-      <Stack direction="row" spacing={-3}>
-        <FavoriteButton isFavorite={isFavorite} />
-        <ShareButton />
+      <Stack direction="row" spacing={0}>
+        <Stack
+          direction="row"
+          spacing={-4}
+          sx={{
+            placeItems: "flex-end",
+          }}
+        >
+          <FavoriteButton
+            onLoadedPlaces={loadedPlaces}
+            isFavorite={isFavorite}
+            onChangeFavorite={changeFavorite ? changeFavorite : ""}
+            onFavoriteHandler={favoritehandler}
+          />
+
+          <Typography
+            variant="body1"
+            fontWeight={400}
+            color="text.primary"
+            style={{
+              marginBlockEnd: "7px",
+            }}
+            sx={{
+              marginLeft: {
+                sps: "10px",
+                ps: "11px",
+                ts: "13px",
+                sls: "-29px",
+                sms: "-32px",
+                sc: "-32px",
+                nsc: "-32px",
+                ns: "-32px",
+                msc: "-32px",
+                mns: "-32px",
+                ms: "-32px",
+                lgs: "-32px",
+              },
+              fontSize: {
+                sps: "10px",
+                ps: "11px",
+                ts: "13px",
+                sls: "9px",
+                sms: "10px",
+                sc: "10px",
+                nsc: "10px",
+                ns: "10px",
+                msc: "10px",
+                mns: "10px",
+                ms: "10px",
+                lgs: "10px",
+              },
+            }}
+          >
+            {changeFavorite === null
+              ? loadedPlaces.favoritesUserIds.length
+              : changeFavorite.favorite
+              ? loadedPlaces.favoritesUserIds.length + 1
+              : loadedPlaces.favoritesUserIds.length}
+          </Typography>
+        </Stack>
+
+        <Stack>
+          <ShareButton />
+        </Stack>
       </Stack>
+
       {!onMap ? (
         <ButtonDetails onPlaceId={loadedPlaces._id} />
       ) : (
