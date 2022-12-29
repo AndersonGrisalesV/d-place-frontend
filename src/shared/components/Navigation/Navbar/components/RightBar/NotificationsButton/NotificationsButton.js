@@ -15,9 +15,10 @@ import styled from "@emotion/styled/macro";
 
 import { AccountCircleOutlined } from "@mui/icons-material";
 import { useHttpClient } from "../../../../../../hooks/http-hook";
-import { LoginContext } from "../../../../../../context/login-context";
+
 import AvatarNotification from "./AvatarNotification";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../../../../../context/login-context";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {
@@ -65,7 +66,7 @@ const NotificationsButton = ({
           "http://localhost:4000/homepage"
         );
 
-        setLoadedPlaces(responseData.places.reverse());
+        setLoadedPlaces(responseData.places);
         // console.log("aqui" + responseData.places.length())
 
         if (
@@ -77,7 +78,7 @@ const NotificationsButton = ({
       } catch (err) {}
     };
     fetchPlaces();
-  }, [sendRequest, login.userId]);
+  }, [sendRequest, login.userId, login.notification]);
 
   const anchorRef = useRef();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -107,8 +108,15 @@ const NotificationsButton = ({
   };
 
   const handleNewPost = () => {
-    navigate(`api/places/${loadedPlaces.slice(0, 1)[0]._id}`);
+    let placeId;
+    if (loadedPlaces) {
+      placeId = loadedPlaces.slice(0, 1)[0]._id;
+    }
+    console.log();
+    login.listItemsNotListed();
+    navigate(`/api/places/${placeId}`);
     handleClose();
+    login.listItemsNotListed(placeId);
     if (onCloseMenuResponsive) {
       onCloseMenuResponsive();
     }

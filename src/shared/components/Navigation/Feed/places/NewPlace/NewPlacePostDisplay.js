@@ -202,6 +202,7 @@ const NewPlacePostDisplay = () => {
         }, "2000");
       }
     }
+    login.notification();
     resetTitleInput();
     resetDescriptionInput();
     resetAddressInput();

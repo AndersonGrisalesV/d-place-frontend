@@ -17,13 +17,30 @@ const StyledListItem = styled(ListItem)({
   paddingTop: "0px",
   paddingLeft: "0px",
 });
+
 const StyleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
-  color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
+  color:
+    theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#000000de",
+  fontWeight: "500",
   "&:hover": {
     backgroundColor: "transparent",
     color: "#9b9b9bc7",
   },
+}));
+
+const StyleTitleNavLink = styled(NavLink)(({ theme }) => ({
+  textDecoration: "none",
+  fontWeight: "500",
+  color:
+    theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#000000de",
+}));
+
+const StyleCommentNavLink = styled(NavLink)(({ theme }) => ({
+  textDecoration: "none",
+  fontWeight: "500",
+  color:
+    theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#00000099",
 }));
 
 const Comments = () => {
@@ -99,29 +116,38 @@ const Comments = () => {
     }
   }
   const profileNavigationHandler = () => {
-    login.listItemsNotListed();
-    navigate(`/api/users/profile/${login.userId}`);
+    if (login.isLoggedIn) {
+      login.listItemsNotListed(login.userId);
+      navigate(`/api/users/profile/${login.userId}`);
+    } else {
+      login.listItemsNotListed();
+      navigate("/api/users/loginregister");
+    }
   };
 
   const firstpPlaceLinkHandler = () => {
     if (loadedPlaces[0] !== undefined) {
-      navigate(`/api/places/${latestComment0.placeId._id}`);
+      // navigate(`/api/places/${latestComment0.placeId._id}`);
       login.listItemsNotListed(latestComment0.placeId._id);
     }
   };
 
   const secondPlaceLinkHandler = () => {
     if (loadedPlaces[1] !== undefined) {
-      navigate(`/api/places/${latestComment1.placeId._id}`);
+      // navigate(`/api/places/${latestComment1.placeId._id}`);
       login.listItemsNotListed(latestComment1.placeId._id);
     }
   };
 
   const thirdpPlaceLinkHandler = () => {
     if (loadedPlaces[2] !== undefined) {
-      navigate(`/api/places/${latestComment2.placeId._id}`);
+      // navigate(`/api/places/${latestComment2.placeId._id}`);
       login.listItemsNotListed(latestComment2.placeId._id);
     }
+  };
+
+  const cleanListHandler = () => {
+    login.listItemsNotListed(login.userId);
   };
 
   return (
@@ -159,9 +185,15 @@ const Comments = () => {
                     />
                   </ListItemAvatar>
                   <ListItemText
-                    onClick={firstpPlaceLinkHandler}
                     sx={{ cursor: "pointer" }}
-                    primary={latestComment0.placeId.title}
+                    primary={
+                      <StyleTitleNavLink
+                        to={`/api/places/${latestComment0.placeId._id}`}
+                        onClick={firstpPlaceLinkHandler}
+                      >
+                        {`${latestComment0.placeId.title}`}
+                      </StyleTitleNavLink>
+                    }
                     secondary={
                       <React.Fragment>
                         <Typography
@@ -177,12 +209,17 @@ const Comments = () => {
                                 ? `/api/users/profile/${login.userId}`
                                 : `/api/users/loginregister`
                             }
-                            // onClick={handleProfileVisit}
+                            onClick={cleanListHandler}
                           >
                             {`${latestComment0.creatorId.name}`}
                           </StyleNavLink>
                         </Typography>
-                        {` — ${finalComment0}`}
+                        <StyleCommentNavLink
+                          to={`/api/places/${latestComment0.placeId._id}`}
+                          onClick={firstpPlaceLinkHandler}
+                        >
+                          {` — ${finalComment0}`}
+                        </StyleCommentNavLink>
                       </React.Fragment>
                     }
                   />
@@ -192,12 +229,21 @@ const Comments = () => {
               {loadedPlaces[1] !== undefined && (
                 <StyledListItem alignItems="flex-start">
                   <ListItemAvatar sx={{ marginTop: "18px" }}>
-                    <AvatarComment loadedPlace={latestComment1} />
+                    <AvatarComment
+                      loadedPlace={latestComment1}
+                      onProfileNavigation={profileNavigationHandler}
+                    />
                   </ListItemAvatar>
                   <ListItemText
-                    onClick={secondPlaceLinkHandler}
                     sx={{ cursor: "pointer" }}
-                    primary={latestComment1.placeId.title}
+                    primary={
+                      <StyleTitleNavLink
+                        to={`/api/places/${latestComment1.placeId._id}`}
+                        onClick={secondPlaceLinkHandler}
+                      >
+                        {`${latestComment1.placeId.title}`}
+                      </StyleTitleNavLink>
+                    }
                     secondary={
                       <React.Fragment>
                         <Typography
@@ -207,9 +253,23 @@ const Comments = () => {
                           variant="body2"
                           color="text.primary"
                         >
-                          {`${latestComment1.creatorId.name}`}
+                          <StyleNavLink
+                            to={
+                              login.isLoggedIn
+                                ? `/api/users/profile/${login.userId}`
+                                : `/api/users/loginregister`
+                            }
+                            onClick={cleanListHandler}
+                          >
+                            {`${latestComment1.creatorId.name}`}
+                          </StyleNavLink>
                         </Typography>
-                        {` — ${finalComment1}`}
+                        <StyleCommentNavLink
+                          to={`/api/places/${latestComment1.placeId._id}`}
+                          onClick={firstpPlaceLinkHandler}
+                        >
+                          {` — ${finalComment1}`}
+                        </StyleCommentNavLink>
                       </React.Fragment>
                     }
                   />
@@ -219,12 +279,22 @@ const Comments = () => {
               {loadedPlaces[2] !== undefined && (
                 <StyledListItem alignItems="flex-start">
                   <ListItemAvatar sx={{ marginTop: "18px" }}>
-                    <AvatarComment loadedPlace={latestComment2} />
+                    <AvatarComment
+                      loadedPlace={latestComment2}
+                      onProfileNavigation={profileNavigationHandler}
+                    />
                   </ListItemAvatar>
                   <ListItemText
                     onClick={thirdpPlaceLinkHandler}
                     sx={{ cursor: "pointer" }}
-                    primary={latestComment2.placeId.title}
+                    primary={
+                      <StyleTitleNavLink
+                        to={`/api/places/${latestComment2.placeId._id}`}
+                        onClick={secondPlaceLinkHandler}
+                      >
+                        {`${latestComment2.placeId.title}`}
+                      </StyleTitleNavLink>
+                    }
                     secondary={
                       <React.Fragment>
                         <Typography
@@ -234,9 +304,23 @@ const Comments = () => {
                           variant="body2"
                           color="text.primary"
                         >
-                          {`${latestComment2.creatorId.name}`}
+                          <StyleNavLink
+                            to={
+                              login.isLoggedIn
+                                ? `/api/users/profile/${login.userId}`
+                                : `/api/users/loginregister`
+                            }
+                            onClick={cleanListHandler}
+                          >
+                            {`${latestComment2.creatorId.name}`}
+                          </StyleNavLink>
                         </Typography>
-                        {` — ${finalComment2}`}
+                        <StyleCommentNavLink
+                          to={`/api/places/${latestComment2.placeId._id}`}
+                          onClick={thirdpPlaceLinkHandler}
+                        >
+                          {` — ${finalComment2}`}
+                        </StyleCommentNavLink>
                       </React.Fragment>
                     }
                   />

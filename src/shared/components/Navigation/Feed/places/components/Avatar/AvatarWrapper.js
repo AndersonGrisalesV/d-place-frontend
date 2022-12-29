@@ -8,7 +8,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const StyleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
-  color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
+  color:
+    theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#000000de",
+  fontWeight: "500",
   "&:hover": {
     backgroundColor: "transparent",
     color: "#9b9b9bc7",
