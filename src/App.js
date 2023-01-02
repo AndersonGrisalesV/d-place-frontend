@@ -17,6 +17,7 @@ import { useHttpClient } from "./shared/hooks/http-hook";
 import Place from "./shared/components/Navigation/Feed/places/Place";
 import { SignalWifiStatusbarNull } from "@mui/icons-material";
 import EditProfile from "./shared/components/LoginRegister/EditProfile/EditProfile";
+import GoBackRefreshMenu from "./shared/util/GoBackRefreshMenu";
 
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",
@@ -170,7 +171,12 @@ function App() {
         />
         <Route
           path="/api/users/profile/:uid"
-          element={<EditProfile onFilterSearch={searchBar}  bgcolor={"backgroundColor"} />}
+          element={
+            <EditProfile
+              onFilterSearch={searchBar}
+              bgcolor={"backgroundColor"}
+            />
+          }
         />
         <Route path="/api/places/newplace" element={<NewPlace />} />
         <Route path="/api/places/editplace/:pid" element={<EditPlace />} />
@@ -258,6 +264,7 @@ function App() {
         clearListItems: clearListItems,
       }}
     >
+      {/* <GoBackRefreshMenu> */}
       <div>
         <ThemeProvider theme={darkThemeTypographyAndBreakpoints}>
           <StyleBox
@@ -309,6 +316,7 @@ function App() {
           </StyleBox>
         </ThemeProvider>
       </div>
+      {/* </GoBackRefreshMenu> */}
     </LoginContext.Provider>
   );
 }

@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import ShareIcon from "@mui/icons-material/Share";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import { Checkbox, IconButton } from "@mui/material";
 import { green } from "@mui/material/colors";
+import { useLocation } from "react-router-dom";
 
 const colorGreen = green[600];
 
 const ShareButton = () => {
+  const { pathname } = useLocation();
+
+  const [showButtons, setShowButtons] = useState(false);
+
+  const handleSocialMediaLinksToShare = () => {
+    setShowButtons(true);
+  };
+
   return (
     <IconButton
+      onClick={handleSocialMediaLinksToShare}
       aria-label="share"
       style={{ backgroundColor: "transparent" }}
       title="Share"

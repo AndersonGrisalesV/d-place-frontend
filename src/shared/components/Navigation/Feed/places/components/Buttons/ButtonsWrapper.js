@@ -21,11 +21,12 @@ import ButtonDeletePost from "./ButtonDeletePost";
 import Backdrop from "@mui/material/Backdrop";
 
 import { LoginContext } from "../../../../../../context/login-context";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 import ButtonCloseModal from "./ButtonCloseModal";
 import { useHttpClient } from "../../../../../../hooks/http-hook";
 import CommentButton from "./CommentButton";
+import SnackBarResultLogin from "../../../../../LoginRegister/components/SnackBarResultLogin";
 
 const style = {
   position: "absolute",
@@ -78,10 +79,14 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
 
   const login = useContext(LoginContext);
 
+  let navigate = useNavigate();
+
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [changeFavorite, setChangeFavorite] = useState(null);
   // const [showComments, setshowComments] = useState(null);
+
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const params = useParams();
 
@@ -118,6 +123,13 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
       } catch (err) {
         console.log(err);
       }
+    } else {
+      setShowSuccess("You must be logged in to like posts");
+
+      setTimeout(() => {
+        // navigate("/api/users/loginregister");
+        setShowSuccess(false);
+      }, "4000");
     }
   };
   console.log(loadedPlaces);
@@ -127,6 +139,13 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
       disableSpacing
       sx={{ paddingTop: "0px", paddingLeft: "0px", paddingBottom: "0px" }}
     >
+      {showSuccess && (
+        <SnackBarResultLogin
+          onDuration={5000}
+          onClear={clearError}
+          error={showSuccess}
+        />
+      )}
       <Stack direction="row" spacing={-2} sx={{ flexFlow: "wrap" }}>
         <FavoriteButton
           onLoadedPlaces={loadedPlaces}
