@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import {
   Box,
-  Button,
   CardActions,
+  Divider,
   Fade,
   IconButton,
   ListItemText,
@@ -27,6 +27,9 @@ import ButtonCloseModal from "./ButtonCloseModal";
 import { useHttpClient } from "../../../../../../hooks/http-hook";
 import CommentButton from "./CommentButton";
 import SnackBarResultLogin from "../../../../../LoginRegister/components/SnackBarResultLogin";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const style = {
   position: "absolute",
@@ -70,6 +73,20 @@ const StyleContainerMap = styled(Box)(({ theme }) => ({
     lgs: "652px",
   },
   width: "100%",
+}));
+
+const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
+  backgroundColor: "transparent",
+  "&:hover": {
+    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    // [`${FavoriteBorderOutlined}`]: {
+    //   color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    // },
+    // [`${AccountCircleOutlined}`]: {
+    //   color: theme.palette.mode === "dark" ? "" : "#da4453c7",
+    // },
+  },
 }));
 
 const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
@@ -134,6 +151,65 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   };
   console.log(loadedPlaces);
 
+  // const [anchorEl, setAnchorEl] = useState(null);
+
+  // const isMenuOpen = Boolean(anchorEl);
+
+  // const handleMenuClose = () => {
+  //   setAnchorEl(null);
+  // };
+
+  // const handleProfileMenuClose = () => {
+  //   setAnchorEl(null);
+  // };
+
+  // const handleMenuCloseAndLogout = () => {
+  //   setAnchorEl(null);
+  // };
+
+  // const menuId = "primary-search-account-menu";
+  // const renderMenu = (
+  //   <Menu
+  //     sx={{
+  //       marginLleft: "406px",
+  //       marginTop: "218px",
+  //     }}
+  //     anchorEl={anchorEl}
+  //     anchorOrigin={{
+  //       vertical: "10",
+  //       horizontal: "center",
+  //     }}
+  //     id={menuId}
+  //     keepMounted
+  //     transformOrigin={{
+  //       vertical: "bottom",
+  //       horizontal: "right",
+  //     }}
+  //     open={isMenuOpen}
+  //     onClose={handleMenuClose}
+  //   >
+  //     <StyleMenuItem onClick={handleProfileMenuClose}>Profile</StyleMenuItem>
+  //     <StyleMenuItem onClick={handleMenuCloseAndLogout}>Logout</StyleMenuItem>
+  //   </Menu>
+  // );
+
+  // const handleSocialMediaLinksToShare = () => {
+  //   setAnchorEl(true);
+  // };
+
+  // const handleSocialMediaLinksToShareDisable = () => {
+  //   setAnchorEl(false);
+  // };
+
+  const [anchorElLinks, setAnchorElLinks] = React.useState(null);
+  const openMenuLinks = Boolean(anchorElLinks);
+  const handleClickLinks = (event) => {
+    setAnchorElLinks(event.currentTarget);
+  };
+  const handleCloseLinks = () => {
+    setAnchorElLinks(null);
+  };
+
   return (
     <CardActions
       disableSpacing
@@ -155,7 +231,41 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
         />
         <CommentButton onLoadedPlaces={loadedPlaces} />
 
-        <ShareButton />
+        <div>
+          <ShareButton
+            onLoadedPlaces={loadedPlaces}
+            onOpenMenuLinks={openMenuLinks}
+            onClickLinks={handleClickLinks}
+          />
+          {/* <Button
+          id="basic-button"
+          aria-controls={openMenuLinks ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={openMenuLinks ? "true" : undefined}
+          onClick={handleClick}
+        >
+          Dashboard
+        </Button> */}
+
+          <Menu
+            // sx={{
+            //   pointerEvents: "none",
+            // }}
+            id="basic-menu"
+            anchorEl={anchorElLinks}
+            open={openMenuLinks}
+            onClose={handleCloseLinks}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <StyleMenuItem onClick={handleCloseLinks}>Profile</StyleMenuItem>
+            <StyleMenuItem onClick={handleCloseLinks}>My account</StyleMenuItem>
+            <StyleMenuItem onClick={handleCloseLinks}>Logout</StyleMenuItem>
+          </Menu>
+        </div>
+
+        {/* <Divider variant="middle" /> */}
         <Stack sx={{ display: "flex", justifyContent: "center" }}>
           {!onMap ? (
             <ButtonDetails onPlaceId={loadedPlaces._id} />
