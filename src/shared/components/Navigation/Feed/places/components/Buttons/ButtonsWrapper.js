@@ -211,185 +211,183 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   };
 
   return (
-    <CardActions
-      disableSpacing
-      sx={{ paddingTop: "0px", paddingLeft: "0px", paddingBottom: "0px" }}
-    >
-      {showSuccess && (
-        <SnackBarResultLogin
-          onDuration={5000}
-          onClear={clearError}
-          error={showSuccess}
-        />
-      )}
-      <Stack direction="row" spacing={-2} sx={{ flexFlow: "wrap" }}>
-        <FavoriteButton
-          onLoadedPlaces={loadedPlaces}
-          isFavorite={isFavorite}
-          onChangeFavorite={changeFavorite ? changeFavorite : ""}
-          onFavoriteHandler={favoritehandler}
-        />
-        <CommentButton onLoadedPlaces={loadedPlaces} />
-
-        <div>
-          <ShareButton
-            onLoadedPlaces={loadedPlaces}
-            onOpenMenuLinks={openMenuLinks}
-            onClickLinks={handleClickLinks}
+    <React.Fragment>
+      <CardActions
+        disableSpacing
+        sx={{
+          paddingTop: "0px",
+          paddingLeft: "0px",
+          paddingBottom: "0px",
+          paddinRight: "0px",
+        }}
+      >
+        {showSuccess && (
+          <SnackBarResultLogin
+            onDuration={5000}
+            onClear={clearError}
+            error={showSuccess}
           />
-          {/* <Button
-          id="basic-button"
-          aria-controls={openMenuLinks ? "basic-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={openMenuLinks ? "true" : undefined}
-          onClick={handleClick}
-        >
-          Dashboard
-        </Button> */}
+        )}
 
-          <Menu
-            // sx={{
-            //   pointerEvents: "none",
-            // }}
-            id="basic-menu"
-            anchorEl={anchorElLinks}
-            open={openMenuLinks}
-            onClose={handleCloseLinks}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <StyleMenuItem onClick={handleCloseLinks}>Profile</StyleMenuItem>
-            <StyleMenuItem onClick={handleCloseLinks}>My account</StyleMenuItem>
-            <StyleMenuItem onClick={handleCloseLinks}>Logout</StyleMenuItem>
-          </Menu>
-        </div>
+        <Stack direction="row" spacing={-2} sx={{ flexFlow: "inherit" }}>
+          <FavoriteButton
+            onLoadedPlaces={loadedPlaces}
+            isFavorite={isFavorite}
+            onChangeFavorite={changeFavorite ? changeFavorite : ""}
+            onFavoriteHandler={favoritehandler}
+          />
+          <CommentButton onLoadedPlaces={loadedPlaces} />
 
-        {/* <Divider variant="middle" /> */}
-        <Stack sx={{ display: "flex", justifyContent: "center" }}>
-          {!onMap ? (
-            <ButtonDetails onPlaceId={loadedPlaces._id} />
-          ) : (
-            <ButtonSeeMap onHandleOpen={handleOpen} />
-          )}
-          {onMap && (
-            <div>
-              <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-map"
-                aria-describedby="modal-modal-map-location"
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                  timeout: 500,
-                }}
-              >
-                <Fade in={open}>
-                  <Stack>
-                    <Box sx={style}>
-                      <Stack>
-                        <ButtonCloseModal handleClose={handleClose} />
-                        <Stack
-                          direction="row"
-                          spacing={2}
-                          justifyContent="space-between"
-                          alignItems="center"
-                        >
-                          <Typography
-                            sx={{
-                              display: "inline",
-                              paddingLeft: "24px",
-                              fontSize: {
-                                sps: "12px",
-                                ps: "13px",
-                                ts: "15px",
-                                sls: "15px",
-                                sms: "17px",
-                                sc: "17px",
-                                nsc: "17px",
-                                ns: "17px",
-                                msc: "17px",
-                                mns: "17px",
-                                ms: "17px",
-                                lgs: "17px",
-                              },
-                            }}
-                            fontWeight={600}
-                            variant="h6"
-                            color="text.primary"
-                          >
-                            {loadedPlaces.title}
-                          </Typography>
-                        </Stack>
-                        <p style={{ margin: "1px" }} />
-                        <Stack
-                          direction="row"
-                          spacing={2}
-                          justifyContent="space-between"
-                          alignItems="center"
-                        >
-                          <Typography
-                            variant="h6"
-                            fontWeight={400}
-                            color="text.secondary"
-                            sx={{
-                              marginBottom: "10px",
-                              paddingLeft: "24px",
-                              fontSize: {
-                                sps: "8px",
-                                ps: "9px",
-                                ts: "11px",
-                                sls: "11px",
-                                sms: "13px",
-                                sc: "13px",
-                                nsc: "13px",
-                                ns: "13px",
-                                msc: "13px",
-                                mns: "13px",
-                                ms: "13px",
-                                lgs: "13px",
-                              },
-                            }}
-                          >
-                            {loadedPlaces.address}
-                          </Typography>
-                          {login.isLoggedIn &&
-                            login.userId === loadedPlaces.creatorId._id && (
-                              <ButtonEdit loadedPlaces={loadedPlaces} />
-                            )}
-                        </Stack>
-                      </Stack>
-                      <Box
-                        sx={{
-                          height: {
-                            sps: "15rem",
-                            ps: "20rem",
-                            ts: "22rem",
-                            sls: "23rem",
-                            sms: "24rem",
-                            sc: "25rem",
-                            nsc: "25rem",
-                            ns: "25rem",
-                            msc: "25rem",
-                            mns: "25rem",
-                            ms: "25rem",
-                            lgs: "25rem",
-                          },
-                          width: "100%",
-                        }}
-                      >
-                        <Map center={loadedPlaces.location} zoom={16} />
-                      </Box>
-                    </Box>
-                  </Stack>
-                </Fade>
-              </Modal>
-            </div>
-          )}
+          <div>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorElLinks}
+              open={openMenuLinks}
+              onClose={handleCloseLinks}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+                role: "listbox",
+              }}
+            >
+              <StyleMenuItem onClick={handleCloseLinks}>Profile</StyleMenuItem>
+              <StyleMenuItem onClick={handleCloseLinks}>
+                My account
+              </StyleMenuItem>
+              <StyleMenuItem onClick={handleCloseLinks}>Logout</StyleMenuItem>
+            </Menu>
+
+            <ShareButton
+              onLoadedPlaces={loadedPlaces}
+              onOpenMenuLinks={openMenuLinks}
+              onClickLinks={handleClickLinks}
+            />
+          </div>
         </Stack>
+      </CardActions>
+      <Stack sx={{ display: "flex", justifyContent: "center" }}>
+        {!onMap ? (
+          <ButtonDetails onPlaceId={loadedPlaces._id} />
+        ) : (
+          <ButtonSeeMap onHandleOpen={handleOpen} />
+        )}
+
+        {onMap && (
+          <div>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-map"
+              aria-describedby="modal-modal-map-location"
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <Fade in={open}>
+                <Stack>
+                  <Box sx={style}>
+                    <Stack>
+                      <ButtonCloseModal handleClose={handleClose} />
+                      <Stack
+                        direction="row"
+                        spacing={2}
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Typography
+                          sx={{
+                            display: "inline",
+                            paddingLeft: "24px",
+                            fontSize: {
+                              sps: "12px",
+                              ps: "13px",
+                              ts: "15px",
+                              sls: "15px",
+                              sms: "17px",
+                              sc: "17px",
+                              nsc: "17px",
+                              ns: "17px",
+                              msc: "17px",
+                              mns: "17px",
+                              ms: "17px",
+                              lgs: "17px",
+                            },
+                          }}
+                          fontWeight={600}
+                          variant="h6"
+                          color="text.primary"
+                        >
+                          {loadedPlaces.title}
+                        </Typography>
+                      </Stack>
+                      <p style={{ margin: "1px" }} />
+                      <Stack
+                        direction="row"
+                        spacing={2}
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Typography
+                          variant="h6"
+                          fontWeight={400}
+                          color="text.secondary"
+                          sx={{
+                            marginBottom: "10px",
+                            paddingLeft: "24px",
+                            fontSize: {
+                              sps: "8px",
+                              ps: "9px",
+                              ts: "11px",
+                              sls: "11px",
+                              sms: "13px",
+                              sc: "13px",
+                              nsc: "13px",
+                              ns: "13px",
+                              msc: "13px",
+                              mns: "13px",
+                              ms: "13px",
+                              lgs: "13px",
+                            },
+                          }}
+                        >
+                          {loadedPlaces.address}
+                        </Typography>
+                        {login.isLoggedIn &&
+                          login.userId === loadedPlaces.creatorId._id && (
+                            <ButtonEdit loadedPlaces={loadedPlaces} />
+                          )}
+                      </Stack>
+                    </Stack>
+                    <Box
+                      sx={{
+                        height: {
+                          sps: "15rem",
+                          ps: "20rem",
+                          ts: "22rem",
+                          sls: "23rem",
+                          sms: "24rem",
+                          sc: "25rem",
+                          nsc: "25rem",
+                          ns: "25rem",
+                          msc: "25rem",
+                          mns: "25rem",
+                          ms: "25rem",
+                          lgs: "25rem",
+                        },
+                        width: "100%",
+                      }}
+                    >
+                      <Map center={loadedPlaces.location} zoom={16} />
+                    </Box>
+                  </Box>
+                </Stack>
+              </Fade>
+            </Modal>
+          </div>
+        )}
       </Stack>
-    </CardActions>
+    </React.Fragment>
   );
 };
 

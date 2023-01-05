@@ -1,10 +1,20 @@
 import React, { useState } from "react";
 import ShareIcon from "@mui/icons-material/Share";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
-import { Checkbox, IconButton } from "@mui/material";
+import { Checkbox, IconButton, styled } from "@mui/material";
 import { green } from "@mui/material/colors";
 
 const colorGreen = green[600];
+
+const StyleShareBorderIcon = styled(ShareOutlinedIcon)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
+}));
+
+const StyleShareIcon = styled(ShareIcon)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
+}));
 
 const ShareButton = ({ onClickLinks, onOpenMenuLinks, onLoadedPlaces }) => {
   const [sharedPost, setSharedPost] = useState(false);
@@ -18,7 +28,7 @@ const ShareButton = ({ onClickLinks, onOpenMenuLinks, onLoadedPlaces }) => {
     <Checkbox
       style={{ backgroundColor: "transparent" }}
       icon={
-        <ShareOutlinedIcon
+        <StyleShareBorderIcon
           sx={{
             width: {
               sps: "14px",
@@ -58,7 +68,7 @@ const ShareButton = ({ onClickLinks, onOpenMenuLinks, onLoadedPlaces }) => {
     <Checkbox
       style={{ backgroundColor: "transparent" }}
       icon={
-        <ShareIcon
+        <StyleShareIcon
           sx={{
             color: `${colorGreen}`,
             width: {
@@ -93,7 +103,7 @@ const ShareButton = ({ onClickLinks, onOpenMenuLinks, onLoadedPlaces }) => {
         />
       }
       checkedIcon={
-        <ShareIcon
+        <StyleShareIcon
           sx={{
             color: `${colorGreen}`,
             width: {
@@ -143,6 +153,9 @@ const ShareButton = ({ onClickLinks, onOpenMenuLinks, onLoadedPlaces }) => {
       style={{ backgroundColor: "transparent" }}
       title="Share"
       sx={{
+        paddingTop: "0px",
+        paddingBottom: "0px",
+
         fontSize: {
           sps: "10px",
           ps: "12px",

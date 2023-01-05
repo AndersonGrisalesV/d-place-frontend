@@ -24,6 +24,8 @@ import CollectionsOutlinedIcon from "@mui/icons-material/CollectionsOutlined";
 import styled from "@emotion/styled/macro";
 
 const StyleHomeIcon = styled(HomeOutlined)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
   color: theme.palette.mode === "dark" ? "" : "#00000091",
   "&:hover": {
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -31,6 +33,8 @@ const StyleHomeIcon = styled(HomeOutlined)(({ theme }) => ({
 }));
 
 const StyleFavoriteIcon = styled(FavoriteBorderOutlined)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
   color: theme.palette.mode === "dark" ? "" : "#00000091",
   "&:hover": {
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -38,6 +42,8 @@ const StyleFavoriteIcon = styled(FavoriteBorderOutlined)(({ theme }) => ({
 }));
 
 const StyleAccountCircleIcon = styled(AccountCircleOutlined)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
   color: theme.palette.mode === "dark" ? "" : "#00000091",
   "&:hover": {
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -45,6 +51,8 @@ const StyleAccountCircleIcon = styled(AccountCircleOutlined)(({ theme }) => ({
 }));
 
 const StyleSettingsIcon = styled(SettingsOutlined)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
   color: theme.palette.mode === "dark" ? "" : "#00000091",
   "&:hover": {
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -52,6 +60,8 @@ const StyleSettingsIcon = styled(SettingsOutlined)(({ theme }) => ({
 }));
 
 const StyleLogoutIcon = styled(Logout)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
   color: theme.palette.mode === "dark" ? "" : "#00000091",
   "&:hover": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
@@ -59,6 +69,8 @@ const StyleLogoutIcon = styled(Logout)(({ theme }) => ({
 }));
 
 const StyleMyplacesIcon = styled(CollectionsOutlinedIcon)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
   color: theme.palette.mode === "dark" ? "" : "#00000091",
   "&:hover": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
@@ -66,7 +78,7 @@ const StyleMyplacesIcon = styled(CollectionsOutlinedIcon)(({ theme }) => ({
 }));
 
 const StyleListItemText = styled(ListItemText)(({ theme }) => ({
-  color: theme.palette.mode === "dark" ? "" : "#000000",
+  color: theme.palette.mode === "dark" ? "" : "#000000de",
   "&:hover": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
   },

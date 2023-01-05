@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import {
   Box,
@@ -13,6 +13,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import { styled, alpha } from "@mui/material/styles";
 import ButtonCloseModal from "../../../Feed/places/components/Buttons/ButtonCloseModal";
+import { LoginContext } from "../../../../../context/login-context";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -56,6 +57,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchBar = ({ onSearch, onClear, onShowCloseButton }) => {
   const [erasedDataSearch, setErasedDataSearch] = useState(false);
+
+  const login = useContext(LoginContext);
 
   useEffect(() => {}, [onShowCloseButton]);
 

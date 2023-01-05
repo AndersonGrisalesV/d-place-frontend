@@ -40,6 +40,7 @@ const CardWrapper = (props) => {
       <Card
         sx={{
           borderRadius: "18px",
+          paddingBottom: "8px",
           maxWidth: {
             sps: "200px",
             ps: "285px",

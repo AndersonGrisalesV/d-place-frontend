@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { Checkbox, IconButton } from "@mui/material";
+import { Checkbox, IconButton, styled } from "@mui/material";
 
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -10,6 +10,16 @@ import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../../../../context/login-context";
 
 const colorYellow = yellow[700];
+
+const StyleCommentBorderIcon = styled(ModeCommentOutlinedIcon)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
+}));
+
+const StyleCommentIcon = styled(CommentIcon)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 0,
+}));
 
 const CommentButton = ({
   isFavorite = "",
@@ -34,6 +44,8 @@ const CommentButton = ({
       title="Comment"
       onClick={handleNavigateToPost}
       sx={{
+        paddingTop: "0px",
+        paddingBottom: "0px",
         fontSize: {
           sps: "10px",
           ps: "12px",
@@ -54,9 +66,8 @@ const CommentButton = ({
         checked={onLoadedPlaces.comments.length >= 1 ? true : false}
         style={{ backgroundColor: "transparent" }}
         icon={
-          <ModeCommentOutlinedIcon
+          <StyleCommentBorderIcon
             sx={{
-              backgroundColor: "transparent",
               width: {
                 sps: "15px",
                 ps: "16px",
@@ -89,7 +100,7 @@ const CommentButton = ({
           />
         }
         checkedIcon={
-          <CommentIcon
+          <StyleCommentIcon
             sx={{
               backgroundColor: "transparent",
               color: `${colorYellow}`,

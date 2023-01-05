@@ -5,13 +5,27 @@ import { Checkbox, IconButton, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { LoginContext } from "../../../../../../context/login-context";
 
-const StyleFavoriteBorderIcon = styled(FavoriteIcon)({
+const StyleFavoriteBorderIcon = styled(FavoriteBorderIcon)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
+  // color: "#da4453",
+  "&:hover": {
+    backgroundColor: "#db2d3f0f",
+    color: "#db2d3f",
+  },
+}));
+
+const StyleFavoriteIcon = styled(FavoriteIcon)(({ theme }) => ({
+  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
+  strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
   color: "#da4453",
   "&:hover": {
     backgroundColor: "#db2d3f0f",
     color: "#db2d3f",
   },
-});
+}));
+
+const IconButtonModified = styled(IconButton)({});
 
 const FavoriteButton = ({
   isFavorite = "",
@@ -47,12 +61,16 @@ const FavoriteButton = ({
   }, [onChangeFavorite]);
 
   return (
-    <IconButton
+    <IconButtonModified
       aria-label="add to favorites"
-      style={{ backgroundColor: "transparent" }}
+      style={{
+        backgroundColor: "transparent",
+      }}
       title="Like"
       onClick={onFavoriteHandler}
       sx={{
+        paddingTop: "0px",
+        paddingBottom: "0px",
         fontSize: {
           sps: "10px",
           ps: "12px",
@@ -71,9 +89,11 @@ const FavoriteButton = ({
     >
       <Checkbox
         checked={onChangeFavorite ? newFavorite : isFavorite}
-        style={{ backgroundColor: "transparent" }}
+        style={{
+          backgroundColor: "transparent",
+        }}
         icon={
-          <FavoriteBorderIcon
+          <StyleFavoriteBorderIcon
             sx={{
               backgroundColor: "transparent",
               width: {
@@ -108,7 +128,7 @@ const FavoriteButton = ({
           />
         }
         checkedIcon={
-          <StyleFavoriteBorderIcon
+          <StyleFavoriteIcon
             sx={{
               backgroundColor: "transparent",
               color: "red",
@@ -149,7 +169,7 @@ const FavoriteButton = ({
         : onChangeFavorite.favorite
         ? onLoadedPlaces.favoritesUserIds.length + 1
         : onLoadedPlaces.favoritesUserIds.length}
-    </IconButton>
+    </IconButtonModified>
   );
 };
 

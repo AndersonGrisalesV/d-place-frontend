@@ -99,10 +99,13 @@ function App() {
     setShowCloseButton(false);
 
     navigate(`/api/places/${placeSearched}`);
+    if (placeSearched !== undefined) {
+      listItemsNotListed(placeSearched);
+    }
 
     if (placeSearched === undefined) {
       setTimeout(() => {
-        navigate("/homepage");
+        navigate(-1);
       }, "2000");
     }
   };
@@ -114,6 +117,7 @@ function App() {
       storedInputSearch.target.value = "";
     }
     setShowCloseButton(false);
+
     // setClearSBar(true);
   };
 
