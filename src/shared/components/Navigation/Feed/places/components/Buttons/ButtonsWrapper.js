@@ -1,15 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   Box,
   CardActions,
-  Divider,
   Fade,
-  IconButton,
-  ListItemText,
   Modal,
   Stack,
   Typography,
-  Zoom,
 } from "@mui/material";
 import ButtonDetails from "./ButtonDetails";
 import FavoriteButton from "./FavoriteButton";
@@ -17,19 +13,39 @@ import ShareButton from "./ShareButton";
 import ButtonSeeMap from "./ButtonSeeMap";
 import Map from "../../../../../Map/Map";
 import ButtonEdit from "./ButtonEdit";
-import ButtonDeletePost from "./ButtonDeletePost";
+
 import Backdrop from "@mui/material/Backdrop";
 
 import { LoginContext } from "../../../../../../context/login-context";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 import ButtonCloseModal from "./ButtonCloseModal";
 import { useHttpClient } from "../../../../../../hooks/http-hook";
 import CommentButton from "./CommentButton";
 import SnackBarResultLogin from "../../../../../LoginRegister/components/SnackBarResultLogin";
-import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import {
+  FacebookShareButton,
+  LineShareButton,
+  PinterestShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
+import {
+  FacebookIcon,
+  LineIcon,
+  PinterestIcon,
+  RedditIcon,
+  TelegramIcon,
+  TwitterIcon,
+  WhatsappIcon,
+} from "react-share";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import CopyLinkButton from "./CopyLinkButton";
 
 const style = {
   position: "absolute",
@@ -76,6 +92,8 @@ const StyleContainerMap = styled(Box)(({ theme }) => ({
 }));
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
   backgroundColor: "transparent",
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
@@ -95,8 +113,6 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   const handleClose = () => setOpen(false);
 
   const login = useContext(LoginContext);
-
-  let navigate = useNavigate();
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -201,6 +217,8 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   //   setAnchorEl(false);
   // };
 
+  const [showAllShareLinks, setShowAllShareLinks] = useState(false);
+
   const [anchorElLinks, setAnchorElLinks] = React.useState(null);
   const openMenuLinks = Boolean(anchorElLinks);
   const handleClickLinks = (event) => {
@@ -208,6 +226,64 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   };
   const handleCloseLinks = () => {
     setAnchorElLinks(null);
+    setShowAllShareLinks(false);
+  };
+
+  // const handleFacebookLink = () => {
+
+  //   window?.location.href ?? ""
+  //   alert(`${String(window.location)}`);
+  // };
+
+  const facebookLink = useRef(null);
+  const lineLink = useRef(null);
+  const whatsappLink = useRef(null);
+  const twitterLink = useRef(null);
+  const redditLink = useRef(null);
+  const telegramLink = useRef(null);
+  const pinterestLink = useRef(null);
+
+  const handleFacebookLink = () => {
+    handleCloseLinks();
+    facebookLink.current.click();
+  };
+
+  const handleWhatsappLink = () => {
+    handleCloseLinks();
+    whatsappLink.current.click();
+  };
+
+  const handleTwitterLink = () => {
+    handleCloseLinks();
+    twitterLink.current.click();
+  };
+
+  const handleLineLink = () => {
+    handleCloseLinks();
+    lineLink.current.click();
+  };
+
+  const handleRedditLink = () => {
+    handleCloseLinks();
+    redditLink.current.click();
+  };
+
+  const handleTelegramLink = () => {
+    handleCloseLinks();
+    telegramLink.current.click();
+  };
+
+  const handlePinterestLink = () => {
+    handleCloseLinks();
+    pinterestLink.current.click();
+  };
+
+  const handleShowMoreLinks = () => {
+    setShowAllShareLinks(true);
+  };
+
+  const handleShowLessLinks = () => {
+    setShowAllShareLinks(false);
   };
 
   return (
@@ -246,16 +322,264 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
               onClose={handleCloseLinks}
               MenuListProps={{
                 "aria-labelledby": "basic-button",
-                role: "listbox",
               }}
             >
-              <StyleMenuItem onClick={handleCloseLinks}>Profile</StyleMenuItem>
-              <StyleMenuItem onClick={handleCloseLinks}>
-                My account
+              <StyleMenuItem
+                onClick={handleCloseLinks}
+                sx={{
+                  marginLeft: "-7px",
+                  fontSize: {
+                    sps: "11px",
+                    ps: "13px",
+                    ts: "13px",
+                    sls: "15px",
+                    sms: "16px",
+                    sc: "16px",
+                    nsc: "16px",
+                    ns: "16px",
+                    msc: "16px",
+                    mns: "16px",
+                    ms: "16px",
+                    lgs: "16px",
+                  },
+                }}
+              >
+                <CopyLinkButton />
+                Copy Link
               </StyleMenuItem>
-              <StyleMenuItem onClick={handleCloseLinks}>Logout</StyleMenuItem>
-            </Menu>
+              <StyleMenuItem
+                onClick={handleFacebookLink}
+                sx={{
+                  fontSize: {
+                    sps: "11px",
+                    ps: "13px",
+                    ts: "13px",
+                    sls: "15px",
+                    sms: "16px",
+                    sc: "16px",
+                    nsc: "16px",
+                    ns: "16px",
+                    msc: "16px",
+                    mns: "16px",
+                    ms: "16px",
+                    lgs: "16px",
+                  },
+                }}
+              >
+                <FacebookShareButton
+                  style={{ display: "flex", marginRight: "9px" }}
+                  url={`${String(window.location)}`}
+                  ref={facebookLink}
+                >
+                  <FacebookIcon size={26} round />
+                </FacebookShareButton>
+                Share to Facebook
+              </StyleMenuItem>
 
+              <StyleMenuItem
+                onClick={handleWhatsappLink}
+                sx={{
+                  fontSize: {
+                    sps: "11px",
+                    ps: "13px",
+                    ts: "13px",
+                    sls: "15px",
+                    sms: "16px",
+                    sc: "16px",
+                    nsc: "16px",
+                    ns: "16px",
+                    msc: "16px",
+                    mns: "16px",
+                    ms: "16px",
+                    lgs: "16px",
+                  },
+                }}
+              >
+                <WhatsappShareButton
+                  style={{ display: "flex", marginRight: "9px" }}
+                  url={`${String(window.location)}`}
+                  ref={whatsappLink}
+                >
+                  <WhatsappIcon size={26} round />
+                </WhatsappShareButton>
+                Share to Whatsapp
+              </StyleMenuItem>
+              <StyleMenuItem
+                onClick={handleTwitterLink}
+                sx={{
+                  fontSize: {
+                    sps: "11px",
+                    ps: "13px",
+                    ts: "13px",
+                    sls: "15px",
+                    sms: "16px",
+                    sc: "16px",
+                    nsc: "16px",
+                    ns: "16px",
+                    msc: "16px",
+                    mns: "16px",
+                    ms: "16px",
+                    lgs: "16px",
+                  },
+                }}
+              >
+                <TwitterShareButton
+                  style={{ display: "flex", marginRight: "9px" }}
+                  url={`${String(window.location)}`}
+                  ref={twitterLink}
+                >
+                  <TwitterIcon size={26} round />
+                </TwitterShareButton>
+                Share to Twitter
+              </StyleMenuItem>
+              {!showAllShareLinks ? (
+                <StyleMenuItem
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-evenly",
+                    minHeight: "0",
+                  }}
+                  onClick={handleShowMoreLinks}
+                >
+                  <ExpandMoreIcon sx={{ cursor: "pointer" }} />
+                </StyleMenuItem>
+              ) : null}
+              {showAllShareLinks ? (
+                <React.Fragment>
+                  <StyleMenuItem
+                    onClick={handleLineLink}
+                    sx={{
+                      fontSize: {
+                        sps: "11px",
+                        ps: "13px",
+                        ts: "13px",
+                        sls: "15px",
+                        sms: "16px",
+                        sc: "16px",
+                        nsc: "16px",
+                        ns: "16px",
+                        msc: "16px",
+                        mns: "16px",
+                        ms: "16px",
+                        lgs: "16px",
+                      },
+                    }}
+                  >
+                    <LineShareButton
+                      style={{ display: "flex", marginRight: "9px" }}
+                      url={`${String(window.location)}`}
+                      ref={lineLink}
+                    >
+                      <LineIcon size={26} round />
+                    </LineShareButton>
+                    Share to Line
+                  </StyleMenuItem>
+
+                  <StyleMenuItem
+                    onClick={handleRedditLink}
+                    sx={{
+                      fontSize: {
+                        sps: "11px",
+                        ps: "13px",
+                        ts: "13px",
+                        sls: "15px",
+                        sms: "16px",
+                        sc: "16px",
+                        nsc: "16px",
+                        ns: "16px",
+                        msc: "16px",
+                        mns: "16px",
+                        ms: "16px",
+                        lgs: "16px",
+                      },
+                    }}
+                  >
+                    <RedditShareButton
+                      style={{ display: "flex", marginRight: "9px" }}
+                      url={`${String(window.location)}`}
+                      ref={redditLink}
+                    >
+                      <RedditIcon size={26} round />
+                    </RedditShareButton>
+                    Share to Reddit
+                  </StyleMenuItem>
+
+                  <StyleMenuItem
+                    onClick={handleTelegramLink}
+                    sx={{
+                      fontSize: {
+                        sps: "11px",
+                        ps: "13px",
+                        ts: "13px",
+                        sls: "15px",
+                        sms: "16px",
+                        sc: "16px",
+                        nsc: "16px",
+                        ns: "16px",
+                        msc: "16px",
+                        mns: "16px",
+                        ms: "16px",
+                        lgs: "16px",
+                      },
+                    }}
+                  >
+                    <TelegramShareButton
+                      style={{ display: "flex", marginRight: "9px" }}
+                      url={`${String(window.location)}`}
+                      ref={telegramLink}
+                    >
+                      <TelegramIcon size={26} round />
+                    </TelegramShareButton>
+                    Share to Telegram
+                  </StyleMenuItem>
+                  <StyleMenuItem
+                    onClick={handlePinterestLink}
+                    sx={{
+                      fontSize: {
+                        sps: "11px",
+                        ps: "13px",
+                        ts: "13px",
+                        sls: "15px",
+                        sms: "16px",
+                        sc: "16px",
+                        nsc: "16px",
+                        ns: "16px",
+                        msc: "16px",
+                        mns: "16px",
+                        ms: "16px",
+                        lgs: "16px",
+                      },
+                    }}
+                  >
+                    <PinterestShareButton
+                      style={{ display: "flex", marginRight: "9px" }}
+                      url={`${String(window.location)}`}
+                      media={`${String(window.location)}`}
+                      ref={pinterestLink}
+                      description=""
+                    >
+                      <PinterestIcon size={26} round />
+                    </PinterestShareButton>
+                    Share to Pinterest
+                  </StyleMenuItem>
+
+                  {showAllShareLinks ? (
+                    <StyleMenuItem
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-evenly",
+                        minHeight: "0",
+                      }}
+                      onClick={handleShowLessLinks}
+                    >
+                      <ExpandLessIcon sx={{ cursor: "pointer" }} />
+                    </StyleMenuItem>
+                  ) : null}
+                </React.Fragment>
+              ) : null}
+            </Menu>
             <ShareButton
               onLoadedPlaces={loadedPlaces}
               onOpenMenuLinks={openMenuLinks}
