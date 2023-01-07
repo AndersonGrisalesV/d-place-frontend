@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ShareIcon from "@mui/icons-material/Share";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import { Checkbox, IconButton, styled } from "@mui/material";
@@ -7,6 +7,7 @@ import { green } from "@mui/material/colors";
 const colorGreen = green[600];
 
 const StyleShareBorderIcon = styled(ShareOutlinedIcon)(({ theme }) => ({
+  color: theme.palette.mode === "dark" ? "#ffffffb3" : "#00000099",
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
 }));
@@ -16,18 +17,68 @@ const StyleShareIcon = styled(ShareIcon)(({ theme }) => ({
   strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
 }));
 
-const ShareButton = ({ onClickLinks, onOpenMenuLinks, onLoadedPlaces }) => {
-  const [sharedPost, setSharedPost] = useState(false);
+const ShareButton = ({
+  onClickLinks,
+  onOpenMenuLinks,
+  onLoadedPlaces,
+  onSharePost = false,
+  onChangeShareCount,
+}) => {
+  const [freezeShareIcon, setFreezeShareIcon] = useState(false);
 
   const handleClickShareButton = (e) => {
     onClickLinks(e);
-    setSharedPost(true);
+    setFreezeShareIcon(true);
   };
+
+  const [storeValueToShow, setStoreValueToShow] = useState(0);
+
+  useEffect(() => {
+    if (onSharePost) {
+      setStoreValueToShow(1);
+    } else {
+      setStoreValueToShow(0);
+    }
+  }, [onSharePost, setStoreValueToShow, storeValueToShow]);
 
   const unchecked = (
     <Checkbox
       style={{ backgroundColor: "transparent" }}
       icon={
+        <StyleShareBorderIcon
+          sx={{
+            width: {
+              sps: "14px",
+              ps: "15px",
+              ts: "17px",
+              sls: "19px",
+              sms: "23px",
+              sc: "23px",
+              nsc: "23px",
+              ns: "23px",
+              msc: "23px",
+              mns: "23px",
+              ms: "23px",
+              lgs: "23px",
+            },
+            height: {
+              sps: "18px",
+              ps: "20px",
+              ts: "22px",
+              sls: "22px",
+              sms: "30px",
+              sc: "30px",
+              nsc: "30px",
+              ns: "30px",
+              msc: "30px",
+              mns: "30px",
+              ms: "30px",
+              lgs: "30px",
+            },
+          }}
+        />
+      }
+      checkedIcon={
         <StyleShareBorderIcon
           sx={{
             width: {
@@ -172,8 +223,15 @@ const ShareButton = ({ onClickLinks, onOpenMenuLinks, onLoadedPlaces }) => {
         },
       }}
     >
-      {sharedPost ? checked : unchecked}
-      {onLoadedPlaces.shareCount}
+      {/* { freezeShareIcon && !onSharePost ? unchecked ? checked : unchecked} */}
+      {freezeShareIcon && onSharePost ? checked : unchecked}
+
+      {/* {onChangeShareCount === ""
+        ? onLoadedPlaces.shareCount
+        : onLoadedPlaces.shareCount + 1} */}
+      {onSharePost
+        ? onLoadedPlaces.shareCount + onChangeShareCount
+        : onLoadedPlaces.shareCount}
     </IconButton>
   );
 };

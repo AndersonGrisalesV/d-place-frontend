@@ -117,6 +117,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [changeFavorite, setChangeFavorite] = useState(null);
+  const [changeShareCount, setChangeShareCount] = useState(null);
   // const [showComments, setshowComments] = useState(null);
 
   const [showSuccess, setShowSuccess] = useState(false);
@@ -165,65 +166,16 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
       }, "4000");
     }
   };
-  console.log(loadedPlaces);
-
-  // const [anchorEl, setAnchorEl] = useState(null);
-
-  // const isMenuOpen = Boolean(anchorEl);
-
-  // const handleMenuClose = () => {
-  //   setAnchorEl(null);
-  // };
-
-  // const handleProfileMenuClose = () => {
-  //   setAnchorEl(null);
-  // };
-
-  // const handleMenuCloseAndLogout = () => {
-  //   setAnchorEl(null);
-  // };
-
-  // const menuId = "primary-search-account-menu";
-  // const renderMenu = (
-  //   <Menu
-  //     sx={{
-  //       marginLleft: "406px",
-  //       marginTop: "218px",
-  //     }}
-  //     anchorEl={anchorEl}
-  //     anchorOrigin={{
-  //       vertical: "10",
-  //       horizontal: "center",
-  //     }}
-  //     id={menuId}
-  //     keepMounted
-  //     transformOrigin={{
-  //       vertical: "bottom",
-  //       horizontal: "right",
-  //     }}
-  //     open={isMenuOpen}
-  //     onClose={handleMenuClose}
-  //   >
-  //     <StyleMenuItem onClick={handleProfileMenuClose}>Profile</StyleMenuItem>
-  //     <StyleMenuItem onClick={handleMenuCloseAndLogout}>Logout</StyleMenuItem>
-  //   </Menu>
-  // );
-
-  // const handleSocialMediaLinksToShare = () => {
-  //   setAnchorEl(true);
-  // };
-
-  // const handleSocialMediaLinksToShareDisable = () => {
-  //   setAnchorEl(false);
-  // };
 
   const [showAllShareLinks, setShowAllShareLinks] = useState(false);
 
   const [anchorElLinks, setAnchorElLinks] = React.useState(null);
   const openMenuLinks = Boolean(anchorElLinks);
+
   const handleClickLinks = (event) => {
     setAnchorElLinks(event.currentTarget);
   };
+
   const handleCloseLinks = () => {
     setAnchorElLinks(null);
     setShowAllShareLinks(false);
@@ -235,6 +187,10 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   //   alert(`${String(window.location)}`);
   // };
 
+  const [sharedPost, setSharedPost] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(null);
+  const [sendCount, sendSendCount] = useState(0);
+
   const facebookLink = useRef(null);
   const lineLink = useRef(null);
   const whatsappLink = useRef(null);
@@ -243,39 +199,76 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   const telegramLink = useRef(null);
   const pinterestLink = useRef(null);
 
+  const handleCopyLink = async () => {
+    handleCloseLinks();
+    try {
+      setCopySuccess("Link copied!");
+      await navigator.clipboard.writeText(`${String(window.location)}`);
+    } catch (err) {
+      setCopySuccess("Failed to copy link!");
+    }
+    setTimeout(() => {
+      setCopySuccess(null);
+    }, "800");
+    setSharedPost(true);
+    shareCountHandler();
+    sendSendCount(sendCount + 1);
+  };
+
   const handleFacebookLink = () => {
     handleCloseLinks();
     facebookLink.current.click();
+    setSharedPost(true);
+    shareCountHandler();
+    sendSendCount(sendCount + 1);
   };
 
   const handleWhatsappLink = () => {
     handleCloseLinks();
     whatsappLink.current.click();
+    setSharedPost(true);
+    shareCountHandler();
+    sendSendCount(sendCount + 1);
   };
 
   const handleTwitterLink = () => {
     handleCloseLinks();
     twitterLink.current.click();
+    setSharedPost(true);
+    shareCountHandler();
+    sendSendCount(sendCount + 1);
   };
 
   const handleLineLink = () => {
     handleCloseLinks();
     lineLink.current.click();
+    setSharedPost(true);
+    shareCountHandler();
+    sendSendCount(sendCount + 1);
   };
 
   const handleRedditLink = () => {
     handleCloseLinks();
     redditLink.current.click();
+    setSharedPost(true);
+    shareCountHandler();
+    sendSendCount(sendCount + 1);
   };
 
   const handleTelegramLink = () => {
     handleCloseLinks();
     telegramLink.current.click();
+    setSharedPost(true);
+    shareCountHandler();
+    sendSendCount(sendCount + 1);
   };
 
   const handlePinterestLink = () => {
     handleCloseLinks();
     pinterestLink.current.click();
+    setSharedPost(true);
+    shareCountHandler();
+    sendSendCount(sendCount + 1);
   };
 
   const handleShowMoreLinks = () => {
@@ -284,6 +277,27 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
 
   const handleShowLessLinks = () => {
     setShowAllShareLinks(false);
+  };
+
+  const shareCountHandler = async () => {
+    try {
+      const responseData = await sendRequest(
+        `http://localhost:4000/api/places/shareplace/${loadedPlaces._id}`,
+        "PATCH",
+        JSON.stringify({
+          newShare: 1,
+        }),
+        {
+          "Content-Type": "Application/json",
+        }
+      );
+      setChangeShareCount(responseData);
+    } catch (err) {
+      console.log(err);
+    }
+    // setTimeout(() => {
+    //   setChangeShareCount(null);
+    // }, "500");
   };
 
   return (
@@ -299,9 +313,18 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
       >
         {showSuccess && (
           <SnackBarResultLogin
-            onDuration={5000}
+            onDuration={4000}
             onClear={clearError}
             error={showSuccess}
+          />
+        )}
+
+        {copySuccess && (
+          <SnackBarResultLogin
+            onSuccess={true}
+            onDuration={800}
+            onClear={clearError}
+            message={copySuccess}
           />
         )}
 
@@ -325,7 +348,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
               }}
             >
               <StyleMenuItem
-                onClick={handleCloseLinks}
+                onClick={handleCopyLink}
                 sx={{
                   marginLeft: "-7px",
                   fontSize: {
@@ -584,6 +607,8 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
               onLoadedPlaces={loadedPlaces}
               onOpenMenuLinks={openMenuLinks}
               onClickLinks={handleClickLinks}
+              onSharePost={sharedPost}
+              onChangeShareCount={sendCount}
             />
           </div>
         </Stack>
