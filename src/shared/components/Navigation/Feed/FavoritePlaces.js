@@ -6,6 +6,7 @@ import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
 import Place from "./places/Place";
 
 import { useHttpClient } from "../../../hooks/http-hook";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const FavoritePlaces = ({ onFilterSearch = null }) => {
   const params = useParams();
@@ -105,33 +106,55 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
     );
   }
 
+  let spinner = "";
+  if (isLoading) {
+    spinner = (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "14px",
+          // marginTop: "25%",
+          // marginLeft: "40%",
+          // marginRight: "50%",
+        }}
+      >
+        <LoadingSpinner asOverlay />
+      </Box>
+    );
+  }
+
   return (
-    <Box flex={4} p={2} style={{ marginBottom: "100%" }}>
-      <ScrollToTop pathname={pathname}>
-        {onFilterSearch ? (
-          <React.Fragment>
-            {filteredPlaces && !emptySearch ? (
-              filteredPlaces
-            ) : (
-              <p>No places found!</p>
-            )}
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            {!isLoading ? (
-              <React.Fragment>
-                {loadedPlaces ? (
-                  placesFavorites
-                ) : (
-                  <React.Fragment>
-                    {dataStatus ? <p>You don't have favorite places</p> : ""}
-                  </React.Fragment>
-                )}
-              </React.Fragment>
-            ) : null}
-          </React.Fragment>
-        )}
-      </ScrollToTop>
+    <Box flex={4} p={0} style={{ marginBottom: "100%" }}>
+      {isLoading ? (
+        spinner
+      ) : (
+        <ScrollToTop pathname={pathname}>
+          {onFilterSearch ? (
+            <React.Fragment>
+              {filteredPlaces && !emptySearch ? (
+                filteredPlaces
+              ) : (
+                <p>No places found!</p>
+              )}
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              {!isLoading ? (
+                <React.Fragment>
+                  {loadedPlaces ? (
+                    placesFavorites
+                  ) : (
+                    <React.Fragment>
+                      {dataStatus ? <p>You don't have favorite places</p> : ""}
+                    </React.Fragment>
+                  )}
+                </React.Fragment>
+              ) : null}
+            </React.Fragment>
+          )}
+        </ScrollToTop>
+      )}
     </Box>
   );
 };

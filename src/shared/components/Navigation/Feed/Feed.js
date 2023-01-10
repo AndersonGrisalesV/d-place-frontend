@@ -7,6 +7,7 @@ import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
 import { Box } from "@mui/material";
 
 import { useHttpClient } from "../../../hooks/http-hook";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
   const params = useParams();
@@ -103,44 +104,79 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
     );
   }
 
+  let spinner = "";
+  if (isLoading) {
+    spinner = (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          // marginTop: "34.4%",
+          // marginLeft: "38%",
+          // marginRight: "30%",
+        }}
+      >
+        <LoadingSpinner asOverlay />
+      </Box>
+    );
+  }
+
   return (
-    <Box flex={4} p={2} style={{ marginBottom: "100%" }}>
-      <ScrollToTop pathname={pathname}>
-        {onDetail && !onMap ? (
-          <React.Fragment>
-            {/* <Place />
+    <Box
+      flex={4}
+      p={2}
+      style={{
+        marginBottom: "100%",
+      }}
+    >
+      {isLoading ? (
+        spinner
+      ) : (
+        <ScrollToTop pathname={pathname}>
+          {onDetail && !onMap ? (
+            <React.Fragment>
+              {/* <Place />
           <br /> */}
-          </React.Fragment>
-        ) : onDetail && onMap ? (
-          <PlaceGetById onMap={true} onShowComments={onDetail} placeId={pid} />
-        ) : (
-          <React.Fragment>
-            {onFilterSearch ? (
-              <React.Fragment>
-                {filteredPlaces && !emptySearch ? (
-                  filteredPlaces
-                ) : (
-                  <p>No places found!</p>
-                )}
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                {!isLoading ? (
-                  <React.Fragment>
-                    {loadedPlaces && loadedPlaces.length > 0 ? (
-                      places
-                    ) : (
-                      <React.Fragment>
-                        {dataStatus ? <p>There are not places to show</p> : ""}
-                      </React.Fragment>
-                    )}
-                  </React.Fragment>
-                ) : null}
-              </React.Fragment>
-            )}
-          </React.Fragment>
-        )}
-      </ScrollToTop>
+            </React.Fragment>
+          ) : onDetail && onMap ? (
+            <PlaceGetById
+              onMap={true}
+              onShowComments={onDetail}
+              placeId={pid}
+            />
+          ) : (
+            <React.Fragment>
+              {onFilterSearch ? (
+                <React.Fragment>
+                  {filteredPlaces && !emptySearch ? (
+                    filteredPlaces
+                  ) : (
+                    <p>No places found!</p>
+                  )}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {!isLoading ? (
+                    <React.Fragment>
+                      {loadedPlaces && loadedPlaces.length > 0 ? (
+                        places
+                      ) : (
+                        <React.Fragment>
+                          {dataStatus ? (
+                            <p>There are not places to show</p>
+                          ) : (
+                            ""
+                          )}
+                        </React.Fragment>
+                      )}
+                    </React.Fragment>
+                  ) : null}
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          )}
+        </ScrollToTop>
+      )}
     </Box>
   );
 };

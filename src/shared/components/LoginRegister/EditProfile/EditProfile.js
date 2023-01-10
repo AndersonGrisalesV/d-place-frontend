@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
-import { Divider, Stack, TextField } from "@mui/material";
+import { Box, Divider, Stack, TextField } from "@mui/material";
 
 import styled from "@emotion/styled";
 
@@ -448,214 +448,81 @@ const EditProfile = () => {
     setChangePassword((prevPassword) => !prevPassword);
   };
 
+  let spinner = "";
+  if (isLoading) {
+    spinner = (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "14px",
+          // marginTop: "24.2%",
+          // marginLeft: "39.5%",
+          // marginRight: "45%",
+        }}
+      >
+        <LoadingSpinner asOverlay />
+      </Box>
+    );
+  }
+
   return (
-    <ScrollToTop pathname={pathname}>
-      {error && (
-        <SnackBarResultLogin
-          onDuration={6000}
-          error={error}
-          onClear={clearError}
-        />
-      )}
-      {showpassMatchError && (
-        <SnackBarResultLogin
-          onDuration={6000}
-          onClear={clearError}
-          error={`${showErrorPassword}`}
-        />
-      )}
-      {showSuccess && (
-        <SnackBarResultLogin
-          onSuccess={true}
-          onDuration={800}
-          message={`${successMessage}`}
-        />
-      )}
-      <React.Fragment>
-        {!isLoading && loadedUser && !showSuccess && (
-          <CardWrapperLogin>
-            <CardContentLogin>
-              <Title />
-              <form
-                onSubmit={onSubmitLoginRegisterHandler}
-                encType="multipart/form-data"
-              >
-                <Stack
-                  direction="column"
-                  spacing={4}
-                  justifyContent="space-between"
-                >
-                  <StyleTextField
-                    id="outlined-name-input"
-                    disabled={
-                      isLoading ? true : false || showSuccess ? true : false
-                    }
-                    label="Name"
-                    type="text"
-                    autoComplete="name-text"
-                    size="small"
-                    name="name"
-                    InputLabelProps={{
-                      sx: {
-                        fontSize: {
-                          sps: "11px",
-                          ps: "12px",
-                          ts: "14px",
-                          sls: "14px",
-                          sms: "16px",
-                          sc: "16px",
-                          nsc: "16px",
-                          ns: "16px",
-                          msc: "16px",
-                          mns: "16px",
-                          ms: "16px",
-                          lgs: "16px",
-                        },
-                      },
-                    }}
-                    InputProps={{
-                      inputProps: {
-                        sx: {
-                          fontSize: {
-                            sps: "11px",
-                            ps: "12px",
-                            ts: "14px",
-                            sls: "14px",
-                            sms: "16px",
-                            sc: "16px",
-                            nsc: "16px",
-                            ns: "16px",
-                            msc: "16px",
-                            mns: "16px",
-                            ms: "16px",
-                            lgs: "16px",
-                          },
-                        },
-                      },
-                    }}
-                    FormHelperTextProps={{
-                      sx: {
-                        fontSize: {
-                          sps: "9px",
-                          ps: "10px",
-                          ts: "12px",
-                          sls: "12px",
-                          sms: "14px",
-                          sc: "14px",
-                          nsc: "14px",
-                          ns: "14px",
-                          msc: "14px",
-                          mns: "14px",
-                          ms: "14px",
-                          lgs: "14px",
-                        },
-                      },
-                    }}
-                    defaultValue={`${loadedUser.name}`}
-                    onChange={(e) => {
-                      formInputsHandler(e);
-                      nameChangeHandler(e);
-                    }}
-                    onBlur={showBlurName ? null : nameBlurHandler}
-                    // value={nameInput}
-                    error={nameInputHasError}
-                    helperText={
-                      nameInputHasError ? "Name must be at least 5 letters" : ""
-                    }
-                  />
-
-                  <StyleTextField
-                    id="outlined-email-input"
-                    disabled={
-                      isLoading ? true : false || showSuccess ? true : false
-                    }
-                    label="Email Address"
-                    type="email"
-                    autoComplete="email-text"
-                    size="small"
-                    name="email"
-                    InputLabelProps={{
-                      sx: {
-                        fontSize: {
-                          sps: "11px",
-                          ps: "12px",
-                          ts: "14px",
-                          sls: "14px",
-                          sms: "16px",
-                          sc: "16px",
-                          nsc: "16px",
-                          ns: "16px",
-                          msc: "16px",
-                          mns: "16px",
-                          ms: "16px",
-                          lgs: "16px",
-                        },
-                      },
-                    }}
-                    InputProps={{
-                      inputProps: {
-                        sx: {
-                          fontSize: {
-                            sps: "11px",
-                            ps: "12px",
-                            ts: "14px",
-                            sls: "14px",
-                            sms: "16px",
-                            sc: "16px",
-                            nsc: "16px",
-                            ns: "16px",
-                            msc: "16px",
-                            mns: "16px",
-                            ms: "16px",
-                            lgs: "16px",
-                          },
-                        },
-                      },
-                    }}
-                    FormHelperTextProps={{
-                      sx: {
-                        fontSize: {
-                          sps: "9px",
-                          ps: "10px",
-                          ts: "12px",
-                          sls: "12px",
-                          sms: "14px",
-                          sc: "14px",
-                          nsc: "14px",
-                          ns: "14px",
-                          msc: "14px",
-                          mns: "14px",
-                          ms: "14px",
-                          lgs: "14px",
-                        },
-                      },
-                    }}
-                    defaultValue={`${loadedUser.email}`}
-                    onChange={(e) => {
-                      formInputsHandler(e);
-                      emailChangeHandler(e);
-                    }}
-                    onBlur={showBlurEmail ? null : emailBlurHandler}
-                    // value={emailInput}
-                    error={emailInputHasError}
-                    helperText={emailInputHasError ? "Incorrect mail" : ""}
-                  />
-                  <ButtonChangePassword
-                    onChangePassword={changePasswordHandler}
-                  />
-                  {changePassword ? (
-                    <React.Fragment>
-                      <Divider variant="middle" />
+    <Box
+      flex={5.6}
+      p={0}
+      style={{
+        marginBottom: "100%",
+      }}
+    >
+      {isLoading ? (
+        spinner
+      ) : (
+        <ScrollToTop pathname={pathname}>
+          {error && (
+            <SnackBarResultLogin
+              onDuration={6000}
+              error={error}
+              onClear={clearError}
+            />
+          )}
+          {showpassMatchError && (
+            <SnackBarResultLogin
+              onDuration={6000}
+              onClear={clearError}
+              error={`${showErrorPassword}`}
+            />
+          )}
+          {showSuccess && (
+            <SnackBarResultLogin
+              onSuccess={true}
+              onDuration={800}
+              message={`${successMessage}`}
+            />
+          )}
+          <React.Fragment>
+            {!isLoading && loadedUser && !showSuccess && (
+              <CardWrapperLogin>
+                <CardContentLogin>
+                  <Title />
+                  <form
+                    onSubmit={onSubmitLoginRegisterHandler}
+                    encType="multipart/form-data"
+                  >
+                    <Stack
+                      direction="column"
+                      spacing={4}
+                      justifyContent="space-between"
+                    >
                       <StyleTextField
-                        id="outlined-password-input"
+                        id="outlined-name-input"
                         disabled={
                           isLoading ? true : false || showSuccess ? true : false
                         }
-                        label="Old Password"
-                        type="password"
-                        autoComplete="old-password"
+                        label="Name"
+                        type="text"
+                        autoComplete="name-text"
                         size="small"
-                        name="password"
+                        name="name"
                         InputLabelProps={{
                           sx: {
                             fontSize: {
@@ -712,34 +579,31 @@ const EditProfile = () => {
                             },
                           },
                         }}
-                        // defaultValue={`${loadedUser.password}`}
+                        defaultValue={`${loadedUser.name}`}
                         onChange={(e) => {
                           formInputsHandler(e);
-                          oldPasswordChangeHandler(e);
+                          nameChangeHandler(e);
                         }}
-                        onBlur={
-                          showBlurOldPassword ? null : oldPasswordBlurHandler
-                        }
-                        ref={oldPasswordInputRef}
-                        value={oldPasswordInput}
-                        error={oldPasswordInputHasError}
+                        onBlur={showBlurName ? null : nameBlurHandler}
+                        // value={nameInput}
+                        error={nameInputHasError}
                         helperText={
-                          oldPasswordInputHasError
-                            ? "Password must be at least 6 characters long"
+                          nameInputHasError
+                            ? "Name must be at least 5 letters"
                             : ""
                         }
                       />
 
                       <StyleTextField
-                        id="outlined-new-password-input"
+                        id="outlined-email-input"
                         disabled={
                           isLoading ? true : false || showSuccess ? true : false
                         }
-                        label="New Password"
-                        type="password"
-                        autoComplete="new-password"
+                        label="Email Address"
+                        type="email"
+                        autoComplete="email-text"
                         size="small"
-                        name="password"
+                        name="email"
                         InputLabelProps={{
                           sx: {
                             fontSize: {
@@ -796,160 +660,342 @@ const EditProfile = () => {
                             },
                           },
                         }}
+                        defaultValue={`${loadedUser.email}`}
                         onChange={(e) => {
                           formInputsHandler(e);
-                          passwordChangeHandler(e);
+                          emailChangeHandler(e);
                         }}
-                        onBlur={showBlurPassword ? null : passwordBlurHandler}
-                        value={passwordInput}
-                        error={passwordInputHasError}
-                        helperText={
-                          passwordInputHasError
-                            ? "Password must be at least 6 characters long"
-                            : ""
-                        }
+                        onBlur={showBlurEmail ? null : emailBlurHandler}
+                        // value={emailInput}
+                        error={emailInputHasError}
+                        helperText={emailInputHasError ? "Incorrect mail" : ""}
                       />
-                      <StyleTextField
-                        id="outlined-confirmpassword-input"
-                        disabled={
-                          isLoading ? true : false || showSuccess ? true : false
-                        }
-                        label="Confirm New Password"
-                        type="password"
-                        autoComplete="confirm-new-Password"
-                        size="small"
-                        name="confirmPassword"
-                        InputLabelProps={{
-                          sx: {
-                            fontSize: {
-                              sps: "11px",
-                              ps: "12px",
-                              ts: "14px",
-                              sls: "14px",
-                              sms: "16px",
-                              sc: "16px",
-                              nsc: "16px",
-                              ns: "16px",
-                              msc: "16px",
-                              mns: "16px",
-                              ms: "16px",
-                              lgs: "16px",
-                            },
-                          },
-                        }}
-                        InputProps={{
-                          inputProps: {
-                            sx: {
-                              fontSize: {
-                                sps: "11px",
-                                ps: "12px",
-                                ts: "14px",
-                                sls: "14px",
-                                sms: "16px",
-                                sc: "16px",
-                                nsc: "16px",
-                                ns: "16px",
-                                msc: "16px",
-                                mns: "16px",
-                                ms: "16px",
-                                lgs: "16px",
-                              },
-                            },
-                          },
-                        }}
-                        FormHelperTextProps={{
-                          sx: {
-                            fontSize: {
-                              sps: "9px",
-                              ps: "10px",
-                              ts: "12px",
-                              sls: "12px",
-                              sms: "14px",
-                              sc: "14px",
-                              nsc: "14px",
-                              ns: "14px",
-                              msc: "14px",
-                              mns: "14px",
-                              ms: "14px",
-                              lgs: "14px",
-                            },
-                          },
-                        }}
-                        // defaultValue={`${loadedUser.confirmPassword}`}
-                        onChange={(e) => {
-                          formInputsHandler(e);
-                          confirmPasswordChangeHandler(e);
-                        }}
-                        onBlur={
-                          showBlurConfirmPassword
-                            ? ""
-                            : confirmPasswordBlurHandler
-                        }
-                        value={confirmPasswordInput}
-                        error={confirmPasswordInputHasError}
-                        helperText={
-                          confirmPasswordInputHasError
-                            ? "Passwords don't match"
-                            : ""
-                        }
+                      <ButtonChangePassword
+                        onChangePassword={changePasswordHandler}
                       />
-                    </React.Fragment>
-                  ) : null}
-                  <React.Fragment>
-                    {isLoading || showSuccess ? (
-                      <LoadingSpinnerWrapper>
-                        <LoadingSpinner />
-                      </LoadingSpinnerWrapper>
-                    ) : (
-                      <React.Fragment>
+                      {changePassword ? (
                         <React.Fragment>
-                          <ImageEditProfileButton
-                            formInputsHandler={formInputsHandler}
-                            isLoading={isLoading}
-                            showSuccess={showSuccess}
-                            setImageUrl={setImageUrl}
-                            showBlurImage={showBlurImage}
+                          <Divider variant="middle" />
+                          <StyleTextField
+                            id="outlined-password-input"
+                            disabled={
+                              isLoading
+                                ? true
+                                : false || showSuccess
+                                ? true
+                                : false
+                            }
+                            label="Old Password"
+                            type="password"
+                            autoComplete="old-password"
+                            size="small"
+                            name="password"
+                            InputLabelProps={{
+                              sx: {
+                                fontSize: {
+                                  sps: "11px",
+                                  ps: "12px",
+                                  ts: "14px",
+                                  sls: "14px",
+                                  sms: "16px",
+                                  sc: "16px",
+                                  nsc: "16px",
+                                  ns: "16px",
+                                  msc: "16px",
+                                  mns: "16px",
+                                  ms: "16px",
+                                  lgs: "16px",
+                                },
+                              },
+                            }}
+                            InputProps={{
+                              inputProps: {
+                                sx: {
+                                  fontSize: {
+                                    sps: "11px",
+                                    ps: "12px",
+                                    ts: "14px",
+                                    sls: "14px",
+                                    sms: "16px",
+                                    sc: "16px",
+                                    nsc: "16px",
+                                    ns: "16px",
+                                    msc: "16px",
+                                    mns: "16px",
+                                    ms: "16px",
+                                    lgs: "16px",
+                                  },
+                                },
+                              },
+                            }}
+                            FormHelperTextProps={{
+                              sx: {
+                                fontSize: {
+                                  sps: "9px",
+                                  ps: "10px",
+                                  ts: "12px",
+                                  sls: "12px",
+                                  sms: "14px",
+                                  sc: "14px",
+                                  nsc: "14px",
+                                  ns: "14px",
+                                  msc: "14px",
+                                  mns: "14px",
+                                  ms: "14px",
+                                  lgs: "14px",
+                                },
+                              },
+                            }}
+                            // defaultValue={`${loadedUser.password}`}
+                            onChange={(e) => {
+                              formInputsHandler(e);
+                              oldPasswordChangeHandler(e);
+                            }}
+                            onBlur={
+                              showBlurOldPassword
+                                ? null
+                                : oldPasswordBlurHandler
+                            }
+                            ref={oldPasswordInputRef}
+                            value={oldPasswordInput}
+                            error={oldPasswordInputHasError}
+                            helperText={
+                              oldPasswordInputHasError
+                                ? "Password must be at least 6 characters long"
+                                : ""
+                            }
                           />
-                          {imageUrl && selectedImage && (
-                            <ImagePreviewEditProfileButton
-                              imageUrl={imageUrl}
-                              selectedImageName={selectedImage.name}
-                              handleRemoveImage={handleRemoveImage}
-                            />
-                          )}
+
+                          <StyleTextField
+                            id="outlined-new-password-input"
+                            disabled={
+                              isLoading
+                                ? true
+                                : false || showSuccess
+                                ? true
+                                : false
+                            }
+                            label="New Password"
+                            type="password"
+                            autoComplete="new-password"
+                            size="small"
+                            name="password"
+                            InputLabelProps={{
+                              sx: {
+                                fontSize: {
+                                  sps: "11px",
+                                  ps: "12px",
+                                  ts: "14px",
+                                  sls: "14px",
+                                  sms: "16px",
+                                  sc: "16px",
+                                  nsc: "16px",
+                                  ns: "16px",
+                                  msc: "16px",
+                                  mns: "16px",
+                                  ms: "16px",
+                                  lgs: "16px",
+                                },
+                              },
+                            }}
+                            InputProps={{
+                              inputProps: {
+                                sx: {
+                                  fontSize: {
+                                    sps: "11px",
+                                    ps: "12px",
+                                    ts: "14px",
+                                    sls: "14px",
+                                    sms: "16px",
+                                    sc: "16px",
+                                    nsc: "16px",
+                                    ns: "16px",
+                                    msc: "16px",
+                                    mns: "16px",
+                                    ms: "16px",
+                                    lgs: "16px",
+                                  },
+                                },
+                              },
+                            }}
+                            FormHelperTextProps={{
+                              sx: {
+                                fontSize: {
+                                  sps: "9px",
+                                  ps: "10px",
+                                  ts: "12px",
+                                  sls: "12px",
+                                  sms: "14px",
+                                  sc: "14px",
+                                  nsc: "14px",
+                                  ns: "14px",
+                                  msc: "14px",
+                                  mns: "14px",
+                                  ms: "14px",
+                                  lgs: "14px",
+                                },
+                              },
+                            }}
+                            onChange={(e) => {
+                              formInputsHandler(e);
+                              passwordChangeHandler(e);
+                            }}
+                            onBlur={
+                              showBlurPassword ? null : passwordBlurHandler
+                            }
+                            value={passwordInput}
+                            error={passwordInputHasError}
+                            helperText={
+                              passwordInputHasError
+                                ? "Password must be at least 6 characters long"
+                                : ""
+                            }
+                          />
+                          <StyleTextField
+                            id="outlined-confirmpassword-input"
+                            disabled={
+                              isLoading
+                                ? true
+                                : false || showSuccess
+                                ? true
+                                : false
+                            }
+                            label="Confirm New Password"
+                            type="password"
+                            autoComplete="confirm-new-Password"
+                            size="small"
+                            name="confirmPassword"
+                            InputLabelProps={{
+                              sx: {
+                                fontSize: {
+                                  sps: "11px",
+                                  ps: "12px",
+                                  ts: "14px",
+                                  sls: "14px",
+                                  sms: "16px",
+                                  sc: "16px",
+                                  nsc: "16px",
+                                  ns: "16px",
+                                  msc: "16px",
+                                  mns: "16px",
+                                  ms: "16px",
+                                  lgs: "16px",
+                                },
+                              },
+                            }}
+                            InputProps={{
+                              inputProps: {
+                                sx: {
+                                  fontSize: {
+                                    sps: "11px",
+                                    ps: "12px",
+                                    ts: "14px",
+                                    sls: "14px",
+                                    sms: "16px",
+                                    sc: "16px",
+                                    nsc: "16px",
+                                    ns: "16px",
+                                    msc: "16px",
+                                    mns: "16px",
+                                    ms: "16px",
+                                    lgs: "16px",
+                                  },
+                                },
+                              },
+                            }}
+                            FormHelperTextProps={{
+                              sx: {
+                                fontSize: {
+                                  sps: "9px",
+                                  ps: "10px",
+                                  ts: "12px",
+                                  sls: "12px",
+                                  sms: "14px",
+                                  sc: "14px",
+                                  nsc: "14px",
+                                  ns: "14px",
+                                  msc: "14px",
+                                  mns: "14px",
+                                  ms: "14px",
+                                  lgs: "14px",
+                                },
+                              },
+                            }}
+                            // defaultValue={`${loadedUser.confirmPassword}`}
+                            onChange={(e) => {
+                              formInputsHandler(e);
+                              confirmPasswordChangeHandler(e);
+                            }}
+                            onBlur={
+                              showBlurConfirmPassword
+                                ? ""
+                                : confirmPasswordBlurHandler
+                            }
+                            value={confirmPasswordInput}
+                            error={confirmPasswordInputHasError}
+                            helperText={
+                              confirmPasswordInputHasError
+                                ? "Passwords don't match"
+                                : ""
+                            }
+                          />
                         </React.Fragment>
+                      ) : null}
+                      <React.Fragment>
+                        {isLoading || showSuccess ? (
+                          <LoadingSpinnerWrapper>
+                            <LoadingSpinner />
+                          </LoadingSpinnerWrapper>
+                        ) : (
+                          <React.Fragment>
+                            <React.Fragment>
+                              <ImageEditProfileButton
+                                formInputsHandler={formInputsHandler}
+                                isLoading={isLoading}
+                                showSuccess={showSuccess}
+                                setImageUrl={setImageUrl}
+                                showBlurImage={showBlurImage}
+                              />
+                              {imageUrl && selectedImage && (
+                                <ImagePreviewEditProfileButton
+                                  imageUrl={imageUrl}
+                                  selectedImageName={selectedImage.name}
+                                  handleRemoveImage={handleRemoveImage}
+                                />
+                              )}
+                            </React.Fragment>
 
-                        <Stack
-                          spacing={2}
-                          direction="column"
-                          sx={{
-                            margin: "0px",
-                            padding: "0px",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Stack
-                            direction="row"
-                            spacing={0}
-                            justifyContent="center"
-                          >
-                            <ButtonEditProfile formIsValid={formIsValid} />
-                            <ButtonCancelEditProfile
-                              open={open}
-                              close={handleClose}
-                              onHandleOpen={handleOpen}
-                              onHandleClose={handleClose}
-                            />
-                          </Stack>
-                          <ButtonDeleteProfile
-                            onDelete={handleDeleteProfileModal}
-                          />
-                        </Stack>
+                            <Stack
+                              spacing={2}
+                              direction="column"
+                              sx={{
+                                margin: "0px",
+                                padding: "0px",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Stack
+                                direction="row"
+                                spacing={0}
+                                justifyContent="center"
+                              >
+                                <ButtonEditProfile formIsValid={formIsValid} />
+                                <ButtonCancelEditProfile
+                                  open={open}
+                                  close={handleClose}
+                                  onHandleOpen={handleOpen}
+                                  onHandleClose={handleClose}
+                                />
+                              </Stack>
+                              <ButtonDeleteProfile
+                                onDelete={handleDeleteProfileModal}
+                              />
+                            </Stack>
+                          </React.Fragment>
+                        )}
                       </React.Fragment>
-                    )}
-                  </React.Fragment>
 
-                  {/* {isLoading ? (
+                      {/* {isLoading ? (
                 <LoadingSpinnerWrapper onLogin={true}>
                   <LoadingSpinner />
                 </LoadingSpinnerWrapper>
@@ -959,20 +1005,22 @@ const EditProfile = () => {
               
                 // </ButtonsWrapper>
               )} */}
-                </Stack>
-              </form>
-              {openDeleteProfile ? (
-                <ModalDeleteProfile
-                  open={handleOpenModalDeleteProfile}
-                  handleClose={handleCloseDeletePlace}
-                  handleConfirmDelete={handleConfirmDeleteProfile}
-                />
-              ) : null}
-            </CardContentLogin>
-          </CardWrapperLogin>
-        )}
-      </React.Fragment>
-    </ScrollToTop>
+                    </Stack>
+                  </form>
+                  {openDeleteProfile ? (
+                    <ModalDeleteProfile
+                      open={handleOpenModalDeleteProfile}
+                      handleClose={handleCloseDeletePlace}
+                      handleConfirmDelete={handleConfirmDeleteProfile}
+                    />
+                  ) : null}
+                </CardContentLogin>
+              </CardWrapperLogin>
+            )}
+          </React.Fragment>
+        </ScrollToTop>
+      )}
+    </Box>
   );
 };
 

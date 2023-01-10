@@ -16,7 +16,20 @@ const Place = ({
       <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
         <Box
           sx={{
-            marginLeft: "10px",
+            marginLeft: {
+              sps: "10px",
+              ps: "10px",
+              ts: "10px",
+              sls: "10px",
+              sms: "10px",
+              sc: "10px",
+              nsc: "10px",
+              ns: "10px",
+              msc: "16px",
+              mns: "16px",
+              ms: "53px",
+              lgs: "380px",
+            },
             marginTop: "14px",
             display: "flex",
             justifyContent: "center",

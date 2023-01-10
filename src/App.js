@@ -269,57 +269,57 @@ function App() {
       }}
     >
       {/* <GoBackRefreshMenu> */}
-      <div>
-        <ThemeProvider theme={darkThemeTypographyAndBreakpoints}>
-          <StyleBox
-            className={AppStyles}
-            bgcolor={"background.main"}
-            sx={{ fontFamily: "Noto Sans" }}
-            color={"text.primary"}
-            style={{ margin: 0, padding: 0 }}
-          >
-            <NavigationBar
-              setMode={setMode}
-              mode={mode}
-              onOption={handleBurgerMenu}
-              onSearch={handleSearchBar}
-              onClear={clearSearchBar}
-              onClearSearchBar={handlleSideBarCleanSearchBar}
-              onShowCloseButton={showCloseButton}
-              onCurrent={storedInputSearch}
-            />
 
-            <div style={{ margin: 0, padding: 0 }}>
-              <Stack direction="row" spacing={2} justifyContent="space-between">
-                {menuOption ? (
-                  <SideBar
-                    menuOption={menuOption}
-                    mode={mode}
-                    setMode={setMode}
-                    onOption={handleBurgerMenu}
-                    onClearSearchBar={handlleSideBarCleanSearchBar}
-                  />
-                ) : (
-                  <SideBar
-                    menuOption={menuOption}
-                    mode={mode}
-                    setMode={setMode}
-                    onOption={handleBurgerMenu}
-                    onClearSearchBar={handlleSideBarCleanSearchBar}
-                  />
-                )}
-                <Routes>
-                  <Route
-                    path="/homepage"
-                    element={<HomePage onFilterSearch={searchBar} />}
-                  />
-                  {routes}
-                </Routes>
-              </Stack>
-            </div>
-          </StyleBox>
-        </ThemeProvider>
-      </div>
+      <ThemeProvider theme={darkThemeTypographyAndBreakpoints}>
+        <StyleBox
+          className={AppStyles}
+          bgcolor={"background.main"}
+          sx={{ fontFamily: "Noto Sans" }}
+          color={"text.primary"}
+          style={{ margin: 0, padding: 0 }}
+        >
+          <NavigationBar
+            setMode={setMode}
+            mode={mode}
+            onOption={handleBurgerMenu}
+            onSearch={handleSearchBar}
+            onClear={clearSearchBar}
+            onClearSearchBar={handlleSideBarCleanSearchBar}
+            onShowCloseButton={showCloseButton}
+            onCurrent={storedInputSearch}
+          />
+
+          <div style={{ margin: 0, padding: 0 }}>
+            <Stack direction="row" spacing={2} justifyContent="space-between">
+              {menuOption ? (
+                <SideBar
+                  menuOption={menuOption}
+                  mode={mode}
+                  setMode={setMode}
+                  onOption={handleBurgerMenu}
+                  onClearSearchBar={handlleSideBarCleanSearchBar}
+                />
+              ) : (
+                <SideBar
+                  menuOption={menuOption}
+                  mode={mode}
+                  setMode={setMode}
+                  onOption={handleBurgerMenu}
+                  onClearSearchBar={handlleSideBarCleanSearchBar}
+                />
+              )}
+              <Routes>
+                <Route
+                  path="/homepage"
+                  element={<HomePage onFilterSearch={searchBar} />}
+                />
+                {routes}
+              </Routes>
+            </Stack>
+          </div>
+        </StyleBox>
+      </ThemeProvider>
+
       {/* </GoBackRefreshMenu> */}
     </LoginContext.Provider>
   );

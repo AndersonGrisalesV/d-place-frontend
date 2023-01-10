@@ -4,6 +4,24 @@
   height: 64px;
 }
 
+.lds-dual-ring__overlay {
+  display: inline-block;
+  /* width: 627px; */
+}
+
+.lds-dual-ring__overlay:after {
+  content: " ";
+  display: block;
+  width: 36px;
+  height: 36px;
+  margin: 1px;
+  border-radius: 50%;
+  border-color: #da4453 transparent #da4453c7 transparent;
+  border-top: solid #da4453c7;
+  border-left: #da4453c7;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
 .lds-dual-ring:after {
   content: " ";
   display: block;

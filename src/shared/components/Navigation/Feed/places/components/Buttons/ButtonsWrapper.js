@@ -339,6 +339,11 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
 
           <div>
             <Menu
+              sx={{
+                "& .MuiMenu-paper": {
+                  borderRadius: "10%",
+                },
+              }}
               id="basic-menu"
               anchorEl={anchorElLinks}
               open={openMenuLinks}
