@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { Stack, TextField } from "@mui/material";
+import { Box, Stack, TextField } from "@mui/material";
 import Title from "../shared/components/LoginRegister/components/Title";
 import CardContentLogin from "../shared/components/LoginRegister/components/CardContentLogin";
 import CardWrapperLogin from "../shared/components/LoginRegister/components/CardWrapperLogin";
@@ -19,7 +19,6 @@ import useFocusBlurHook from "../shared/hooks/use-my-input";
 import { useHttpClient } from "../shared/hooks/http-hook";
 
 import styled from "@emotion/styled";
-import CardSkeletonLogin from "../shared/components/LoginRegister/components/CardSkeletonLogin";
 import LoadingSpinner from "../shared/components/LoadingSpinner/LoadingSpinner";
 import SnackBarResultLogin from "../shared/components/LoginRegister/components/SnackBarResultLogin";
 import LoadingSpinnerWrapper from "../shared/components/LoadingSpinner/LoadingSpinnerWrapper";
@@ -325,7 +324,7 @@ const LoginRegister = () => {
           message={`${successMessage}`}
         />
       )}
-      <CardWrapperLogin>
+      <CardWrapperLogin onArrangesize={true}>
         <CardContentLogin>
           <Title isLoginMode={isLoginMode} />
           <form

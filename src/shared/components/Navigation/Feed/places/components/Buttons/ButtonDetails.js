@@ -45,7 +45,7 @@ const ButtonDetails = ({ onPlaceId }) => {
           lgs: "-46px",
         },
         paddingLeft: {
-          sps: "110px",
+          sps: "70px",
           ps: "199px",
           ts: "266px",
           sls: "310px",

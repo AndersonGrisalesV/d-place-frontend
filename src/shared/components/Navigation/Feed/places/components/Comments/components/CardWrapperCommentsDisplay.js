@@ -8,7 +8,20 @@ const CardWrapperCommentsDisplay = (props) => {
       <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
         <Box
           sx={{
-            marginLeft: "10px",
+            marginLeft: {
+              sps: "-14px",
+              ps: "-16px",
+              ts: "-16px",
+              sls: "-14px",
+              sms: "-13px",
+              sc: "-10px",
+              nsc: "-6px",
+              ns: "6px",
+              msc: "16px",
+              mns: "16px",
+              ms: "3px",
+              lgs: "-225px",
+            },
             marginTop: "14px",
             marginBottom: "100%",
             display: "flex",

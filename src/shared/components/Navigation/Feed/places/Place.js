@@ -10,6 +10,7 @@ const Place = ({
   onRefreshPlaceComments,
   onDeletedComments,
   onErrorDeleteComment,
+  onArrangeBigSize = false,
 }) => {
   return (
     <React.Fragment>
@@ -17,20 +18,20 @@ const Place = ({
         <Box
           sx={{
             marginLeft: {
-              sps: "10px",
-              ps: "10px",
-              ts: "10px",
-              sls: "10px",
-              sms: "10px",
-              sc: "10px",
-              nsc: "10px",
-              ns: "10px",
+              sps: onArrangeBigSize ? "-14px" : "-15px",
+              ps: onArrangeBigSize ? "-16px" : "-16px",
+              ts: onArrangeBigSize ? "-16px" : "-18px",
+              sls: onArrangeBigSize ? "-14px" : "-16px",
+              sms: onArrangeBigSize ? "-13px" : "-14px",
+              sc: onArrangeBigSize ? "-10px" : "-17px",
+              nsc: onArrangeBigSize ? "-6px" : "-17px",
+              ns: onArrangeBigSize ? "46px" : "10px",
               msc: "16px",
               mns: "16px",
-              ms: "53px",
-              lgs: "380px",
+              ms: onArrangeBigSize ? "3px" : "53px",
+              lgs: onArrangeBigSize ? "-225px" : "380px",
             },
-            marginTop: "14px",
+            marginTop: onArrangeBigSize ? "30px" : "14px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

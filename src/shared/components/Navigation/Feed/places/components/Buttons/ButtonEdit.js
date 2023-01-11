@@ -33,6 +33,9 @@ const ButtonEdit = ({ loadedPlaces }) => {
             <StyleButton
               onClick={cleanListItemsHandler}
               sx={{
+                marginTop: {
+                  sps: "10px",
+                },
                 fontWeight: 500,
                 textTransform: "none",
                 fontSize: {

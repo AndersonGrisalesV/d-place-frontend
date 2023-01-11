@@ -7,11 +7,12 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
-import { CardContent, Zoom } from "@mui/material";
+import { Box, CardContent, Zoom } from "@mui/material";
 import { useHttpClient } from "../../../../../hooks/http-hook";
 import AvatarComment from "./AvatarComment";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../../../context/login-context";
+import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
 
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",
@@ -149,6 +150,44 @@ const Comments = () => {
   const cleanListHandler = () => {
     login.listItemsNotListed(login.userId);
   };
+
+  let spinner = "";
+  if (isLoading) {
+    spinner = (
+      <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
+        <CardContent
+          sx={{
+            paddingLeft: "16px",
+            paddingRight: "16px",
+            paddingTop: "0px",
+            paddingBottom: "0PX",
+          }}
+        >
+          <List
+            sx={{
+              width: "100%",
+              maxWidth: 330,
+              paddingTop: "0px",
+            }}
+          >
+            <Typography variant="h6" fontWeight={400}>
+              Latest Comments
+            </Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "14px",
+              }}
+            >
+              <LoadingSpinner asOverlay />
+            </Box>
+          </List>
+        </CardContent>
+      </Zoom>
+    );
+  }
 
   return (
     <React.Fragment>
@@ -329,8 +368,9 @@ const Comments = () => {
             </List>
           </CardContent>
         </Zoom>
-      ) : null}
-      {/* //here goes skeleton, inside null */}
+      ) : (
+        spinner
+      )}
     </React.Fragment>
   );
 };

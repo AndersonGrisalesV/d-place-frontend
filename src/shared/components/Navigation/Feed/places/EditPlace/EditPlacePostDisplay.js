@@ -428,13 +428,14 @@ const EditPlacePostDisplay = () => {
   };
 
   let spinner = "";
-  if (!isLoading) {
+  if (isLoading) {
     spinner = (
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           marginTop: "14px",
+          marginBottom: "100%",
           // marginTop: "24%",
           // marginLeft: "40%",
           // marginRight: "46%",
@@ -447,13 +448,13 @@ const EditPlacePostDisplay = () => {
 
   return (
     <Box
-      flex={4.9}
+      flex={5.6}
       p={0}
       style={{
         marginBottom: "100%",
       }}
     >
-      {!isLoading ? (
+      {isLoading ? (
         spinner
       ) : (
         <ScrollToTop pathname={pathname}>

@@ -14,6 +14,10 @@ const StyleFabButton = styled(Fab)(({ theme }) => ({
   },
 }));
 
+const StyleNavLink = styled(NavLink)(({ theme }) => ({
+  textDecoration: "none",
+}));
+
 const NewButton = ({
   menuOption,
   onResponsive = false,
@@ -39,7 +43,7 @@ const NewButton = ({
         in={menuOption}
         style={{ transitionDelay: menuOption ? "200ms" : "0ms" }}
       >
-        <NavLink to="/api/places/newplace">
+        <StyleNavLink to="/api/places/newplace">
           <StyleFabButton
             onClick={cleanListItemsHandler}
             sx={{
@@ -53,7 +57,7 @@ const NewButton = ({
           >
             <AddIcon />
           </StyleFabButton>
-        </NavLink>
+        </StyleNavLink>
       </Zoom>
     );
   } else if (login.isLoggedIn && !menuOption && !onResponsive) {

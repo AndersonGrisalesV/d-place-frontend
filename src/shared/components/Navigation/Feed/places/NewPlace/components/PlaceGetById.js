@@ -147,6 +147,7 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
             onRefreshPlaceComments={refresPlaceCommentsHandler}
             // onDeletedComments={handleDeletedComments}
             onErrorDeleteComment={handleErrorDeletingComment}
+            onArrangeBigSize={true}
           />
           <br />
         </React.Fragment>

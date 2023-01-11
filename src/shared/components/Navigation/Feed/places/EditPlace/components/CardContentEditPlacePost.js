@@ -7,8 +7,8 @@ const CardContentEditPlacePost = (props) => {
     <CardContent
       sx={{
         width: {
-          sps: "95px",
-          ps: "107px",
+          sps: "150px",
+          ps: "246px",
           ts: "244px",
           sls: "245px",
           sms: "445px",

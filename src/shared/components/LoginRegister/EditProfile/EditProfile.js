@@ -456,6 +456,7 @@ const EditProfile = () => {
           display: "flex",
           justifyContent: "center",
           marginTop: "14px",
+          marginBottom: "100%",
           // marginTop: "24.2%",
           // marginLeft: "39.5%",
           // marginRight: "45%",

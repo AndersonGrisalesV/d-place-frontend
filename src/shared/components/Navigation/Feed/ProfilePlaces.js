@@ -56,6 +56,7 @@ const ProfilePlaces = ({ onFilterSearch = null }) => {
                       loadedPlaces={place}
                       key={place._id}
                       id={place._id}
+                      onArrangeBigSize={true}
                     />
                     <br />
                   </React.Fragment>
@@ -95,7 +96,12 @@ const ProfilePlaces = ({ onFilterSearch = null }) => {
           <React.Fragment>
             {loadedPlaces.map((place) => (
               <React.Fragment key={place._id}>
-                <Place loadedPlaces={place} key={place._id} id={place._id} />
+                <Place
+                  loadedPlaces={place}
+                  key={place._id}
+                  id={place._id}
+                  onArrangeBigSize={true}
+                />
                 <br />
               </React.Fragment>
             ))}
@@ -113,6 +119,7 @@ const ProfilePlaces = ({ onFilterSearch = null }) => {
           display: "flex",
           justifyContent: "center",
           marginTop: "14px",
+          marginBottom: "100%",
           // marginLeft: "38%",
           // marginRight: "49%",
         }}
@@ -123,7 +130,7 @@ const ProfilePlaces = ({ onFilterSearch = null }) => {
   }
 
   return (
-    <Box flex={3.8} p={0} style={{ marginBottom: "100%" }}>
+    <Box flex={5.6} p={0} style={{ marginBottom: "100%" }}>
       {isLoading ? (
         spinner
       ) : (

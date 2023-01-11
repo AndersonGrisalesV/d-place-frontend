@@ -9,7 +9,7 @@ const CardWrapperEditPlacePostDisplay = (props) => {
       <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
         <Box
           sx={{
-            marginLeft: "10px",
+            marginLeft: "-13px",
             marginTop: "14px",
             marginBottom: "100%",
             display: "flex",

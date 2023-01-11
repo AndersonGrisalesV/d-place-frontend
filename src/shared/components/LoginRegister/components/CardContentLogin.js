@@ -8,8 +8,8 @@ const CardContentLogin = (props) => {
       bgcolor={"backgroundColor"}
       sx={{
         width: {
-          sps: "100px",
-          ps: "164px",
+          sps: "156px",
+          ps: "224px",
           ts: "294px",
           sls: "295px",
           sms: "358px",

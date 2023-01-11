@@ -58,6 +58,7 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
                       loadedPlaces={place}
                       key={place._id}
                       id={place._id}
+                      onArrangeBigSize={true}
                     />
                     <br />
                   </React.Fragment>
@@ -96,7 +97,12 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
           <React.Fragment>
             {loadedPlaces.map((place) => (
               <React.Fragment key={place._id}>
-                <Place loadedPlaces={place} key={place._id} id={place._id} />
+                <Place
+                  loadedPlaces={place}
+                  key={place._id}
+                  id={place._id}
+                  onArrangeBigSize={true}
+                />
                 <br />
               </React.Fragment>
             ))}
@@ -114,6 +120,7 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
           display: "flex",
           justifyContent: "center",
           marginTop: "14px",
+          marginBottom: "100%",
           // marginTop: "25%",
           // marginLeft: "40%",
           // marginRight: "50%",
@@ -125,7 +132,7 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
   }
 
   return (
-    <Box flex={4} p={0} style={{ marginBottom: "100%" }}>
+    <Box flex={5.6} p={0} style={{ marginBottom: "100%" }}>
       {isLoading ? (
         spinner
       ) : (

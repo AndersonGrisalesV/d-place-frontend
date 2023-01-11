@@ -6,8 +6,8 @@ const CardContentComments = (props) => {
     <CardContent
       sx={{
         width: {
-          sps: "95px",
-          ps: "107px",
+          sps: "123px",
+          ps: "226px",
           ts: "244px",
           sls: "245px",
           sms: "445px",

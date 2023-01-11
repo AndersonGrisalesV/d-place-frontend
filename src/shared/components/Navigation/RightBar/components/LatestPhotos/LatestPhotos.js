@@ -1,4 +1,5 @@
 import {
+  Box,
   CardContent,
   ImageList,
   ImageListItem,
@@ -9,6 +10,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../../../context/login-context";
 import { useHttpClient } from "../../../../../hooks/http-hook";
+import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
 
 function srcset(image, size, rows = 1, cols = 1) {
   return {
@@ -50,6 +52,42 @@ const LatestPhotos = () => {
     login.listItemsNotListed(id);
   };
 
+  let spinner = "";
+  if (isLoading) {
+    spinner = (
+      <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
+        <CardContent sx={{ paddingTop: "0px", paddingBottom: "0px" }}>
+          <Typography variant="h6" fontWeight={400} mt={2} mb={2}>
+            Latest Photos
+          </Typography>
+          <div>
+            <ImageList
+              variant="quilted"
+              cols={1}
+              rowHeight={80}
+              gap={5}
+              sx={{
+                width: "330px",
+                height: "250px",
+                paddingRight: "0px",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "14px",
+                }}
+              >
+                <LoadingSpinner asOverlay />
+              </Box>
+            </ImageList>
+          </div>
+        </CardContent>
+      </Zoom>
+    );
+  }
+
   return (
     <React.Fragment>
       {!isLoading && loadedPlaces ? (
@@ -64,7 +102,11 @@ const LatestPhotos = () => {
                 cols={1}
                 rowHeight={80}
                 gap={5}
-                sx={{ width: "330px", height: "250px", paddingRight: "0px" }}
+                sx={{
+                  width: "330px",
+                  height: "250px",
+                  paddingRight: "0px",
+                }}
               >
                 {loadedPlaces.map((place) => {
                   if (count <= 2) {
@@ -100,8 +142,9 @@ const LatestPhotos = () => {
             </div>
           </CardContent>
         </Zoom>
-      ) : null}
-      {/* //here goes skeleton, inside null */}
+      ) : (
+        spinner
+      )}
     </React.Fragment>
   );
 };
