@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ListItem from "@mui/material/ListItem";
 import {
   Grow,
@@ -373,8 +373,9 @@ const ListItems = ({
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem style={{ backgroundColor: "transparent" }}>
+      <MenuItem style={{ backgroundColor: "transparent" }} disableRipple={true}>
         <ListItemButton
+          disableRipple={true}
           component="ul"
           href="#simple-list"
           style={{ backgroundColor: "transparent" }}
@@ -471,8 +472,13 @@ const ListItems = ({
     // } else {
     // }
   };
+  const homepageButton = useRef(null);
 
-  useEffect(() => {}, [clearListItem]);
+  useEffect(() => {
+    if (login.homepageCleanListItems) {
+      homepageButton.current.click("e", 0);
+    }
+  }, [login.homepageCleanListItems]);
 
   return (
     <>
@@ -482,6 +488,7 @@ const ListItems = ({
         {...(true ? { timeout: 500 } : {})}
       >
         <StyleListItemsHomepage
+          ref={homepageButton}
           disablePadding
           component={StyleNavLink}
           to="/homepage"
@@ -489,6 +496,7 @@ const ListItems = ({
           onClick={(e) => activeStateHandler(e, 0)}
         >
           <ListItemButton
+            disableRipple={true}
             component="ul"
             href="/homepage"
             onClick={onCloseResponsiveDrawer ? handleDrawerClose : handleClear}
@@ -511,7 +519,11 @@ const ListItems = ({
             disablePadding
             selected={selectedIndex === 5 ? true : null}
           >
-            <ListItemButton component="div" onClick={handleProfileMenuOpen}>
+            <ListItemButton
+              component="div"
+              onClick={handleProfileMenuOpen}
+              disableRipple={true}
+            >
               <ListItemIcon>
                 <StyleSettingsIcon />
               </ListItemIcon>
@@ -538,6 +550,7 @@ const ListItems = ({
               onClick={(e) => activeStateHandler(e, 1)}
             >
               <ListItemButton
+                disableRipple={true}
                 component="li"
                 href={`/api/users/favorites/${login.userId}`}
                 onClick={
@@ -566,6 +579,7 @@ const ListItems = ({
               onClick={(e) => activeStateHandler(e, 2)}
             >
               <ListItemButton
+                disableRipple={true}
                 component="li"
                 href={`/api/users/myplaces/${login.userId}`}
                 onClick={
@@ -593,6 +607,7 @@ const ListItems = ({
               onClick={(e) => activeStateHandler(e, 3)}
             >
               <ListItemButton
+                disableRipple={true}
                 component="li"
                 href={`/api/users/profile/${login.userId}`}
                 onClick={
@@ -616,7 +631,11 @@ const ListItems = ({
               disablePadding
               selected={settingsSelectedItem === 5 ? true : null}
             >
-              <ListItemButton component="ul" onClick={handleProfileMenuOpen}>
+              <ListItemButton
+                component="ul"
+                onClick={handleProfileMenuOpen}
+                disableRipple={true}
+              >
                 <ListItemIcon>
                   <StyleSettingsIcon />
                 </ListItemIcon>
@@ -632,6 +651,7 @@ const ListItems = ({
           >
             <StyleListItems disablePadding>
               <ListItemButton
+                disableRipple={true}
                 component="ul"
                 href="/logout"
                 onClick={handleLogout}

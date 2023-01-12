@@ -43,6 +43,7 @@ const ShareButton = ({
 
   const unchecked = (
     <Checkbox
+      disableRipple={true}
       style={{ backgroundColor: "transparent" }}
       icon={
         <StyleShareBorderIcon
@@ -117,6 +118,7 @@ const ShareButton = ({
 
   const checked = (
     <Checkbox
+      disableRipple={true}
       style={{ backgroundColor: "transparent" }}
       icon={
         <StyleShareIcon
@@ -193,6 +195,7 @@ const ShareButton = ({
 
   return (
     <IconButton
+      disableRipple={true}
       id="basic-button"
       aria-controls={onOpenMenuLinks ? "basic-menu" : undefined}
       aria-haspopup="true"

@@ -144,6 +144,7 @@ function App() {
 
   const [clearListItems, setClearListItems] = useState(false);
   const [pidCleanListItems, setPidCleanListItems] = useState(null);
+  const [homepageListItems, setHomepageListItems] = useState(null);
 
   const listItemsNotListed = useCallback((pid) => {
     setClearListItems(true);
@@ -155,6 +156,10 @@ function App() {
   const listItemsCleanListed = useCallback(() => {
     setClearListItems(false);
     setPidCleanListItems(null);
+  }, []);
+
+  const listItemsCleanHomepage = useCallback((index) => {
+    setHomepageListItems(index);
   }, []);
 
   let routes;
@@ -266,6 +271,8 @@ function App() {
         listItemsCleanListed: listItemsCleanListed,
         pidCleanListItems: pidCleanListItems,
         clearListItems: clearListItems,
+        homepageListItems: homepageListItems,
+        listItemsCleanHomepage: listItemsCleanHomepage,
       }}
     >
       {/* <GoBackRefreshMenu> */}

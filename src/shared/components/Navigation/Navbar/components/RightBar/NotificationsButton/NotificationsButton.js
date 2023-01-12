@@ -112,7 +112,7 @@ const NotificationsButton = ({
     if (loadedPlaces) {
       placeId = loadedPlaces.slice(0, 1)[0]._id;
     }
-    console.log();
+
     login.listItemsNotListed();
     navigate(`/api/places/${placeId}`);
     handleClose();
@@ -142,7 +142,12 @@ const NotificationsButton = ({
       }}
     >
       <Typography sx={{ p: 1.5, fontWeight: "600" }}>Notifications</Typography>
-      <StyleStack direction="row" spacing={0} sx={{ cursor: "pointer" }}>
+      <StyleStack
+        direction="row"
+        spacing={0}
+        sx={{ cursor: "pointer" }}
+        onClick={handleNewPost}
+      >
         {!isLoading && loadedPlaces ? (
           <React.Fragment>
             <AvatarNotification loadedPlaces={loadedPlaces} />
@@ -152,7 +157,6 @@ const NotificationsButton = ({
               fontWeight={500}
               fontSize={14}
               sx={{ p: 2, paddingTop: "7px" }}
-              onClick={handleNewPost}
             >
               {`New post by ${loadedPlaces.slice(0, 1)[0].creatorId.name}`}
             </Typography>
@@ -184,8 +188,9 @@ const NotificationsButton = ({
               },
             }}
           >
-            <StyleMenuItem onClick={handleClickResponsive}>
+            <StyleMenuItem onClick={handleClickResponsive} disableRipple={true}>
               <IconButton
+                disableRipple={true}
                 style={{ backgroundColor: "transparent" }}
                 size="large"
                 aria-label="show new notifications"
@@ -227,6 +232,7 @@ const NotificationsButton = ({
             }}
           >
             <IconButton
+              disableRipple={true}
               size="large"
               aria-label="show new notifications"
               color="inherit"

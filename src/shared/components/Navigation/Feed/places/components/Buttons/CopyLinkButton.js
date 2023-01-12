@@ -28,11 +28,10 @@ const StyleFavoriteIcon = styled(FavoriteIcon)(({ theme }) => ({
   },
 }));
 
-const IconButtonModified = styled(IconButton)({});
-
 const CopyLinkButton = () => {
   return (
-    <IconButtonModified
+    <IconButton
+      disableRipple={true}
       aria-label="add to favorites"
       style={{
         backgroundColor: "transparent",
@@ -45,13 +44,14 @@ const CopyLinkButton = () => {
       }}
     >
       <StyleLinkIcon
+        disableRipple={true}
         sx={{
           backgroundColor: "transparent",
           width: "24px",
           height: "30px",
         }}
       />
-    </IconButtonModified>
+    </IconButton>
   );
 };
 

@@ -65,6 +65,7 @@ const ModeSwitch = ({ mode, setMode }) => {
   return (
     <>
       <StyleSwitch
+        disableRipple={true}
         m={0}
         p={0}
         checked={changeSwitch}

@@ -96,8 +96,9 @@ const AccountMenuMobile = ({ onClearSearchBar }) => {
         onCloseMenuResponsive={handleMobileMenuClose}
       />
 
-      <StyleMenuItem onClick={handleFavoritesMenuClose}>
+      <StyleMenuItem onClick={handleFavoritesMenuClose} disableRipple={true}>
         <IconButton
+          disableRipple={true}
           style={{ backgroundColor: "transparent" }}
           size="large"
           aria-label="show favorites link"
@@ -108,8 +109,9 @@ const AccountMenuMobile = ({ onClearSearchBar }) => {
         <p>Favorites</p>
       </StyleMenuItem>
       {login.isLoggedIn ? (
-        <StyleMenuItem onClick={handleProfileMenuOpen}>
+        <StyleMenuItem onClick={handleProfileMenuOpen} disableRipple={true}>
           <IconButton
+            disableRipple={true}
             style={{ backgroundColor: "transparent" }}
             size="large"
             aria-label="account of current user"
@@ -144,8 +146,12 @@ const AccountMenuMobile = ({ onClearSearchBar }) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <StyleMenuItem onClick={handleProfileMenuClose}>Profile</StyleMenuItem>
-      <StyleMenuItem onClick={handleMenuCloseAndLogout}>Logout</StyleMenuItem>
+      <StyleMenuItem onClick={handleProfileMenuClose} disableRipple={true}>
+        Edit
+      </StyleMenuItem>
+      <StyleMenuItem onClick={handleMenuCloseAndLogout} disableRipple={true}>
+        Logout
+      </StyleMenuItem>
     </Menu>
   );
 
@@ -171,6 +177,7 @@ const AccountMenuMobile = ({ onClearSearchBar }) => {
           }}
         >
           <IconButton
+            disableRipple={true}
             size="large"
             aria-label="show more"
             aria-controls={mobileMenuId}

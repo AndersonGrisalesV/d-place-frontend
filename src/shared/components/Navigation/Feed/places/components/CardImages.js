@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CardMedia } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../../../../context/login-context";
 
 const CardImages = ({ loadedPlaces }) => {
+  const login = useContext(LoginContext);
   let navigate = useNavigate();
 
   const handleNavigateToPost = () => {
     if (loadedPlaces) {
       navigate(`/api/places/${loadedPlaces.id}`);
+      login.listItemsNotListed(loadedPlaces.id);
     }
   };
   return (

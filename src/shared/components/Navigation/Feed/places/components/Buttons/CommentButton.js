@@ -39,6 +39,7 @@ const CommentButton = ({
 
   return (
     <IconButton
+      disableRipple={true}
       aria-label="post comments"
       style={{ backgroundColor: "transparent" }}
       title="Comment"
@@ -63,6 +64,7 @@ const CommentButton = ({
       }}
     >
       <Checkbox
+        disableRipple={true}
         checked={onLoadedPlaces.comments.length >= 1 ? true : false}
         style={{ backgroundColor: "transparent" }}
         icon={

@@ -6,10 +6,12 @@ export const LoginContext = createContext({
   newNotification: false,
   pidCleanListItems: null,
   clearListItems: false,
+  homepageListItems: null,
   login: () => {},
   createAccount: () => {},
   logout: () => {},
   notification: () => {},
   listItemsNotListed: () => {},
   listItemsCleanListed: () => {},
+  homepageCleanListItems: () => {},
 });

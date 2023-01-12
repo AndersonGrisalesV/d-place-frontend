@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Button, Zoom } from "@mui/material";
 
@@ -15,8 +15,10 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonChangePassword = ({ onChangePassword }) => {
+const ButtonChangePassword = ({ onChangePassword, onValue = false }) => {
   const login = useContext(LoginContext);
+
+  // useEffect(() => {}, [onChangePassword]);
 
   return (
     <React.Fragment>
@@ -57,7 +59,7 @@ const ButtonChangePassword = ({ onChangePassword }) => {
               },
             }}
           >
-            CHANGE PASSWORD
+            {!onValue ? "CHANGE PASSWORD" : "LEAVE OLD PASSWORD"}
           </StyleButton>
         </Zoom>
       )}

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
-import { Box, Divider, Stack, TextField } from "@mui/material";
+import { Box, Divider, InputAdornment, Stack, TextField } from "@mui/material";
 
 import styled from "@emotion/styled";
 
@@ -23,6 +23,10 @@ import ButtonCancelEditProfile from "./Buttons/ButtonCancelEditProfile";
 import ButtonDeleteProfile from "./Buttons/ButtonDeleteProfile";
 import ModalDeleteProfile from "./Buttons/Modals/ModalDeleteProfile";
 import ButtonChangePassword from "./Buttons/ButtonChangePassword";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
 import LoadingSpinnerWrapper from "../../LoadingSpinner/LoadingSpinnerWrapper";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
@@ -41,6 +45,12 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
     },
+  },
+}));
+
+const StyleIconButton = styled(IconButton)(({ theme }) => ({
+  "&:hover": {
+    backgroundColor: "transparent",
   },
 }));
 
@@ -380,8 +390,14 @@ const EditProfile = () => {
         const myForm = new FormData();
         myForm.append("name", formInputs.name);
         myForm.append("email", formInputs.email);
-        myForm.append("password", formInputs.password);
-        myForm.append("confirmPassword", formInputs.confirmPassword);
+        if (changePassword) {
+          myForm.append("password", formInputs.password);
+          myForm.append("confirmPassword", formInputs.confirmPassword);
+        } else {
+          myForm.append("password", "same");
+          myForm.append("confirmPassword", "same");
+        }
+
         myForm.append("image", formInputs.image);
         const responseData = await sendRequest(
           `http://localhost:4000/api/users/profile/editprofile/${uid}`,
@@ -466,6 +482,16 @@ const EditProfile = () => {
       </Box>
     );
   }
+
+  const [showUserOldPassword, setShowUserOldPassword] = useState(false);
+
+  const handleClickShowUserOldPassword = () =>
+    setShowUserOldPassword((show) => !show);
+
+  const [showUserNewPassword, setShowUserNewPassword] = useState(false);
+
+  const handleClickShowUserNewPassword = () =>
+    setShowUserNewPassword((show) => !show);
 
   return (
     <Box
@@ -673,6 +699,7 @@ const EditProfile = () => {
                       />
                       <ButtonChangePassword
                         onChangePassword={changePasswordHandler}
+                        onValue={changePassword}
                       />
                       {changePassword ? (
                         <React.Fragment>
@@ -687,7 +714,7 @@ const EditProfile = () => {
                                 : false
                             }
                             label="Old Password"
-                            type="password"
+                            type={showUserOldPassword ? "text" : "password"}
                             autoComplete="old-password"
                             size="small"
                             name="password"
@@ -710,6 +737,84 @@ const EditProfile = () => {
                               },
                             }}
                             InputProps={{
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    disableRipple={true}
+                                    sx={{ padding: "0px" }}
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowUserOldPassword}
+                                  >
+                                    {showUserOldPassword ? (
+                                      <VisibilityOff
+                                        sx={{
+                                          width: {
+                                            sps: "15px",
+                                            ps: "16px",
+                                            ts: "18px",
+                                            sls: "20px",
+                                            sms: "24px",
+                                            sc: "24px",
+                                            nsc: "24px",
+                                            ns: "24px",
+                                            msc: "24px",
+                                            mns: "24px",
+                                            ms: "24px",
+                                            lgs: "24px",
+                                          },
+                                          height: {
+                                            sps: "18px",
+                                            ps: "20px",
+                                            ts: "22px",
+                                            sls: "22px",
+                                            sms: "30px",
+                                            sc: "30px",
+                                            nsc: "30px",
+                                            ns: "30px",
+                                            msc: "30px",
+                                            mns: "30px",
+                                            ms: "30px",
+                                            lgs: "30px",
+                                          },
+                                        }}
+                                      />
+                                    ) : (
+                                      <Visibility
+                                        sx={{
+                                          width: {
+                                            sps: "15px",
+                                            ps: "16px",
+                                            ts: "18px",
+                                            sls: "20px",
+                                            sms: "24px",
+                                            sc: "24px",
+                                            nsc: "24px",
+                                            ns: "24px",
+                                            msc: "24px",
+                                            mns: "24px",
+                                            ms: "24px",
+                                            lgs: "24px",
+                                          },
+                                          height: {
+                                            sps: "18px",
+                                            ps: "20px",
+                                            ts: "22px",
+                                            sls: "22px",
+                                            sms: "30px",
+                                            sc: "30px",
+                                            nsc: "30px",
+                                            ns: "30px",
+                                            msc: "30px",
+                                            mns: "30px",
+                                            ms: "30px",
+                                            lgs: "30px",
+                                          },
+                                        }}
+                                      />
+                                    )}
+                                  </IconButton>
+                                </InputAdornment>
+                              ),
                               inputProps: {
                                 sx: {
                                   fontSize: {
@@ -777,7 +882,7 @@ const EditProfile = () => {
                                 : false
                             }
                             label="New Password"
-                            type="password"
+                            type={showUserNewPassword ? "text" : "password"}
                             autoComplete="new-password"
                             size="small"
                             name="password"
@@ -800,6 +905,84 @@ const EditProfile = () => {
                               },
                             }}
                             InputProps={{
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    disableRipple={true}
+                                    sx={{ padding: "0px" }}
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowUserNewPassword}
+                                  >
+                                    {showUserNewPassword ? (
+                                      <VisibilityOff
+                                        sx={{
+                                          width: {
+                                            sps: "15px",
+                                            ps: "16px",
+                                            ts: "18px",
+                                            sls: "20px",
+                                            sms: "24px",
+                                            sc: "24px",
+                                            nsc: "24px",
+                                            ns: "24px",
+                                            msc: "24px",
+                                            mns: "24px",
+                                            ms: "24px",
+                                            lgs: "24px",
+                                          },
+                                          height: {
+                                            sps: "18px",
+                                            ps: "20px",
+                                            ts: "22px",
+                                            sls: "22px",
+                                            sms: "30px",
+                                            sc: "30px",
+                                            nsc: "30px",
+                                            ns: "30px",
+                                            msc: "30px",
+                                            mns: "30px",
+                                            ms: "30px",
+                                            lgs: "30px",
+                                          },
+                                        }}
+                                      />
+                                    ) : (
+                                      <Visibility
+                                        sx={{
+                                          width: {
+                                            sps: "15px",
+                                            ps: "16px",
+                                            ts: "18px",
+                                            sls: "20px",
+                                            sms: "24px",
+                                            sc: "24px",
+                                            nsc: "24px",
+                                            ns: "24px",
+                                            msc: "24px",
+                                            mns: "24px",
+                                            ms: "24px",
+                                            lgs: "24px",
+                                          },
+                                          height: {
+                                            sps: "18px",
+                                            ps: "20px",
+                                            ts: "22px",
+                                            sls: "22px",
+                                            sms: "30px",
+                                            sc: "30px",
+                                            nsc: "30px",
+                                            ns: "30px",
+                                            msc: "30px",
+                                            mns: "30px",
+                                            ms: "30px",
+                                            lgs: "30px",
+                                          },
+                                        }}
+                                      />
+                                    )}
+                                  </IconButton>
+                                </InputAdornment>
+                              ),
                               inputProps: {
                                 sx: {
                                   fontSize: {
@@ -862,7 +1045,7 @@ const EditProfile = () => {
                                 : false
                             }
                             label="Confirm New Password"
-                            type="password"
+                            type={showUserNewPassword ? "text" : "password"}
                             autoComplete="confirm-new-Password"
                             size="small"
                             name="confirmPassword"

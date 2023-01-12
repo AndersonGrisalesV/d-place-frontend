@@ -22,6 +22,7 @@ const HamburgerMenu = (props) => {
       }}
     >
       <IconButton
+        disableRipple={true}
         size="large"
         edge="start"
         color="inherit"

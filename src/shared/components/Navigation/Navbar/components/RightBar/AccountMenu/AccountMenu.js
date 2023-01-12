@@ -69,8 +69,12 @@ const AccountMenu = ({ onClearSearchBar }) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <StyleMenuItem onClick={handleProfileMenuClose}>Profile</StyleMenuItem>
-      <StyleMenuItem onClick={handleMenuCloseAndLogout}>Logout</StyleMenuItem>
+      <StyleMenuItem onClick={handleProfileMenuClose} disableRipple={true}>
+        Profile
+      </StyleMenuItem>
+      <StyleMenuItem onClick={handleMenuCloseAndLogout} disableRipple={true}>
+        Logout
+      </StyleMenuItem>
     </Menu>
   );
 
@@ -97,6 +101,7 @@ const AccountMenu = ({ onClearSearchBar }) => {
             }}
           >
             <IconButton
+              disableRipple={true}
               size="large"
               edge="end"
               aria-label="account of current user"

@@ -62,6 +62,7 @@ const FavoriteButton = ({
 
   return (
     <IconButtonModified
+      disableRipple={true}
       aria-label="add to favorites"
       style={{
         backgroundColor: "transparent",
@@ -88,12 +89,14 @@ const FavoriteButton = ({
       }}
     >
       <Checkbox
+        disableRipple={true}
         checked={onChangeFavorite ? newFavorite : isFavorite}
         style={{
           backgroundColor: "transparent",
         }}
         icon={
           <StyleFavoriteBorderIcon
+            disableRipple={true}
             sx={{
               backgroundColor: "transparent",
               width: {
@@ -129,6 +132,7 @@ const FavoriteButton = ({
         }
         checkedIcon={
           <StyleFavoriteIcon
+            disableRipple={true}
             sx={{
               backgroundColor: "transparent",
               color: "red",

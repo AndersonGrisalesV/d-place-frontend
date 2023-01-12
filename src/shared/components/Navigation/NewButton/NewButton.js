@@ -45,6 +45,7 @@ const NewButton = ({
       >
         <StyleNavLink to="/api/places/newplace">
           <StyleFabButton
+            disableRipple={true}
             onClick={cleanListItemsHandler}
             sx={{
               color: "#fff",
@@ -69,6 +70,7 @@ const NewButton = ({
       >
         <NavLink to="/api/places/newPlace">
           <StyleFabButton
+            disableRipple={true}
             onClick={cleanListItemsHandler}
             sx={{
               color: "#fff",
@@ -93,6 +95,7 @@ const NewButton = ({
       >
         <NavLink to="/api/places/newplace">
           <StyleFabButton
+            disableRipple={true}
             onClick={onCloseResponsiveDrawer ? handleDrawerClose : null}
             sx={{
               color: "#fff",
