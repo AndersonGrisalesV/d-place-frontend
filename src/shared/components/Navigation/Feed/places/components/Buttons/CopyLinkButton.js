@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import React from "react";
 
-import { Checkbox, IconButton, Typography } from "@mui/material";
+import { IconButton } from "@mui/material";
 import styled from "@emotion/styled";
-import { LoginContext } from "../../../../../../context/login-context";
+
 import LinkIcon from "@mui/icons-material/Link";
 
 const StyleLinkIcon = styled(LinkIcon)(({ theme }) => ({
@@ -11,19 +10,9 @@ const StyleLinkIcon = styled(LinkIcon)(({ theme }) => ({
   backgroundColor: "transparent",
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
-  // color: "#da4453",
+
   "&:hover": {
     backgroundColor: "transparent",
-    color: "#db2d3f",
-  },
-}));
-
-const StyleFavoriteIcon = styled(FavoriteIcon)(({ theme }) => ({
-  stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
-  strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
-  color: "#da4453",
-  "&:hover": {
-    backgroundColor: "#db2d3f0f",
     color: "#db2d3f",
   },
 }));
@@ -44,7 +33,6 @@ const CopyLinkButton = () => {
       }}
     >
       <StyleLinkIcon
-        disableRipple={true}
         sx={{
           backgroundColor: "transparent",
           width: "24px",

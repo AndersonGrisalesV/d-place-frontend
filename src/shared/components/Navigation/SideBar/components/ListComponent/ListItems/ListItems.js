@@ -347,8 +347,10 @@ const ListItems = ({
 
   const handleLogout = () => {
     navigate("/homepage");
+
     setAnchorEl(null);
     login.logout();
+    window.location.reload();
     onClearSearchBar();
     if (onToggleResponsive) {
       onToggleResponsive("left", false);
@@ -427,7 +429,16 @@ const ListItems = ({
         setSettingsSelecteditem(0);
         break;
     }
-  }, [login.userId, login.pidCleanListItems, login.clearListItems]);
+    // if (login.homepageListItems == 0) {
+    //   homepageButton.current.click();
+    // }
+  }, [
+    login.userId,
+    login.pidCleanListItems,
+    login.clearListItems,
+    login.homepageListItems,
+    login,
+  ]);
 
   const [clearListItem, setClearListItem] = useState(false);
 
@@ -443,12 +454,7 @@ const ListItems = ({
         case `/api/places/places/${login.pidCleanListItems}`:
           setClearListItem(true);
           break;
-        // case `/api/users/favorites/${login.userId}`:
-        //   setClearListItem(true);
-        //   break;
-        // case `/api/users/profile/${login.userId}`:
-        //   setClearListItem(true);
-        //   break;
+
         default:
           break;
       }
@@ -463,7 +469,11 @@ const ListItems = ({
     setClearListItem(false);
     login.listItemsCleanListed();
 
-    setSelectedIndex(index);
+    if (index === undefined) {
+      setSelectedIndex(0);
+    } else {
+      setSelectedIndex(index);
+    }
 
     // if (clearListItem) {
     //   setSelectedIndex(4);
@@ -474,11 +484,10 @@ const ListItems = ({
   };
   const homepageButton = useRef(null);
 
-  useEffect(() => {
-    if (login.homepageCleanListItems) {
-      homepageButton.current.click("e", 0);
-    }
-  }, [login.homepageCleanListItems]);
+  // useEffect(() => {
+  //   homepageButton.current.click(1, 0);
+  //   setSelectedIndex(0);
+  // }, [login.homepageListItems]);
 
   return (
     <>

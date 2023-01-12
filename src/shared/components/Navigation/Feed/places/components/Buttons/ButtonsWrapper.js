@@ -135,6 +135,8 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
     });
   }
 
+  const [userLikeValue, setUserLikeValue] = useState(null);
+
   const favoritehandler = async () => {
     if (login.isLoggedIn) {
       try {
@@ -157,6 +159,14 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
       } catch (err) {
         console.log(err);
       }
+
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:4000/api/places/${loadedPlaces._id}`
+        );
+        setUserLikeValue(responseData.place);
+        console.log(responseData.place);
+      } catch (err) {}
     } else {
       setShowSuccess("You must be logged in to like posts");
 
@@ -334,6 +344,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
             isFavorite={isFavorite}
             onChangeFavorite={changeFavorite ? changeFavorite : ""}
             onFavoriteHandler={favoritehandler}
+            onCount={userLikeValue ? userLikeValue : ""}
           />
           <CommentButton onLoadedPlaces={loadedPlaces} />
 
@@ -474,7 +485,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                 </StyleMenuItem>
               ) : null}
               {showAllShareLinks ? (
-                <React.Fragment>
+                <div>
                   <StyleMenuItem
                     onClick={handleLineLink}
                     sx={{
@@ -605,7 +616,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                       <ExpandLessIcon sx={{ cursor: "pointer" }} />
                     </StyleMenuItem>
                   ) : null}
-                </React.Fragment>
+                </div>
               ) : null}
             </Menu>
             <ShareButton

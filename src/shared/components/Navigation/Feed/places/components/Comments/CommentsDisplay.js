@@ -96,7 +96,7 @@ const CommentsDisplay = ({
       let date = new Date().toJSON();
 
       try {
-        const responseData = await sendRequest(
+        await sendRequest(
           `http://localhost:4000/api/places/${onPlaceId}/newcomment`,
           "POST",
           JSON.stringify({
@@ -156,7 +156,7 @@ const CommentsDisplay = ({
         <React.Fragment key={comment._id}>
           <CommentShow
             onRefreshPlaceComments={onRefreshPlaceComments}
-            onDeletedComments={onDeletedComments}
+            // onDeletedComments={onDeletedComments}
             onErrorDeleteComment={onErrorDeleteComment}
             onPlaceComments={comment}
             key={comment._id}

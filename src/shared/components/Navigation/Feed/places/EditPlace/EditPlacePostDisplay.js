@@ -554,7 +554,7 @@ const EditPlacePostDisplay = () => {
                           formInputsHandler(e);
                           titleChangeHandler(e);
                         }}
-                        onBlur={showBlurTitle ? "" : titleBlurHandler}
+                        onBlur={showBlurTitle ? null : titleBlurHandler}
                         // value={titleInput}
                         error={titleInputHasError}
                         helperText={
@@ -636,7 +636,7 @@ const EditPlacePostDisplay = () => {
                           descriptionChangeHandler(e);
                         }}
                         onBlur={
-                          showBlurDescription ? "" : descriptionBlurHandler
+                          showBlurDescription ? null : descriptionBlurHandler
                         }
                         // value={descriptionInput}
                         error={descriptionInputHasError}
@@ -717,7 +717,7 @@ const EditPlacePostDisplay = () => {
                           formInputsHandler(e);
                           addressChangeHandler(e);
                         }}
-                        onBlur={showBlurAddress ? "" : addressBlurHandler}
+                        onBlur={showBlurAddress ? null : addressBlurHandler}
                         // value={addressInput}
                         error={addressInputHasError}
                         helperText={

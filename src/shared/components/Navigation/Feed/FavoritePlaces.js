@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 import { Box } from "@mui/material";
@@ -7,8 +7,10 @@ import Place from "./places/Place";
 
 import { useHttpClient } from "../../../hooks/http-hook";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import { LoginContext } from "../../../context/login-context";
 
 const FavoritePlaces = ({ onFilterSearch = null }) => {
+  const login = useContext(LoginContext);
   const params = useParams();
   const { pathname } = useLocation();
 
@@ -21,18 +23,20 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
   const [counter, setCounter] = useState(false);
 
   useEffect(() => {
-    setDataStatus(true);
-    const fetchPlaces = async () => {
-      try {
-        const responseData = await sendRequest(
-          `http://localhost:4000/api/users/favorites/${uid}`
-        );
+    if (login.isLoggedIn) {
+      setDataStatus(true);
+      const fetchPlaces = async () => {
+        try {
+          const responseData = await sendRequest(
+            `http://localhost:4000/api/users/favorites/${uid}`
+          );
 
-        setLoadedPlaces(responseData.places.reverse());
-      } catch (err) {}
-    };
-    fetchPlaces();
-  }, [sendRequest, uid]);
+          setLoadedPlaces(responseData.places.reverse());
+        } catch (err) {}
+      };
+      fetchPlaces();
+    }
+  }, [sendRequest, uid, login.isLoggedIn]);
 
   useEffect(() => {
     console.log(onFilterSearch);

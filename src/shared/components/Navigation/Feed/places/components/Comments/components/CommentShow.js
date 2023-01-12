@@ -70,7 +70,6 @@ const CommentShow = ({
 
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // console.log("here" + `${onButton}`);
   console.log(onPlaceComments);
 
   const addDays = (date) => {
@@ -255,6 +254,7 @@ const CommentShow = ({
   const handleConfirmCancel = () => {
     handleClose();
     setEditComment((eComment) => !eComment);
+    resetCommentInput();
   };
 
   const handleDeleteComment = () => {
@@ -533,7 +533,7 @@ const CommentShow = ({
                     formInputsHandler(e);
                     commentChangeHandler(e);
                   }}
-                  onBlur={showBlurComment ? "" : commentBlurHandler}
+                  onBlur={showBlurComment ? null : commentBlurHandler}
                   // value={titleInput}
                   error={commentInputHasError}
                   // onBlur={commentBlurHandler}

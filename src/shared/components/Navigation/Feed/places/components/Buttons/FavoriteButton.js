@@ -4,6 +4,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Checkbox, IconButton, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { LoginContext } from "../../../../../../context/login-context";
+import { useHttpClient } from "../../../../../../hooks/http-hook";
 
 const StyleFavoriteBorderIcon = styled(FavoriteBorderIcon)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
@@ -32,23 +33,10 @@ const FavoriteButton = ({
   onFavoriteHandler,
   onChangeFavorite,
   onLoadedPlaces,
+  onCount,
 }) => {
-  // const login = useContext(LoginContext);
-
-  // let isFavorite = false;
-  // if (login.isLoggedIn) {
-  //   loadedPlaces.favoritesUserIds.map((favorite) => {
-  //     if (favorite === login.userId) {
-  //       return (isFavorite = true);
-  //     }
-  //     return (isFavorite = false);
-  //   });
-  // }
-
-  // console.log(isFavorite);
-  // 637fc05f6fb8981bc3ee8a32
-
   const [newFavorite, setNewFavorite] = useState(false);
+  const [favoriteCount, setFavoriteCount] = useState(0);
 
   useEffect(() => {
     if (onChangeFavorite) {
@@ -60,6 +48,18 @@ const FavoriteButton = ({
     }
   }, [onChangeFavorite]);
 
+  const handlerClickFavorite = () => {
+    setFavoriteCount(true);
+    // if (onChangeFavorite.favorite) {
+    //   setPlaceFavorites(userLikeValue + 1);
+    // } else {
+    //   setPlaceFavorites(userLikeValue - 1);
+    // }
+    // setTimeout(() => {
+    //   fetchPlaces();
+    // }, "100");
+  };
+
   return (
     <IconButtonModified
       disableRipple={true}
@@ -68,7 +68,14 @@ const FavoriteButton = ({
         backgroundColor: "transparent",
       }}
       title="Like"
-      onClick={onFavoriteHandler}
+      onClick={(e) => {
+        onFavoriteHandler(e);
+        handlerClickFavorite(e);
+      }}
+      // onChange={(e) => {
+      //                     formInputsHandler(e);
+      //                     titleChangeHandler(e);
+      //                   }}
       sx={{
         paddingTop: "0px",
         paddingBottom: "0px",
@@ -96,7 +103,6 @@ const FavoriteButton = ({
         }}
         icon={
           <StyleFavoriteBorderIcon
-            disableRipple={true}
             sx={{
               backgroundColor: "transparent",
               width: {
@@ -132,7 +138,6 @@ const FavoriteButton = ({
         }
         checkedIcon={
           <StyleFavoriteIcon
-            disableRipple={true}
             sx={{
               backgroundColor: "transparent",
               color: "red",
@@ -168,10 +173,10 @@ const FavoriteButton = ({
           />
         }
       />
-      {onChangeFavorite === ""
-        ? onLoadedPlaces.favoritesUserIds.length
-        : onChangeFavorite.favorite
-        ? onLoadedPlaces.favoritesUserIds.length + 1
+      {favoriteCount && onCount && newFavorite
+        ? onCount.favoritesUserIds.length
+        : favoriteCount && onCount && !newFavorite
+        ? onCount.favoritesUserIds.length - 1
         : onLoadedPlaces.favoritesUserIds.length}
     </IconButtonModified>
   );

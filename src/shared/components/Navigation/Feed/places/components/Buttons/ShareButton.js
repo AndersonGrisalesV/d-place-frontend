@@ -201,8 +201,6 @@ const ShareButton = ({
       aria-haspopup="true"
       aria-expanded={onOpenMenuLinks ? "true" : undefined}
       onClick={(e) => handleClickShareButton(e)}
-      // onMouseEnter={onClickLinks}
-      // onMouseLeave={onCloseMenuLinks}
       aria-label="share"
       style={{ backgroundColor: "transparent" }}
       title="Share"
@@ -226,12 +224,7 @@ const ShareButton = ({
         },
       }}
     >
-      {/* { freezeShareIcon && !onSharePost ? unchecked ? checked : unchecked} */}
       {freezeShareIcon && onSharePost ? checked : unchecked}
-
-      {/* {onChangeShareCount === ""
-        ? onLoadedPlaces.shareCount
-        : onLoadedPlaces.shareCount + 1} */}
       {onSharePost
         ? onLoadedPlaces.shareCount + onChangeShareCount
         : onLoadedPlaces.shareCount}
