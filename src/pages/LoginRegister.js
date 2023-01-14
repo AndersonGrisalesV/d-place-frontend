@@ -1,7 +1,13 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { Box, Stack, TextField } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+} from "@mui/material";
 import Title from "../shared/components/LoginRegister/components/Title";
 import CardContentLogin from "../shared/components/LoginRegister/components/CardContentLogin";
 import CardWrapperLogin from "../shared/components/LoginRegister/components/CardWrapperLogin";
@@ -22,6 +28,7 @@ import styled from "@emotion/styled";
 import LoadingSpinner from "../shared/components/LoadingSpinner/LoadingSpinner";
 import SnackBarResultLogin from "../shared/components/LoginRegister/components/SnackBarResultLogin";
 import LoadingSpinnerWrapper from "../shared/components/LoadingSpinner/LoadingSpinnerWrapper";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -38,6 +45,20 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
     },
+  },
+}));
+
+const StyleVisibilityOffIcon = styled(VisibilityOff)(({ theme }) => ({
+  color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
+  "&:hover": {
+    color: theme.palette.mode === "dark" ? "#ffffff5c" : "#0000005e",
+  },
+}));
+
+const StyleVisibilityIcon = styled(Visibility)(({ theme }) => ({
+  color: theme.palette.mode === "dark" ? "#ffffff5c" : "#0000005e",
+  "&:hover": {
+    color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
   },
 }));
 
@@ -110,6 +131,11 @@ const LoginRegister = () => {
           setShowSuccess(false);
           setSuccessMessage(null);
         }, "930");
+        resetNameInput();
+        resetEmailInput();
+
+        setImageUrl(null);
+        setSelectedImage(null);
       } catch (err) {}
     } else {
       try {
@@ -150,22 +176,10 @@ const LoginRegister = () => {
           setShowSuccess(false);
           setSuccessMessage(null);
         }, "930");
-
-        // navigate("/homepage", {
-        //   state: {
-        //     onSuccess: true,
-        //     response: responseData.message,
-        //     user: responseData.user,
-        //   },
-        // });
       } catch (err) {}
     }
-    resetNameInput();
-    resetEmailInput();
     resetPasswordInput();
     resetconfirmPasswordInput();
-    setImageUrl(null);
-    setSelectedImage(null);
   };
 
   const switchModeHandler = () => {
@@ -272,6 +286,9 @@ const LoginRegister = () => {
   }
 
   function ValidatePassword(password) {
+    // if (!isLoginMode) {
+    //   return false;
+    // }
     if (password.trim() !== "" && password.length > 5) {
       return true;
     }
@@ -293,7 +310,7 @@ const LoginRegister = () => {
   let formIsValid = false;
 
   if (
-    (isLoginMode && emailIsValid && passwordIsValid) ||
+    (isLoginMode && emailIsValid) ||
     (!isLoginMode &&
       nameIsValid &&
       emailIsValid &&
@@ -307,6 +324,11 @@ const LoginRegister = () => {
     setSelectedImage(null);
     setImageUrl(null);
   };
+
+  const [showUserPassword, setShowUserPassword] = useState(false);
+
+  const handleClickShowUserPassword = () =>
+    setShowUserPassword((show) => !show);
 
   return (
     <ScrollToTop pathname={pathname}>
@@ -488,7 +510,13 @@ const LoginRegister = () => {
                 onBlur={emailBlurHandler}
                 value={emailInput}
                 error={emailInputHasError}
-                helperText={emailInputHasError ? "Incorrect mail" : ""}
+                helperText={
+                  emailInputHasError && isLoginMode
+                    ? "Your email cannot be empty"
+                    : emailInputHasError && !isLoginMode
+                    ? "Incorrect mail"
+                    : ""
+                }
               />
               <StyleTextField
                 id="outlined-password-input"
@@ -496,7 +524,7 @@ const LoginRegister = () => {
                   isLoading ? true : false || showSuccess ? true : false
                 }
                 label="Password"
-                type="password"
+                type={showUserPassword ? "text" : "password"}
                 autoComplete="current-password"
                 size="small"
                 name="password"
@@ -519,6 +547,85 @@ const LoginRegister = () => {
                   },
                 }}
                 InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        disabled={isLoading || showSuccess ? true : false}
+                        disableRipple={true}
+                        sx={{ padding: "0px" }}
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowUserPassword}
+                      >
+                        {showUserPassword ? (
+                          <StyleVisibilityOffIcon
+                            sx={{
+                              width: {
+                                sps: "15px",
+                                ps: "16px",
+                                ts: "18px",
+                                sls: "20px",
+                                sms: "24px",
+                                sc: "24px",
+                                nsc: "24px",
+                                ns: "24px",
+                                msc: "24px",
+                                mns: "24px",
+                                ms: "24px",
+                                lgs: "24px",
+                              },
+                              height: {
+                                sps: "18px",
+                                ps: "20px",
+                                ts: "22px",
+                                sls: "22px",
+                                sms: "30px",
+                                sc: "30px",
+                                nsc: "30px",
+                                ns: "30px",
+                                msc: "30px",
+                                mns: "30px",
+                                ms: "30px",
+                                lgs: "30px",
+                              },
+                            }}
+                          />
+                        ) : (
+                          <StyleVisibilityIcon
+                            sx={{
+                              width: {
+                                sps: "15px",
+                                ps: "16px",
+                                ts: "18px",
+                                sls: "20px",
+                                sms: "24px",
+                                sc: "24px",
+                                nsc: "24px",
+                                ns: "24px",
+                                msc: "24px",
+                                mns: "24px",
+                                ms: "24px",
+                                lgs: "24px",
+                              },
+                              height: {
+                                sps: "18px",
+                                ps: "20px",
+                                ts: "22px",
+                                sls: "22px",
+                                sms: "30px",
+                                sc: "30px",
+                                nsc: "30px",
+                                ns: "30px",
+                                msc: "30px",
+                                mns: "30px",
+                                ms: "30px",
+                                lgs: "30px",
+                              },
+                            }}
+                          />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
                   inputProps: {
                     sx: {
                       fontSize: {
@@ -560,12 +667,14 @@ const LoginRegister = () => {
                   formInputsHandler(e);
                   passwordChangeHandler(e);
                 }}
-                onBlur={passwordBlurHandler}
+                onBlur={!isLoginMode ? passwordBlurHandler : null}
                 value={passwordInput}
                 error={passwordInputHasError}
                 ref={passwordInputRef}
                 helperText={
-                  passwordInputHasError
+                  passwordInputHasError && isLoginMode
+                    ? "Your password cannot be empty"
+                    : passwordInputHasError && !isLoginMode
                     ? "Password must be at least 6 characters long"
                     : ""
                 }
@@ -577,7 +686,7 @@ const LoginRegister = () => {
                     isLoading ? true : false || showSuccess ? true : false
                   }
                   label="Confirm Password"
-                  type="password"
+                  type={showUserPassword ? "text" : "password"}
                   autoComplete="current-confirmPassword"
                   size="small"
                   name="confirmPassword"

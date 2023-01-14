@@ -1,7 +1,14 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
-import { Box, Divider, InputAdornment, Stack, TextField } from "@mui/material";
+import {
+  Box,
+  Divider,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import styled from "@emotion/styled";
 
@@ -48,9 +55,17 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const StyleIconButton = styled(IconButton)(({ theme }) => ({
+const StyleVisibilityOffIcon = styled(VisibilityOff)(({ theme }) => ({
+  color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
   "&:hover": {
-    backgroundColor: "transparent",
+    color: theme.palette.mode === "dark" ? "#ffffff5c" : "#0000005e",
+  },
+}));
+
+const StyleVisibilityIcon = styled(Visibility)(({ theme }) => ({
+  color: theme.palette.mode === "dark" ? "#ffffff5c" : "#0000005e",
+  "&:hover": {
+    color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
   },
 }));
 
@@ -228,7 +243,7 @@ const EditProfile = () => {
     }
 
     if (e.target.name === "image" && showBlurImage) {
-      setShowImage(false);
+      setShowBlurImage(false);
     }
 
     if (e.target.name === "image") {
@@ -255,7 +270,7 @@ const EditProfile = () => {
   const [showBlurOldPassword, setShowOldPassword] = useState(true);
   const [showBlurPassword, setShowPassword] = useState(true);
   const [showBlurConfirmPassword, setShowConfirmPassword] = useState(true);
-  const [showBlurImage, setShowImage] = useState(true);
+  const [showBlurImage, setShowBlurImage] = useState(true);
 
   const {
     value: nameInput,
@@ -361,8 +376,7 @@ const EditProfile = () => {
       return;
     }
     if (login.isLoggedIn && formInputs) {
-      // console.log(formInputs);
-      if (!formInputs.image) {
+      if (!formInputs.image && formInputs.image !== "noImage") {
         formInputs.image = {
           //Replace for a placeholder image
           public_id: "1234",
@@ -382,8 +396,10 @@ const EditProfile = () => {
       if (showBlurConfirmPassword) {
         formInputs.confirmPassword = "same";
       }
-      if (showBlurImage) {
-        formInputs.image = "same";
+      if (formInputs.image !== "noImage") {
+        if (showBlurImage) {
+          formInputs.image = "same";
+        }
       }
 
       try {
@@ -421,21 +437,24 @@ const EditProfile = () => {
           setSuccessMessage(null);
         }, "930");
       } catch (err) {}
+      resetNameInput();
+      resetEmailInput();
     }
 
-    resetNameInput();
-    resetEmailInput();
     resetOldPasswordInput();
     resetPasswordInput();
     resetconfirmPasswordInput();
   };
 
+  const [changePassword, setChangePassword] = useState(false);
+  const [deleteImage, setDeleteImage] = useState(false);
+
   let formIsValid = false;
 
   if (login.isLoggedIn) {
-    if (!showBlurName && nameIsValid) {
+    if (!showBlurName && nameIsValid && !changePassword) {
       formIsValid = true;
-    } else if (!showBlurEmail && emailIsValid) {
+    } else if (!showBlurEmail && emailIsValid && !changePassword) {
       formIsValid = true;
     } else if (
       !showBlurPassword &&
@@ -444,24 +463,51 @@ const EditProfile = () => {
       confirmPasswordIsValid
     ) {
       formIsValid = true;
-    } else if (!showBlurImage) {
+    } else if (!showBlurImage && !changePassword) {
       formIsValid = true;
     }
 
-    if (!selectedImage && !imageUrl) {
-      formIsValid = false;
+    if (!selectedImage && !imageUrl && !changePassword) {
+      if (loadedUser) {
+        if (formInputs.image.value !== "") {
+          formIsValid = false;
+        }
+      }
     }
+    if (deleteImage) {
+      if (loadedUser) {
+        if (loadedUser.imageUrl.url === "") {
+          formIsValid = false;
+        } else {
+          formIsValid = true;
+        }
+      }
+    }
+    // if (showBlurImage && !changePassword && !deleteImage) {
+    //   formIsValid = true;
+    // }
   }
 
   const handleRemoveImage = () => {
+    formInputs.image = "noImage";
+
+    if (loadedUser) {
+      if (loadedUser.imageUrl.url === "") {
+        setDeleteImage(false);
+      } else {
+        setDeleteImage(true);
+      }
+    }
+
     setSelectedImage(null);
     setImageUrl(null);
   };
 
-  const [changePassword, setChangePassword] = useState(false);
-
   const changePasswordHandler = () => {
     setChangePassword((prevPassword) => !prevPassword);
+    resetOldPasswordInput();
+    resetPasswordInput();
+    resetconfirmPasswordInput();
   };
 
   let spinner = "";
@@ -740,13 +786,16 @@ const EditProfile = () => {
                               endAdornment: (
                                 <InputAdornment position="end">
                                   <IconButton
+                                    disabled={
+                                      isLoading || showSuccess ? true : false
+                                    }
                                     disableRipple={true}
                                     sx={{ padding: "0px" }}
                                     aria-label="toggle password visibility"
                                     onClick={handleClickShowUserOldPassword}
                                   >
                                     {showUserOldPassword ? (
-                                      <VisibilityOff
+                                      <StyleVisibilityOffIcon
                                         sx={{
                                           width: {
                                             sps: "15px",
@@ -779,7 +828,7 @@ const EditProfile = () => {
                                         }}
                                       />
                                     ) : (
-                                      <Visibility
+                                      <StyleVisibilityIcon
                                         sx={{
                                           width: {
                                             sps: "15px",
@@ -908,13 +957,16 @@ const EditProfile = () => {
                               endAdornment: (
                                 <InputAdornment position="end">
                                   <IconButton
+                                    disabled={
+                                      isLoading || showSuccess ? true : false
+                                    }
                                     disableRipple={true}
                                     sx={{ padding: "0px" }}
                                     aria-label="toggle password visibility"
                                     onClick={handleClickShowUserNewPassword}
                                   >
                                     {showUserNewPassword ? (
-                                      <VisibilityOff
+                                      <StyleVisibilityOffIcon
                                         sx={{
                                           width: {
                                             sps: "15px",
@@ -947,7 +999,7 @@ const EditProfile = () => {
                                         }}
                                       />
                                     ) : (
-                                      <Visibility
+                                      <StyleVisibilityIcon
                                         sx={{
                                           width: {
                                             sps: "15px",
@@ -1112,7 +1164,7 @@ const EditProfile = () => {
                             }}
                             onBlur={
                               showBlurConfirmPassword
-                                ? ""
+                                ? null
                                 : confirmPasswordBlurHandler
                             }
                             value={confirmPasswordInput}
@@ -1140,6 +1192,32 @@ const EditProfile = () => {
                                 setImageUrl={setImageUrl}
                                 showBlurImage={showBlurImage}
                               />
+                              {formInputs.image.value === "" || deleteImage ? (
+                                <Typography
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    fontSize: {
+                                      sps: "7px",
+                                      ps: "8px",
+                                      ts: "10px",
+                                      sls: "10px",
+                                      sms: "12px",
+                                      sc: "12px",
+                                      nsc: "12px",
+                                      ns: "12px",
+                                      msc: "12px",
+                                      mns: "12px",
+                                      ms: "12px",
+                                      lgs: "12px",
+                                    },
+                                  }}
+                                >
+                                  {formInputs.image.value === ""
+                                    ? "You don't have a profile picture"
+                                    : "You profile picture will be deleted"}
+                                </Typography>
+                              ) : null}
                               {imageUrl && selectedImage && (
                                 <ImagePreviewEditProfileButton
                                   imageUrl={imageUrl}

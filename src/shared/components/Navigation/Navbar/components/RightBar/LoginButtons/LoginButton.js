@@ -86,6 +86,7 @@ const LoginButton = ({ OnComment = false }) => {
     <Box onClick={cleanListItemsHandler}>
       <NavLink to="/api/users/loginregister" style={{ textDecoration: "none" }}>
         <StyleButton
+          disableRipple={true}
           sx={{
             textTransform: "none",
             bgcolor: `${buttonColor}`,
