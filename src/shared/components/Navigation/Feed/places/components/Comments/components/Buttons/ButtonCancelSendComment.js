@@ -26,6 +26,7 @@ const ButtonCancelSendComment = ({
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
+            disableRipple={true}
             onClick={onHandleOpen}
             disabled={cancelSendCommentIsValid ? false : true}
             sx={{

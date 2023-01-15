@@ -35,7 +35,12 @@ const ImageEditProfileButton = ({
     }
   };
   return (
-    <Stack direction="row" spacing={1} justifyContent="space-between">
+    <Stack
+      direction="row"
+      spacing={0}
+      justifyContent="center"
+      sx={{ marginTop: "16px" }}
+    >
       <input
         accept="image/*"
         type="file"
@@ -47,6 +52,7 @@ const ImageEditProfileButton = ({
       />
       <label htmlFor="select-image" style={{ marginLeft: "0px" }}>
         <StyleButtonImage
+          disableRipple={true}
           disabled={isLoading ? true : false || showSuccess ? true : false}
           component="span"
           sx={{
@@ -68,7 +74,7 @@ const ImageEditProfileButton = ({
             },
           }}
         >
-          Select Image
+          Change picture
         </StyleButtonImage>
       </label>
     </Stack>

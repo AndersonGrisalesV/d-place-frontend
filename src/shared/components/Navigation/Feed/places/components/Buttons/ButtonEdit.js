@@ -31,6 +31,7 @@ const ButtonEdit = ({ loadedPlaces }) => {
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleNavLink to={`/api/places/editplace/${loadedPlaces._id}`}>
             <StyleButton
+              disableRipple={true}
               onClick={cleanListItemsHandler}
               sx={{
                 marginTop: {

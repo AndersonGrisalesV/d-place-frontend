@@ -7,6 +7,7 @@ import {
   InputAdornment,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import Title from "../shared/components/LoginRegister/components/Title";
 import CardContentLogin from "../shared/components/LoginRegister/components/CardContentLogin";
@@ -95,7 +96,7 @@ const LoginRegister = () => {
     e.preventDefault();
 
     // console.log(formInputs.image);
-    if (!formInputs.image) {
+    if (!formInputs.image || formInputs.image === "noImage") {
       formInputs.image = "";
     }
 
@@ -183,26 +184,12 @@ const LoginRegister = () => {
   };
 
   const switchModeHandler = () => {
-    // if (!isLoginMode) {
-    //   // setFormData(
-    //   //   {
-    //   //     ...formState.inputs,
-    //   //     name: undefined,
-    //   //   },
-    //   //   formState.inputs.email.isValid && formState.inputs.password.isValid
-    //   // );
-    // } else {
-    //   // setFormData(
-    //   //   {
-    //   //     ...formState.inputs,
-    //   //     name: {
-    //   //       value: "",
-    //   //       isValid: false,
-    //   //     },
-    //   //   },
-    //   //   false
-    //   // );
-    // }
+    resetNameInput();
+    resetEmailInput();
+    setImageUrl(null);
+    setSelectedImage(null);
+    resetPasswordInput();
+    resetconfirmPasswordInput();
     setIsLoginMode((prevMode) => !prevMode);
   };
 
@@ -321,6 +308,7 @@ const LoginRegister = () => {
   }
 
   const handleRemoveImage = () => {
+    formInputs.image = "noImage";
     setSelectedImage(null);
     setImageUrl(null);
   };
@@ -765,11 +753,37 @@ const LoginRegister = () => {
                     formInputsHandler={formInputsHandler}
                     isLoading={isLoading}
                   />
+                  {!imageUrl && !selectedImage ? (
+                    <Typography
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        fontSize: {
+                          sps: "7px",
+                          ps: "8px",
+                          ts: "10px",
+                          sls: "10px",
+                          sms: "12px",
+                          sc: "12px",
+                          nsc: "12px",
+                          ns: "12px",
+                          msc: "12px",
+                          mns: "12px",
+                          ms: "12px",
+                          lgs: "12px",
+                        },
+                      }}
+                    >
+                      "You have not selected a profile picture"
+                    </Typography>
+                  ) : null}
                   {imageUrl && selectedImage && (
                     <ImagePreviewButton
                       imageUrl={imageUrl}
                       selectedImageName={selectedImage.name}
                       handleRemoveImage={handleRemoveImage}
+                      isLoading={isLoading}
+                      showSuccess={showSuccess}
                     />
                   )}
                 </React.Fragment>

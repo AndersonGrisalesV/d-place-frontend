@@ -40,6 +40,7 @@ const ImageUploadButton = ({ formInputsHandler, isLoading, showSuccess }) => {
       />
       <label htmlFor="select-image" style={{ marginLeft: "0px" }}>
         <StyleButtonImage
+          disableRipple={true}
           disabled={isLoading ? true : false || showSuccess ? true : false}
           component="span"
           sx={{
@@ -61,7 +62,7 @@ const ImageUploadButton = ({ formInputsHandler, isLoading, showSuccess }) => {
             },
           }}
         >
-          Select Image
+          Upload Image
         </StyleButtonImage>
       </label>
     </Stack>

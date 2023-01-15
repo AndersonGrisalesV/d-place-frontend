@@ -23,6 +23,7 @@ const ButtonEditDeleteComments = ({
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
+           disableRipple={true}
             onClick={!onButtonName ? onEdit : onDelete}
             sx={{
               fontWeight: 500,

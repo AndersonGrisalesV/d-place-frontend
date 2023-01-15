@@ -19,6 +19,7 @@ const ButtonPostPlace = ({ formIsValid }) => {
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
+            disableRipple={true}
             type="submit"
             disabled={formIsValid ? false : true}
             sx={{

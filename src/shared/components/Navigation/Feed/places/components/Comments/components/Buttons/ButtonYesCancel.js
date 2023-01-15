@@ -12,14 +12,14 @@ const StyleButton = styled(Button)(({ theme }) => ({
 }));
 
 const ButtonYesCancel = ({ DUMMY_PLACES, onYesCancel }) => {
-    const login = useContext(LoginContext);
-
+  const login = useContext(LoginContext);
 
   return (
     <React.Fragment>
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
+            disableRipple={true}
             onClick={onYesCancel}
             sx={{
               fontWeight: 500,

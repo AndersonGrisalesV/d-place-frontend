@@ -46,6 +46,7 @@ const ButtonSeeMap = ({ onHandleOpen }) => {
       }}
     >
       <StyleButton
+        disableRipple={true}
         onClick={onHandleOpen}
         sx={{
           fontWeight: 500,

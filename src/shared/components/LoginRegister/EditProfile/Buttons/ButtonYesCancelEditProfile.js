@@ -19,6 +19,7 @@ const ButtonYesCancelEditProfile = ({ onYesCancel }) => {
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
+            disableRipple={true}
             onClick={onYesCancel}
             sx={{
               fontWeight: 500,

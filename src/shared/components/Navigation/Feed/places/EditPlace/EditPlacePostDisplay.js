@@ -329,7 +329,7 @@ const EditPlacePostDisplay = () => {
 
   const handleDeletePlaceModal = () => {
     if (login.isLoggedIn) {
-      handleOpenDeletePlace();
+      setOpenDeletePlace(true);
     }
   };
 

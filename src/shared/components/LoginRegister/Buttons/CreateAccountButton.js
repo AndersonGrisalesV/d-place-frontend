@@ -20,6 +20,7 @@ const CreateAccountButton = ({
     <React.Fragment>
       <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
         <StyleButton
+          disableRipple={true}
           onClick={switchModeHandler}
           disabled={showSuccess ? true : false}
           sx={{

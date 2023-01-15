@@ -62,6 +62,7 @@ const ButtonDetails = ({ onPlaceId }) => {
     >
       <StyleNavLink to={`/api/places/${onPlaceId}`}>
         <StyleButton
+          disableRipple={true}
           onClick={cleanListItemsHandler}
           sx={{
             fontWeight: 500,

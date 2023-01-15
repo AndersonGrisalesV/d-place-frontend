@@ -19,7 +19,7 @@ const ButtonCancelComment = ({ DUMMY_PLACES, onHandleOpen }) => {
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
-            // type="submit"
+            disableRipple={true}
             onClick={onHandleOpen}
             sx={{
               fontWeight: 500,

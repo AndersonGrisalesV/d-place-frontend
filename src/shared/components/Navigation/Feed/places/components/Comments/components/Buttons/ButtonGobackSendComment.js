@@ -18,6 +18,7 @@ const ButtonGobackSendComment = ({ onGoback }) => {
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
+            disableRipple={true}
             onClick={onGoback}
             sx={{
               fontWeight: 500,

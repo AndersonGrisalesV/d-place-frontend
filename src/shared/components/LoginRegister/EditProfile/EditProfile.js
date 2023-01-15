@@ -123,16 +123,16 @@ const EditProfile = () => {
   );
 
   const [openDeleteProfile, setOpenDeleteProfile] = useState(false);
-  const handleOpenDeletePlace = () => setOpenDeleteProfile(true);
-  const handleCloseDeletePlace = () => setOpenDeleteProfile(false);
+  const handleOpenDeleteProfile = () => handleOpenDeleteProfile(true);
+  const handleCloseDeleteProfile = () => setOpenDeleteProfile(false);
 
-  const [deletePlace, setDeletePlace] = useState(false);
+  const [loadingSpinnerButtons, setLoadingSpinnerButtons] = useState(false);
 
   const handleOpenModalDeleteProfile = () => {
     // handleCloseDeletePlace();
     // setDeletePlace((ePlace) => !ePlace);
     if (login.isLoggedIn) {
-      handleOpenDeletePlace();
+      handleOpenDeleteProfile();
     }
   };
 
@@ -160,7 +160,7 @@ const EditProfile = () => {
       console.log(err);
     }
 
-    handleCloseDeletePlace();
+    handleCloseDeleteProfile();
   };
 
   useEffect(() => {
@@ -352,7 +352,7 @@ const EditProfile = () => {
 
   const handleDeleteProfileModal = () => {
     if (login.isLoggedIn) {
-      handleOpenDeletePlace();
+      setOpenDeleteProfile(true);
     }
   };
 
@@ -362,6 +362,7 @@ const EditProfile = () => {
 
   const onSubmitLoginRegisterHandler = async (e) => {
     e.preventDefault();
+    setLoadingSpinnerButtons(true);
     if (changePassword && loadedUser.password !== oldPasswordInput) {
       setShowpassMatchError(true);
       setShowErrorPassword(`Your old password didn't match, please try again.`);
@@ -435,6 +436,7 @@ const EditProfile = () => {
         setTimeout(() => {
           setShowSuccess(false);
           setSuccessMessage(null);
+          setLoadingSpinnerButtons(false);
         }, "930");
       } catch (err) {}
       resetNameInput();
@@ -511,7 +513,7 @@ const EditProfile = () => {
   };
 
   let spinner = "";
-  if (isLoading) {
+  if (isLoading && !loadingSpinnerButtons) {
     spinner = (
       <Box
         sx={{
@@ -547,7 +549,7 @@ const EditProfile = () => {
         marginBottom: "100%",
       }}
     >
-      {isLoading ? (
+      {!loadingSpinnerButtons && isLoading ? (
         spinner
       ) : (
         <ScrollToTop pathname={pathname}>
@@ -573,7 +575,8 @@ const EditProfile = () => {
             />
           )}
           <React.Fragment>
-            {!isLoading && loadedUser && !showSuccess && (
+            {/* {!isLoading && loadedUser && !showSuccess && ( */}
+            {loadedUser && !showSuccess && (
               <CardWrapperLogin>
                 <CardContentLogin>
                   <Title />
@@ -586,6 +589,51 @@ const EditProfile = () => {
                       spacing={4}
                       justifyContent="space-between"
                     >
+                      <React.Fragment>
+                        {formInputs.image.value === "" || deleteImage ? (
+                          <Typography
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              fontSize: {
+                                sps: "7px",
+                                ps: "8px",
+                                ts: "10px",
+                                sls: "10px",
+                                sms: "12px",
+                                sc: "12px",
+                                nsc: "12px",
+                                ns: "12px",
+                                msc: "12px",
+                                mns: "12px",
+                                ms: "12px",
+                                lgs: "12px",
+                              },
+                            }}
+                          >
+                            {formInputs.image.value === ""
+                              ? `"${"You don't have a profile picture"}"`
+                              : `"${"You profile picture will be deleted"}"`}
+                          </Typography>
+                        ) : null}
+                        {imageUrl && selectedImage && (
+                          <ImagePreviewEditProfileButton
+                            imageUrl={imageUrl}
+                            selectedImageName={selectedImage.name}
+                            handleRemoveImage={handleRemoveImage}
+                            isLoading={isLoading}
+                            showSuccess={showSuccess}
+                          />
+                        )}
+                        <ImageEditProfileButton
+                          formInputsHandler={formInputsHandler}
+                          isLoading={isLoading}
+                          showSuccess={showSuccess}
+                          setImageUrl={setImageUrl}
+                          showBlurImage={showBlurImage}
+                        />
+                      </React.Fragment>
+
                       <StyleTextField
                         id="outlined-name-input"
                         disabled={
@@ -744,6 +792,8 @@ const EditProfile = () => {
                         helperText={emailInputHasError ? "Incorrect mail" : ""}
                       />
                       <ButtonChangePassword
+                        isLoading={isLoading}
+                        showSuccess={showSuccess}
                         onChangePassword={changePasswordHandler}
                         onValue={changePassword}
                       />
@@ -1179,12 +1229,12 @@ const EditProfile = () => {
                       ) : null}
                       <React.Fragment>
                         {isLoading || showSuccess ? (
-                          <LoadingSpinnerWrapper>
+                          <LoadingSpinnerWrapper onLogin={true}>
                             <LoadingSpinner />
                           </LoadingSpinnerWrapper>
                         ) : (
                           <React.Fragment>
-                            <React.Fragment>
+                            {/* <React.Fragment>
                               <ImageEditProfileButton
                                 formInputsHandler={formInputsHandler}
                                 isLoading={isLoading}
@@ -1225,7 +1275,7 @@ const EditProfile = () => {
                                   handleRemoveImage={handleRemoveImage}
                                 />
                               )}
-                            </React.Fragment>
+                            </React.Fragment> */}
 
                             <Stack
                               spacing={2}
@@ -1272,7 +1322,7 @@ const EditProfile = () => {
                   {openDeleteProfile ? (
                     <ModalDeleteProfile
                       open={handleOpenModalDeleteProfile}
-                      handleClose={handleCloseDeletePlace}
+                      handleClose={handleCloseDeleteProfile}
                       handleConfirmDelete={handleConfirmDeleteProfile}
                     />
                   ) : null}

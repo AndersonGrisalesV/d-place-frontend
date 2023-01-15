@@ -59,6 +59,7 @@ const UploadButton = ({ onUpload }) => {
         />
         <label htmlFor="select-image" style={{ marginLeft: "0px" }}>
           <StyleButton
+            disableRipple={true}
             component="span"
             sx={{
               fontWeight: 500,

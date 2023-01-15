@@ -24,37 +24,14 @@ const ImagePreviewEditProfileButton = ({
   imageUrl,
   selectedImageName,
   handleRemoveImage,
+  isLoading,
+  showSuccess,
 }) => {
   return (
     <React.Fragment>
       <React.Fragment>
-        <Typography
-          variant="h9"
-          fontWeight={300}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: {
-              sps: "11px",
-              ps: "13px",
-              ts: "13px",
-              sls: "14px",
-              sms: "15px",
-              sc: "15px",
-              nsc: "15px",
-              ns: "15px",
-              msc: "15px",
-              mns: "15px",
-              ms: "15px",
-              lgs: "15px",
-            },
-          }}
-        >
-          Image Preview
-        </Typography>
         <Box mt={2} textAlign="center">
-          <Stack direction="row" justifyContent="center">
+          <Stack direction="row" justifyContent="space-around">
             <Box
               sx={{
                 display: "flex",
@@ -84,6 +61,8 @@ const ImagePreviewEditProfileButton = ({
                   <StyleCloseIcon
                     onClick={handleRemoveImage}
                     sx={{
+                      visibility:
+                        isLoading || showSuccess ? "hidden" : "visible",
                       cursor: "pointer",
                       width: {
                         sps: "16px",
@@ -173,6 +152,31 @@ const ImagePreviewEditProfileButton = ({
             </Box>
           </Stack>
         </Box>
+        {/* <Typography
+          variant="h9"
+          fontWeight={300}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: {
+              sps: "11px",
+              ps: "13px",
+              ts: "13px",
+              sls: "14px",
+              sms: "15px",
+              sc: "15px",
+              nsc: "15px",
+              ns: "15px",
+              msc: "15px",
+              mns: "15px",
+              ms: "15px",
+              lgs: "15px",
+            },
+          }}
+        >
+          Profile picture
+        </Typography> */}
       </React.Fragment>
     </React.Fragment>
   );

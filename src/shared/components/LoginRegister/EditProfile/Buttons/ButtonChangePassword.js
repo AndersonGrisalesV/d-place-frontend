@@ -15,7 +15,12 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonChangePassword = ({ onChangePassword, onValue = false }) => {
+const ButtonChangePassword = ({
+  onChangePassword,
+  onValue = false,
+  isLoading,
+  showSuccess,
+}) => {
   const login = useContext(LoginContext);
 
   // useEffect(() => {}, [onChangePassword]);
@@ -25,6 +30,7 @@ const ButtonChangePassword = ({ onChangePassword, onValue = false }) => {
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
+            disabled={isLoading ? true : false || showSuccess ? true : false}
             onClick={onChangePassword}
             sx={{
               fontWeight: 500,
