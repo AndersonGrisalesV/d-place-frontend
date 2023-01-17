@@ -216,7 +216,9 @@ const NewPlacePostDisplay = () => {
     login.isLoggedIn &&
     titleIsValid &&
     descriptionIsValid &&
-    addressIsValid
+    addressIsValid &&
+    imageUrl &&
+    selectedImage
   ) {
     formIsValid = true;
   }
@@ -506,6 +508,30 @@ const NewPlacePostDisplay = () => {
                         isLoading={isLoading}
                         showSuccess={showSuccess}
                       />
+                      {!imageUrl && !selectedImage ? (
+                        <Typography
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            fontSize: {
+                              sps: "7px",
+                              ps: "8px",
+                              ts: "10px",
+                              sls: "10px",
+                              sms: "12px",
+                              sc: "12px",
+                              nsc: "12px",
+                              ns: "12px",
+                              msc: "12px",
+                              mns: "12px",
+                              ms: "12px",
+                              lgs: "12px",
+                            },
+                          }}
+                        >
+                          "You have not selected a picture yet"
+                        </Typography>
+                      ) : null}
                       {imageUrl && selectedImage && (
                         <ImagePreviewPlaceButton
                           imageUrl={imageUrl}

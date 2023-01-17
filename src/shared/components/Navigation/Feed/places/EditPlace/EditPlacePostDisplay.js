@@ -741,6 +741,30 @@ const EditPlacePostDisplay = () => {
                                 setImageUrl={setImageUrl}
                                 showBlurImage={showBlurImage}
                               />
+                              {!imageUrl && !selectedImage ? (
+                                <Typography
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    fontSize: {
+                                      sps: "7px",
+                                      ps: "8px",
+                                      ts: "10px",
+                                      sls: "10px",
+                                      sms: "12px",
+                                      sc: "12px",
+                                      nsc: "12px",
+                                      ns: "12px",
+                                      msc: "12px",
+                                      mns: "12px",
+                                      ms: "12px",
+                                      lgs: "12px",
+                                    },
+                                  }}
+                                >
+                                  "You must upload a picture"
+                                </Typography>
+                              ) : null}
                               {imageUrl && selectedImage && (
                                 <ImagePreviewEditPlaceButton
                                   imageUrl={imageUrl}

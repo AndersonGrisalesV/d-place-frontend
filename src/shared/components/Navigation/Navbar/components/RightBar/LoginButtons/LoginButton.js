@@ -59,6 +59,7 @@ const LoginButton = ({ OnComment = false }) => {
         style={{ textDecoration: "none" }}
       >
         <StyleButtonOnComment
+          disableRipple={true}
           sx={{
             textTransform: "none",
             bgcolor: `${buttonColor}`,

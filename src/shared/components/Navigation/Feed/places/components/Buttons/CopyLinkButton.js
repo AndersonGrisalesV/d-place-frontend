@@ -24,7 +24,7 @@ const CopyLinkButton = () => {
       aria-label="add to favorites"
       style={{
         backgroundColor: "transparent",
-        transform: "rotate(45deg)",
+        transform: "rotate(134deg)",
       }}
       title="Like"
       sx={{

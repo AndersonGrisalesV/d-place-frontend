@@ -1234,49 +1234,6 @@ const EditProfile = () => {
                           </LoadingSpinnerWrapper>
                         ) : (
                           <React.Fragment>
-                            {/* <React.Fragment>
-                              <ImageEditProfileButton
-                                formInputsHandler={formInputsHandler}
-                                isLoading={isLoading}
-                                showSuccess={showSuccess}
-                                setImageUrl={setImageUrl}
-                                showBlurImage={showBlurImage}
-                              />
-                              {formInputs.image.value === "" || deleteImage ? (
-                                <Typography
-                                  sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    fontSize: {
-                                      sps: "7px",
-                                      ps: "8px",
-                                      ts: "10px",
-                                      sls: "10px",
-                                      sms: "12px",
-                                      sc: "12px",
-                                      nsc: "12px",
-                                      ns: "12px",
-                                      msc: "12px",
-                                      mns: "12px",
-                                      ms: "12px",
-                                      lgs: "12px",
-                                    },
-                                  }}
-                                >
-                                  {formInputs.image.value === ""
-                                    ? "You don't have a profile picture"
-                                    : "You profile picture will be deleted"}
-                                </Typography>
-                              ) : null}
-                              {imageUrl && selectedImage && (
-                                <ImagePreviewEditProfileButton
-                                  imageUrl={imageUrl}
-                                  selectedImageName={selectedImage.name}
-                                  handleRemoveImage={handleRemoveImage}
-                                />
-                              )}
-                            </React.Fragment> */}
-
                             <Stack
                               spacing={2}
                               direction="column"

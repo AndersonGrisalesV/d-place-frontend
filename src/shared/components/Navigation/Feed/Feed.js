@@ -151,7 +151,13 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
                   {filteredPlaces && !emptySearch ? (
                     filteredPlaces
                   ) : (
-                    <p>No places found!</p>
+                    <p
+                      style={{
+                        marginBottom: "100%",
+                      }}
+                    >
+                      No places found!
+                    </p>
                   )}
                 </React.Fragment>
               ) : (
@@ -163,10 +169,14 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
                       ) : (
                         <React.Fragment>
                           {dataStatus ? (
-                            <p>There are not places to show</p>
-                          ) : (
-                            ""
-                          )}
+                            <p
+                              style={{
+                                marginBottom: "100%",
+                              }}
+                            >
+                              There are not places to show
+                            </p>
+                          ) : null}
                         </React.Fragment>
                       )}
                     </React.Fragment>

@@ -352,7 +352,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
             <Menu
               sx={{
                 "& .MuiMenu-paper": {
-                  borderRadius: "10%",
+                  borderRadius: "20px 20px 20px 20px",
                 },
               }}
               id="basic-menu"
@@ -619,6 +619,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                 </div>
               ) : null}
             </Menu>
+
             <ShareButton
               onLoadedPlaces={loadedPlaces}
               onOpenMenuLinks={openMenuLinks}

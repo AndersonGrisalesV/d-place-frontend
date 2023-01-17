@@ -33,8 +33,6 @@ const Title = () => {
         Edit Profile
       </Typography>
       <Divider variant="middle" />
-      <br />
-      <br />
     </React.Fragment>
   );
 };

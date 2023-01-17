@@ -19,7 +19,6 @@ import {
 import ModeSwitch from "../../ModeSwitch/ModeSwitch";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../../../../context/login-context";
-import classes from "./ListItems.module.css";
 import CollectionsOutlinedIcon from "@mui/icons-material/CollectionsOutlined";
 import styled from "@emotion/styled/macro";
 
@@ -319,7 +318,6 @@ const ListItems = ({
   onCloseResponsiveDrawer = false,
   onToggleResponsive = null,
   onClearSearchBar,
-  onResponsive = false,
 }) => {
   const login = useContext(LoginContext);
   let navigate = useNavigate();
@@ -328,13 +326,11 @@ const ListItems = ({
 
   const isMenuOpen = Boolean(anchorEl);
 
-  // useEffect(() => {}, [onResponsive]);
   const [settingsSelectedItem, setSettingsSelecteditem] = useState(0);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
     setSettingsSelecteditem(5);
-    // setSelectedIndex(5);
   };
 
   const handleMenuClose = () => {
@@ -404,6 +400,7 @@ const ListItems = ({
   };
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [clearListItem, setClearListItem] = useState(false);
 
   useEffect(() => {
     switch (window.location.pathname) {
@@ -412,6 +409,7 @@ const ListItems = ({
         break;
       case `/api/users/favorites/${login.pidCleanListItems}`: //here we use pidCleanListItems instead oflogin.userId because there is a conflict between favorites and profile
         setSelectedIndex(1);
+
         break;
       case `/api/users/myplaces/${login.userId}`:
         setSelectedIndex(2);
@@ -419,51 +417,33 @@ const ListItems = ({
       case `/api/users/profile/${login.userId}`:
         setSelectedIndex(3);
         break;
-      case `/api/places/${login.pidCleanListItems}`:
-        setSelectedIndex(4);
-        break;
       case `/api/users/loginregister`:
         setSelectedIndex(6);
         break;
+      case `/api/places/${login.pidCleanListItems}`:
+        setSelectedIndex(4);
+        setClearListItem(false);
+        break;
+      case `/api/places/editplace/${login.pidCleanListItems}`:
+        setSelectedIndex(4);
+        setClearListItem(false);
+        break;
+      case `/api/places/places/${login.pidCleanListItems}`:
+        setClearListItem(true);
+        break;
       default:
+        // setSelectedIndex(0);
         setSettingsSelecteditem(0);
         break;
     }
-    // if (login.homepageListItems == 0) {
-    //   homepageButton.current.click();
-    // }
   }, [
     login.userId,
     login.pidCleanListItems,
     login.clearListItems,
     login.homepageListItems,
+
     login,
   ]);
-
-  const [clearListItem, setClearListItem] = useState(false);
-
-  useEffect(() => {
-    if (login.clearListItems) {
-      switch (window.location.pathname) {
-        case `/api/places/${login.pidCleanListItems}`:
-          setClearListItem(true);
-          break;
-        case `/api/places/editplace/${login.pidCleanListItems}`:
-          setClearListItem(true);
-          break;
-        case `/api/places/places/${login.pidCleanListItems}`:
-          setClearListItem(true);
-          break;
-
-        default:
-          break;
-      }
-    }
-    // if (clearSelectedItem) {
-    //   setSelectedIndex(4);
-    //   setClearListItem(true);
-    // }
-  }, [login.pidCleanListItems, login.clearListItems, login.userId]);
 
   const activeStateHandler = (e, index) => {
     setClearListItem(false);
@@ -474,20 +454,8 @@ const ListItems = ({
     } else {
       setSelectedIndex(index);
     }
-
-    // if (clearListItem) {
-    //   setSelectedIndex(4);
-
-    //   setClearListItem(false);
-    // } else {
-    // }
   };
   const homepageButton = useRef(null);
-
-  // useEffect(() => {
-  //   homepageButton.current.click(1, 0);
-  //   setSelectedIndex(0);
-  // }, [login.homepageListItems]);
 
   return (
     <>
