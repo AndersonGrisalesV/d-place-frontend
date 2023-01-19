@@ -125,7 +125,7 @@ const LoginRegister = () => {
         setSuccessMessage(`Welcome back ${responseData.user.name}`);
         setShowSuccess(true);
         setTimeout(() => {
-          login.login(responseData.user.id);
+          login.login(responseData.user.id, responseData.token);
           navigate("/homepage");
         }, "910");
         setTimeout(() => {
@@ -170,7 +170,7 @@ const LoginRegister = () => {
         setSuccessMessage(`Welcome to Dplace ${responseData.user.name}`);
         setShowSuccess(true);
         setTimeout(() => {
-          login.createAccount(responseData.user.id);
+          login.createAccount(responseData.user.id, responseData.token);
           navigate("/homepage");
         }, "910");
         setTimeout(() => {

@@ -152,6 +152,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
             userId: login.userId,
           }),
           {
+            Authorization: "Bearer " + login.token,
             "Content-Type": "Application/json",
           }
         );

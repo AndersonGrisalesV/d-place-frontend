@@ -139,7 +139,11 @@ const EditPlacePostDisplay = () => {
     try {
       await sendRequest(
         `http://localhost:4000/api/places/deleteplace/${pid}`,
-        "DELETE"
+        "DELETE",
+        null,
+        {
+          Authorization: "Bearer " + login.token,
+        }
       );
 
       setShowSuccess("The place was deleted successfully");
@@ -372,7 +376,10 @@ const EditPlacePostDisplay = () => {
         await sendRequest(
           `http://localhost:4000/api/places/editplace/${pid}`,
           "PATCH",
-          myForm
+          myForm,
+          {
+            Authorization: "Bearer " + login.token,
+          }
         );
 
         // await sendRequest(

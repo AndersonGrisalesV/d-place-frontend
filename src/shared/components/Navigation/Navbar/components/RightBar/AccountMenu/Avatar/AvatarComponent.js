@@ -17,8 +17,14 @@ const AvatarComponent = () => {
       const fetchPlaces = async () => {
         try {
           const responseData = await sendRequest(
-            `http://localhost:4000/api/users/profile/${login.userId}`
+            `http://localhost:4000/api/users/profile/${login.userId}`,
+            "GET",
+            null,
+            {
+              Authorization: "Bearer " + login.token,
+            }
           );
+
           console.log(responseData.user);
           setLoadedPlace(responseData.user);
         } catch (err) {}
@@ -26,7 +32,7 @@ const AvatarComponent = () => {
       fetchPlaces();
     }
     setSuccessProfilePhoto(true);
-  }, [sendRequest, login.userId, succssProfilePhoto]);
+  }, [sendRequest, login.userId, succssProfilePhoto, login.token]);
 
   return (
     <>

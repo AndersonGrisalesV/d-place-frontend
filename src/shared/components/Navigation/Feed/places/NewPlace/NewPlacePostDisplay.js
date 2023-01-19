@@ -170,7 +170,10 @@ const NewPlacePostDisplay = () => {
         await sendRequest(
           "http://localhost:4000/api/places/newplace",
           "POST",
-          myForm
+          myForm,
+          {
+            Authorization: "Bearer " + login.token,
+          }
         );
         // const responseData = await sendRequest(
         //   "http://localhost:4000/api/places/newplace",

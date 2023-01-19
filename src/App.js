@@ -24,7 +24,7 @@ const StyleBox = styled(Box)(({ theme }) => ({
 }));
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(false);
   const [userId, setUserId] = useState(false);
 
   const [newNotification, setNewNotification] = useState(false);
@@ -121,20 +121,20 @@ function App() {
     // setClearSBar(true);
   };
 
-  const login = useCallback((uid) => {
-    setIsLoggedIn(true);
+  const login = useCallback((uid, token) => {
+    setToken(token);
     setUserId(uid);
 
     setNewNotification(true);
   }, []);
 
   const createAccount = useCallback((uid) => {
-    setIsLoggedIn(true);
+    setToken(token);
     setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
+    setToken(null);
     setUserId(null);
   }, []);
 
@@ -163,7 +163,7 @@ function App() {
   }, []);
 
   let routes;
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <React.Fragment>
         <Route
@@ -260,7 +260,8 @@ function App() {
   return (
     <LoginContext.Provider
       value={{
-        isLoggedIn: isLoggedIn,
+        isLoggedIn: !!token,
+        token: token,
         login: login,
         createAccount: createAccount,
         userId: userId,

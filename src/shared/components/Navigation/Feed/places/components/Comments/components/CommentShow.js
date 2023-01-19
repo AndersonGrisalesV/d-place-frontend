@@ -187,6 +187,7 @@ const CommentShow = ({
             postCommentDate: date,
           }),
           {
+            Authorization: "Bearer " + login.token,
             "Content-Type": "Application/json",
           }
         );
@@ -269,7 +270,11 @@ const CommentShow = ({
     try {
       await sendRequest(
         `http://localhost:4000/api/places/${onPlaceComments.placeId}/deletecomment/${onPlaceComments._id}`,
-        "DELETE"
+        "DELETE",
+        null,
+        {
+          Authorization: "Bearer " + login.token,
+        }
       );
 
       setShowSuccess(true);

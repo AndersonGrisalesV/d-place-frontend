@@ -11,7 +11,6 @@ import styled from "@emotion/styled";
 import LoginButton from "../../../../Navbar/components/RightBar/LoginButtons/LoginButton";
 import ButtonCancelSendComment from "./components/Buttons/ButtonCancelSendComment";
 import { useHttpClient } from "../../../../../../hooks/http-hook";
-import { useNavigate } from "react-router-dom";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -40,8 +39,6 @@ const CommentsDisplay = ({
   onErrorDeleteComment,
 }) => {
   const login = useContext(LoginContext);
-
-  let navigate = useNavigate();
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -106,6 +103,7 @@ const CommentsDisplay = ({
             creatorId: login.userId,
           }),
           {
+            Authorization: "Bearer " + login.token,
             "Content-Type": "Application/json",
           }
         );

@@ -7,6 +7,7 @@ export const LoginContext = createContext({
   pidCleanListItems: null,
   clearListItems: false,
   homepageListItems: null,
+  token: null,
   login: () => {},
   createAccount: () => {},
   logout: () => {},

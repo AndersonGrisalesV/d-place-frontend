@@ -29,7 +29,12 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
       const fetchPlaces = async () => {
         try {
           const responseData = await sendRequest(
-            `http://localhost:4000/api/users/favorites/${uid}`
+            `http://localhost:4000/api/users/favorites/${uid}`,
+            "GET",
+            null,
+            {
+              Authorization: "Bearer " + login.token,
+            }
           );
 
           setLoadedPlaces(responseData.places.reverse());
@@ -37,7 +42,7 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
       };
       fetchPlaces();
     }
-  }, [sendRequest, uid, login.isLoggedIn]);
+  }, [sendRequest, uid, login.isLoggedIn, login.token]);
 
   useEffect(() => {
     console.log(onFilterSearch);

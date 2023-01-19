@@ -141,7 +141,11 @@ const EditProfile = () => {
     try {
       await sendRequest(
         `http://localhost:4000/api/users/profile/deleteprofile/${uid}`,
-        "DELETE"
+        "DELETE",
+        null,
+        {
+          Authorization: "Bearer " + login.token,
+        }
       );
 
       setShowSuccess(true);
@@ -167,7 +171,12 @@ const EditProfile = () => {
     const fetchPlace = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:4000/api/users/profile/${uid}`
+          `http://localhost:4000/api/users/profile/${uid}`,
+          "GET",
+          null,
+          {
+            Authorization: "Bearer " + login.token,
+          }
         );
         setLoadedUser(responseData.user);
         // console.log(responseData.user);
@@ -205,7 +214,14 @@ const EditProfile = () => {
       } catch (err) {}
     };
     fetchPlace();
-  }, [sendRequest, uid, setFormData, setImageUrl, setSelectedImage]);
+  }, [
+    sendRequest,
+    uid,
+    setFormData,
+    setImageUrl,
+    setSelectedImage,
+    login.token,
+  ]);
 
   // console.log(formInputs);
 
@@ -419,7 +435,10 @@ const EditProfile = () => {
         const responseData = await sendRequest(
           `http://localhost:4000/api/users/profile/editprofile/${uid}`,
           "PATCH",
-          myForm
+          myForm,
+          {
+            Authorization: "Bearer " + login.token,
+          }
         );
 
         setSuccessMessage(
@@ -593,6 +612,7 @@ const EditProfile = () => {
                         {formInputs.image.value === "" || deleteImage ? (
                           <Typography
                             sx={{
+                              marginTop: "40px",
                               display: "flex",
                               justifyContent: "center",
                               fontSize: {
@@ -1278,7 +1298,7 @@ const EditProfile = () => {
                   </form>
                   {openDeleteProfile ? (
                     <ModalDeleteProfile
-                      open={handleOpenModalDeleteProfile}
+                      open={openDeleteProfile}
                       handleClose={handleCloseDeleteProfile}
                       handleConfirmDelete={handleConfirmDeleteProfile}
                     />
