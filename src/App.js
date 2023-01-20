@@ -18,16 +18,27 @@ import Place from "./shared/components/Navigation/Feed/places/Place";
 import { SignalWifiStatusbarNull } from "@mui/icons-material";
 import EditProfile from "./shared/components/LoginRegister/EditProfile/EditProfile";
 import GoBackRefreshMenu from "./shared/util/GoBackRefreshMenu";
+import { useAuth } from "./shared/hooks/auth-hook";
 
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",
 }));
 
 function App() {
-  const [token, setToken] = useState(false);
-  const [userId, setUserId] = useState(false);
+  // const [token, setToken] = useState(false);
+  // const [userId, setUserId] = useState(false);
 
-  const [newNotification, setNewNotification] = useState(false);
+  // const [newNotification, setNewNotification] = useState(false);
+
+  const {
+    token,
+    login,
+
+    logout,
+    userId,
+    notification,
+    newNotification,
+  } = useAuth();
 
   let navigate = useNavigate();
 
@@ -121,26 +132,27 @@ function App() {
     // setClearSBar(true);
   };
 
-  const login = useCallback((uid, token) => {
-    setToken(token);
-    setUserId(uid);
+  // const login = useCallback((uid, token) => {
+  //   setToken(token);
+  //   setUserId(uid);
 
-    setNewNotification(true);
-  }, []);
+  //   setNewNotification(true);
+  // }, []);
 
-  const createAccount = useCallback((uid) => {
-    setToken(token);
-    setUserId(uid);
-  }, []);
+  // const createAccount = useCallback((uid, token) => {
+  //   setToken(token);
+  //   setUserId(uid);
+  //   setNewNotification(true);
+  // }, []);
 
-  const logout = useCallback(() => {
-    setToken(null);
-    setUserId(null);
-  }, []);
+  // const logout = useCallback(() => {
+  //   setToken(null);
+  //   setUserId(null);
+  // }, []);
 
-  const notification = useCallback(() => {
-    setNewNotification((preNewNotification) => !preNewNotification);
-  }, []);
+  // const notification = useCallback(() => {
+  //   setNewNotification((preNewNotification) => !preNewNotification);
+  // }, []);
 
   const [clearListItems, setClearListItems] = useState(false);
   const [pidCleanListItems, setPidCleanListItems] = useState(null);
@@ -161,6 +173,8 @@ function App() {
   const listItemsCleanHomepage = useCallback((index) => {
     setHomepageListItems(index);
   }, []);
+
+  const [mode, setMode] = useState("light");
 
   let routes;
   if (token) {
@@ -199,7 +213,10 @@ function App() {
   } else {
     routes = (
       <React.Fragment>
-        <Route path="/api/users/loginregister" element={<LoginRegister />} />
+        <Route
+          path="/api/users/loginregister"
+          element={<LoginRegister setMode={setMode} mode={mode} />}
+        />
         <Route
           path="/api/places/:pid"
           element={<PlaceDetail onFilterSearch={searchBar} />}
@@ -208,8 +225,6 @@ function App() {
       </React.Fragment>
     );
   }
-
-  const [mode, setMode] = useState("light");
 
   const darkThemeTypographyAndBreakpoints = createTheme({
     breakpoints: {
@@ -251,6 +266,30 @@ function App() {
     },
   });
 
+  // useEffect(() => {
+  //   if (login.isLoggedIn) {
+  //     const updateTheme = async () => {
+  //       try {
+  //         await sendRequest(
+  //           `http://localhost:4000/api/users/updatetheme/${login.userId}`,
+  //           "PATCH",
+  //           JSON.stringify({
+  //             theme: mode === "light" ? "dark" : "light",
+  //           }),
+  //           {
+  //             "Content-Type": "Application/json",
+  //           }
+  //         );
+  //       } catch (err) {}
+  //     };
+  //     updateTheme();
+  //   }
+  // }, [mode, login.isLoggedIn, sendRequest, login.userId]);
+
+  // const themeUpdate = useCallback(() => {
+  //   updateTheme();
+  // }, []);
+
   const [menuOption, setMenuOption] = useState(true);
 
   const handleBurgerMenu = () => {
@@ -263,7 +302,6 @@ function App() {
         isLoggedIn: !!token,
         token: token,
         login: login,
-        createAccount: createAccount,
         userId: userId,
         logout: logout,
         notification: notification,

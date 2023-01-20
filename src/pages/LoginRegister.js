@@ -63,7 +63,7 @@ const StyleVisibilityIcon = styled(Visibility)(({ theme }) => ({
   },
 }));
 
-const LoginRegister = () => {
+const LoginRegister = ({ mode, setMode }) => {
   const login = useContext(LoginContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -124,8 +124,12 @@ const LoginRegister = () => {
 
         setSuccessMessage(`Welcome back ${responseData.user.name}`);
         setShowSuccess(true);
+
         setTimeout(() => {
           login.login(responseData.user.id, responseData.token);
+          setMode(
+            responseData.user.themePreference === "light" ? "light" : "dark"
+          );
           navigate("/homepage");
         }, "910");
         setTimeout(() => {
@@ -143,6 +147,7 @@ const LoginRegister = () => {
         const myForm = new FormData();
         myForm.append("name", formInputs.name);
         myForm.append("email", formInputs.email);
+        myForm.append("theme", mode === "light" ? "light" : "dark");
         myForm.append("password", formInputs.password);
         myForm.append("confirmPassword", formInputs.confirmPassword);
         myForm.append("image", formInputs.image);
@@ -170,7 +175,10 @@ const LoginRegister = () => {
         setSuccessMessage(`Welcome to Dplace ${responseData.user.name}`);
         setShowSuccess(true);
         setTimeout(() => {
-          login.createAccount(responseData.user.id, responseData.token);
+          login.login(responseData.user.id, responseData.token);
+          setMode(
+            responseData.user.themePreference === "light" ? "light" : "dark"
+          );
           navigate("/homepage");
         }, "910");
         setTimeout(() => {

@@ -9,7 +9,6 @@ export const LoginContext = createContext({
   homepageListItems: null,
   token: null,
   login: () => {},
-  createAccount: () => {},
   logout: () => {},
   notification: () => {},
   listItemsNotListed: () => {},

@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Switch } from "@mui/material";
 import styled from "@emotion/styled";
+import { useAuth } from "../../../../../hooks/auth-hook";
+import { useHttpClient } from "../../../../../hooks/http-hook";
+import { LoginContext } from "../../../../../context/login-context";
 
 const StyleSwitch = styled(Switch)(({ theme }) => ({
   padding: 8,
@@ -51,6 +54,10 @@ const StyleSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const ModeSwitch = ({ mode, setMode }) => {
+  const login = useContext(LoginContext);
+  const { userId } = useAuth();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
   const switchVariant = mode === "light" ? false : true;
   const [changeSwitch, setChangeSwitch] = useState(switchVariant);
 
@@ -58,8 +65,26 @@ const ModeSwitch = ({ mode, setMode }) => {
     setChangeSwitch(switchVariant);
   }, [switchVariant]);
 
-  const modeHandler = (e) => {
+  const modeHandler = async (e) => {
     setMode(mode === "light" ? "dark" : "light");
+
+    if (login.isLoggedIn) {
+      const updateTheme = async () => {
+        try {
+          await sendRequest(
+            `http://localhost:4000/api/users/updatetheme/${login.userId}`,
+            "PATCH",
+            JSON.stringify({
+              theme: mode === "light" ? "dark" : "light",
+            }),
+            {
+              "Content-Type": "Application/json",
+            }
+          );
+        } catch (err) {}
+      };
+      updateTheme();
+    }
   };
 
   return (
