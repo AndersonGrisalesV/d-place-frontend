@@ -182,7 +182,12 @@ const LoginRegister = ({ mode, setMode }) => {
         setSuccessMessage(`Welcome to Dplace ${responseData.user.name}`);
         setShowSuccess(true);
         setTimeout(() => {
-          login.login(responseData.user.id, responseData.token);
+          login.login(
+            responseData.user.id,
+            responseData.token,
+            null,
+            responseData.user.themePreference === "light" ? "light" : "dark"
+          );
           setMode(
             responseData.user.themePreference === "light" ? "light" : "dark"
           );
