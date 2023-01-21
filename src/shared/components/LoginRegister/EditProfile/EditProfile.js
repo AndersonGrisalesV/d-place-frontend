@@ -423,6 +423,7 @@ const EditProfile = () => {
         const myForm = new FormData();
         myForm.append("name", formInputs.name);
         myForm.append("email", formInputs.email);
+
         if (changePassword) {
           myForm.append("password", formInputs.password);
           myForm.append("confirmPassword", formInputs.confirmPassword);

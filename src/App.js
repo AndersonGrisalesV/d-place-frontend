@@ -30,15 +30,8 @@ function App() {
 
   // const [newNotification, setNewNotification] = useState(false);
 
-  const {
-    token,
-    login,
-
-    logout,
-    userId,
-    notification,
-    newNotification,
-  } = useAuth();
+  const { token, login, theme, logout, userId, notification, newNotification } =
+    useAuth();
 
   let navigate = useNavigate();
 
@@ -174,7 +167,49 @@ function App() {
     setHomepageListItems(index);
   }, []);
 
-  const [mode, setMode] = useState("light");
+  // useEffect(() => {
+  //   const fetchPlaces = async () => {
+  //     try {
+  //       const responseData = await sendRequest(
+  //         `http://localhost:4000/api/users/profile/${userId}`
+  //       );
+
+  //       setMode(responseData.user.themePreference);
+  //     } catch (err) {}
+  //   };
+  //   fetchPlaces();
+  // }, [sendRequest, userId]);
+
+  // const [themeUser, setThemeUser] = useState(false);
+
+  // const themeUserHandler = useCallback((theme) => {
+  //   setThemeUser(theme);
+  // }, []);
+
+  const storedData = JSON.parse(localStorage.getItem("userData")) || null;
+
+  const [mode, setMode] = useState(storedData ? storedData.theme : "light");
+
+  // const storedData = JSON.parse(localStorage.getItem("userData"));
+  // if (
+  //   storedData &&
+  //   storedData.token &&
+  //   new Date(storedData.expiration) > new Date()
+  // ) {
+  //   login(
+  //     storedData.userId,
+  //     storedData.token,
+  //     new Date(storedData.expiration)
+  //   );
+  // }
+
+  // useEffect(() => {
+  //   if (themeUser === "dark") {
+  //     setMode("dark");
+  //   }
+  // }, [themeUser]);
+
+  // alert(theme);
 
   let routes;
   if (token) {
@@ -301,6 +336,7 @@ function App() {
       value={{
         isLoggedIn: !!token,
         token: token,
+
         login: login,
         userId: userId,
         logout: logout,

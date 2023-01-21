@@ -90,6 +90,7 @@ const NotificationsButton = ({
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     setShowNotification(false);
+    alert("here");
 
     // console.log(loadedPlaces);
     // setTimeout(() => {

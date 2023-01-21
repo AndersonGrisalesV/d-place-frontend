@@ -80,7 +80,7 @@ const LoginRegister = ({ mode, setMode }) => {
 
   // const [successMessage, setSuccessMessage] = useState(false);
 
-  const passwordInputRef = useRef();
+  const passwordInputRef = useRef(null);
 
   const initialFormInputs = {
     name: "",
@@ -126,7 +126,13 @@ const LoginRegister = ({ mode, setMode }) => {
         setShowSuccess(true);
 
         setTimeout(() => {
-          login.login(responseData.user.id, responseData.token);
+          // login.themeUserHandler(mode === "light" ? "light" : "dark");
+          login.login(
+            responseData.user.id,
+            responseData.token,
+            null,
+            responseData.user.themePreference === "light" ? "light" : "dark"
+          );
           setMode(
             responseData.user.themePreference === "light" ? "light" : "dark"
           );
@@ -148,6 +154,7 @@ const LoginRegister = ({ mode, setMode }) => {
         myForm.append("name", formInputs.name);
         myForm.append("email", formInputs.email);
         myForm.append("theme", mode === "light" ? "light" : "dark");
+        myForm.append("notification", true);
         myForm.append("password", formInputs.password);
         myForm.append("confirmPassword", formInputs.confirmPassword);
         myForm.append("image", formInputs.image);
@@ -305,7 +312,7 @@ const LoginRegister = ({ mode, setMode }) => {
   let formIsValid = false;
 
   if (
-    (isLoginMode && emailIsValid) ||
+    (isLoginMode && emailIsValid && passwordInput.length > 0) ||
     (!isLoginMode &&
       nameIsValid &&
       emailIsValid &&
@@ -314,7 +321,7 @@ const LoginRegister = ({ mode, setMode }) => {
   ) {
     formIsValid = true;
   }
-
+  // alert(passwordInput.length > 5);
   const handleRemoveImage = () => {
     formInputs.image = "noImage";
     setSelectedImage(null);
@@ -761,7 +768,7 @@ const LoginRegister = ({ mode, setMode }) => {
                     formInputsHandler={formInputsHandler}
                     isLoading={isLoading}
                   />
-                  {!imageUrl && !selectedImage ? (
+                  {!imageUrl && !selectedImage && !isLoading ? (
                     <Typography
                       sx={{
                         display: "flex",

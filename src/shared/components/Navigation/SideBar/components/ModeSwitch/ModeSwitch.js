@@ -85,6 +85,22 @@ const ModeSwitch = ({ mode, setMode }) => {
       };
       updateTheme();
     }
+
+    // login.themeUserHandler(mode === "light" ? "dark" : "light");
+
+    // const storedData = JSON.parse(localStorage.getItem("userData"));
+
+    const data = window.localStorage.getItem("userData");
+    const newData = JSON.parse(data);
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ ...newData, theme: mode === "light" ? "dark" : "light" })
+    );
+
+    //  localStorage.setItem('userInfo',JSON.stringify({name:'reza',age:20}));
+    // const data = window.localStorage.getItem('userInfo')
+    // const newData = JSON.parse(data)
+    // localStorage.setItem('userInfo',JSON.stringify({...newData,age:44}))
   };
 
   return (
