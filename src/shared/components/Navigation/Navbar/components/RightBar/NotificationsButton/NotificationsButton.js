@@ -19,6 +19,7 @@ import { useHttpClient } from "../../../../../../hooks/http-hook";
 import AvatarNotification from "./AvatarNotification";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../../../../context/login-context";
+import PopoverComponent from "./PopoverComponent";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {
@@ -57,7 +58,7 @@ const NotificationsButton = ({
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedPlaces, setLoadedPlaces] = useState();
-  const [showNotification, setShowNotification] = useState(false);
+  const [showNotification, setShowNotification] = useState(true);
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -69,40 +70,105 @@ const NotificationsButton = ({
         setLoadedPlaces(responseData.places);
         // console.log("aqui" + responseData.places.length())
 
-        if (
-          login.userId !==
-          responseData.places.reverse().slice(0, 1)[0].creatorId._id
-        ) {
+        // if (
+        //   login.userId !==
+        //   responseData.places.reverse().slice(0, 1)[0].creatorId._id
+        // ) {
+        //   setShowNotification(true);
+        // }
+      } catch (err) {}
+    };
+    fetchPlaces();
+
+    const fetchUser = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:4000/api/users/profile/${login.userId}`,
+          "GET",
+          null,
+          {
+            Authorization: "Bearer " + login.token,
+          }
+        );
+
+        // setLoadedPlaces(responseData.user);
+        // console.log("aqui" + responseData.places.length())
+
+        if (responseData.user.viewedNotification) {
           setShowNotification(true);
         }
       } catch (err) {}
     };
-    fetchPlaces();
-  }, [sendRequest, login.userId, login.notification]);
+    fetchUser();
+  }, [sendRequest, login.userId, login.notification, login.token]);
 
-  const anchorRef = useRef();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const anchorRef = useRef(null);
+  const [anchorEl, setAnchorEl] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => setAnchorEl(anchorRef?.current), 1);
-  }, [anchorRef]);
+  // useEffect(() => {
+  //   if (showNotification) {
+  //     anchorRef.current.click();
 
-  const handleClick = (event) => {
+  //     // setAnchorEl(anchorRef.currentTarget);
+  //   }
+  // }, [anchorRef, showNotification]);
+
+  const [updateNotification, setUpdateNotification] = useState(false);
+
+  // const handleClick = async (event) => {
+  //   setAnchorEl(event.currentTarget);
+
+  //   if (showNotification) {
+  //     try {
+  //       const responseData = await sendRequest(
+  //         `http://localhost:4000/api/users/notification/${login.userId}`,
+  //         "PATCH",
+  //         JSON.stringify({
+  //           notification: false,
+  //         }),
+  //         {
+  //           Authorization: "Bearer " + login.token,
+  //           "Content-Type": "Application/json",
+  //         }
+  //       );
+  //       setUpdateNotification(true);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //     setShowNotification(false);
+  //   }
+  // };
+
+  const handleClick = async (event) => {
     setAnchorEl(event.currentTarget);
-    setShowNotification(false);
-    alert("here");
+    if (onResponsive) {
+      setShowPopover(true);
+    }
 
-    // console.log(loadedPlaces);
-    // setTimeout(() => {
-    //   login.notification();
-    // }, "4000");
+    if (showNotification) {
+      setShowNotification(false);
+      setUpdateNotification(true);
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:4000/api/users/notification/${login.userId}`,
+          "PATCH",
+          JSON.stringify({
+            notification: false,
+          }),
+          {
+            Authorization: "Bearer " + login.token,
+            "Content-Type": "Application/json",
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
-  const handleClickResponsive = (event) => {
-    setAnchorEl(event.currentTarget);
-    setShowPopover(true);
-    setShowNotification(false);
-  };
+  // useEffect(() => {
+  //   // setUpdateNotification(true);
+  // }, [updateNotification]);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -126,49 +192,6 @@ const NotificationsButton = ({
     // onCloseMenuResponsive();
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-
-  let PopoverComponent;
-
-  PopoverComponent = (
-    <Popover
-      id={id}
-      open={open}
-      anchorEl={anchorEl}
-      onClose={handleClose}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "left",
-      }}
-    >
-      <Typography sx={{ p: 1.5, fontWeight: "600" }}>Notifications</Typography>
-      <StyleStack
-        direction="row"
-        spacing={0}
-        sx={{ cursor: "pointer" }}
-        onClick={handleNewPost}
-      >
-        {!isLoading && loadedPlaces ? (
-          <React.Fragment>
-            <AvatarNotification loadedPlaces={loadedPlaces} />
-
-            <Typography
-              variant="body1"
-              fontWeight={500}
-              fontSize={14}
-              sx={{ p: 2, paddingTop: "7px" }}
-            >
-              {`New post by ${loadedPlaces.slice(0, 1)[0].creatorId.name}`}
-            </Typography>
-          </React.Fragment>
-        ) : (
-          <AccountCircleOutlined />
-        )}
-      </StyleStack>
-    </Popover>
-  );
-
   return (
     <React.Fragment>
       {changeResponsive ? (
@@ -189,7 +212,7 @@ const NotificationsButton = ({
               },
             }}
           >
-            <StyleMenuItem onClick={handleClickResponsive} disableRipple={true}>
+            <StyleMenuItem onClick={handleClick} disableRipple={true}>
               <IconButton
                 disableRipple={true}
                 style={{ backgroundColor: "transparent" }}
@@ -201,7 +224,7 @@ const NotificationsButton = ({
                 {!isLoading ? (
                   <Badge
                     badgeContent={
-                      showNotification && login.newNotification ? 1 : null
+                      showNotification && !updateNotification ? 1 : null
                     }
                     color="error"
                   >
@@ -211,50 +234,59 @@ const NotificationsButton = ({
               </IconButton>
               <p>Notifications</p>
             </StyleMenuItem>
-            {PopoverComponent}
+            {!isLoading && loadedPlaces ? (
+              <PopoverComponent
+                loadedPlaces={loadedPlaces}
+                anchorEl={anchorEl}
+                onHandleNewPost={handleNewPost}
+                onHandleClose={handleClose}
+              />
+            ) : null}
           </Box>
         </Zoom>
       ) : (
-        <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
-          <Box
-            sx={{
-              display: {
-                sps: "none",
-                ps: "none",
-                ts: "none",
-                sls: "none",
-                sms: "none",
-                sc: "none",
-                nsc: "none",
-                ns: "flex",
-                ms: "flex",
-                lgs: "flex",
-              },
-            }}
+        <Box
+          sx={{
+            display: {
+              sps: "none",
+              ps: "none",
+              ts: "none",
+              sls: "none",
+              sms: "none",
+              sc: "none",
+              nsc: "none",
+              ns: "flex",
+              ms: "flex",
+              lgs: "flex",
+            },
+          }}
+        >
+          <IconButton
+            disableRipple={true}
+            size="large"
+            aria-label="show new notifications"
+            color="inherit"
+            title="Notifications"
+            sx={{ marginLeft: "6px" }}
+            onClick={handleClick}
           >
-            <IconButton
-              disableRipple={true}
-              size="large"
-              aria-label="show new notifications"
-              color="inherit"
-              title="Notifications"
-              sx={{ marginLeft: "6px" }}
+            <Badge
+              badgeContent={showNotification && !updateNotification ? 1 : null}
+              color="error"
             >
-              {!isLoading ? (
-                <Badge
-                  badgeContent={
-                    showNotification && login.newNotification ? 1 : null
-                  }
-                  color="error"
-                >
-                  <NotificationsOutlinedIcon onClick={handleClick} />
-                  {PopoverComponent}
-                </Badge>
-              ) : null}
-            </IconButton>
-          </Box>
-        </Zoom>
+              <NotificationsOutlinedIcon />
+            </Badge>
+          </IconButton>
+        </Box>
       )}
+      {!isLoading && loadedPlaces ? (
+        <PopoverComponent
+          loadedPlaces={loadedPlaces}
+          anchorEl={anchorEl}
+          onHandleNewPost={handleNewPost}
+          onHandleClose={handleClose}
+        />
+      ) : null}
     </React.Fragment>
   );
 };
