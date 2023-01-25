@@ -146,9 +146,25 @@ const EditPlacePostDisplay = () => {
         }
       );
 
+      // try {
+      //   await sendRequest(
+      //     `http://localhost:4000/api/users/updateusernotification`,
+      //     "PATCH",
+      //     null,
+      //     {
+      //       Authorization: "Bearer " + login.token,
+      //       "Content-Type": "Application/json",
+      //     }
+      //   );
+      // } catch (err) {
+      //   console.log(err);
+      // }
+
+      login.notification();
       setShowSuccess("The place was deleted successfully");
       setTimeout(() => {
         navigate("/homepage");
+        // window.location.reload();
       }, "1000");
       setTimeout(() => {
         // navigate("/homepage");

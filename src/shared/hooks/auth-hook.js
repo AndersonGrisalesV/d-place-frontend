@@ -8,14 +8,10 @@ export const useAuth = () => {
   const [userId, setUserId] = useState(false);
   const [theme, setTheme] = useState(false);
 
-  const [newNotification, setNewNotification] = useState(false);
-  //   const [mode, setMode] = useState("light");
-
   const login = useCallback((uid, token, expirationDate, theme) => {
     setToken(token);
     setUserId(uid);
     setTheme(theme);
-    setNewNotification(true);
     const tokenExpirationDate =
       expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
     setTokenExpirationDate(tokenExpirationDate);
@@ -30,23 +26,6 @@ export const useAuth = () => {
     );
   }, []);
 
-  //   const createAccount = useCallback((uid, token, expirationDate) => {
-  //     setToken(token);
-  //     setUserId(uid);
-  //     setNewNotification(true);
-  //     const tokenExpirationDate =
-  //       expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
-  //     setTokenExpirationDate(tokenExpirationDate);
-  //     localStorage.setItem(
-  //       "userData",
-  //       JSON.stringify({
-  //         userId: uid,
-  //         token: token,
-  //         expiration: tokenExpirationDate.toISOString(),
-  //       })
-  //     );
-  //   }, []);
-
   const logout = useCallback(() => {
     setToken(null);
     setTokenExpirationDate(null);
@@ -54,22 +33,6 @@ export const useAuth = () => {
     setTheme(null);
     localStorage.removeItem("userData");
   }, []);
-
-  const notification = useCallback(() => {
-    setNewNotification((preNewNotification) => !preNewNotification);
-  }, []);
-
-  //   const modeWebsite = useCallback((modeName) => {
-  //     if (modeName === "light") {
-  //       setMode("light");
-  //     } else {
-  //       setMode("dark");
-  //     }
-  //     // setToken(null);
-  //     // setTokenExpirationDate(null);
-  //     // setUserId(null);
-  //     // localStorage.removeItem("userData");
-  //   }, []);
 
   useEffect(() => {
     if (token && tokenExpirationDate) {
@@ -103,7 +66,5 @@ export const useAuth = () => {
     theme,
     logout,
     userId,
-    notification,
-    newNotification,
   };
 };

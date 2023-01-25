@@ -1,7 +1,7 @@
 import { AccountCircleOutlined } from "@mui/icons-material";
 import { Popover, Typography } from "@mui/material";
 import { Stack, styled } from "@mui/system";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AvatarNotification from "./AvatarNotification";
 
 const StyleStack = styled(Stack)(({ theme }) => ({

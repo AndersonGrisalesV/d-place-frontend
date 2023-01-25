@@ -50,6 +50,7 @@ const AccountMenu = ({ onClearSearchBar }) => {
     onClearSearchBar();
     handleMobileMenuClose();
     navigate("/homepage");
+    window.location.reload();
   };
 
   const menuId = "primary-search-account-menu";

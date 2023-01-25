@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled/macro";
 import AvatarComponent from "./Avatar/AvatarComponent";
 import { LoginContext } from "../../../../../../context/login-context";
+import { useHttpClient } from "../../../../../../hooks/http-hook";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {
@@ -26,12 +27,18 @@ const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   },
 }));
 
-const AccountMenuMobile = ({ onClearSearchBar }) => {
+const AccountMenuMobile = ({
+  onClearSearchBar,
+  setUpdateNotification,
+  updateNotification,
+}) => {
   const login = useContext(LoginContext);
   let navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -68,10 +75,27 @@ const AccountMenuMobile = ({ onClearSearchBar }) => {
     onClearSearchBar();
     handleMobileMenuClose();
     navigate("/homepage");
+    window.location.reload();
   };
 
-  const handleMobileMenuOpen = (event) => {
+  const [userInfo, setUserInfo] = useState();
+
+  const handleMobileMenuOpen = async (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+
+    try {
+      const responseData = await sendRequest(
+        `http://localhost:4000/api/users/profile/${login.userId}`,
+        "GET",
+        null,
+        {
+          Authorization: "Bearer " + login.token,
+        }
+      );
+      setUserInfo(responseData.user);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -92,8 +116,11 @@ const AccountMenuMobile = ({ onClearSearchBar }) => {
       onClose={handleMobileMenuClose}
     >
       <NotificationsButton
+        onUser={userInfo}
         onResponsive={true}
         onCloseMenuResponsive={handleMobileMenuClose}
+        setUpdateNotification={setUpdateNotification}
+        updateNotification={updateNotification}
       />
 
       <StyleMenuItem onClick={handleFavoritesMenuClose} disableRipple={true}>

@@ -14,10 +14,7 @@ import PlaceDetail from "./pages/PlaceDetail";
 import NewPlace from "./pages/NewPlace";
 import EditPlace from "./pages/EditPlace";
 import { useHttpClient } from "./shared/hooks/http-hook";
-import Place from "./shared/components/Navigation/Feed/places/Place";
-import { SignalWifiStatusbarNull } from "@mui/icons-material";
 import EditProfile from "./shared/components/LoginRegister/EditProfile/EditProfile";
-import GoBackRefreshMenu from "./shared/util/GoBackRefreshMenu";
 import { useAuth } from "./shared/hooks/auth-hook";
 
 const StyleBox = styled(Box)(({ theme }) => ({
@@ -28,10 +25,9 @@ function App() {
   // const [token, setToken] = useState(false);
   // const [userId, setUserId] = useState(false);
 
-  // const [newNotification, setNewNotification] = useState(false);
+  const [newNotification, setNewNotification] = useState(false);
 
-  const { token, login, theme, logout, userId, notification, newNotification } =
-    useAuth();
+  const { token, login, logout, userId } = useAuth();
 
   let navigate = useNavigate();
 
@@ -167,6 +163,10 @@ function App() {
     setHomepageListItems(index);
   }, []);
 
+  const notification = useCallback(() => {
+    setNewNotification((preNewNotification) => !preNewNotification);
+  }, []);
+
   // useEffect(() => {
   //   const fetchPlaces = async () => {
   //     try {
@@ -189,27 +189,6 @@ function App() {
   const storedData = JSON.parse(localStorage.getItem("userData")) || null;
 
   const [mode, setMode] = useState(storedData ? storedData.theme : "light");
-
-  // const storedData = JSON.parse(localStorage.getItem("userData"));
-  // if (
-  //   storedData &&
-  //   storedData.token &&
-  //   new Date(storedData.expiration) > new Date()
-  // ) {
-  //   login(
-  //     storedData.userId,
-  //     storedData.token,
-  //     new Date(storedData.expiration)
-  //   );
-  // }
-
-  // useEffect(() => {
-  //   if (themeUser === "dark") {
-  //     setMode("dark");
-  //   }
-  // }, [themeUser]);
-
-  // alert(theme);
 
   let routes;
   if (token) {
@@ -336,7 +315,6 @@ function App() {
       value={{
         isLoggedIn: !!token,
         token: token,
-
         login: login,
         userId: userId,
         logout: logout,

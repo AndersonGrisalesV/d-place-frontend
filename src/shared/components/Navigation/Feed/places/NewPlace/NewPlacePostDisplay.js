@@ -175,21 +175,6 @@ const NewPlacePostDisplay = () => {
             Authorization: "Bearer " + login.token,
           }
         );
-        // const responseData = await sendRequest(
-        //   "http://localhost:4000/api/places/newplace",
-        //   "POST",
-        //   JSON.stringify({
-        //     title: formInputs.title,
-        //     description: formInputs.description,
-        //     image: formInputs.image,
-        //     postDate: date,
-        //     address: formInputs.address,
-        //     creatorId: login.userId,
-        //   }),
-        //   {
-        //     "Content-Type": "Application/json",
-        //   }
-        // );
 
         setShowSuccess(true);
         setTimeout(() => {
@@ -204,8 +189,22 @@ const NewPlacePostDisplay = () => {
           login.notification();
         }, "2000");
       }
+
+      try {
+        await sendRequest(
+          `http://localhost:4000/api/users/updateusernotification`,
+          "PATCH",
+          null,
+          {
+            Authorization: "Bearer " + login.token,
+            "Content-Type": "Application/json",
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      }
     }
-    login.notification();
+    // login.notification();
     resetTitleInput();
     resetDescriptionInput();
     resetAddressInput();

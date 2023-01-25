@@ -1,22 +1,11 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import {
-  Avatar,
-  Badge,
-  Box,
-  IconButton,
-  MenuItem,
-  Stack,
-  Zoom,
-} from "@mui/material";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { Badge, Box, IconButton, MenuItem, Zoom } from "@mui/material";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
+
 import styled from "@emotion/styled/macro";
 
-import { AccountCircleOutlined } from "@mui/icons-material";
 import { useHttpClient } from "../../../../../../hooks/http-hook";
 
-import AvatarNotification from "./AvatarNotification";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../../../../context/login-context";
 import PopoverComponent from "./PopoverComponent";
@@ -31,24 +20,16 @@ const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   },
 }));
 
-const StyleStack = styled(Stack)(({ theme }) => ({
-  "&:hover": {
-    color:
-      theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
-    [`${Typography}`]: {
-      color: "#9b9b9bc7",
-    },
-  },
-}));
-
 const NotificationsButton = ({
   onResponsive,
   onCloseMenuResponsive = null,
+  onUser,
+  setUpdateNotification,
+  updateNotification,
 }) => {
   const login = useContext(LoginContext);
   const responsiveVariant = onResponsive;
   const [changeResponsive, setChangeResponsive] = useState(responsiveVariant);
-  const [showPopover, setShowPopover] = useState(false);
 
   let navigate = useNavigate();
 
@@ -58,7 +39,7 @@ const NotificationsButton = ({
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedPlaces, setLoadedPlaces] = useState();
-  const [showNotification, setShowNotification] = useState(true);
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -68,14 +49,14 @@ const NotificationsButton = ({
         );
 
         setLoadedPlaces(responseData.places);
-        // console.log("aqui" + responseData.places.length())
+        console.log(login.userId);
 
-        // if (
-        //   login.userId !==
-        //   responseData.places.reverse().slice(0, 1)[0].creatorId._id
-        // ) {
-        //   setShowNotification(true);
-        // }
+        if (
+          login.userId ===
+          responseData.places.reverse().slice(0, 1)[0].creatorId._id
+        ) {
+          setUpdateNotification(true);
+        }
       } catch (err) {}
     };
     fetchPlaces();
@@ -100,69 +81,52 @@ const NotificationsButton = ({
       } catch (err) {}
     };
     fetchUser();
-  }, [sendRequest, login.userId, login.notification, login.token]);
 
-  const anchorRef = useRef(null);
+    // if (login.newNotification) {
+    //   fetchPlaces();
+    //   fetchUser();
+    //   login.notification();
+    // }
+  }, [
+    sendRequest,
+    login.userId,
+    login.notification,
+    login.token,
+    setUpdateNotification,
+    login.newNotification,
+    login.notification,
+    login,
+  ]);
+
   const [anchorEl, setAnchorEl] = useState(false);
-
-  // useEffect(() => {
-  //   if (showNotification) {
-  //     anchorRef.current.click();
-
-  //     // setAnchorEl(anchorRef.currentTarget);
-  //   }
-  // }, [anchorRef, showNotification]);
-
-  const [updateNotification, setUpdateNotification] = useState(false);
-
-  // const handleClick = async (event) => {
-  //   setAnchorEl(event.currentTarget);
-
-  //   if (showNotification) {
-  //     try {
-  //       const responseData = await sendRequest(
-  //         `http://localhost:4000/api/users/notification/${login.userId}`,
-  //         "PATCH",
-  //         JSON.stringify({
-  //           notification: false,
-  //         }),
-  //         {
-  //           Authorization: "Bearer " + login.token,
-  //           "Content-Type": "Application/json",
-  //         }
-  //       );
-  //       setUpdateNotification(true);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //     setShowNotification(false);
-  //   }
-  // };
+  const notificationBadge = useRef(null);
 
   const handleClick = async (event) => {
     setAnchorEl(event.currentTarget);
     if (onResponsive) {
-      setShowPopover(true);
+      notificationBadge.current.click();
     }
 
-    if (showNotification) {
-      setShowNotification(false);
-      setUpdateNotification(true);
-      try {
-        const responseData = await sendRequest(
-          `http://localhost:4000/api/users/notification/${login.userId}`,
-          "PATCH",
-          JSON.stringify({
-            notification: false,
-          }),
-          {
-            Authorization: "Bearer " + login.token,
-            "Content-Type": "Application/json",
-          }
-        );
-      } catch (err) {
-        console.log(err);
+    if (login.userId !== loadedPlaces.reverse().slice(0, 1)[0].creatorId._id) {
+      if (showNotification && !updateNotification) {
+        try {
+          await sendRequest(
+            `http://localhost:4000/api/users/notification/${login.userId}`,
+            "PATCH",
+            JSON.stringify({
+              notification: false,
+            }),
+            {
+              Authorization: "Bearer " + login.token,
+              "Content-Type": "Application/json",
+            }
+          );
+        } catch (err) {
+          console.log(err);
+        }
       }
+      setUpdateNotification(true);
+      setShowNotification(false);
     }
   };
 
@@ -187,9 +151,6 @@ const NotificationsButton = ({
     if (onCloseMenuResponsive) {
       onCloseMenuResponsive();
     }
-    setShowPopover(false);
-
-    // onCloseMenuResponsive();
   };
 
   return (
@@ -220,11 +181,14 @@ const NotificationsButton = ({
                 aria-label="show new notifications"
                 color="inherit"
                 title="Notifications"
+                ref={notificationBadge}
               >
-                {!isLoading ? (
+                {onUser ? (
                   <Badge
                     badgeContent={
-                      showNotification && !updateNotification ? 1 : null
+                      onUser.viewedNotification && !updateNotification
+                        ? 1
+                        : null
                     }
                     color="error"
                   >

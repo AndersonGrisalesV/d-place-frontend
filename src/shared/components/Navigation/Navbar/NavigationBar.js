@@ -24,6 +24,8 @@ const StyleToolbar = styled(Toolbar)({
 export default function NavigationBar(props) {
   const login = useContext(LoginContext);
 
+  const [updateNotification, setUpdateNotification] = useState(false);
+
   return (
     <Grow
       in={true}
@@ -55,7 +57,11 @@ export default function NavigationBar(props) {
               />
 
               <FavoritesButton />
-              <NotificationsButton onResponsive={false} />
+              <NotificationsButton
+                onResponsive={false}
+                setUpdateNotification={setUpdateNotification}
+                updateNotification={updateNotification}
+              />
               <AccountMenu onClearSearchBar={props.onClearSearchBar} />
             </React.Fragment>
           ) : (
@@ -89,7 +95,11 @@ export default function NavigationBar(props) {
             </React.Fragment>
           )}
 
-          <AccountMenuMobile onClearSearchBar={props.onClearSearchBar} />
+          <AccountMenuMobile
+            onClearSearchBar={props.onClearSearchBar}
+            setUpdateNotification={setUpdateNotification}
+            updateNotification={updateNotification}
+          />
         </StyleToolbar>
       </AppBar>
     </Grow>
