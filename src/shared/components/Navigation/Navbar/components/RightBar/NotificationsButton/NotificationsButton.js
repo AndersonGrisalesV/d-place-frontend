@@ -25,7 +25,7 @@ const NotificationsButton = ({
   onCloseMenuResponsive = null,
   onUser,
   setUpdateNotification,
-  updateNotification,
+  updateNotification = true,
 }) => {
   const login = useContext(LoginContext);
   const responsiveVariant = onResponsive;
@@ -99,13 +99,12 @@ const NotificationsButton = ({
   ]);
 
   const [anchorEl, setAnchorEl] = useState(false);
+  const [showPopOver, setShowPopOver] = useState(false);
   const notificationBadge = useRef(null);
 
   const handleClick = async (event) => {
-    setAnchorEl(event.currentTarget);
-    if (onResponsive) {
-      notificationBadge.current.click();
-    }
+    console.log(loadedPlaces.reverse().slice(0, 1)[0].creatorId._id);
+    console.log(login.userId);
 
     if (login.userId !== loadedPlaces.reverse().slice(0, 1)[0].creatorId._id) {
       if (showNotification && !updateNotification) {
@@ -128,6 +127,12 @@ const NotificationsButton = ({
       setUpdateNotification(true);
       setShowNotification(false);
     }
+
+    setAnchorEl(event.currentTarget);
+    if (onResponsive) {
+      notificationBadge.current.click();
+    }
+    setShowPopOver(true);
   };
 
   // useEffect(() => {
@@ -135,22 +140,8 @@ const NotificationsButton = ({
   // }, [updateNotification]);
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleNewPost = () => {
-    let placeId;
-    if (loadedPlaces) {
-      placeId = loadedPlaces.slice(0, 1)[0]._id;
-    }
-
-    login.listItemsNotListed();
-    navigate(`/api/places/${placeId}`);
-    handleClose();
-    login.listItemsNotListed(placeId);
-    if (onCloseMenuResponsive) {
-      onCloseMenuResponsive();
-    }
+    setAnchorEl(false);
+    setShowPopOver(false);
   };
 
   return (
@@ -198,11 +189,10 @@ const NotificationsButton = ({
               </IconButton>
               <p>Notifications</p>
             </StyleMenuItem>
-            {!isLoading && loadedPlaces ? (
+            {changeResponsive && !isLoading && loadedPlaces && showPopOver ? (
               <PopoverComponent
                 loadedPlaces={loadedPlaces}
-                anchorEl={anchorEl}
-                onHandleNewPost={handleNewPost}
+                anchorEl={anchorEl ? anchorEl : false}
                 onHandleClose={handleClose}
               />
             ) : null}
@@ -235,7 +225,11 @@ const NotificationsButton = ({
             onClick={handleClick}
           >
             <Badge
-              badgeContent={showNotification && !updateNotification ? 1 : null}
+              badgeContent={
+                showNotification && !updateNotification && loadedPlaces
+                  ? 1
+                  : null
+              }
               color="error"
             >
               <NotificationsOutlinedIcon />
@@ -243,12 +237,14 @@ const NotificationsButton = ({
           </IconButton>
         </Box>
       )}
-      {!isLoading && loadedPlaces ? (
+      {!isLoading && loadedPlaces && showPopOver ? (
         <PopoverComponent
+          setLoadedPlaces={setLoadedPlaces}
+          onPost={true}
           loadedPlaces={loadedPlaces}
-          anchorEl={anchorEl}
-          onHandleNewPost={handleNewPost}
+          anchorEl={anchorEl ? anchorEl : false}
           onHandleClose={handleClose}
+          onCloseMenuResponsive={onCloseMenuResponsive}
         />
       ) : null}
     </React.Fragment>

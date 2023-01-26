@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia, styled } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const BoxStyled = styled(Box)(() => ({
   marginTop: "12%",
@@ -24,7 +24,17 @@ const BoxStyled = styled(Box)(() => ({
   },
 }));
 
-const NotFound = () => {
+const NotFoundUserPlaces = () => {
+  const storedData = JSON.parse(localStorage.getItem("userData")) || null;
+
+  const [theme, setTheme] = useState(storedData ? storedData.theme : "light");
+
+  useEffect(() => {
+    if (storedData.theme !== theme) {
+      setTheme(storedData.theme);
+    }
+  }, [storedData.theme, theme]);
+
   return (
     <BoxStyled>
       <Card
@@ -54,12 +64,16 @@ const NotFound = () => {
           sx={{ height: "100%", objectFit: "contain" }}
           component="img"
           height="194"
-          image="https://res.cloudinary.com/doa4qiuc2/image/upload/v1673914143/places/NotFavoritePlacesFound.png"
-          alt="User do not have favorite places"
+          image={
+            theme === "light"
+              ? "https://res.cloudinary.com/doa4qiuc2/image/upload/v1674691052/places/NotUserPlacesFound_b9uqml.png"
+              : "https://res.cloudinary.com/doa4qiuc2/image/upload/v1674691052/places/NotUserPlacesFoundDarkTheme_s7ufn9.png"
+          }
+          alt="User do not have own places"
         />
       </Card>
     </BoxStyled>
   );
 };
 
-export default NotFound;
+export default NotFoundUserPlaces;

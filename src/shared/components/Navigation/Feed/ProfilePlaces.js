@@ -8,6 +8,7 @@ import Place from "./places/Place";
 import { useHttpClient } from "../../../hooks/http-hook";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 import { LoginContext } from "../../../context/login-context";
+import NotFoundUserPlaces from "./NotFoundUserPlaces";
 
 const ProfilePlaces = ({ onFilterSearch = null }) => {
   const login = useContext(LoginContext);
@@ -158,7 +159,7 @@ const ProfilePlaces = ({ onFilterSearch = null }) => {
                     placesProfile
                   ) : (
                     <React.Fragment>
-                      {dataStatus ? <p>You don't have places</p> : ""}
+                      {dataStatus ? <NotFoundUserPlaces /> : null}
                     </React.Fragment>
                   )}
                 </React.Fragment>

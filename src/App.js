@@ -368,13 +368,15 @@ function App() {
                   onClearSearchBar={handlleSideBarCleanSearchBar}
                 />
               )}
-              <Routes>
-                <Route
-                  path="/homepage"
-                  element={<HomePage onFilterSearch={searchBar} />}
-                />
-                {routes}
-              </Routes>
+              {!isLoading ? (
+                <Routes>
+                  <Route
+                    path="/homepage"
+                    element={<HomePage onFilterSearch={searchBar} />}
+                  />
+                  {routes}
+                </Routes>
+              ) : null}
             </Stack>
           </div>
         </StyleBox>

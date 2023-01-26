@@ -8,7 +8,7 @@ import Place from "./places/Place";
 import { useHttpClient } from "../../../hooks/http-hook";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 import { LoginContext } from "../../../context/login-context";
-import NotFound from "./NotFound";
+import NotFoundFavorites from "./NotFoundFavorites";
 
 const FavoritePlaces = ({ onFilterSearch = null }) => {
   const login = useContext(LoginContext);
@@ -163,8 +163,8 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
                     placesFavorites
                   ) : (
                     <React.Fragment>
-                      {dataStatus ? (
-                        <NotFound style={{ marginBottom: "100%" }}></NotFound>
+                      {dataStatus && !isLoading ? (
+                        <NotFoundFavorites style={{ marginBottom: "100%" }} />
                       ) : null}
                     </React.Fragment>
                   )}
