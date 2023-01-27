@@ -404,10 +404,12 @@ const ListItems = ({
 
   useEffect(() => {
     switch (window.location.pathname) {
-      case "/homepage":
+      case `${process.env.REACT_APP_BACKEND_URL}/homepage`:
         setSelectedIndex(0);
         break;
-      case `/api/users/favorites/${login.pidCleanListItems}`: //here we use pidCleanListItems instead oflogin.userId because there is a conflict between favorites and profile
+      case `/api/users/favorites/${
+        login.pidCleanListItems ? login.pidCleanListItems : login.userId
+      }`: //here we use pidCleanListItems instead oflogin.userId because there is a conflict between favorites and profile
         setSelectedIndex(1);
 
         break;

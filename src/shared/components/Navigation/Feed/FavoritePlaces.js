@@ -9,6 +9,7 @@ import { useHttpClient } from "../../../hooks/http-hook";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 import { LoginContext } from "../../../context/login-context";
 import NotFoundFavorites from "./NotFoundFavorites";
+import NotFoundPlaces from "./NotFoundPlaces";
 
 const FavoritePlaces = ({ onFilterSearch = null }) => {
   const login = useContext(LoginContext);
@@ -152,7 +153,7 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
               {filteredPlaces && !emptySearch ? (
                 filteredPlaces
               ) : (
-                <p>No places found!</p>
+                <NotFoundPlaces />
               )}
             </React.Fragment>
           ) : (

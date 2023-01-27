@@ -379,19 +379,19 @@ const EditProfile = () => {
   const onSubmitLoginRegisterHandler = async (e) => {
     e.preventDefault();
     setLoadingSpinnerButtons(true);
-    if (changePassword && loadedUser.password !== oldPasswordInput) {
-      setShowpassMatchError(true);
-      setShowErrorPassword(`Your old password didn't match, please try again.`);
-      resetOldPasswordInput();
-      resetPasswordInput();
-      resetconfirmPasswordInput();
+    // if (changePassword && loadedUser.password !== oldPasswordInput) {
+    //   setShowpassMatchError(true);
+    //   setShowErrorPassword(`Your old password didn't match, please try again.`);
+    //   resetOldPasswordInput();
+    //   resetPasswordInput();
+    //   resetconfirmPasswordInput();
 
-      setTimeout(() => {
-        setShowpassMatchError(false);
-        setShowErrorPassword(null);
-      }, "5090");
-      return;
-    }
+    //   setTimeout(() => {
+    //     setShowpassMatchError(false);
+    //     setShowErrorPassword(null);
+    //   }, "5090");
+    //   return;
+    // }
     if (login.isLoggedIn && formInputs) {
       if (!formInputs.image && formInputs.image !== "noImage") {
         formInputs.image = {
@@ -425,6 +425,7 @@ const EditProfile = () => {
         myForm.append("email", formInputs.email);
 
         if (changePassword) {
+          myForm.append("oldPassword", oldPasswordInput);
           myForm.append("password", formInputs.password);
           myForm.append("confirmPassword", formInputs.confirmPassword);
         } else {

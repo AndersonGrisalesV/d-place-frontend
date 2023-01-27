@@ -30,10 +30,12 @@ const NotFoundUserPlaces = () => {
   const [theme, setTheme] = useState(storedData ? storedData.theme : "light");
 
   useEffect(() => {
-    if (storedData.theme !== theme) {
-      setTheme(storedData.theme);
+    if (storedData) {
+      if (storedData.theme !== theme) {
+        setTheme(storedData.theme);
+      }
     }
-  }, [storedData.theme, theme]);
+  }, [storedData, theme]);
 
   return (
     <BoxStyled>
@@ -66,8 +68,8 @@ const NotFoundUserPlaces = () => {
           height="194"
           image={
             theme === "light"
-              ? "https://res.cloudinary.com/doa4qiuc2/image/upload/v1674691052/places/NotUserPlacesFound_b9uqml.png"
-              : "https://res.cloudinary.com/doa4qiuc2/image/upload/v1674691052/places/NotUserPlacesFoundDarkTheme_s7ufn9.png"
+              ? "https://res.cloudinary.com/doa4qiuc2/image/upload/v1674765088/places/NotFoundUserPlacesLightTheme_b5ipgt.png"
+              : "https://res.cloudinary.com/doa4qiuc2/image/upload/v1674765088/places/NotFoundUserPlacesDarkTheme_it0k10.png"
           }
           alt="User do not have own places"
         />

@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 
 import { useHttpClient } from "../../../hooks/http-hook";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import NotFoundPlaces from "./NotFoundPlaces";
 
 const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
   const params = useParams();
@@ -26,7 +27,7 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:4000/homepage"
+          `${process.env.REACT_APP_BACKEND_URL}/homepage`
         );
 
         setLoadedPlaces(responseData.places.reverse());
@@ -111,6 +112,8 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
         sx={{
           display: "flex",
           justifyContent: "center",
+          marginBottom: "100%",
+          paddingBottom: "800px",
           // marginTop: "34.4%",
           // marginLeft: "38%",
           // marginRight: "30%",
@@ -151,13 +154,7 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
                   {filteredPlaces && !emptySearch ? (
                     filteredPlaces
                   ) : (
-                    <p
-                      style={{
-                        marginBottom: "100%",
-                      }}
-                    >
-                      No places found!
-                    </p>
+                    <NotFoundPlaces />
                   )}
                 </React.Fragment>
               ) : (
@@ -168,15 +165,7 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
                         places
                       ) : (
                         <React.Fragment>
-                          {dataStatus ? (
-                            <p
-                              style={{
-                                marginBottom: "100%",
-                              }}
-                            >
-                              There are not places to show
-                            </p>
-                          ) : null}
+                          {dataStatus ? <NotFoundPlaces /> : null}
                         </React.Fragment>
                       )}
                     </React.Fragment>

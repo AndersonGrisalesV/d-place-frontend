@@ -16,6 +16,8 @@ import EditPlace from "./pages/EditPlace";
 import { useHttpClient } from "./shared/hooks/http-hook";
 import EditProfile from "./shared/components/LoginRegister/EditProfile/EditProfile";
 import { useAuth } from "./shared/hooks/auth-hook";
+import NotFoundGeneral from "./pages/NotFoundGeneral";
+import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
 
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",
@@ -42,7 +44,7 @@ function App() {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:4000/homepage"
+          `${process.env.REACT_APP_BACKEND_URL}/homepage`
         );
 
         setLoadedPlaces(responseData.places.reverse());
@@ -195,7 +197,7 @@ function App() {
     routes = (
       <React.Fragment>
         <Route
-          path="/homepage"
+          path="/api/homepage"
           element={<HomePage onFilterSearch={searchBar} />}
         />
         <Route
@@ -221,7 +223,7 @@ function App() {
           path="/api/places/:pid"
           element={<PlaceDetail onFilterSearch={searchBar} />}
         />
-        <Route path="*" element={<p>Not Found!</p>} />
+        <Route path="*" element={<NotFoundGeneral />} />
       </React.Fragment>
     );
   } else {
@@ -235,7 +237,7 @@ function App() {
           path="/api/places/:pid"
           element={<PlaceDetail onFilterSearch={searchBar} />}
         />
-        <Route path="*" element={<p>Not found!</p>} />
+        <Route path="*" element={<NotFoundGeneral />} />
       </React.Fragment>
     );
   }
@@ -310,6 +312,25 @@ function App() {
     setMenuOption((prevMenuOption) => !prevMenuOption);
   };
 
+  let spinner = "";
+  if (isLoading) {
+    spinner = (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "14px",
+          marginBottom: "100%",
+          // marginTop: "25%",
+          // marginLeft: "40%",
+          // marginRight: "50%",
+        }}
+      >
+        <LoadingSpinner asOverlay />
+      </Box>
+    );
+  }
+
   return (
     <LoginContext.Provider
       value={{
@@ -338,47 +359,69 @@ function App() {
           color={"text.primary"}
           style={{ margin: 0, padding: 0 }}
         >
-          <NavigationBar
-            setMode={setMode}
-            mode={mode}
-            onOption={handleBurgerMenu}
-            onSearch={handleSearchBar}
-            onClear={clearSearchBar}
-            onClearSearchBar={handlleSideBarCleanSearchBar}
-            onShowCloseButton={showCloseButton}
-            onCurrent={storedInputSearch}
-          />
+          {!isLoading ? (
+            <React.Fragment>
+              <NavigationBar
+                setMode={setMode}
+                mode={mode}
+                onOption={handleBurgerMenu}
+                onSearch={handleSearchBar}
+                onClear={clearSearchBar}
+                onClearSearchBar={handlleSideBarCleanSearchBar}
+                onShowCloseButton={showCloseButton}
+                onCurrent={storedInputSearch}
+              />
 
-          <div style={{ margin: 0, padding: 0 }}>
-            <Stack direction="row" spacing={2} justifyContent="space-between">
-              {menuOption ? (
-                <SideBar
-                  menuOption={menuOption}
-                  mode={mode}
-                  setMode={setMode}
-                  onOption={handleBurgerMenu}
-                  onClearSearchBar={handlleSideBarCleanSearchBar}
-                />
-              ) : (
-                <SideBar
-                  menuOption={menuOption}
-                  mode={mode}
-                  setMode={setMode}
-                  onOption={handleBurgerMenu}
-                  onClearSearchBar={handlleSideBarCleanSearchBar}
-                />
-              )}
-              {!isLoading ? (
-                <Routes>
-                  <Route
-                    path="/homepage"
-                    element={<HomePage onFilterSearch={searchBar} />}
-                  />
-                  {routes}
-                </Routes>
-              ) : null}
-            </Stack>
-          </div>
+              <div style={{ margin: 0, padding: 0 }}>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  justifyContent="space-between"
+                >
+                  {menuOption ? (
+                    <SideBar
+                      menuOption={menuOption}
+                      mode={mode}
+                      setMode={setMode}
+                      onOption={handleBurgerMenu}
+                      onClearSearchBar={handlleSideBarCleanSearchBar}
+                    />
+                  ) : (
+                    <SideBar
+                      menuOption={menuOption}
+                      mode={mode}
+                      setMode={setMode}
+                      onOption={handleBurgerMenu}
+                      onClearSearchBar={handlleSideBarCleanSearchBar}
+                    />
+                  )}
+
+                  <Routes>
+                    <Route
+                      path="/api/homepage"
+                      element={<HomePage onFilterSearch={searchBar} />}
+                    />
+                    {!isLoading ? (
+                      <React.Fragment>{routes}</React.Fragment>
+                    ) : null}
+                  </Routes>
+                </Stack>
+              </div>
+            </React.Fragment>
+          ) : (
+            <Box
+              flex={5.6}
+              p={0}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                paddingBottom: "800px",
+                marginBottom: "100%",
+              }}
+            >
+              {spinner}
+            </Box>
+          )}
         </StyleBox>
       </ThemeProvider>
 

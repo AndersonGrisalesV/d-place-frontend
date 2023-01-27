@@ -40,5 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://localhost:3000/homepage"
+  "homepage": "https://localhost:3000/api/homepage"
 }

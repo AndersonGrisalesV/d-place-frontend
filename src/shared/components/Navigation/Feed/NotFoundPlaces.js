@@ -24,7 +24,7 @@ const BoxStyled = styled(Box)(() => ({
   },
 }));
 
-const NotFoundFavorites = () => {
+const NotFoundPlaces = () => {
   const storedData = JSON.parse(localStorage.getItem("userData")) || null;
 
   const [theme, setTheme] = useState(storedData ? storedData.theme : "light");
@@ -68,14 +68,14 @@ const NotFoundFavorites = () => {
           height="194"
           image={
             theme === "light"
-              ? "https://res.cloudinary.com/doa4qiuc2/image/upload/v1674765035/places/NotFoundFavoritePlacesLightTheme_l6rn4g.png"
-              : "https://res.cloudinary.com/doa4qiuc2/image/upload/v1674765034/places/NotFoundFavoritePlacesDarkTheme_zvym3t.png"
+              ? "https://res.cloudinary.com/doa4qiuc2/image/upload/v1674767201/places/NotFoundPlacesLightTheme_jheik2.png"
+              : "https://res.cloudinary.com/doa4qiuc2/image/upload/v1674767201/places/NotFoundPlacesDarkTheme_pam0vw.png"
           }
-          alt="User do not have favorite places"
+          alt="No places found"
         />
       </Card>
     </BoxStyled>
   );
 };
 
-export default NotFoundFavorites;
+export default NotFoundPlaces;
