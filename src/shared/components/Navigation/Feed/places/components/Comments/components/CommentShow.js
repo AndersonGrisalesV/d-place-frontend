@@ -377,7 +377,7 @@ const CommentShow = ({
               >
                 <Avatar
                   sx={{
-                    color: "#ffffffb8",
+                    color: "#fff",
                     marginTop: "5%",
                     marginLeft: "5%",
                     fontSize: {

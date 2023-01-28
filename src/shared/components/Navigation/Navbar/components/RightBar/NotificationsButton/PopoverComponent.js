@@ -34,11 +34,10 @@ const PopoverComponent = ({
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [updatedPlaceId, setUpdatedPlaceId] = useState(null);
-  const [reload, setReload] = useState(onReloadPopComponent ? false : true);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     if (onPost) {
-      setReload(false);
       const fetchPlaces = async () => {
         try {
           const responseData = await sendRequest(
@@ -48,6 +47,10 @@ const PopoverComponent = ({
           setLoadedPlaces(responseData.places);
 
           setUpdatedPlaceId(responseData.places.reverse().slice(0, 1)[0]);
+          setTimeout(() => {
+            // navigate("/homepage");
+            setReload(true);
+          }, "100");
         } catch (err) {}
       };
 
@@ -67,7 +70,7 @@ const PopoverComponent = ({
 
   return (
     <React.Fragment>
-      {!isLoading && loadedPlaces ? (
+      {!isLoading && loadedPlaces && reload ? (
         <Popover
           open={anchorEl ? true : false}
           anchorEl={anchorEl}

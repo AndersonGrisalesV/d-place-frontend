@@ -13,7 +13,7 @@ const AvatarComponent = ({ loadedPlaces, onProfileNavigation }) => {
       }
       title={loadedPlaces.creatorId.name}
       sx={{
-        color: "#ffffffb8",
+        color: "#fff",
         cursor: "pointer",
         fontSize: {
           sps: "10px",

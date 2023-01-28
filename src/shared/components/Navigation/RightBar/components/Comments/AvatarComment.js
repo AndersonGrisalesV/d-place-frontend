@@ -13,7 +13,7 @@ const AvatarComment = ({ loadedPlace, onProfileNavigation }) => {
       }
       title={loadedPlace.creatorId.name}
       sx={{
-        color: "#ffffffb8",
+        color: "#fff",
         cursor: "pointer",
         fontSize: {
           sps: "10px",

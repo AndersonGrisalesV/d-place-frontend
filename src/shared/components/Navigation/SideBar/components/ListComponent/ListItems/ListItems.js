@@ -411,33 +411,46 @@ const ListItems = ({
     switch (window.location.pathname) {
       case "/api/homepage":
         setSelectedIndex(0);
+        document.title = "Home";
         break;
       case `/api/users/favorites/${login.userId}`: //here we use pidCleanListItems instead oflogin.userId because there is a conflict between favorites and profile
         setSelectedIndex(1);
+        document.title = "Favorites";
         break;
       case `/api/users/myplaces/${login.userId}`:
         setSelectedIndex(2);
+        document.title = "My places";
         break;
       case `/api/users/profile/${login.userId}`:
         setSelectedIndex(3);
+        document.title = "Profile";
         break;
       case `/api/places/editplace/${login.pidCleanListItems}`:
         alert(window.location.pathname);
         // login.listItemsNotListed(login.pidCleanListItems);
         setSelectedIndex(4);
         setClearListItem(false);
+        document.title = "Edit place";
         break;
-      case `/api/places/${login.userId}`:
+      case `/api/places/${login.pidCleanListItems}`:
         // login.listItemsNotListed(login.pidCleanListItems);
         setSelectedIndex(4);
         setClearListItem(false);
+
+        if (login.pidCleanListItems !== "newplace") {
+          document.title = "Place details";
+        } else {
+          document.title = "New place";
+        }
         break;
       case "/api/places/newplace":
         setSelectedIndex(4);
         setClearListItem(false);
+        document.title = "New place";
         break;
       case `/api/users/loginregister`:
         setSelectedIndex(6);
+        document.title = "Signup";
         break;
       // case `/api/places/places/${login.pidCleanListItems}`:
       //   setClearListItem(true);
@@ -492,7 +505,7 @@ const ListItems = ({
             <ListItemIcon>
               <StyleHomeIcon />
             </ListItemIcon>
-            <StyleListItemText primary="Homepage" />
+            <StyleListItemText primary="Home" />
           </ListItemButton>
         </StyleListItemsHomepage>
       </Grow>
