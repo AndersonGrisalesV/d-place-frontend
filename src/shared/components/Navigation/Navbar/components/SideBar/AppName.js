@@ -13,7 +13,7 @@ const AppName = () => {
 
   const handleClickAppName = () => {
     setActivateAnimation(true);
-    navigate("/homepage");
+    navigate("/api/homepage");
     login.listItemsCleanHomepage(0);
     setTimeout(() => {
       setActivateAnimation(false);

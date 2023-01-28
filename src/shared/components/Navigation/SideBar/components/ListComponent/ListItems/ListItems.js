@@ -17,7 +17,7 @@ import {
   SettingsOutlined,
 } from "@mui/icons-material";
 import ModeSwitch from "../../ModeSwitch/ModeSwitch";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../../../../context/login-context";
 import CollectionsOutlinedIcon from "@mui/icons-material/CollectionsOutlined";
 import styled from "@emotion/styled/macro";
@@ -322,6 +322,11 @@ const ListItems = ({
   const login = useContext(LoginContext);
   let navigate = useNavigate();
 
+  const { pathname } = useLocation();
+  const str = pathname;
+  const parts = str.split("/");
+  const id = parts[3];
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -342,7 +347,7 @@ const ListItems = ({
   };
 
   const handleLogout = () => {
-    navigate("/homepage");
+    navigate("/api/homepage");
 
     setAnchorEl(null);
     login.logout();
@@ -404,14 +409,11 @@ const ListItems = ({
 
   useEffect(() => {
     switch (window.location.pathname) {
-      case `${process.env.REACT_APP_BACKEND_URL}/homepage`:
+      case "/api/homepage":
         setSelectedIndex(0);
         break;
-      case `/api/users/favorites/${
-        login.pidCleanListItems ? login.pidCleanListItems : login.userId
-      }`: //here we use pidCleanListItems instead oflogin.userId because there is a conflict between favorites and profile
+      case `/api/users/favorites/${login.userId}`: //here we use pidCleanListItems instead oflogin.userId because there is a conflict between favorites and profile
         setSelectedIndex(1);
-
         break;
       case `/api/users/myplaces/${login.userId}`:
         setSelectedIndex(2);
@@ -419,22 +421,30 @@ const ListItems = ({
       case `/api/users/profile/${login.userId}`:
         setSelectedIndex(3);
         break;
+      case `/api/places/editplace/${login.pidCleanListItems}`:
+        alert(window.location.pathname);
+        // login.listItemsNotListed(login.pidCleanListItems);
+        setSelectedIndex(4);
+        setClearListItem(false);
+        break;
+      case `/api/places/${login.userId}`:
+        // login.listItemsNotListed(login.pidCleanListItems);
+        setSelectedIndex(4);
+        setClearListItem(false);
+        break;
+      case "/api/places/newplace":
+        setSelectedIndex(4);
+        setClearListItem(false);
+        break;
       case `/api/users/loginregister`:
         setSelectedIndex(6);
         break;
-      case `/api/places/${login.pidCleanListItems}`:
-        setSelectedIndex(4);
-        setClearListItem(false);
-        break;
-      case `/api/places/editplace/${login.pidCleanListItems}`:
-        setSelectedIndex(4);
-        setClearListItem(false);
-        break;
-      case `/api/places/places/${login.pidCleanListItems}`:
-        setClearListItem(true);
-        break;
+      // case `/api/places/places/${login.pidCleanListItems}`:
+      //   setClearListItem(true);
+      //   break;
       default:
-        // setSelectedIndex(0);
+        setSelectedIndex(4);
+        setClearListItem(false);
         setSettingsSelecteditem(0);
         break;
     }
@@ -443,7 +453,6 @@ const ListItems = ({
     login.pidCleanListItems,
     login.clearListItems,
     login.homepageListItems,
-
     login,
   ]);
 
@@ -470,14 +479,14 @@ const ListItems = ({
           ref={homepageButton}
           disablePadding
           component={StyleNavLink}
-          to="/homepage"
+          to="/api/homepage"
           selected={selectedIndex === 0 && !clearListItem ? true : null}
           onClick={(e) => activeStateHandler(e, 0)}
         >
           <ListItemButton
             disableRipple={true}
             component="ul"
-            href="/homepage"
+            href="api//homepage"
             onClick={onCloseResponsiveDrawer ? handleDrawerClose : handleClear}
           >
             <ListItemIcon>

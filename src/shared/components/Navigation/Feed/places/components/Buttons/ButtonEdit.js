@@ -23,6 +23,7 @@ const ButtonEdit = ({ loadedPlaces }) => {
 
   const cleanListItemsHandler = () => {
     login.listItemsNotListed(loadedPlaces._id);
+    // alert(loadedPlaces._id);
   };
 
   return (

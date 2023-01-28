@@ -168,7 +168,7 @@ const NewPlacePostDisplay = () => {
         myForm.append("address", formInputs.address);
         myForm.append("creatorId", login.userId);
         await sendRequest(
-          "http://localhost:4000/api/places/newplace",
+          `${process.env.REACT_APP_BACKEND_URL}/places/newplace`,
           "POST",
           myForm,
           {
@@ -179,20 +179,20 @@ const NewPlacePostDisplay = () => {
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
-          navigate("/homepage");
+          navigate("/api/homepage");
           login.notification();
         }, "2000");
       } catch (err) {
         setTimeout(() => {
           setShowSuccess(false);
-          navigate("/homepage");
+          navigate("/api/homepage");
           login.notification();
         }, "2000");
       }
 
       try {
         await sendRequest(
-          `http://localhost:4000/api/users/updateusernotification`,
+          `${process.env.REACT_APP_BACKEND_URL}/users/updateusernotification`,
           "PATCH",
           null,
           {

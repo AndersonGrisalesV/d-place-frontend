@@ -17,7 +17,7 @@ const AvatarComponent = () => {
       const fetchPlaces = async () => {
         try {
           const responseData = await sendRequest(
-            `http://localhost:4000/api/users/profile/${login.userId}`,
+            `${process.env.REACT_APP_BACKEND_URL}/users/profile/${login.userId}`,
             "GET",
             null,
             {
@@ -41,6 +41,7 @@ const AvatarComponent = () => {
           src={loadedPlace.imageUrl.url ? loadedPlace.imageUrl.url : ""}
           title={loadedPlace.name}
           sx={{
+            color: "#ffffffb8",
             cursor: "pointer",
             fontSize: {
               sps: "10px",

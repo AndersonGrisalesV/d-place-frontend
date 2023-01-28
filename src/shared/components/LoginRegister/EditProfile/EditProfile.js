@@ -140,7 +140,7 @@ const EditProfile = () => {
     e.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:4000/api/users/profile/deleteprofile/${uid}`,
+        `${process.env.REACT_APP_BACKEND_URL}/users/profile/deleteprofile/${uid}`,
         "DELETE",
         null,
         {
@@ -154,7 +154,7 @@ const EditProfile = () => {
       );
       setTimeout(() => {
         login.logout();
-        navigate("/homepage");
+        navigate("/api/homepage");
       }, "200");
       setTimeout(() => {
         // navigate("/homepage");
@@ -171,7 +171,7 @@ const EditProfile = () => {
     const fetchPlace = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:4000/api/users/profile/${uid}`,
+          `${process.env.REACT_APP_BACKEND_URL}/users/profile/${uid}`,
           "GET",
           null,
           {
@@ -435,7 +435,7 @@ const EditProfile = () => {
 
         myForm.append("image", formInputs.image);
         const responseData = await sendRequest(
-          `http://localhost:4000/api/users/profile/editprofile/${uid}`,
+          `${process.env.REACT_APP_BACKEND_URL}/users/profile/editprofile/${uid}`,
           "PATCH",
           myForm,
           {
@@ -448,7 +448,7 @@ const EditProfile = () => {
         );
         setShowSuccess(true);
         setTimeout(() => {
-          navigate("/homepage");
+          navigate("/api/homepage");
 
           cleanListItemsHandler();
 

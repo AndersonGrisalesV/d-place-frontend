@@ -67,6 +67,10 @@
   border-radius: 4px;
 }
 
+.animate__animated.animate__flash:hover {
+  --animate-duration: 2s;
+}
+
 @keyframes glowing {
   0% {
     background-position: 0 0;

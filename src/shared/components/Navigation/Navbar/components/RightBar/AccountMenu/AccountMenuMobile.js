@@ -74,7 +74,7 @@ const AccountMenuMobile = ({
     login.logout();
     onClearSearchBar();
     handleMobileMenuClose();
-    navigate("/homepage");
+    navigate("/api/homepage");
     window.location.reload();
   };
 
@@ -85,7 +85,7 @@ const AccountMenuMobile = ({
 
     try {
       const responseData = await sendRequest(
-        `http://localhost:4000/api/users/profile/${login.userId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/users/profile/${login.userId}`,
         "GET",
         null,
         {

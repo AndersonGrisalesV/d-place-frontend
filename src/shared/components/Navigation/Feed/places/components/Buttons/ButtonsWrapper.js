@@ -3,9 +3,11 @@ import {
   Box,
   CardActions,
   Fade,
+  Grow,
   Modal,
   Stack,
   Typography,
+  Zoom,
 } from "@mui/material";
 import ButtonDetails from "./ButtonDetails";
 import FavoriteButton from "./FavoriteButton";
@@ -146,7 +148,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
         // );
 
         const responseData = await sendRequest(
-          `http://localhost:4000/api/places/favoriteplace/${loadedPlaces._id}`,
+          `${process.env.REACT_APP_BACKEND_URL}/places/favoriteplace/${loadedPlaces._id}`,
           "PATCH",
           JSON.stringify({
             userId: login.userId,
@@ -163,7 +165,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
 
       try {
         const responseData = await sendRequest(
-          `http://localhost:4000/api/places/${loadedPlaces._id}`
+          `${process.env.REACT_APP_BACKEND_URL}/places/${loadedPlaces._id}`
         );
         setUserLikeValue(responseData.place);
         console.log(responseData.place);
@@ -293,7 +295,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   const shareCountHandler = async () => {
     try {
       const responseData = await sendRequest(
-        `http://localhost:4000/api/places/shareplace/${loadedPlaces._id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/places/shareplace/${loadedPlaces._id}`,
         "PATCH",
         JSON.stringify({
           newShare: 1,
@@ -726,27 +728,32 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                           )}
                       </Stack>
                     </Stack>
-                    <Box
-                      sx={{
-                        height: {
-                          sps: "15rem",
-                          ps: "20rem",
-                          ts: "22rem",
-                          sls: "23rem",
-                          sms: "24rem",
-                          sc: "25rem",
-                          nsc: "25rem",
-                          ns: "25rem",
-                          msc: "25rem",
-                          mns: "25rem",
-                          ms: "25rem",
-                          lgs: "25rem",
-                        },
-                        width: "100%",
-                      }}
+                    <Zoom
+                      in={true}
+                      style={{ transitionDelay: true ? "200ms" : "0ms" }}
                     >
-                      <Map center={loadedPlaces.location} zoom={16} />
-                    </Box>
+                      <Box
+                        sx={{
+                          height: {
+                            sps: "15rem",
+                            ps: "20rem",
+                            ts: "22rem",
+                            sls: "23rem",
+                            sms: "24rem",
+                            sc: "25rem",
+                            nsc: "25rem",
+                            ns: "25rem",
+                            msc: "25rem",
+                            mns: "25rem",
+                            ms: "25rem",
+                            lgs: "25rem",
+                          },
+                          width: "100%",
+                        }}
+                      >
+                        <Map center={loadedPlaces.location} zoom={16} />
+                      </Box>
+                    </Zoom>
                   </Box>
                 </Stack>
               </Fade>

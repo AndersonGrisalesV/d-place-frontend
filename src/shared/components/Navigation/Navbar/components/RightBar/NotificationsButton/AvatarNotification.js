@@ -12,6 +12,7 @@ const AvatarNotification = ({ loadedPlaces }) => {
       }
       title={loadedPlaces.slice(0, 1)[0].creatorId.name}
       sx={{
+        color: "#ffffffb8",
         marginLeft: "10px",
         marginBottom: "18px",
         fontSize: {

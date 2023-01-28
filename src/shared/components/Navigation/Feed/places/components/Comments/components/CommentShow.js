@@ -180,7 +180,7 @@ const CommentShow = ({
       }
       try {
         await sendRequest(
-          `http://localhost:4000/api/places/${onPlaceComments.placeId}/editcomment/${onPlaceComments._id}`,
+          `${process.env.REACT_APP_BACKEND_URL}/places/${onPlaceComments.placeId}/editcomment/${onPlaceComments._id}`,
           "PATCH",
           JSON.stringify({
             commentText: formInputs.commentText,
@@ -269,7 +269,7 @@ const CommentShow = ({
     e.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:4000/api/places/${onPlaceComments.placeId}/deletecomment/${onPlaceComments._id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/places/${onPlaceComments.placeId}/deletecomment/${onPlaceComments._id}`,
         "DELETE",
         null,
         {
@@ -377,6 +377,7 @@ const CommentShow = ({
               >
                 <Avatar
                   sx={{
+                    color: "#ffffffb8",
                     marginTop: "5%",
                     marginLeft: "5%",
                     fontSize: {

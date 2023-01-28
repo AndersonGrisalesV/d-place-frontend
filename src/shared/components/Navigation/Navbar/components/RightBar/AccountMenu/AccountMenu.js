@@ -49,7 +49,7 @@ const AccountMenu = ({ onClearSearchBar }) => {
     login.logout();
     onClearSearchBar();
     handleMobileMenuClose();
-    navigate("/homepage");
+    navigate("/api/homepage");
     window.location.reload();
   };
 

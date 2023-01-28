@@ -25,6 +25,7 @@ const PopoverComponent = ({
   onPost = false,
   setLoadedPlaces,
   onCloseMenuResponsive = null,
+  onReloadPopComponent,
 }) => {
   const login = useContext(LoginContext);
 
@@ -33,27 +34,28 @@ const PopoverComponent = ({
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [updatedPlaceId, setUpdatedPlaceId] = useState(null);
+  const [reload, setReload] = useState(onReloadPopComponent ? false : true);
 
   useEffect(() => {
     if (onPost) {
+      setReload(false);
       const fetchPlaces = async () => {
         try {
           const responseData = await sendRequest(
-            "http://localhost:4000/homepage"
+            `${process.env.REACT_APP_BACKEND_URL}/homepage`
           );
+
           setLoadedPlaces(responseData.places);
+
           setUpdatedPlaceId(responseData.places.reverse().slice(0, 1)[0]);
         } catch (err) {}
       };
+
       fetchPlaces();
     }
-  }, [onPost, sendRequest, setLoadedPlaces]);
+  }, [onPost, sendRequest, setLoadedPlaces, reload]);
 
   const handleNewPost = () => {
-    // if (!isLoading && loadedPlaces) {
-    //   placeId = loadedPlaces.reverse().slice(0, 1)[0]._id;
-    // }
-
     login.listItemsNotListed();
     navigate(`/api/places/${updatedPlaceId._id}`);
     onHandleClose();

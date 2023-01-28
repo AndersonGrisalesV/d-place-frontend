@@ -138,7 +138,7 @@ const EditPlacePostDisplay = () => {
     e.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:4000/api/places/deleteplace/${pid}`,
+        `${process.env.REACT_APP_BACKEND_URL}/places/deleteplace/${pid}`,
         "DELETE",
         null,
         {
@@ -163,7 +163,7 @@ const EditPlacePostDisplay = () => {
       login.notification();
       setShowSuccess("The place was deleted successfully");
       setTimeout(() => {
-        navigate("/homepage");
+        navigate("/api/homepage");
         // window.location.reload();
       }, "1000");
       setTimeout(() => {
@@ -203,7 +203,7 @@ const EditPlacePostDisplay = () => {
     const fetchPlace = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:4000/api/places/${pid}`
+          `${process.env.REACT_APP_BACKEND_URL}/places/${pid}`
         );
         setLoadedPlace(responseData.place);
         // console.log("down here");
@@ -390,7 +390,7 @@ const EditPlacePostDisplay = () => {
         myForm.append("postDate", date);
         myForm.append("address", formInputs.address);
         await sendRequest(
-          `http://localhost:4000/api/places/editplace/${pid}`,
+          `${process.env.REACT_APP_BACKEND_URL}/places/editplace/${pid}`,
           "PATCH",
           myForm,
           {

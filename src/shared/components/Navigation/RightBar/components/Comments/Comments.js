@@ -56,7 +56,7 @@ const Comments = () => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:4000/homepage/comments"
+          `${process.env.REACT_APP_BACKEND_URL}/homepage/comments`
         );
 
         setLoadedPlaces(responseData.comments.reverse());

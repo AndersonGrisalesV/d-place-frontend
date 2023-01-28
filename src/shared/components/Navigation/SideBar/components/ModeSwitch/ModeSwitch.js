@@ -72,7 +72,7 @@ const ModeSwitch = ({ mode, setMode }) => {
       const updateTheme = async () => {
         try {
           await sendRequest(
-            `http://localhost:4000/api/users/updatetheme/${login.userId}`,
+            `${process.env.REACT_APP_BACKEND_URL}/users/updatetheme/${login.userId}`,
             "PATCH",
             JSON.stringify({
               theme: mode === "light" ? "dark" : "light",

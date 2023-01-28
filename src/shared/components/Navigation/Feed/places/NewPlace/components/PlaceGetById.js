@@ -40,7 +40,7 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:4000/api/places/${placeId}`
+          `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`
         );
         setLoadedPlace(responseData.place);
         // console.log(responseData.place);
@@ -54,7 +54,7 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
       const fetchPlaces = async () => {
         try {
           const responseData = await sendRequest(
-            `http://localhost:4000/api/places/${refreshpage}`
+            `${process.env.REACT_APP_BACKEND_URL}/places/${refreshpage}`
           );
           setLoadedPlace(responseData.place);
           // console.log(responseData.place);

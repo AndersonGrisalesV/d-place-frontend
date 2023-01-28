@@ -54,7 +54,7 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
     // redirect
 
     onHandleClose();
-    navigate("/homepage");
+    navigate("/api/homepage");
   };
 
   return (

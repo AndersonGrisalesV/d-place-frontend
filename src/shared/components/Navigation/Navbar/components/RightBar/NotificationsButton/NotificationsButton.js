@@ -45,7 +45,7 @@ const NotificationsButton = ({
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:4000/homepage"
+          `${process.env.REACT_APP_BACKEND_URL}/homepage`
         );
 
         setLoadedPlaces(responseData.places);
@@ -64,7 +64,7 @@ const NotificationsButton = ({
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:4000/api/users/profile/${login.userId}`,
+          `${process.env.REACT_APP_BACKEND_URL}/users/profile/${login.userId}`,
           "GET",
           null,
           {
@@ -102,15 +102,17 @@ const NotificationsButton = ({
   const [showPopOver, setShowPopOver] = useState(false);
   const notificationBadge = useRef(null);
 
+  const [cancelReload, setCancelReload] = useState(false);
+
   const handleClick = async (event) => {
-    console.log(loadedPlaces.reverse().slice(0, 1)[0].creatorId._id);
-    console.log(login.userId);
+    // console.log(loadedPlaces.reverse().slice(0, 1)[0].creatorId._id);
+    // console.log(login.userId);
 
     if (login.userId !== loadedPlaces.reverse().slice(0, 1)[0].creatorId._id) {
       if (showNotification && !updateNotification) {
         try {
           await sendRequest(
-            `http://localhost:4000/api/users/notification/${login.userId}`,
+            `${process.env.REACT_APP_BACKEND_URL}/users/notification/${login.userId}`,
             "PATCH",
             JSON.stringify({
               notification: false,
@@ -130,8 +132,13 @@ const NotificationsButton = ({
 
     setAnchorEl(event.currentTarget);
     if (onResponsive) {
+      setCancelReload(true);
       notificationBadge.current.click();
     }
+    setTimeout(() => {
+      // navigate("/homepage");
+      setCancelReload(false);
+    }, "1000");
     setShowPopOver(true);
   };
 
@@ -147,57 +154,54 @@ const NotificationsButton = ({
   return (
     <React.Fragment>
       {changeResponsive ? (
-        <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
-          <Box
-            sx={{
-              display: {
-                sps: "flex",
-                ps: "flex",
-                ts: "flex",
-                sls: "flex",
-                sms: "flex",
-                sc: "flex",
-                nsc: "flex",
-                ns: "none",
-                ms: "none",
-                lgs: "none",
-              },
-            }}
-          >
-            <StyleMenuItem onClick={handleClick} disableRipple={true}>
-              <IconButton
-                disableRipple={true}
-                style={{ backgroundColor: "transparent" }}
-                size="large"
-                aria-label="show new notifications"
-                color="inherit"
-                title="Notifications"
-                ref={notificationBadge}
-              >
-                {onUser ? (
-                  <Badge
-                    badgeContent={
-                      onUser.viewedNotification && !updateNotification
-                        ? 1
-                        : null
-                    }
-                    color="error"
-                  >
-                    <NotificationsOutlinedIcon />
-                  </Badge>
-                ) : null}
-              </IconButton>
-              <p>Notifications</p>
-            </StyleMenuItem>
-            {changeResponsive && !isLoading && loadedPlaces && showPopOver ? (
-              <PopoverComponent
-                loadedPlaces={loadedPlaces}
-                anchorEl={anchorEl ? anchorEl : false}
-                onHandleClose={handleClose}
-              />
-            ) : null}
-          </Box>
-        </Zoom>
+        <Box
+          sx={{
+            display: {
+              sps: "flex",
+              ps: "flex",
+              ts: "flex",
+              sls: "flex",
+              sms: "flex",
+              sc: "flex",
+              nsc: "flex",
+              ns: "none",
+              ms: "none",
+              lgs: "none",
+            },
+          }}
+        >
+          <StyleMenuItem onClick={handleClick} disableRipple={true}>
+            <IconButton
+              disableRipple={true}
+              style={{ backgroundColor: "transparent" }}
+              size="large"
+              aria-label="show new notifications"
+              color="inherit"
+              title="Notifications"
+              ref={notificationBadge}
+            >
+              {onUser ? (
+                <Badge
+                  badgeContent={
+                    onUser.viewedNotification && !updateNotification ? 1 : null
+                  }
+                  color="error"
+                >
+                  <NotificationsOutlinedIcon />
+                </Badge>
+              ) : null}
+            </IconButton>
+            <p>Notifications</p>
+          </StyleMenuItem>
+          {changeResponsive && !isLoading && loadedPlaces && showPopOver ? (
+            <PopoverComponent
+              onReloadPopComponent={updateNotification ? true : false}
+              loadedPlaces={loadedPlaces}
+              anchorEl={anchorEl ? anchorEl : false}
+              onHandleClose={handleClose}
+            />
+          ) : null}
+        </Box>
       ) : (
         <Box
           sx={{

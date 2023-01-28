@@ -33,7 +33,7 @@ const LatestPhotos = () => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:4000/homepage"
+          `${process.env.REACT_APP_BACKEND_URL}/homepage`
         );
 
         setLoadedPlaces(responseData.places.reverse());

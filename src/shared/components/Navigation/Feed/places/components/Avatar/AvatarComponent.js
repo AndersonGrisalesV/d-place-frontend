@@ -3,7 +3,6 @@ import React from "react";
 import Avatar from "@mui/material/Avatar";
 
 const AvatarComponent = ({ loadedPlaces, onProfileNavigation }) => {
-  // console.log(loadedPlaces);
   return (
     <Avatar
       onClick={onProfileNavigation}
@@ -14,6 +13,7 @@ const AvatarComponent = ({ loadedPlaces, onProfileNavigation }) => {
       }
       title={loadedPlaces.creatorId.name}
       sx={{
+        color: "#ffffffb8",
         cursor: "pointer",
         fontSize: {
           sps: "10px",

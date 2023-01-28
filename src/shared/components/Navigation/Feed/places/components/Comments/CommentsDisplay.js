@@ -94,7 +94,7 @@ const CommentsDisplay = ({
 
       try {
         await sendRequest(
-          `http://localhost:4000/api/places/${onPlaceId}/newcomment`,
+          `${process.env.REACT_APP_BACKEND_URL}/places/${onPlaceId}/newcomment`,
           "POST",
           JSON.stringify({
             commentText: formInputs.comment,

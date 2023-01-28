@@ -103,7 +103,7 @@ const LoginRegister = ({ mode, setMode }) => {
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
-          "http://localhost:4000/api/users/login",
+          `${process.env.REACT_APP_BACKEND_URL}/users/login`,
           "POST",
           JSON.stringify({
             email: formInputs.email,
@@ -136,7 +136,7 @@ const LoginRegister = ({ mode, setMode }) => {
           setMode(
             responseData.user.themePreference === "light" ? "light" : "dark"
           );
-          navigate("/homepage");
+          navigate("/api/homepage");
         }, "910");
         setTimeout(() => {
           setShowSuccess(false);
@@ -159,7 +159,7 @@ const LoginRegister = ({ mode, setMode }) => {
         myForm.append("confirmPassword", formInputs.confirmPassword);
         myForm.append("image", formInputs.image);
         const responseData = await sendRequest(
-          "http://localhost:4000/api/users/register",
+          `${process.env.REACT_APP_BACKEND_URL}/users/register`,
           "POST",
           myForm
         );
@@ -191,7 +191,7 @@ const LoginRegister = ({ mode, setMode }) => {
           setMode(
             responseData.user.themePreference === "light" ? "light" : "dark"
           );
-          navigate("/homepage");
+          navigate("/api/homepage");
         }, "910");
         setTimeout(() => {
           setShowSuccess(false);
