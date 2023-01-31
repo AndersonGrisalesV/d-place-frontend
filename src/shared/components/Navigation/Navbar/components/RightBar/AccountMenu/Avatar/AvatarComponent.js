@@ -13,7 +13,7 @@ const AvatarComponent = () => {
   const [succssProfilePhoto, setSuccessProfilePhoto] = useState(false);
 
   useEffect(() => {
-    if (!succssProfilePhoto) {
+    if (!succssProfilePhoto || login.newAvatar) {
       const fetchPlaces = async () => {
         try {
           const responseData = await sendRequest(
@@ -32,7 +32,8 @@ const AvatarComponent = () => {
       fetchPlaces();
     }
     setSuccessProfilePhoto(true);
-  }, [sendRequest, login.userId, succssProfilePhoto, login.token]);
+    login.refreshAvatar();
+  }, [sendRequest, succssProfilePhoto, login]);
 
   return (
     <>

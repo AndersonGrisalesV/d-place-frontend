@@ -146,6 +146,7 @@ const NewPlacePostDisplay = () => {
 
   const onSubmitPostPlaceHandler = async (e) => {
     e.preventDefault();
+    window.scrollTo(0, 0);
 
     if (login.isLoggedIn && formIsValid) {
       let date = new Date().toJSON();

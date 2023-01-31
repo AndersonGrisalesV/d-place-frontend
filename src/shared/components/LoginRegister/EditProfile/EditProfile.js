@@ -138,6 +138,7 @@ const EditProfile = () => {
 
   const handleConfirmDeleteProfile = async (e) => {
     e.preventDefault();
+    window.scrollTo(0, 0);
     try {
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/profile/deleteprofile/${uid}`,
@@ -247,15 +248,15 @@ const EditProfile = () => {
     }
 
     if (e.target.name === "oldPassword" && showBlurPassword) {
-      setShowOldPassword(false);
+      setShowBlurOldPassword(false);
     }
 
     if (e.target.name === "password" && showBlurPassword) {
-      setShowPassword(false);
+      setShowBlurPassword(false);
     }
 
     if (e.target.name === "confirmPassword" && showBlurConfirmPassword) {
-      setShowConfirmPassword(false);
+      setShowBlurConfirmPassword(false);
     }
 
     if (e.target.name === "image" && showBlurImage) {
@@ -283,9 +284,9 @@ const EditProfile = () => {
 
   const [showBlurName, setShowBlurName] = useState(true);
   const [showBlurEmail, setShowBlurEmail] = useState(true);
-  const [showBlurOldPassword, setShowOldPassword] = useState(true);
-  const [showBlurPassword, setShowPassword] = useState(true);
-  const [showBlurConfirmPassword, setShowConfirmPassword] = useState(true);
+  const [showBlurOldPassword, setShowBlurOldPassword] = useState(true);
+  const [showBlurPassword, setShowBlurPassword] = useState(true);
+  const [showBlurConfirmPassword, setShowBlurConfirmPassword] = useState(true);
   const [showBlurImage, setShowBlurImage] = useState(true);
 
   const {
@@ -376,8 +377,9 @@ const EditProfile = () => {
     login.listItemsNotListed();
   };
 
-  const onSubmitLoginRegisterHandler = async (e) => {
+  const onSubmitEditProfileHandler = async (e) => {
     e.preventDefault();
+    window.scrollTo(0, 0);
     setLoadingSpinnerButtons(true);
     // if (changePassword && loadedUser.password !== oldPasswordInput) {
     //   setShowpassMatchError(true);
@@ -446,6 +448,7 @@ const EditProfile = () => {
         setSuccessMessage(
           `${responseData.user.name}'s profile was successfully updated`
         );
+        login.refreshAvatar();
         setShowSuccess(true);
         setTimeout(() => {
           navigate("/api/homepage");
@@ -459,7 +462,36 @@ const EditProfile = () => {
           setSuccessMessage(null);
           setLoadingSpinnerButtons(false);
         }, "930");
-      } catch (err) {}
+      } catch (err) {
+        setFormInputs(
+          {
+            name: {
+              value: loadedUser.name,
+              // isValid: true,
+            },
+            email: {
+              value: loadedUser.email,
+              // isValid: true,
+            },
+            password: {
+              value: loadedUser.password,
+              // isValid: true,
+            },
+            confirmPassword: {
+              value: loadedUser.confirmPassword,
+              // isValid: true,
+            },
+            image: {
+              value: loadedUser.imageUrl.url,
+              // isValid: true,
+            },
+          },
+          true
+        );
+
+        setImageUrl(loadedUser.imageUrl.url);
+        setSelectedImage(loadedUser.imageUrl.url);
+      }
       resetNameInput();
       resetEmailInput();
     }
@@ -472,7 +504,102 @@ const EditProfile = () => {
   const [changePassword, setChangePassword] = useState(false);
   const [deleteImage, setDeleteImage] = useState(false);
 
+  const handleRemoveImage = () => {
+    formInputs.image = "noImage";
+
+    if (loadedUser) {
+      if (loadedUser.imageUrl.url === "") {
+        setDeleteImage(false);
+      } else {
+        setDeleteImage(true);
+      }
+    }
+
+    setSelectedImage(null);
+    setImageUrl(null);
+  };
+
+  // useEffect(() => {
+  //   if (!changePassword) {
+  //     setShowBlurName(true);
+  //     setShowBlurEmail(true);
+  //     setShowBlurOldPassword(true);
+  //     setShowBlurPassword(true);
+  //     setShowBlurConfirmPassword(true);
+  //     setShowBlurImage(true);
+  //   }
+  // }, [changePassword]);
+
   let formIsValid = false;
+
+  const changePasswordHandler = () => {
+    setChangePassword((prevPassword) => !prevPassword);
+
+    resetOldPasswordInput();
+    resetPasswordInput();
+    resetconfirmPasswordInput();
+
+    if (!showBlurName && nameIsValid && !changePassword) {
+      formIsValid = true;
+    } else if (!showBlurEmail && emailIsValid && !changePassword) {
+      formIsValid = true;
+    } else if (
+      !showBlurPassword &&
+      passwordIsValid &&
+      !showBlurConfirmPassword &&
+      confirmPasswordIsValid
+    ) {
+      formIsValid = true;
+    } else if (!showBlurImage && !changePassword) {
+      formIsValid = true;
+    }
+
+    if (!selectedImage && !imageUrl && !changePassword) {
+      if (loadedUser) {
+        if (formInputs.image.value !== "") {
+          formIsValid = false;
+        }
+      }
+    }
+    if (deleteImage) {
+      if (loadedUser) {
+        if (loadedUser.imageUrl.url === "") {
+          formIsValid = false;
+        } else {
+          formIsValid = true;
+        }
+      }
+    }
+  };
+
+  let spinner = "";
+  if (isLoading && !loadingSpinnerButtons) {
+    spinner = (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "14px",
+          marginBottom: "100%",
+          // marginTop: "24.2%",
+          // marginLeft: "39.5%",
+          // marginRight: "45%",
+        }}
+      >
+        <LoadingSpinner asOverlay />
+      </Box>
+    );
+  }
+
+  const [showUserOldPassword, setShowUserOldPassword] = useState(false);
+
+  const handleClickShowUserOldPassword = () =>
+    setShowUserOldPassword((show) => !show);
+
+  const [showUserNewPassword, setShowUserNewPassword] = useState(false);
+
+  const handleClickShowUserNewPassword = () =>
+    setShowUserNewPassword((show) => !show);
 
   if (login.isLoggedIn) {
     if (!showBlurName && nameIsValid && !changePassword) {
@@ -510,57 +637,6 @@ const EditProfile = () => {
     //   formIsValid = true;
     // }
   }
-
-  const handleRemoveImage = () => {
-    formInputs.image = "noImage";
-
-    if (loadedUser) {
-      if (loadedUser.imageUrl.url === "") {
-        setDeleteImage(false);
-      } else {
-        setDeleteImage(true);
-      }
-    }
-
-    setSelectedImage(null);
-    setImageUrl(null);
-  };
-
-  const changePasswordHandler = () => {
-    setChangePassword((prevPassword) => !prevPassword);
-    resetOldPasswordInput();
-    resetPasswordInput();
-    resetconfirmPasswordInput();
-  };
-
-  let spinner = "";
-  if (isLoading && !loadingSpinnerButtons) {
-    spinner = (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "14px",
-          marginBottom: "100%",
-          // marginTop: "24.2%",
-          // marginLeft: "39.5%",
-          // marginRight: "45%",
-        }}
-      >
-        <LoadingSpinner asOverlay />
-      </Box>
-    );
-  }
-
-  const [showUserOldPassword, setShowUserOldPassword] = useState(false);
-
-  const handleClickShowUserOldPassword = () =>
-    setShowUserOldPassword((show) => !show);
-
-  const [showUserNewPassword, setShowUserNewPassword] = useState(false);
-
-  const handleClickShowUserNewPassword = () =>
-    setShowUserNewPassword((show) => !show);
 
   return (
     <Box
@@ -602,7 +678,7 @@ const EditProfile = () => {
                 <CardContentLogin>
                   <Title />
                   <form
-                    onSubmit={onSubmitLoginRegisterHandler}
+                    onSubmit={onSubmitEditProfileHandler}
                     encType="multipart/form-data"
                   >
                     <Stack
@@ -611,7 +687,10 @@ const EditProfile = () => {
                       justifyContent="space-between"
                     >
                       <React.Fragment>
-                        {formInputs.image.value === "" || deleteImage ? (
+                        {(formInputs.image.value === "" &&
+                          !imageUrl &&
+                          !selectedImage) ||
+                        (deleteImage && !imageUrl && !selectedImage) ? (
                           <Typography
                             sx={{
                               marginTop: "40px",

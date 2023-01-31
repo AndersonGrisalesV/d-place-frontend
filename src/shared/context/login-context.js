@@ -8,10 +8,12 @@ export const LoginContext = createContext({
   clearListItems: false,
   homepageListItems: null,
   token: null,
+  newAvatar: null,
   login: () => {},
   logout: () => {},
   notification: () => {},
   listItemsNotListed: () => {},
   listItemsCleanListed: () => {},
   homepageCleanListItems: () => {},
+  preNewAvatar: () => {},
 });

@@ -94,7 +94,7 @@ const LoginRegister = ({ mode, setMode }) => {
 
   const onSubmitLoginRegisterHandler = async (e) => {
     e.preventDefault();
-
+    window.scrollTo(0, 0);
     // console.log(formInputs.image);
     if (!formInputs.image || formInputs.image === "noImage") {
       formInputs.image = "";
@@ -197,6 +197,11 @@ const LoginRegister = ({ mode, setMode }) => {
           setShowSuccess(false);
           setSuccessMessage(null);
         }, "930");
+        resetNameInput();
+        resetEmailInput();
+
+        setImageUrl(null);
+        setSelectedImage(null);
       } catch (err) {}
     }
     resetPasswordInput();
@@ -773,7 +778,7 @@ const LoginRegister = ({ mode, setMode }) => {
                     formInputsHandler={formInputsHandler}
                     isLoading={isLoading}
                   />
-                  {!imageUrl && !selectedImage && !isLoading ? (
+                  {!imageUrl && !selectedImage && !isLoading && !showSuccess ? (
                     <Typography
                       sx={{
                         display: "flex",

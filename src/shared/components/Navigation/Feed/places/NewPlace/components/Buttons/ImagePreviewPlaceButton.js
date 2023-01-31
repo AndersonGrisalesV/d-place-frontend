@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box } from "@mui/system";
+import LoadingSpinnerWrapper from "../../../../../../LoadingSpinner/LoadingSpinnerWrapper";
+import LoadingSpinner from "../../../../../../LoadingSpinner/LoadingSpinner";
 
 const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
   color:
@@ -23,6 +25,11 @@ const ImagePreviewPlaceButton = ({
   selectedImageName,
   handleRemoveImage,
 }) => {
+  const [loadingImage, setLoadingImage] = useState(true);
+
+  setTimeout(() => {
+    setLoadingImage(false);
+  }, "1000");
   return (
     <React.Fragment>
       <React.Fragment>
@@ -51,80 +58,88 @@ const ImagePreviewPlaceButton = ({
         >
           Image Preview
         </Typography>
-        <Box mt={2} textAlign="center">
-          <Stack direction="row" justifyContent="center">
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <ImageListItem
-                key={imageUrl}
-                style={{
-                  gridColumnEnd: "4",
-                  objectFit: "contain",
-                }}
+        {loadingImage ? (
+          <Stack style={{ marginTop: "62px" }}>
+            <LoadingSpinnerWrapper onNewPlace={true}>
+              <LoadingSpinner />
+            </LoadingSpinnerWrapper>
+          </Stack>
+        ) : (
+          <Box mt={2} textAlign="center">
+            <Stack direction="row" justifyContent="center">
+              <Box
                 sx={{
-                  paddingRight: "0px",
-                  borderRadius: "18%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <Box
+                <ImageListItem
+                  key={imageUrl}
+                  style={{
+                    gridColumnEnd: "4",
+                    objectFit: "contain",
+                  }}
                   sx={{
-                    display: "flex",
-                    justifyContent: "end",
-                    alignAitems: "flex-start",
-                    backgroundColor: "transparent",
+                    paddingRight: "0px",
+                    borderRadius: "18%",
                   }}
                 >
-                  <StyleCloseIcon
-                    onClick={handleRemoveImage}
+                  <Box
                     sx={{
-                      cursor: "pointer",
-                      width: {
-                        sps: "16px",
-                        ps: "17px",
-                        ts: "18px",
-                        sls: "20px",
-                        sms: "24px",
-                        sc: "24px",
-                        nsc: "24px",
-                        ns: "24px",
-                        msc: "24px",
-                        mns: "24px",
-                        ms: "24px",
-                        lgs: "24px",
-                      },
-                      height: {
-                        sps: "16px",
-                        ps: "17px",
-                        ts: "18px",
-                        sls: "20px",
-                        sms: "24px",
-                        sc: "24px",
-                        nsc: "24px",
-                        ns: "24px",
-                        msc: "24px",
-                        mns: "24px",
-                        ms: "24px",
-                        lgs: "24px",
-                      },
+                      display: "flex",
+                      justifyContent: "end",
+                      alignAitems: "flex-start",
+                      backgroundColor: "transparent",
                     }}
-                  />
-                </Box>
-                <img
-                  style={{ borderRadius: "2.2%", maxHeight: "800px" }}
-                  src={imageUrl}
-                  srcSet={imageUrl}
-                  alt={selectedImageName}
-                  loading="lazy"
-                ></img>
-              </ImageListItem>
-            </Box>
-          </Stack>
-        </Box>
+                  >
+                    <StyleCloseIcon
+                      onClick={handleRemoveImage}
+                      sx={{
+                        cursor: "pointer",
+                        width: {
+                          sps: "16px",
+                          ps: "17px",
+                          ts: "18px",
+                          sls: "20px",
+                          sms: "24px",
+                          sc: "24px",
+                          nsc: "24px",
+                          ns: "24px",
+                          msc: "24px",
+                          mns: "24px",
+                          ms: "24px",
+                          lgs: "24px",
+                        },
+                        height: {
+                          sps: "16px",
+                          ps: "17px",
+                          ts: "18px",
+                          sls: "20px",
+                          sms: "24px",
+                          sc: "24px",
+                          nsc: "24px",
+                          ns: "24px",
+                          msc: "24px",
+                          mns: "24px",
+                          ms: "24px",
+                          lgs: "24px",
+                        },
+                      }}
+                    />
+                  </Box>
+                  <img
+                    style={{ borderRadius: "2.2%", maxHeight: "800px" }}
+                    src={imageUrl}
+                    srcSet={imageUrl}
+                    alt={selectedImageName}
+                    loading="lazy"
+                  ></img>
+                </ImageListItem>
+              </Box>
+            </Stack>
+          </Box>
+        )}
       </React.Fragment>
     </React.Fragment>
   );

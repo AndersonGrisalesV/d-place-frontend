@@ -426,7 +426,7 @@ const ListItems = ({
         document.title = "Profile";
         break;
       case `/api/places/editplace/${login.pidCleanListItems}`:
-        alert(window.location.pathname);
+        // alert(window.location.pathname);
         // login.listItemsNotListed(login.pidCleanListItems);
         setSelectedIndex(4);
         setClearListItem(false);

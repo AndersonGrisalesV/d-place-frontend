@@ -102,13 +102,12 @@ const NotificationsButton = ({
   const [showPopOver, setShowPopOver] = useState(false);
   const notificationBadge = useRef(null);
 
-  const [cancelReload, setCancelReload] = useState(false);
-
   const handleClick = async (event) => {
     // console.log(loadedPlaces.reverse().slice(0, 1)[0].creatorId._id);
     // console.log(login.userId);
 
-    if (login.userId !== loadedPlaces.reverse().slice(0, 1)[0].creatorId._id) {
+    // alert(loadedPlaces.slice(0, 1)[0].creatorId._id);
+    if (login.userId !== loadedPlaces.slice(0, 1)[0].creatorId._id) {
       if (showNotification && !updateNotification) {
         try {
           await sendRequest(
@@ -132,13 +131,9 @@ const NotificationsButton = ({
 
     setAnchorEl(event.currentTarget);
     if (onResponsive) {
-      setCancelReload(true);
       notificationBadge.current.click();
     }
-    setTimeout(() => {
-      // navigate("/homepage");
-      setCancelReload(false);
-    }, "1000");
+
     setShowPopOver(true);
   };
 
@@ -195,7 +190,6 @@ const NotificationsButton = ({
           </StyleMenuItem>
           {changeResponsive && !isLoading && loadedPlaces && showPopOver ? (
             <PopoverComponent
-              onReloadPopComponent={updateNotification ? true : false}
               loadedPlaces={loadedPlaces}
               anchorEl={anchorEl ? anchorEl : false}
               onHandleClose={handleClose}

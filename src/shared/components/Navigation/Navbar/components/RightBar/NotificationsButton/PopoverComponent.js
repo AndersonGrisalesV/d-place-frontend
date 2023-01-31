@@ -25,7 +25,6 @@ const PopoverComponent = ({
   onPost = false,
   setLoadedPlaces,
   onCloseMenuResponsive = null,
-  onReloadPopComponent,
 }) => {
   const login = useContext(LoginContext);
 
@@ -35,6 +34,7 @@ const PopoverComponent = ({
 
   const [updatedPlaceId, setUpdatedPlaceId] = useState(null);
   const [reload, setReload] = useState(false);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (onPost) {
@@ -47,16 +47,18 @@ const PopoverComponent = ({
           setLoadedPlaces(responseData.places);
 
           setUpdatedPlaceId(responseData.places.reverse().slice(0, 1)[0]);
-          setTimeout(() => {
-            // navigate("/homepage");
-            setReload(true);
-          }, "100");
+          // setTimeout(() => {
+          //   // navigate("/homepage");
+          //   setReload(true);
+          // }, "100");
         } catch (err) {}
       };
-
-      fetchPlaces();
+      if (count === 0) {
+        fetchPlaces();
+        setCount(1);
+      }
     }
-  }, [onPost, sendRequest, setLoadedPlaces, reload]);
+  }, [onPost, sendRequest, setLoadedPlaces, reload, count]);
 
   const handleNewPost = () => {
     login.listItemsNotListed();
@@ -70,7 +72,7 @@ const PopoverComponent = ({
 
   return (
     <React.Fragment>
-      {!isLoading && loadedPlaces && reload ? (
+      {!isLoading && loadedPlaces ? (
         <Popover
           open={anchorEl ? true : false}
           anchorEl={anchorEl}

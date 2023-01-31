@@ -29,9 +29,10 @@ import LoadingSpinnerWrapper from "../../../../LoadingSpinner/LoadingSpinnerWrap
 
 import { useForm } from "../../../../../hooks/form-hook";
 import { useHttpClient } from "../../../../../hooks/http-hook";
-import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
+
 import ButtonDeletePlace from "./components/Buttons/ButtonDeletePlace";
 import ModalDeletePlace from "./components/Buttons/Modals/ModalDeletePlace";
+import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
@@ -136,6 +137,7 @@ const EditPlacePostDisplay = () => {
 
   const handleConfirmDeletePlace = async (e) => {
     e.preventDefault();
+    window.scrollTo(0, 0);
     try {
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/places/deleteplace/${pid}`,
@@ -355,6 +357,8 @@ const EditPlacePostDisplay = () => {
 
   const onSubmitPostPlaceHandler = async (e) => {
     e.preventDefault();
+
+    window.scrollTo(0, 0);
 
     let date = new Date().toJSON();
     if (login.isLoggedIn && formInputs) {

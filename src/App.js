@@ -148,6 +148,7 @@ function App() {
   const [clearListItems, setClearListItems] = useState(false);
   const [pidCleanListItems, setPidCleanListItems] = useState(null);
   const [homepageListItems, setHomepageListItems] = useState(null);
+  const [newAvatar, setNewAvatar] = useState(null);
 
   const listItemsNotListed = useCallback((pid) => {
     setClearListItems(true);
@@ -167,6 +168,10 @@ function App() {
 
   const notification = useCallback(() => {
     setNewNotification((preNewNotification) => !preNewNotification);
+  }, []);
+
+  const refreshAvatar = useCallback(() => {
+    setNewAvatar((preNewAvatar) => !preNewAvatar);
   }, []);
 
   // useEffect(() => {
@@ -341,6 +346,8 @@ function App() {
         logout: logout,
         notification: notification,
         newNotification: newNotification,
+        refreshAvatar: refreshAvatar,
+        newAvatar: newAvatar,
         listItemsNotListed: listItemsNotListed,
         listItemsCleanListed: listItemsCleanListed,
         pidCleanListItems: pidCleanListItems,
