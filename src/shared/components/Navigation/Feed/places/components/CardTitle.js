@@ -1,6 +1,7 @@
-import { CardContent, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
+import { CardContent, Typography } from "@mui/material";
 
 const CardTitle = ({ onMap = false, loadedPlaces }) => {
   let navigate = useNavigate();

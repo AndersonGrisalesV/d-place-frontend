@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Box, Modal, Stack, Typography } from "@mui/material";
-
 import ButtonYesCancelEditPlace from "../ButtonYesCancelEditPlace";
 import ButtonGobackEditPlace from "../ButtonGobackEditPlace";
+
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
+import { Box, Modal, Stack, Typography } from "@mui/material";
 
 const styleModalCancel = {
   position: "absolute",

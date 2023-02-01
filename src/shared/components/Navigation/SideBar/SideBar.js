@@ -1,6 +1,8 @@
 import React from "react";
-import Box from "@mui/material/Box";
+
 import DrawerComponent from "./components/Drawer/DrawerComponent";
+
+import Box from "@mui/material/Box";
 
 const SideBar = ({ mode, setMode, menuOption = true, onClearSearchBar }) => {
   return (

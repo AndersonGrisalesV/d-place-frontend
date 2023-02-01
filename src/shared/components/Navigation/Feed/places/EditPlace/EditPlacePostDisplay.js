@@ -1,38 +1,29 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { Box, Divider, Stack, TextField, Typography } from "@mui/material";
-import CardWrapperEditPlacePostDisplay from "./components/CardWrapperEditPlacePostDisplay";
-import CardContentEditPlacePost from "./components/CardContentEditPlacePost";
-import TitleEditPlacePost from "./components/TitleEditPlacePost";
-// import CardContentNewPlacePost from "./components/CardContentNewPlacePost";
-// import CardWrapperNewPlacePostDisplay from "./components/CardWrapperNewPlacePostDisplay";
-// import TitleNewPlacePost from "./components/TitleNewPlacePost";
-// import ButtonCancelPostPlace from "./components/Buttons/ButtonCancelPostPlace";
-// import ImageUploadPlaceButton from "./components/Buttons/ImageUploadPlaceButton";
-// import ImagePreviewPlaceButton from "./components/Buttons/ImagePreviewPlaceButton";
-// import ButtonPostPlace from "./components/Buttons/ButtonPostPlace";
-
-import useFocusBlurHook from "../../../../../../shared/hooks/use-my-input";
-
 import { LoginContext } from "../../../../../context/login-context";
 
-import styled from "@emotion/styled";
-import ImageUploadEditPlaceButton from "./components/Buttons/ImageUploadEditPlaceButton";
-import ImagePreviewEditPlaceButton from "./components/Buttons/ImagePreviewEditPlaceButton";
-import ButtonEditPlace from "./components/Buttons/ButtonEditPlace";
-import ButtonCancelEditPlace from "./components/Buttons/ButtonCancelEditPlace";
-
-import ScrollToTop from "../../../../../util/ScollTop/ScrollToTop";
-import SnackBarResultLogin from "../../../../LoginRegister/components/SnackBarResultLogin";
-import LoadingSpinnerWrapper from "../../../../LoadingSpinner/LoadingSpinnerWrapper";
-
+import useFocusBlurHook from "../../../../../../shared/hooks/use-my-input";
 import { useForm } from "../../../../../hooks/form-hook";
 import { useHttpClient } from "../../../../../hooks/http-hook";
 
-import ButtonDeletePlace from "./components/Buttons/ButtonDeletePlace";
-import ModalDeletePlace from "./components/Buttons/Modals/ModalDeletePlace";
+import CardContentEditPlacePost from "./components/CardContentEditPlacePost";
+import CardWrapperEditPlacePostDisplay from "./components/CardWrapperEditPlacePostDisplay";
+import TitleEditPlacePost from "./components/TitleEditPlacePost";
+import ScrollToTop from "../../../../../util/ScollTop/ScrollToTop";
+import LoadingSpinnerWrapper from "../../../../LoadingSpinner/LoadingSpinnerWrapper";
+import SnackBarResultLogin from "../../../../LoginRegister/components/SnackBarResultLogin";
 import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
+import ModalDeletePlace from "./components/Buttons/Modals/ModalDeletePlace";
+
+import ButtonCancelEditPlace from "./components/Buttons/ButtonCancelEditPlace";
+import ButtonEditPlace from "./components/Buttons/ButtonEditPlace";
+import ImagePreviewEditPlaceButton from "./components/Buttons/ImagePreviewEditPlaceButton";
+import ImageUploadEditPlaceButton from "./components/Buttons/ImageUploadEditPlaceButton";
+import ButtonDeletePlace from "./components/Buttons/ButtonDeletePlace";
+
+import { Box, Divider, Stack, TextField, Typography } from "@mui/material";
+import styled from "@emotion/styled";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {

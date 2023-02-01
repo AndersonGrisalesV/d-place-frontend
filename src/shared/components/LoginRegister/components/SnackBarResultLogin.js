@@ -94,41 +94,30 @@ const StyleSnackBarSuccess = styled(Snackbar)(({ theme }) => ({
   },
 }));
 
-// const Alert = React.forwardRef(function Alert(props, ref) {
-//   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-// });
-
 const SnackBarResultLogin = ({
   error,
   onClear,
   onSuccess,
-  setChangeState,
   message,
-  logUser,
   onDuration,
 }) => {
+  const [errorState, setErrorState] = useState(error ? true : false);
+  const [successState, setSuccessState] = useState(onSuccess ? true : false);
+
   useEffect(() => {
     setErrorState(error ? true : false);
     setSuccessState(onSuccess ? true : false);
   }, [error, onSuccess]);
 
-  const [errorState, setErrorState] = useState(error ? true : false);
-  const [successState, setSuccessState] = useState(onSuccess ? true : false);
-
-  // const handleClick = () => {
-  //   setOpen(true);
-  // };
-
   const handleClose = (event, reason) => {
     error = false;
     setErrorState(error ? true : false);
     setSuccessState(onSuccess ? false : true);
-    // setChangeState(false);
+
     if (!onSuccess) {
       onClear();
     }
     if (reason === "clickaway") {
-      // setChangeState(false);
       return;
     }
   };

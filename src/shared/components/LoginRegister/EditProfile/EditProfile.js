@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { LoginContext } from "../../../context/login-context";
 
-import { useForm } from "../../../hooks/form-hook";
 import { useHttpClient } from "../../../hooks/http-hook";
 import useFocusBlurHook from "../../../../shared/hooks/use-my-input";
 
@@ -80,9 +79,6 @@ const EditProfile = () => {
   const [loadedUser, setLoadedUser] = useState();
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const [showpassMatchError, setShowpassMatchError] = useState(false);
-  const [showErrorPassword, setShowErrorPassword] = useState(false);
-
   const [successMessage, setSuccessMessage] = useState(null);
 
   const [formInputs, setFormInputs] = useState(null);
@@ -96,45 +92,10 @@ const EditProfile = () => {
 
   const oldPasswordInputRef = useRef();
 
-  const [formState, inputHandler, setFormData] = useForm(
-    {
-      name: {
-        value: "",
-        isValid: false,
-      },
-      email: {
-        value: "",
-        isValid: false,
-      },
-      password: {
-        value: "",
-        isValid: false,
-      },
-      confirmPassword: {
-        value: "",
-        isValid: false,
-      },
-      imageUrl: {
-        value: "",
-        isValid: false,
-      },
-    },
-    false
-  );
-
   const [openDeleteProfile, setOpenDeleteProfile] = useState(false);
-  const handleOpenDeleteProfile = () => handleOpenDeleteProfile(true);
   const handleCloseDeleteProfile = () => setOpenDeleteProfile(false);
 
   const [loadingSpinnerButtons, setLoadingSpinnerButtons] = useState(false);
-
-  const handleOpenModalDeleteProfile = () => {
-    // handleCloseDeletePlace();
-    // setDeletePlace((ePlace) => !ePlace);
-    if (login.isLoggedIn) {
-      handleOpenDeleteProfile();
-    }
-  };
 
   const handleConfirmDeleteProfile = async (e) => {
     e.preventDefault();
@@ -158,7 +119,6 @@ const EditProfile = () => {
         navigate("/api/homepage");
       }, "200");
       setTimeout(() => {
-        // navigate("/homepage");
         setShowSuccess(false);
       }, "2000");
     } catch (err) {
@@ -180,30 +140,23 @@ const EditProfile = () => {
           }
         );
         setLoadedUser(responseData.user);
-        // console.log(responseData.user);
-        // console.log(responseData.place);
 
         setFormInputs(
           {
             name: {
               value: responseData.user.name,
-              // isValid: true,
             },
             email: {
               value: responseData.user.email,
-              // isValid: true,
             },
             password: {
               value: responseData.user.password,
-              // isValid: true,
             },
             confirmPassword: {
               value: responseData.user.confirmPassword,
-              // isValid: true,
             },
             image: {
               value: responseData.user.imageUrl.url,
-              // isValid: true,
             },
           },
           true
@@ -211,20 +164,10 @@ const EditProfile = () => {
 
         setImageUrl(responseData.user.imageUrl.url);
         setSelectedImage(responseData.user.imageUrl.url);
-        // console.log(formInputs.title);
       } catch (err) {}
     };
     fetchPlace();
-  }, [
-    sendRequest,
-    uid,
-    setFormData,
-    setImageUrl,
-    setSelectedImage,
-    login.token,
-  ]);
-
-  // console.log(formInputs);
+  }, [sendRequest, uid, setImageUrl, setSelectedImage, login.token]);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -379,21 +322,10 @@ const EditProfile = () => {
 
   const onSubmitEditProfileHandler = async (e) => {
     e.preventDefault();
+
     window.scrollTo(0, 0);
     setLoadingSpinnerButtons(true);
-    // if (changePassword && loadedUser.password !== oldPasswordInput) {
-    //   setShowpassMatchError(true);
-    //   setShowErrorPassword(`Your old password didn't match, please try again.`);
-    //   resetOldPasswordInput();
-    //   resetPasswordInput();
-    //   resetconfirmPasswordInput();
 
-    //   setTimeout(() => {
-    //     setShowpassMatchError(false);
-    //     setShowErrorPassword(null);
-    //   }, "5090");
-    //   return;
-    // }
     if (login.isLoggedIn && formInputs) {
       if (!formInputs.image && formInputs.image !== "noImage") {
         formInputs.image = {
@@ -519,17 +451,6 @@ const EditProfile = () => {
     setImageUrl(null);
   };
 
-  // useEffect(() => {
-  //   if (!changePassword) {
-  //     setShowBlurName(true);
-  //     setShowBlurEmail(true);
-  //     setShowBlurOldPassword(true);
-  //     setShowBlurPassword(true);
-  //     setShowBlurConfirmPassword(true);
-  //     setShowBlurImage(true);
-  //   }
-  // }, [changePassword]);
-
   let formIsValid = false;
 
   const changePasswordHandler = () => {
@@ -581,9 +502,6 @@ const EditProfile = () => {
           justifyContent: "center",
           marginTop: "14px",
           marginBottom: "100%",
-          // marginTop: "24.2%",
-          // marginLeft: "39.5%",
-          // marginRight: "45%",
         }}
       >
         <LoadingSpinner asOverlay />
@@ -633,9 +551,6 @@ const EditProfile = () => {
         }
       }
     }
-    // if (showBlurImage && !changePassword && !deleteImage) {
-    //   formIsValid = true;
-    // }
   }
 
   return (
@@ -657,13 +572,6 @@ const EditProfile = () => {
               onClear={clearError}
             />
           )}
-          {showpassMatchError && (
-            <SnackBarResultLogin
-              onDuration={6000}
-              onClear={clearError}
-              error={`${showErrorPassword}`}
-            />
-          )}
           {showSuccess && (
             <SnackBarResultLogin
               onSuccess={true}
@@ -672,7 +580,6 @@ const EditProfile = () => {
             />
           )}
           <React.Fragment>
-            {/* {!isLoading && loadedUser && !showSuccess && ( */}
             {loadedUser && !showSuccess && (
               <CardWrapperLogin>
                 <CardContentLogin>
@@ -807,7 +714,6 @@ const EditProfile = () => {
                           nameChangeHandler(e);
                         }}
                         onBlur={showBlurName ? null : nameBlurHandler}
-                        // value={nameInput}
                         error={nameInputHasError}
                         helperText={
                           nameInputHasError
@@ -888,7 +794,6 @@ const EditProfile = () => {
                           emailChangeHandler(e);
                         }}
                         onBlur={showBlurEmail ? null : emailBlurHandler}
-                        // value={emailInput}
                         error={emailInputHasError}
                         helperText={emailInputHasError ? "Incorrect mail" : ""}
                       />
@@ -1052,7 +957,6 @@ const EditProfile = () => {
                                 },
                               },
                             }}
-                            // defaultValue={`${loadedUser.password}`}
                             onChange={(e) => {
                               formInputsHandler(e);
                               oldPasswordChangeHandler(e);
@@ -1308,7 +1212,6 @@ const EditProfile = () => {
                                 },
                               },
                             }}
-                            // defaultValue={`${loadedUser.confirmPassword}`}
                             onChange={(e) => {
                               formInputsHandler(e);
                               confirmPasswordChangeHandler(e);
@@ -1364,17 +1267,6 @@ const EditProfile = () => {
                           </React.Fragment>
                         )}
                       </React.Fragment>
-
-                      {/* {isLoading ? (
-                <LoadingSpinnerWrapper onLogin={true}>
-                  <LoadingSpinner />
-                </LoadingSpinnerWrapper>
-              ) : (
-                <p> </p>
-                // <ButtonsWrapper isLoginMode={isLoginMode}>
-              
-                // </ButtonsWrapper>
-              )} */}
                     </Stack>
                   </form>
                   {openDeleteProfile ? (

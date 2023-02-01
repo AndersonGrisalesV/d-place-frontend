@@ -23,8 +23,6 @@ const ButtonChangePassword = ({
 }) => {
   const login = useContext(LoginContext);
 
-  // useEffect(() => {}, [onChangePassword]);
-
   return (
     <React.Fragment>
       {login.isLoggedIn && (

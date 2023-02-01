@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-import { Box } from "@mui/material";
-import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
-import Place from "./places/Place";
+import { LoginContext } from "../../../context/login-context";
 
 import { useHttpClient } from "../../../hooks/http-hook";
+
+import Place from "./places/Place";
+import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
-import { LoginContext } from "../../../context/login-context";
-import NotFoundUserPlaces from "./NotFoundUserPlaces";
 import NotFoundPlaces from "./NotFoundPlaces";
+import NotFoundUserPlaces from "./NotFoundUserPlaces";
+
+import { Box } from "@mui/material";
 
 const ProfilePlaces = ({ onFilterSearch = null }) => {
   const login = useContext(LoginContext);

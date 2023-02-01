@@ -51,9 +51,8 @@ const styleModalCancel = {
 
 const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
   let navigate = useNavigate();
-  const handleConfirmCancel = () => {
-    // redirect
 
+  const handleConfirmCancel = () => {
     onHandleClose();
     navigate("/api/homepage");
   };
@@ -85,8 +84,6 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
                   sx={{
                     backgroundColor: "transparent",
                     color: "#da4453c7",
-                    // stroke: "#ffffff",
-                    // strokeWidth: 4,
                     width: {
                       sps: "15px",
                       ps: "16px",

@@ -1,4 +1,19 @@
 import React, { useContext, useState } from "react";
+
+import { LoginContext } from "../../../../../../../context/login-context";
+
+import { useHttpClient } from "../../../../../../../hooks/http-hook";
+import useFocusBlurHook from "../../../../../../../hooks/use-my-input";
+
+import LoadingSpinner from "../../../../../../LoadingSpinner/LoadingSpinner";
+import LoadingSpinnerWrapper from "../../../../../../LoadingSpinner/LoadingSpinnerWrapper";
+
+import ButtonCancelComment from "./Buttons/ButtonCancelComment";
+import ButtonEditDeleteComments from "./Buttons/ButtonEditDeleteComments";
+import ButtonSendComment from "./Buttons/ButtonSendComment";
+import ModalCancelDeleteComment from "./Buttons/Modals/ModalCancelDeleteComment";
+import ModalCancelEditComment from "./Buttons/Modals/ModalCancelEditComment";
+
 import {
   Avatar,
   Box,
@@ -10,17 +25,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import ButtonEditDeleteComments from "./Buttons/ButtonEditDeleteComments";
-import { LoginContext } from "../../../../../../../context/login-context";
-import ButtonSendComment from "./Buttons/ButtonSendComment";
-import ButtonCancelComment from "./Buttons/ButtonCancelComment";
-import ModalCancelEditComment from "./Buttons/Modals/ModalCancelEditComment";
-import ModalCancelDeleteComment from "./Buttons/Modals/ModalCancelDeleteComment";
-import useFocusBlurHook from "../../../../../../../hooks/use-my-input";
 import styled from "@emotion/styled";
-import { useHttpClient } from "../../../../../../../hooks/http-hook";
-import LoadingSpinnerWrapper from "../../../../../../LoadingSpinner/LoadingSpinnerWrapper";
-import LoadingSpinner from "../../../../../../LoadingSpinner/LoadingSpinner";
 
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",

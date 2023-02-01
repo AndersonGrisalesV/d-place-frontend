@@ -1,7 +1,8 @@
 import React from "react";
 
-import { Box, Zoom } from "@mui/material";
 import CardWrapperEditPlacePost from "./CardWrapperEditPlacePost";
+
+import { Box, Zoom } from "@mui/material";
 
 const CardWrapperEditPlacePostDisplay = (props) => {
   return (

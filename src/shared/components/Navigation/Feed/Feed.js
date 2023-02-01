@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
+import { useHttpClient } from "../../../hooks/http-hook";
+
 import Place from "./places/Place";
 import PlaceGetById from "./places/NewPlace/components/PlaceGetById";
 import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
-import { Box } from "@mui/material";
-
-import { useHttpClient } from "../../../hooks/http-hook";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 import NotFoundPlaces from "./NotFoundPlaces";
+
+import { Box } from "@mui/material";
 
 const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
   const params = useParams();

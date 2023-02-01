@@ -22,9 +22,6 @@ const ImageUploadButton = ({ formInputsHandler, isLoading, showSuccess }) => {
   const handleClickImageUploadPlaceButton = (e) => {
     if (e.target.files[0]) {
       formInputsHandler(e);
-
-      // console.log(e.target.files[0]);
-      // console.log(e.target.value);
     }
   };
   return (

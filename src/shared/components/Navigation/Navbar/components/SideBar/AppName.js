@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
-import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import "animate.css";
+
 import { LoginContext } from "../../../../../context/login-context";
+
+import { Typography } from "@mui/material";
+import "animate.css";
 
 const AppName = () => {
   const [activateAnimation, setActivateAnimation] = useState(false);

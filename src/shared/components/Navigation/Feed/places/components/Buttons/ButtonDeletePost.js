@@ -13,25 +13,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
 
 const ButtonDeletePost = ({ onHandleOpenDeletePost }) => {
   return (
-    <Stack
-      direction="row"
-      // sx={{
-      //   paddingLeft: {
-      //     sps: "58px",
-      //     ps: "136px",
-      //     ts: "197px",
-      //     sls: "239px",
-      //     sms: "444px",
-      //     sc: "444px",
-      //     nsc: "444px",
-      //     ns: "444px",
-      //     msc: "444px",
-      //     mns: "444px",
-      //     ms: "444px",
-      //     lgs: "444px",
-      //   },
-      // }}
-    >
+    <Stack direction="row">
       <StyleButton
         onClick={onHandleOpenDeletePost}
         sx={{

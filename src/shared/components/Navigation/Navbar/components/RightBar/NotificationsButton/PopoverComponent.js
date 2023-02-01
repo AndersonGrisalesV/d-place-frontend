@@ -1,12 +1,14 @@
-import { AccountCircleOutlined } from "@mui/icons-material";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { LoginContext } from "../../../../../../context/login-context";
+
+import { useHttpClient } from "../../../../../../hooks/http-hook";
+
+import AvatarNotification from "./AvatarNotification";
+
 import { Popover, Typography } from "@mui/material";
 import { Stack, styled } from "@mui/system";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { LoginContext } from "../../../../../../context/login-context";
-import { useHttpClient } from "../../../../../../hooks/http-hook";
-import AvatarNotification from "./AvatarNotification";
-import NotificationText from "./NotificationText";
 
 const StyleStack = styled(Stack)(({ theme }) => ({
   "&:hover": {

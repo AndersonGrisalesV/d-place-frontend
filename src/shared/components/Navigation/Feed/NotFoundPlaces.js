@@ -1,5 +1,6 @@
-import { Box, Card, CardMedia, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
+
+import { Box, Card, CardMedia, styled } from "@mui/material";
 
 const BoxStyled = styled(Box)(() => ({
   marginTop: "12%",

@@ -1,9 +1,10 @@
-import { Card, Grow } from "@mui/material";
-import { Box } from "@mui/system";
 import React from "react";
 
 import Comments from "./components/Comments/Comments";
 import LatestPhotos from "./components/LatestPhotos/LatestPhotos";
+
+import { Box } from "@mui/system";
+import { Card, Grow } from "@mui/material";
 
 const Rightbar = () => {
   return (

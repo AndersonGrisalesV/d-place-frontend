@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
+
+import { LoginContext } from "../../../../../../context/login-context";
 
 import { Box, Zoom } from "@mui/material";
-import { NavLink } from "react-router-dom";
 import styles from "./FavoritesButton.module.css";
-import { LoginContext } from "../../../../../../context/login-context";
 
 const FavoritesButton = () => {
   const login = useContext(LoginContext);

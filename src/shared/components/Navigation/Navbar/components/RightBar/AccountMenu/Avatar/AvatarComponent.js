@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import Avatar from "@mui/material/Avatar";
-import { AccountCircleOutlined } from "@mui/icons-material";
 import { LoginContext } from "../../../../../../../context/login-context";
+
 import { useHttpClient } from "../../../../../../../hooks/http-hook";
+
+import { AccountCircleOutlined } from "@mui/icons-material";
+import Avatar from "@mui/material/Avatar";
 
 const AvatarComponent = () => {
   const login = useContext(LoginContext);

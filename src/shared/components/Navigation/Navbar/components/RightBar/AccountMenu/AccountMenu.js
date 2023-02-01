@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { LoginContext } from "../../../../../../context/login-context";
+
+import AvatarComponent from "./Avatar/AvatarComponent";
+
 import { Box } from "@mui/system";
 import { IconButton, Menu, MenuItem, Zoom } from "@mui/material";
 import { AccountCircleOutlined } from "@mui/icons-material";
-
-import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled/macro";
-import AvatarComponent from "./Avatar/AvatarComponent";
-import { LoginContext } from "../../../../../../context/login-context";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {

@@ -1,18 +1,22 @@
-import { IconButton, Menu, MenuItem } from "@mui/material";
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { LoginContext } from "../../../../../../context/login-context";
+
+import { useHttpClient } from "../../../../../../hooks/http-hook";
+
+import AvatarComponent from "./Avatar/AvatarComponent";
+
+import LoginButton from "../LoginButtons/LoginButton";
+import NotificationsButton from "../NotificationsButton/NotificationsButton";
+
 import {
   AccountCircleOutlined,
   FavoriteBorderOutlined,
 } from "@mui/icons-material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import Box from "@mui/material/Box";
-import LoginButton from "../LoginButtons/LoginButton";
-import NotificationsButton from "../NotificationsButton/NotificationsButton";
-
-import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled/macro";
-import AvatarComponent from "./Avatar/AvatarComponent";
-import { LoginContext } from "../../../../../../context/login-context";
-import { useHttpClient } from "../../../../../../hooks/http-hook";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {

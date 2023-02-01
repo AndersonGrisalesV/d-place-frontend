@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Box, Modal, Stack, Typography } from "@mui/material";
+import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+
 import ButtonGobackNewPlace from "../ButtonGobackNewPlace";
 import ButtonYesCancelNewPlace from "../ButtonYesCancelNewPlace";
-import { useNavigate } from "react-router-dom";
+
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import { Box, Modal, Stack, Typography } from "@mui/material";
 
 const styleModalCancel = {
   position: "absolute",

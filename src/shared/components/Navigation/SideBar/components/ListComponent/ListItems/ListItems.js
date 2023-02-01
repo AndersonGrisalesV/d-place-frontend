@@ -1,13 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import ListItem from "@mui/material/ListItem";
-import {
-  Grow,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-} from "@mui/material";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+
+import { LoginContext } from "../../../../../../context/login-context";
+
+import ModeSwitch from "../../ModeSwitch/ModeSwitch";
+
 import {
   AccountCircleOutlined,
   FavoriteBorderOutlined,
@@ -16,10 +13,16 @@ import {
   ModeNight,
   SettingsOutlined,
 } from "@mui/icons-material";
-import ModeSwitch from "../../ModeSwitch/ModeSwitch";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { LoginContext } from "../../../../../../context/login-context";
 import CollectionsOutlinedIcon from "@mui/icons-material/CollectionsOutlined";
+import {
+  Grow,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from "@mui/material";
+import ListItem from "@mui/material/ListItem";
 import styled from "@emotion/styled/macro";
 
 const StyleHomeIcon = styled(HomeOutlined)(({ theme }) => ({

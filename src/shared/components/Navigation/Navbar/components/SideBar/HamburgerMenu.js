@@ -1,6 +1,8 @@
 import React from "react";
-import { Box, IconButton } from "@mui/material";
+
 import MenuIcon from "@mui/icons-material/Menu";
+import { Box, IconButton } from "@mui/material";
+
 const HamburgerMenu = (props) => {
   return (
     <Box

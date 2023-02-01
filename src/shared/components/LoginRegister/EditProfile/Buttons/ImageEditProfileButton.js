@@ -29,9 +29,6 @@ const ImageEditProfileButton = ({
     if (e.target.files[0]) {
       formInputsHandler(e);
       setImageUrl(null);
-
-      //   console.log(e.target.files[0]);
-      //   console.log(e.target.value);
     }
   };
   return (

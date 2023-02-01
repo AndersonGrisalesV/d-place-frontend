@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { Badge, Box, IconButton, MenuItem, Zoom } from "@mui/material";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
-import styled from "@emotion/styled/macro";
+import { LoginContext } from "../../../../../../context/login-context";
 
 import { useHttpClient } from "../../../../../../hooks/http-hook";
-
 import { useNavigate } from "react-router-dom";
-import { LoginContext } from "../../../../../../context/login-context";
+
 import PopoverComponent from "./PopoverComponent";
+
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import { Badge, Box, IconButton, MenuItem } from "@mui/material";
+import styled from "@emotion/styled/macro";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {

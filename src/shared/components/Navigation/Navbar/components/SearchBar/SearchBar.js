@@ -1,19 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-import {
-  Box,
-  IconButton,
-  InputAdornment,
-  ListItemIcon,
-  Stack,
-  Zoom,
-} from "@mui/material";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import CloseIcon from "@mui/icons-material/Close";
-import { styled, alpha } from "@mui/material/styles";
-import ButtonCloseModal from "../../../Feed/places/components/Buttons/ButtonCloseModal";
 import { LoginContext } from "../../../../../context/login-context";
+
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
+import { Box, ListItemIcon, Stack, Zoom } from "@mui/material";
+import InputBase from "@mui/material/InputBase";
+import { alpha, styled } from "@mui/material/styles";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

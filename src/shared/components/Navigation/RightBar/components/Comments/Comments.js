@@ -1,18 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+
+import { LoginContext } from "../../../../../context/login-context";
+
+import { useHttpClient } from "../../../../../hooks/http-hook";
+
+import AvatarComment from "./AvatarComment";
+import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
+
+import { Box, CardContent, Zoom } from "@mui/material";
+import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
+import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
-import { Box, CardContent, Zoom } from "@mui/material";
-import { useHttpClient } from "../../../../../hooks/http-hook";
-import AvatarComment from "./AvatarComment";
-import { NavLink, useNavigate } from "react-router-dom";
-import { LoginContext } from "../../../../../context/login-context";
-import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
 
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",

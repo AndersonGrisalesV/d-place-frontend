@@ -1,23 +1,28 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Box, createTheme, Stack, ThemeProvider } from "@mui/material";
-import NavigationBar from "./shared/components/Navigation/Navbar/NavigationBar";
-import styled from "@emotion/styled";
-import HomePage from "./pages/HomePage";
-import FavoritesPage from "./pages/FavoritesPage";
-import SideBar from "./shared/components/Navigation/SideBar/SideBar";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import AppStyles from "./App.css";
-import MyPlaces from "./pages/MyPlaces";
+
 import { LoginContext } from "./shared/context/login-context";
-import LoginRegister from "./pages/LoginRegister";
-import PlaceDetail from "./pages/PlaceDetail";
-import NewPlace from "./pages/NewPlace";
-import EditPlace from "./pages/EditPlace";
-import { useHttpClient } from "./shared/hooks/http-hook";
-import EditProfile from "./shared/components/LoginRegister/EditProfile/EditProfile";
+
 import { useAuth } from "./shared/hooks/auth-hook";
+import { useHttpClient } from "./shared/hooks/http-hook";
+
+import EditPlace from "./pages/EditPlace";
+import FavoritesPage from "./pages/FavoritesPage";
+import HomePage from "./pages/HomePage";
+import LoginRegister from "./pages/LoginRegister";
+import MyPlaces from "./pages/MyPlaces";
+import NewPlace from "./pages/NewPlace";
 import NotFoundGeneral from "./pages/NotFoundGeneral";
+import PlaceDetail from "./pages/PlaceDetail";
+
 import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
+import EditProfile from "./shared/components/LoginRegister/EditProfile/EditProfile";
+import NavigationBar from "./shared/components/Navigation/Navbar/NavigationBar";
+import SideBar from "./shared/components/Navigation/SideBar/SideBar";
+
+import AppStyles from "./App.css";
+import { Box, createTheme, Stack, ThemeProvider } from "@mui/material";
+import styled from "@emotion/styled";
 
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",

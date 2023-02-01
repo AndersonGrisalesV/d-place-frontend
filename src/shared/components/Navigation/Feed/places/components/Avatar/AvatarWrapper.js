@@ -82,18 +82,9 @@ const AvatarWrapper = ({ loadedPlaces }) => {
   let fetchedDate = addDays(loadedPlaces.postDate);
 
   const [isEdit, setIsEdit] = useState(false);
-  let placeId;
 
   useEffect(() => {
-    // console.log(loadedPlaces);
     if (login.isLoggedIn && loadedPlaces.creatorId._id === login.userId) {
-      // loadedPlaces.creatorId.places.map((samePlace) => {
-      //   console.log(samePlace);
-      //   if (samePlace === loadedPlaces._id) {
-      //     placeId = loadedPlaces._id;
-      //     return (isEdit = true);
-      //   }
-      // placeId = "";
       setIsEdit(true);
     }
   }, [loadedPlaces, login]);

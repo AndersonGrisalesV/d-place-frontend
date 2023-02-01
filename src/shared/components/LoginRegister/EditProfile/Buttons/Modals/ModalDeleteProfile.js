@@ -108,7 +108,6 @@ const ModalDeleteProfile = ({ open, handleClose, handleConfirmDelete }) => {
                     },
                   }}
                 />
-
                 <Typography
                   sx={{
                     display: "inline",

@@ -1,8 +1,9 @@
 import React from "react";
-import CardImages from "./CardImages";
+
 import AvatarWrapper from "./Avatar/AvatarWrapper";
-import CardTitle from "./CardTitle";
 import ButtonsWrapper from "./Buttons/ButtonsWrapper";
+import CardImages from "./CardImages";
+import CardTitle from "./CardTitle";
 import CardWrapper from "./CardWrapper";
 
 const CardPlaces = ({ onMap = false, loadedPlaces }) => {

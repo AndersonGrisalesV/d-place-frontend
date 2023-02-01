@@ -43,7 +43,6 @@ import {
   Typography,
   Zoom,
 } from "@mui/material";
-import Backdrop from "@mui/material/Backdrop";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Menu from "@mui/material/Menu";
@@ -76,24 +75,6 @@ const style = {
   padding: "0px",
 };
 
-const StyleContainerMap = styled(Box)(({ theme }) => ({
-  height: {
-    sps: "210px",
-    ps: "290px",
-    ts: "351px",
-    sls: "400px",
-    sms: "600px",
-    sc: "652px",
-    nsc: "652px",
-    ns: "652px",
-    msc: "652px",
-    mns: "652px",
-    ms: "652px",
-    lgs: "652px",
-  },
-  width: "100%",
-}));
-
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -101,12 +82,6 @@ const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
-    // [`${FavoriteBorderOutlined}`]: {
-    //   color: theme.palette.mode === "dark" ? "" : "#da4453c7",
-    // },
-    // [`${AccountCircleOutlined}`]: {
-    //   color: theme.palette.mode === "dark" ? "" : "#da4453c7",
-    // },
   },
 }));
 
@@ -117,15 +92,11 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
 
   const login = useContext(LoginContext);
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { sendRequest, clearError } = useHttpClient();
 
   const [changeFavorite, setChangeFavorite] = useState(null);
-  const [changeShareCount, setChangeShareCount] = useState(null);
-  // const [showComments, setshowComments] = useState(null);
 
   const [showSuccess, setShowSuccess] = useState(false);
-
-  const params = useParams();
 
   let isFavorite = false;
 
@@ -143,11 +114,6 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   const favoritehandler = async () => {
     if (login.isLoggedIn) {
       try {
-        // await sendRequest(
-        //   `http://localhost:4000/api/places/favoriteplace/${loadedPlaces._id}`,
-        //   "PATCH"
-        // );
-
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/places/favoriteplace/${loadedPlaces._id}`,
           "PATCH",
@@ -295,7 +261,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
 
   const shareCountHandler = async () => {
     try {
-      const responseData = await sendRequest(
+      await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/places/shareplace/${loadedPlaces._id}`,
         "PATCH",
         JSON.stringify({
@@ -305,13 +271,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
           "Content-Type": "Application/json",
         }
       );
-      setChangeShareCount(responseData);
-    } catch (err) {
-      console.log(err);
-    }
-    // setTimeout(() => {
-    //   setChangeShareCount(null);
-    // }, "500");
+    } catch (err) {}
   };
 
   return (
@@ -649,10 +609,6 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
               aria-labelledby="modal-modal-map"
               aria-describedby="modal-modal-map-location"
               closeAfterTransition
-              BackdropComponent={Backdrop}
-              BackdropProps={{
-                timeout: 500,
-              }}
             >
               <Fade in={open}>
                 <Stack>

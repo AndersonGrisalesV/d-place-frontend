@@ -1,7 +1,9 @@
 import React from "react";
-import { Box, Zoom } from "@mui/material";
+
 import CardPlace from "./components/CardPlace";
 import CommentsPost from "./components/Comments/CommentsPost";
+
+import { Box, Zoom } from "@mui/material";
 
 const Place = ({
   onMap = false,

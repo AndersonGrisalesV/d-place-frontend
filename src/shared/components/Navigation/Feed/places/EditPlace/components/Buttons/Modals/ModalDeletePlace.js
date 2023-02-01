@@ -1,9 +1,11 @@
 import React from "react";
-import { Modal, Typography } from "@mui/material";
-import { Box, Stack } from "@mui/system";
+
 import ButtonYesDelete from "../../../../components/Comments/components/Buttons/ButtonYesDelete";
 import ButtonGoback from "../../../../components/Comments/components/Buttons/ButtonGoback";
+
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import { Modal, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/system";
 
 const styleModalDelete = {
   position: "absolute",

@@ -1,4 +1,5 @@
 import React from "react";
+
 import NewPlacePostDisplay from "./NewPlacePostDisplay";
 
 const NewPlacePost = () => {

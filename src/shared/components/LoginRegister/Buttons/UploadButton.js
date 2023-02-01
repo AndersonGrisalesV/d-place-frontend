@@ -35,15 +35,12 @@ const UploadButton = ({ onUpload }) => {
     setSelectedImage(e.target.files[0]);
 
     reader.readAsDataURL(e.target.files[0]);
-    // console.log(e.target.name);
+
     reader.onload = () => {
       // console.log(reader.result); //base64encoded string
       const baseResult = reader.result;
       onUpload(baseResult);
     };
-    // reader.onerror = (error) => {
-    //   console.log("Error: ", error);
-    // };
   };
 
   return (

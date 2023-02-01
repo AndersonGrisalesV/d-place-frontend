@@ -23,7 +23,6 @@ const ButtonDetails = ({ onPlaceId }) => {
 
   const cleanListItemsHandler = () => {
     login.listItemsNotListed(onPlaceId);
-    // console.log(onClearListItems);
   };
 
   return (

@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Switch } from "@mui/material";
-import styled from "@emotion/styled";
+
+import { LoginContext } from "../../../../../context/login-context";
+
 import { useAuth } from "../../../../../hooks/auth-hook";
 import { useHttpClient } from "../../../../../hooks/http-hook";
-import { LoginContext } from "../../../../../context/login-context";
+
+import { Switch } from "@mui/material";
+import styled from "@emotion/styled";
 
 const StyleSwitch = styled(Switch)(({ theme }) => ({
   padding: 8,

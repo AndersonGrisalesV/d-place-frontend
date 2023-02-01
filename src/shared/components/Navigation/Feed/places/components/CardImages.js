@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
-import { CardMedia } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
 import { LoginContext } from "../../../../../context/login-context";
+
+import { CardMedia } from "@mui/material";
 
 const CardImages = ({ loadedPlaces }) => {
   const login = useContext(LoginContext);

@@ -1,25 +1,26 @@
 import React, { useContext, useEffect, useState } from "react";
-
-import { Divider, Stack, TextField, Typography } from "@mui/material";
-import CardContentNewPlacePost from "./components/CardContentNewPlacePost";
-import CardWrapperNewPlacePostDisplay from "./components/CardWrapperNewPlacePostDisplay";
-import TitleNewPlacePost from "./components/TitleNewPlacePost";
-import ButtonCancelPostPlace from "./components/Buttons/ButtonCancelPostPlace";
-import ImageUploadPlaceButton from "./components/Buttons/ImageUploadPlaceButton";
-import ImagePreviewPlaceButton from "./components/Buttons/ImagePreviewPlaceButton";
-import ButtonPostPlace from "./components/Buttons/ButtonPostPlace";
-
-import useFocusBlurHook from "../../../../../../shared/hooks/use-my-input";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { LoginContext } from "../../../../../context/login-context";
 
-import styled from "@emotion/styled";
+import useFocusBlurHook from "../../../../../../shared/hooks/use-my-input";
 import { useHttpClient } from "../../../../../hooks/http-hook";
-import LoadingSpinnerWrapper from "../../../../LoadingSpinner/LoadingSpinnerWrapper";
-import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
+
+import CardWrapperNewPlacePostDisplay from "./components/CardWrapperNewPlacePostDisplay";
 import ScrollToTop from "../../../../../util/ScollTop/ScrollToTop";
-import { useLocation, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
+import LoadingSpinnerWrapper from "../../../../LoadingSpinner/LoadingSpinnerWrapper";
 import SnackBarResultLogin from "../../../../LoginRegister/components/SnackBarResultLogin";
+import TitleNewPlacePost from "./components/TitleNewPlacePost";
+
+import ButtonCancelPostPlace from "./components/Buttons/ButtonCancelPostPlace";
+import ButtonPostPlace from "./components/Buttons/ButtonPostPlace";
+import ImagePreviewPlaceButton from "./components/Buttons/ImagePreviewPlaceButton";
+import ImageUploadPlaceButton from "./components/Buttons/ImageUploadPlaceButton";
+import CardContentNewPlacePost from "./components/CardContentNewPlacePost";
+
+import { Divider, Stack, TextField, Typography } from "@mui/material";
+import styled from "@emotion/styled";
 
 const formData = require("form-data");
 
