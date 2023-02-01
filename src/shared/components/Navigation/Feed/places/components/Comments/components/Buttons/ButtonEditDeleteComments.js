@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
+
+import { LoginContext } from "../../../../../../../../context/login-context";
+
 import { Button, Zoom } from "@mui/material";
 import styled from "@emotion/styled";
-import { LoginContext } from "../../../../../../../../context/login-context";
 
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
@@ -23,7 +25,7 @@ const ButtonEditDeleteComments = ({
       {login.isLoggedIn && (
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
-           disableRipple={true}
+            disableRipple={true}
             onClick={!onButtonName ? onEdit : onDelete}
             sx={{
               fontWeight: 500,

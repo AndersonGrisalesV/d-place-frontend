@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+
+import { LoginContext } from "../../../../../../context/login-context";
 
 import AvatarComponent from "./AvatarComponent";
+
 import ButtonEdit from "../Buttons/ButtonEdit";
+
 import { CardHeader, styled } from "@mui/material";
-import { LoginContext } from "../../../../../../context/login-context";
-import { NavLink, useNavigate } from "react-router-dom";
 
 const StyleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",

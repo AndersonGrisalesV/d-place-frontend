@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Checkbox, IconButton, Typography } from "@mui/material";
+import { Checkbox, IconButton } from "@mui/material";
 import styled from "@emotion/styled";
-import { LoginContext } from "../../../../../../context/login-context";
-import { useHttpClient } from "../../../../../../hooks/http-hook";
 
 const StyleFavoriteBorderIcon = styled(FavoriteBorderIcon)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",

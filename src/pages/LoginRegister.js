@@ -1,35 +1,35 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { LoginContext } from "../shared/context/login-context";
+
+import { useHttpClient } from "../shared/hooks/http-hook";
+import useFocusBlurHook from "../shared/hooks/use-my-input";
+
+import ScrollToTop from "../shared/util/ScollTop/ScrollToTop";
+
+import CardContentLogin from "../shared/components/LoginRegister/components/CardContentLogin";
+import CardWrapperLogin from "../shared/components/LoginRegister/components/CardWrapperLogin";
+import Title from "../shared/components/LoginRegister/components/Title";
+import LoadingSpinner from "../shared/components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinnerWrapper from "../shared/components/LoadingSpinner/LoadingSpinnerWrapper";
+import SnackBarResultLogin from "../shared/components/LoginRegister/components/SnackBarResultLogin";
+
+import ButtonsWrapper from "../shared/components/LoginRegister/Buttons/ButtonsWrapper";
+import CreateAccountButton from "../shared/components/LoginRegister/Buttons/CreateAccountButton";
+import ImagePreviewButton from "../shared/components/LoginRegister/Buttons/ImagePreviewButton";
+import ImageUploadButton from "../shared/components/LoginRegister/Buttons/ImageUploadButton";
+import LoginRegisterButton from "../shared/components/LoginRegister/Buttons/LoginRegisterButton";
 
 import {
-  Box,
   IconButton,
   InputAdornment,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import Title from "../shared/components/LoginRegister/components/Title";
-import CardContentLogin from "../shared/components/LoginRegister/components/CardContentLogin";
-import CardWrapperLogin from "../shared/components/LoginRegister/components/CardWrapperLogin";
-import CreateAccountButton from "../shared/components/LoginRegister/Buttons/CreateAccountButton";
-import LoginRegisterButton from "../shared/components/LoginRegister/Buttons/LoginRegisterButton";
-import ButtonsWrapper from "../shared/components/LoginRegister/Buttons/ButtonsWrapper";
-import ImageUploadButton from "../shared/components/LoginRegister/Buttons/ImageUploadButton";
-import ImagePreviewButton from "../shared/components/LoginRegister/Buttons/ImagePreviewButton";
-
-import ScrollToTop from "../shared/util/ScollTop/ScrollToTop";
-
-import { LoginContext } from "../shared/context/login-context";
-
-import useFocusBlurHook from "../shared/hooks/use-my-input";
-import { useHttpClient } from "../shared/hooks/http-hook";
-
-import styled from "@emotion/styled";
-import LoadingSpinner from "../shared/components/LoadingSpinner/LoadingSpinner";
-import SnackBarResultLogin from "../shared/components/LoginRegister/components/SnackBarResultLogin";
-import LoadingSpinnerWrapper from "../shared/components/LoadingSpinner/LoadingSpinnerWrapper";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import styled from "@emotion/styled";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {

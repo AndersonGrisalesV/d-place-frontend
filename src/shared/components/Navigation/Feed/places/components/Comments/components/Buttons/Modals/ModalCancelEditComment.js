@@ -1,7 +1,10 @@
 import React from "react";
-import { Box, Modal, Stack, Typography } from "@mui/material";
+
 import ButtonGoback from "../ButtonGoback";
 import ButtonYesCancel from "../ButtonYesCancel";
+
+import { Box, Modal, Stack, Typography } from "@mui/material";
+import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 
 const styleModalCancel = {
   position: "absolute",
@@ -56,13 +59,55 @@ const ModalCancelEditComment = ({ open, handleClose, handleConfirmCancel }) => {
       >
         <Stack>
           <Box sx={styleModalCancel}>
-            <Stack>
+            <Stack
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Stack
                 direction="row"
                 spacing={2}
                 justifyContent="center"
                 alignItems="center"
               >
+                <DoDisturbIcon
+                  sx={{
+                    backgroundColor: "transparent",
+                    color: "#da4453c7",
+                    // stroke: "#ffffff",
+                    // strokeWidth: 4,
+                    width: {
+                      sps: "15px",
+                      ps: "16px",
+                      ts: "18px",
+                      sls: "20px",
+                      sms: "24px",
+                      sc: "24px",
+                      nsc: "24px",
+                      ns: "24px",
+                      msc: "24px",
+                      mns: "24px",
+                      ms: "24px",
+                      lgs: "24px",
+                    },
+                    height: {
+                      sps: "18px",
+                      ps: "20px",
+                      ts: "22px",
+                      sls: "22px",
+                      sms: "30px",
+                      sc: "30px",
+                      nsc: "30px",
+                      ns: "30px",
+                      msc: "30px",
+                      mns: "30px",
+                      ms: "30px",
+                      lgs: "30px",
+                    },
+                  }}
+                />
                 <Typography
                   sx={{
                     display: "inline",

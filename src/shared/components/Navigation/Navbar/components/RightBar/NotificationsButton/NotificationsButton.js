@@ -103,6 +103,7 @@ const NotificationsButton = ({
   const notificationBadge = useRef(null);
 
   const handleClick = async (event) => {
+    setAnchorEl(event.currentTarget);
     // console.log(loadedPlaces.reverse().slice(0, 1)[0].creatorId._id);
     // console.log(login.userId);
 
@@ -129,7 +130,6 @@ const NotificationsButton = ({
       setShowNotification(false);
     }
 
-    setAnchorEl(event.currentTarget);
     if (onResponsive) {
       notificationBadge.current.click();
     }
@@ -145,6 +145,20 @@ const NotificationsButton = ({
     setAnchorEl(false);
     setShowPopOver(false);
   };
+
+  let popOver;
+  if (!isLoading && loadedPlaces) {
+    popOver = (
+      <PopoverComponent
+        setLoadedPlaces={setLoadedPlaces}
+        onPost={true}
+        loadedPlaces={loadedPlaces}
+        anchorEl={anchorEl ? anchorEl : false}
+        onHandleClose={handleClose}
+        onCloseMenuResponsive={onCloseMenuResponsive}
+      />
+    );
+  }
 
   return (
     <React.Fragment>
@@ -188,13 +202,7 @@ const NotificationsButton = ({
             </IconButton>
             <p>Notifications</p>
           </StyleMenuItem>
-          {changeResponsive && !isLoading && loadedPlaces && showPopOver ? (
-            <PopoverComponent
-              loadedPlaces={loadedPlaces}
-              anchorEl={anchorEl ? anchorEl : false}
-              onHandleClose={handleClose}
-            />
-          ) : null}
+          {popOver}
         </Box>
       ) : (
         <Box
@@ -235,16 +243,7 @@ const NotificationsButton = ({
           </IconButton>
         </Box>
       )}
-      {!isLoading && loadedPlaces && showPopOver ? (
-        <PopoverComponent
-          setLoadedPlaces={setLoadedPlaces}
-          onPost={true}
-          loadedPlaces={loadedPlaces}
-          anchorEl={anchorEl ? anchorEl : false}
-          onHandleClose={handleClose}
-          onCloseMenuResponsive={onCloseMenuResponsive}
-        />
-      ) : null}
+      {popOver}
     </React.Fragment>
   );
 };

@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import LoadingSpinnerWrapper from "../../LoadingSpinner/LoadingSpinnerWrapper";
+
+import CloseIcon from "@mui/icons-material/Close";
 import { Box } from "@mui/system";
 import {
   Avatar,
@@ -8,9 +12,6 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import LoadingSpinnerWrapper from "../../LoadingSpinner/LoadingSpinnerWrapper";
-import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
   color:

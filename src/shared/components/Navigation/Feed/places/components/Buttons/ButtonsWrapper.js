@@ -1,53 +1,54 @@
 import React, { useContext, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import { LoginContext } from "../../../../../../context/login-context";
+
+import { useHttpClient } from "../../../../../../hooks/http-hook";
+
+import SnackBarResultLogin from "../../../../../LoginRegister/components/SnackBarResultLogin";
+import Map from "../../../../../Map/Map";
+
+import ButtonCloseModal from "./ButtonCloseModal";
+import CommentButton from "./CommentButton";
+import CopyLinkButton from "./CopyLinkButton";
+import ButtonDetails from "./ButtonDetails";
+import ButtonEdit from "./ButtonEdit";
+import ButtonSeeMap from "./ButtonSeeMap";
+import FavoriteButton from "./FavoriteButton";
+import ShareButton from "./ShareButton";
+
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  LineIcon,
+  LineShareButton,
+  PinterestIcon,
+  PinterestShareButton,
+  RedditIcon,
+  RedditShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+} from "react-share";
+
 import {
   Box,
   CardActions,
   Fade,
-  Grow,
   Modal,
   Stack,
   Typography,
   Zoom,
 } from "@mui/material";
-import ButtonDetails from "./ButtonDetails";
-import FavoriteButton from "./FavoriteButton";
-import ShareButton from "./ShareButton";
-import ButtonSeeMap from "./ButtonSeeMap";
-import Map from "../../../../../Map/Map";
-import ButtonEdit from "./ButtonEdit";
-
 import Backdrop from "@mui/material/Backdrop";
-
-import { LoginContext } from "../../../../../../context/login-context";
-import { useParams } from "react-router-dom";
-import styled from "@emotion/styled";
-import ButtonCloseModal from "./ButtonCloseModal";
-import { useHttpClient } from "../../../../../../hooks/http-hook";
-import CommentButton from "./CommentButton";
-import SnackBarResultLogin from "../../../../../LoginRegister/components/SnackBarResultLogin";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import {
-  FacebookShareButton,
-  LineShareButton,
-  PinterestShareButton,
-  RedditShareButton,
-  TelegramShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from "react-share";
-import {
-  FacebookIcon,
-  LineIcon,
-  PinterestIcon,
-  RedditIcon,
-  TelegramIcon,
-  TwitterIcon,
-  WhatsappIcon,
-} from "react-share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import CopyLinkButton from "./CopyLinkButton";
+import styled from "@emotion/styled";
 
 const style = {
   position: "absolute",

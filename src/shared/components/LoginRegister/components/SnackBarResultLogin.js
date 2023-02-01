@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
-import ErrorIcon from "@mui/icons-material/Error";
-import CloseIcon from "@mui/icons-material/Close";
-import { IconButton, Slide } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CloseIcon from "@mui/icons-material/Close";
+import ErrorIcon from "@mui/icons-material/Error";
+import { IconButton } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 import styled from "@emotion/styled/macro";
 
 const StyleErrorIcon = styled(ErrorIcon)(({ theme }) => ({

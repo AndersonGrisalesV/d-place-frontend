@@ -1,5 +1,28 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
+import { LoginContext } from "../../../context/login-context";
+
+import { useForm } from "../../../hooks/form-hook";
+import { useHttpClient } from "../../../hooks/http-hook";
+import useFocusBlurHook from "../../../../shared/hooks/use-my-input";
+
+import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
+
+import CardContentLogin from "../components/CardContentLogin";
+import CardWrapperLogin from "../components/CardWrapperLogin";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import LoadingSpinnerWrapper from "../../LoadingSpinner/LoadingSpinnerWrapper";
+import Title from "./components/Title";
+import SnackBarResultLogin from "../components/SnackBarResultLogin";
+
+import ImageEditProfileButton from "./Buttons/ImageEditProfileButton";
+import ImagePreviewEditProfileButton from "./Buttons/ImagePreviewEditProfileButton";
+import ButtonCancelEditProfile from "./Buttons/ButtonCancelEditProfile";
+import ButtonChangePassword from "./Buttons/ButtonChangePassword";
+import ButtonDeleteProfile from "./Buttons/ButtonDeleteProfile";
+import ButtonEditProfile from "./Buttons/ButtonEditProfile";
+import ModalDeleteProfile from "./Buttons/Modals/ModalDeleteProfile";
 
 import {
   Box,
@@ -9,33 +32,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-
-import styled from "@emotion/styled";
-
-import Title from "./components/Title";
-import CardWrapperLogin from "../components/CardWrapperLogin";
-import CardContentLogin from "../components/CardContentLogin";
-
-import ImageEditProfileButton from "./Buttons/ImageEditProfileButton";
-import ImagePreviewEditProfileButton from "./Buttons/ImagePreviewEditProfileButton";
-import SnackBarResultLogin from "../components/SnackBarResultLogin";
-import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
-
-import { LoginContext } from "../../../context/login-context";
-import { useHttpClient } from "../../../hooks/http-hook";
-import useFocusBlurHook from "../../../../shared/hooks/use-my-input";
-import { useForm } from "../../../hooks/form-hook";
-import ButtonEditProfile from "./Buttons/ButtonEditProfile";
-import ButtonCancelEditProfile from "./Buttons/ButtonCancelEditProfile";
-import ButtonDeleteProfile from "./Buttons/ButtonDeleteProfile";
-import ModalDeleteProfile from "./Buttons/Modals/ModalDeleteProfile";
-import ButtonChangePassword from "./Buttons/ButtonChangePassword";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
-import LoadingSpinnerWrapper from "../../LoadingSpinner/LoadingSpinnerWrapper";
-import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import styled from "@emotion/styled";
 
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {

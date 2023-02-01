@@ -1,7 +1,8 @@
 import React from "react";
 
-import { Box, Zoom } from "@mui/material";
 import CardWrapper from "../../Navigation/Feed/places/components/CardWrapper";
+
+import { Box, Zoom } from "@mui/material";
 
 const CardWrapperLogin = (props) => {
   return (
