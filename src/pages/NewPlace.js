@@ -5,6 +5,8 @@ import NewPlacePost from "../shared/components/Navigation/Feed/places/NewPlace/N
 const NewPlace = () => {
   return (
     <React.Fragment>
+      {/* The NewPlacePost component needs the "bgcolor" props for it to display 
+      the proper background color */}
       <NewPlacePost bgcolor={"backgroundColor"} />
     </React.Fragment>
   );

@@ -4,7 +4,7 @@ import { LoginContext } from "../../../../../../context/login-context";
 
 import { useHttpClient } from "../../../../../../hooks/http-hook";
 
-import SnackBarResultLogin from "../../../../../LoginRegister/components/SnackBarResultLogin";
+import SnackBarResult from "../../../../../LoginRegister/components/SnackBarResult";
 import Map from "../../../../../Map/Map";
 
 import ButtonCloseModal from "./ButtonCloseModal";
@@ -275,7 +275,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
         }}
       >
         {showSuccess && (
-          <SnackBarResultLogin
+          <SnackBarResult
             onDuration={4000}
             onClear={clearError}
             error={showSuccess}
@@ -283,7 +283,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
         )}
 
         {copySuccess && (
-          <SnackBarResultLogin
+          <SnackBarResult
             onSuccess={true}
             onDuration={800}
             onClear={clearError}

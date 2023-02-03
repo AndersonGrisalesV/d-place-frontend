@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { LoginContext } from "../../../context/login-context";
 
 import { useHttpClient } from "../../../hooks/http-hook";
-import useFocusBlurHook from "../../../../shared/hooks/use-my-input";
+import useFocusBlurHook from "../../../hooks/use-my-input";
 
 import ScrollToTop from "../../../util/ScollTop/ScrollToTop";
 
@@ -13,7 +13,7 @@ import CardWrapperLogin from "../components/CardWrapperLogin";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 import LoadingSpinnerWrapper from "../../LoadingSpinner/LoadingSpinnerWrapper";
 import Title from "./components/Title";
-import SnackBarResultLogin from "../components/SnackBarResultLogin";
+import SnackBarResult from "../components/SnackBarResult";
 
 import ImageEditProfileButton from "./Buttons/ImageEditProfileButton";
 import ImagePreviewEditProfileButton from "./Buttons/ImagePreviewEditProfileButton";
@@ -559,14 +559,14 @@ const EditProfile = () => {
       ) : (
         <ScrollToTop pathname={pathname}>
           {error && (
-            <SnackBarResultLogin
+            <SnackBarResult
               onDuration={6000}
               error={error}
               onClear={clearError}
             />
           )}
           {showSuccess && (
-            <SnackBarResultLogin
+            <SnackBarResult
               onSuccess={true}
               onDuration={800}
               message={`${successMessage}`}
@@ -1249,8 +1249,7 @@ const EditProfile = () => {
                                 <ButtonCancelEditProfile
                                   open={open}
                                   close={handleClose}
-                                  onHandleOpen={handleOpen}
-                                  onHandleClose={handleClose}
+                                  onOpenModal={handleOpen}
                                 />
                               </Stack>
                               <ButtonDeleteProfile
@@ -1265,8 +1264,8 @@ const EditProfile = () => {
                   {openDeleteProfile ? (
                     <ModalDeleteProfile
                       open={openDeleteProfile}
-                      handleClose={handleCloseDeleteProfile}
-                      handleConfirmDelete={handleConfirmDeleteProfile}
+                      close={handleCloseDeleteProfile}
+                      onConfirmDelete={handleConfirmDeleteProfile}
                     />
                   ) : null}
                 </CardContentLogin>

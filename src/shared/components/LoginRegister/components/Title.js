@@ -2,6 +2,7 @@ import React from "react";
 
 import { Divider, Typography } from "@mui/material";
 
+// isLoginMode is a boolean indicating the mode we are in (login/signup)
 const Title = ({ isLoginMode }) => {
   return (
     <React.Fragment>
@@ -14,6 +15,7 @@ const Title = ({ isLoginMode }) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          // fontSize for different screen sizes
           fontSize: {
             sps: "0.9rem",
             ps: "1rem",

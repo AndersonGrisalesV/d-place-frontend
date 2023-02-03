@@ -7,11 +7,13 @@ import ButtonYesCancelEditProfile from "../ButtonYesCancelEditProfile";
 import { Box, Modal, Stack, Typography } from "@mui/material";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 
+// Styled component for ModalCancel
 const styleModalCancel = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
+  // width for different screen sizes
   width: {
     sps: "234px",
     ps: "278px",
@@ -26,6 +28,7 @@ const styleModalCancel = {
     ms: "388px",
     lgs: "388px",
   },
+  // height for different screen sizes
   height: {
     sps: "4.1rem",
     ps: "4.5rem",
@@ -49,11 +52,14 @@ const styleModalCancel = {
   paddingBottom: "0px",
 };
 
-const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
+// open is a boolean indicating if the modal is open or not located on EditProfile
+// close is a pointer to a function that changes the state open to false on EditProfile
+const ModalCancel = ({ open, close }) => {
   let navigate = useNavigate();
 
+  // Confirms cancel EditProfile
   const handleConfirmCancel = () => {
-    onHandleClose();
+    close();
     navigate("/api/homepage");
   };
 
@@ -62,8 +68,8 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
       <Modal
         open={open}
         onClose={close}
-        aria-labelledby="modal-modal-confirm-cancel"
-        aria-describedby="modal-modal-confirm-cancel-edit"
+        aria-labelledby="modal-confirm-cancel-edit-profile"
+        aria-describedby="modal-confirm-cancel-edit-profile"
       >
         <Stack>
           <Box sx={styleModalCancel}>
@@ -84,6 +90,7 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
                   sx={{
                     backgroundColor: "transparent",
                     color: "#da4453c7",
+                    // width for different screen sizes
                     width: {
                       sps: "15px",
                       ps: "16px",
@@ -98,6 +105,7 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
                       ms: "24px",
                       lgs: "24px",
                     },
+                    // height for different screen sizes
                     height: {
                       sps: "18px",
                       ps: "20px",
@@ -117,6 +125,7 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
                 <Typography
                   sx={{
                     display: "inline",
+                    // fontSize for different screen sizes
                     fontSize: {
                       sps: "12px",
                       ps: "13px",
@@ -139,7 +148,7 @@ const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
                   Are you sure you want to cancel ?
                 </Typography>
               </Stack>
-
+              {/* Margin correction */}
               <p style={{ margin: "1px" }} />
               <Stack
                 direction="row"

@@ -13,7 +13,7 @@ import CardWrapperLogin from "../shared/components/LoginRegister/components/Card
 import Title from "../shared/components/LoginRegister/components/Title";
 import LoadingSpinner from "../shared/components/LoadingSpinner/LoadingSpinner";
 import LoadingSpinnerWrapper from "../shared/components/LoadingSpinner/LoadingSpinnerWrapper";
-import SnackBarResultLogin from "../shared/components/LoginRegister/components/SnackBarResultLogin";
+import SnackBarResult from "../shared/components/LoginRegister/components/SnackBarResult";
 
 import ButtonsWrapper from "../shared/components/LoginRegister/Buttons/ButtonsWrapper";
 import CreateAccountButton from "../shared/components/LoginRegister/Buttons/CreateAccountButton";
@@ -314,14 +314,10 @@ const LoginRegister = ({ mode, setMode }) => {
   return (
     <ScrollToTop pathname={pathname}>
       {error && (
-        <SnackBarResultLogin
-          onDuration={6000}
-          error={error}
-          onClear={clearError}
-        />
+        <SnackBarResult onDuration={6000} error={error} onClear={clearError} />
       )}
       {showSuccess && (
-        <SnackBarResultLogin
+        <SnackBarResult
           onSuccess={true}
           onDuration={800}
           message={`${successMessage}`}

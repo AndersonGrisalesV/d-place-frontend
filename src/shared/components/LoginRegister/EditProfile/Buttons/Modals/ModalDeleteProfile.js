@@ -1,17 +1,19 @@
 import React from "react";
 
 import ButtonGoback from "../../../../Navigation/Feed/places/components/Comments/components/Buttons/ButtonGoback";
-import ButtonYesDelete from "../../../../Navigation/Feed/places/components/Comments/components/Buttons/ButtonYesDelete";
 
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { Modal, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
+import ButtonYesDelete from "../ButtonYesDelete";
 
+// Styled component for ModalDelete
 const styleModalDelete = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
+  // width for different screen sizes
   width: {
     sps: "280px",
     ps: "346px",
@@ -26,6 +28,7 @@ const styleModalDelete = {
     ms: "509px",
     lgs: "509px",
   },
+  // height for different screen sizes
   height: {
     sps: "4.1rem",
     ps: "4.5rem",
@@ -40,7 +43,6 @@ const styleModalDelete = {
     ms: "5.6rem",
     lgs: "5.6rem",
   },
-
   bgcolor: "background.paper",
   borderRadius: "8px",
   boxShadow: 24,
@@ -50,14 +52,17 @@ const styleModalDelete = {
   paddingBottom: "0px",
 };
 
-const ModalDeleteProfile = ({ open, handleClose, handleConfirmDelete }) => {
+// open is a boolean indicating if the modal is open or not located on EditProfile
+// close is a pointer to a function that changes the state open to false on EditProfile
+// handleConfirmDelete is a pointer to a function that triggers the deletion of a profile
+const ModalDeleteProfile = ({ open, close, onConfirmDelete }) => {
   return (
     <div>
       <Modal
         open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-cancel-delete-profile"
-        aria-describedby="modal-modal-cancel-delete-profile"
+        onClose={close}
+        aria-labelledby="modal-delete-profile"
+        aria-describedby="modal-delete-profile"
       >
         <Stack>
           <Box sx={styleModalDelete}>
@@ -78,6 +83,7 @@ const ModalDeleteProfile = ({ open, handleClose, handleConfirmDelete }) => {
                   sx={{
                     backgroundColor: "transparent",
                     color: "#da4453c7",
+                    // width for different screen sizes
                     width: {
                       sps: "15px",
                       ps: "16px",
@@ -92,6 +98,7 @@ const ModalDeleteProfile = ({ open, handleClose, handleConfirmDelete }) => {
                       ms: "24px",
                       lgs: "24px",
                     },
+                    // height for different screen sizes
                     height: {
                       sps: "18px",
                       ps: "20px",
@@ -111,6 +118,7 @@ const ModalDeleteProfile = ({ open, handleClose, handleConfirmDelete }) => {
                 <Typography
                   sx={{
                     display: "inline",
+                    // fontSize for different screen sizes
                     fontSize: {
                       sps: "12px",
                       ps: "13px",
@@ -133,7 +141,7 @@ const ModalDeleteProfile = ({ open, handleClose, handleConfirmDelete }) => {
                   Your profile will be deleted, continue?
                 </Typography>
               </Stack>
-
+              {/* Margin correction */}
               <p style={{ margin: "1px" }} />
               <Stack
                 direction="row"
@@ -141,8 +149,8 @@ const ModalDeleteProfile = ({ open, handleClose, handleConfirmDelete }) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <ButtonYesDelete onYesDelete={handleConfirmDelete} />
-                <ButtonGoback onGoback={handleClose} />
+                <ButtonYesDelete onYesDelete={onConfirmDelete} />
+                <ButtonGoback onGoback={close} />
               </Stack>
             </Stack>
           </Box>

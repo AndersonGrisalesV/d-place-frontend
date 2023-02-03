@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import Place from "../../Place";
 
 import { useHttpClient } from "../../../../../../hooks/http-hook";
-import SnackBarResultLogin from "../../../../../LoginRegister/components/SnackBarResultLogin";
+import SnackBarResult from "../../../../../LoginRegister/components/SnackBarResult";
 
 const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
   const [loadedPlace, setLoadedPlace] = useState();
@@ -94,14 +94,10 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
   return (
     <>
       {error && !showError && (
-        <SnackBarResultLogin
-          error={error}
-          onDuration={6000}
-          onClear={clearError}
-        />
+        <SnackBarResult error={error} onDuration={6000} onClear={clearError} />
       )}
       {showSuccess && (
-        <SnackBarResultLogin
+        <SnackBarResult
           onSuccess={true}
           onDuration={6000}
           onClear={clearError}
@@ -109,7 +105,7 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
         />
       )}
       {showError && (
-        <SnackBarResultLogin
+        <SnackBarResult
           onDuration={6000}
           onClear={clearError}
           error={showError}
@@ -117,7 +113,7 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
       )}
 
       {postShowSuccess && (
-        <SnackBarResultLogin
+        <SnackBarResult
           onSuccess={true}
           onDuration={6000}
           onClear={clearError}

@@ -4,6 +4,7 @@ import CardWrapper from "../../Navigation/Feed/places/components/CardWrapper";
 
 import { Box, Zoom } from "@mui/material";
 
+// Wraps up the CardContent (entire form ) on LoginRegisterPage
 const CardWrapperLogin = (props) => {
   return (
     <Box flex={8}>
@@ -12,6 +13,9 @@ const CardWrapperLogin = (props) => {
           sx={{
             marginTop: "30px",
             marginBottom: "100%",
+            // marginLeft for different screen sizes
+            // onArrangesize comes from LoginRegister, it's needed to correct
+            // marginLeft on the page's form becuase it is a smaler card(wrapper) than place's card
             marginLeft: {
               sps: "-22px",
               ps: props.onArrangesize ? "-29px" : "-20px",
@@ -31,6 +35,8 @@ const CardWrapperLogin = (props) => {
             alignItems: "center",
           }}
         >
+          {/* The CardWrapper component needs the "bgcolor" props for it to display 
+      the proper background color on LoginRegisterPage */}
           <CardWrapper
             bgcolor={"backgroundColor"}
             sx={{ marginRight: "105px" }}

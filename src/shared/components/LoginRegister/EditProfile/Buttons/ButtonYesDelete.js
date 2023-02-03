@@ -2,12 +2,9 @@ import React, { useContext } from "react";
 
 import { LoginContext } from "../../../../context/login-context";
 
-import ModalCancel from "./Modals/ModalCancel";
-
 import { Button, Zoom } from "@mui/material";
-import { styled } from "@mui/system";
+import styled from "@emotion/styled";
 
-// Styled component for Button
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
   "&:hover": {
@@ -16,7 +13,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonCancelEditProfile = ({ open, close, onOpenModal }) => {
+const ButtonYesDelete = ({ onYesDelete }) => {
   const login = useContext(LoginContext);
 
   return (
@@ -25,7 +22,7 @@ const ButtonCancelEditProfile = ({ open, close, onOpenModal }) => {
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <StyleButton
             disableRipple={true}
-            onClick={onOpenModal}
+            onClick={onYesDelete}
             sx={{
               fontWeight: 500,
               textTransform: "none",
@@ -59,15 +56,12 @@ const ButtonCancelEditProfile = ({ open, close, onOpenModal }) => {
               },
             }}
           >
-            Cancel
+            Delete
           </StyleButton>
         </Zoom>
       )}
-      <React.Fragment>
-        {open && <ModalCancel open={open} close={close} />}
-      </React.Fragment>
     </React.Fragment>
   );
 };
 
-export default ButtonCancelEditProfile;
+export default ButtonYesDelete;

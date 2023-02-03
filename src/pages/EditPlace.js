@@ -5,6 +5,8 @@ import EditPlacePost from "../shared/components/Navigation/Feed/places/EditPlace
 const EditPlace = () => {
   return (
     <React.Fragment>
+      {/* The EditPlacePost component needs the "bgcolor" props for it to display
+       the proper background color */}
       <EditPlacePost bgcolor={"backgroundColor"} />
     </React.Fragment>
   );

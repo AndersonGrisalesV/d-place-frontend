@@ -2,11 +2,13 @@ import React from "react";
 
 import { CardContent } from "@mui/material";
 
+// Wraps up the entire form on LoginRegisterPage
 const CardContentLogin = (props) => {
   return (
     <CardContent
       bgcolor={"backgroundColor"}
       sx={{
+        // width for different screen sizes
         width: {
           sps: "156px",
           ps: "224px",

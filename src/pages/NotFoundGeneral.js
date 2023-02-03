@@ -9,6 +9,7 @@ const BoxStyled = styled(Box)(() => ({
   boxShadow: "transparent",
   display: "flex",
   justifyContent: "center",
+  // height for different screen sizes
   height: {
     ns: "514px",
     mns: "514px",
@@ -16,6 +17,7 @@ const BoxStyled = styled(Box)(() => ({
     ms: "514px",
     lgs: "514px",
   },
+  // maxWidth for different screen sizes
   maxWidth: {
     ns: "800px",
     msc: "800px",
@@ -26,10 +28,15 @@ const BoxStyled = styled(Box)(() => ({
 }));
 
 const NotFoundGeneral = () => {
+  // Retrieves the stored data from localStorage using the key "userData",
+  // and uses the JSON.parse method to parse the string value stored in the local storage
+  // into a JavaScript object.
   const storedData = JSON.parse(localStorage.getItem("userData")) || null;
 
+  // Changes the theme according to the information found in storedData
   const [theme, setTheme] = useState(storedData ? storedData.theme : "light");
 
+  // useEffect hook monitors and chanes the theme depending on the info in storedData
   useEffect(() => {
     if (storedData) {
       if (storedData.theme !== theme) {
@@ -48,6 +55,7 @@ const NotFoundGeneral = () => {
             backgroundImage: "none",
             borderRadius: "18px",
             paddingBottom: "8px",
+            // maxWidth for different screen sizes
             maxWidth: {
               sps: "200px",
               ps: "285px",

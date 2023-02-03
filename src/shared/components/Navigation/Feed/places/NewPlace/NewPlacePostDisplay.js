@@ -10,7 +10,7 @@ import CardWrapperNewPlacePostDisplay from "./components/CardWrapperNewPlacePost
 import ScrollToTop from "../../../../../util/ScollTop/ScrollToTop";
 import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
 import LoadingSpinnerWrapper from "../../../../LoadingSpinner/LoadingSpinnerWrapper";
-import SnackBarResultLogin from "../../../../LoginRegister/components/SnackBarResultLogin";
+import SnackBarResult from "../../../../LoginRegister/components/SnackBarResult";
 import TitleNewPlacePost from "./components/TitleNewPlacePost";
 
 import ButtonCancelPostPlace from "./components/Buttons/ButtonCancelPostPlace";
@@ -227,9 +227,9 @@ const NewPlacePostDisplay = () => {
 
   return (
     <ScrollToTop pathname={pathname}>
-      {error && <SnackBarResultLogin error={error} onClear={clearError} />}
+      {error && <SnackBarResult error={error} onClear={clearError} />}
       {showSuccess && (
-        <SnackBarResultLogin
+        <SnackBarResult
           onSuccess={true}
           onDuration={2000}
           message={"The place was created successfully"}

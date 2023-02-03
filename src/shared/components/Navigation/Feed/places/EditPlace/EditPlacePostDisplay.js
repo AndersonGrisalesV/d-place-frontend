@@ -11,7 +11,7 @@ import CardWrapperEditPlacePostDisplay from "./components/CardWrapperEditPlacePo
 import TitleEditPlacePost from "./components/TitleEditPlacePost";
 import ScrollToTop from "../../../../../util/ScollTop/ScrollToTop";
 import LoadingSpinnerWrapper from "../../../../LoadingSpinner/LoadingSpinnerWrapper";
-import SnackBarResultLogin from "../../../../LoginRegister/components/SnackBarResultLogin";
+import SnackBarResult from "../../../../LoginRegister/components/SnackBarResult";
 import LoadingSpinner from "../../../../LoadingSpinner/LoadingSpinner";
 import ModalDeletePlace from "./components/Buttons/Modals/ModalDeletePlace";
 
@@ -344,9 +344,9 @@ const EditPlacePostDisplay = () => {
         spinner
       ) : (
         <ScrollToTop pathname={pathname}>
-          {error && <SnackBarResultLogin error={error} onClear={clearError} />}
+          {error && <SnackBarResult error={error} onClear={clearError} />}
           {showSuccess && (
-            <SnackBarResultLogin
+            <SnackBarResult
               onSuccess={true}
               onDuration={800}
               message={showSuccess}
