@@ -4,7 +4,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { LoginContext } from "../../../../../context/login-context";
 
 import useFocusBlurHook from "../../../../../../shared/hooks/use-my-input";
-import { useForm } from "../../../../../hooks/form-hook";
 import { useHttpClient } from "../../../../../hooks/http-hook";
 
 import CardContentEditPlacePost from "./components/CardContentEditPlacePost";
@@ -54,14 +53,6 @@ const EditPlacePostDisplay = () => {
   const [loadedPlace, setLoadedPlace] = useState();
   const [showSuccess, setShowSuccess] = useState(false);
 
-  //   const initialFormInputs = {
-  //   title: "",
-  //   description: "",
-  //   address: "",
-  //   image: "",
-  //   // imageUrl: "",
-  // };
-
   const [formInputs, setFormInputs] = useState(null);
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -71,56 +62,11 @@ const EditPlacePostDisplay = () => {
 
   const { pid } = params;
 
-  const [formState, inputHandler, setFormData] = useForm(
-    {
-      title: {
-        value: "",
-        isValid: false,
-      },
-      description: {
-        value: "",
-        isValid: false,
-      },
-      imageUrl: {
-        value: "",
-        isValid: false,
-      },
-      address: {
-        value: "",
-        isValid: false,
-      },
-      // location: {
-      //   value: "",
-      //   isValid: false,
-      // },
-      postDate: {
-        value: "",
-        isValid: false,
-      },
-    },
-    false
-  );
-
-  //   const [open, setOpen] = useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
-
-  // const handleDeleteComment = () => {
-  //   // if(login && userowncomment){ deleete comment
-  //   if (login.isLoggedIn) {
-  //     handleOpen();
-  //   }
-  // };
-
   const [openDeletePlace, setOpenDeletePlace] = useState(false);
   const handleOpenDeletePlace = () => setOpenDeletePlace(true);
   const handleCloseDeletePlace = () => setOpenDeletePlace(false);
 
-  const [deletePlace, setDeletePlace] = useState(false);
-
   const handleOpenModalDeletePlace = () => {
-    // handleCloseDeletePlace();
-    // setDeletePlace((ePlace) => !ePlace);
     if (login.isLoggedIn) {
       handleOpenDeletePlace();
     }
@@ -139,58 +85,18 @@ const EditPlacePostDisplay = () => {
         }
       );
 
-      // try {
-      //   await sendRequest(
-      //     `http://localhost:4000/api/users/updateusernotification`,
-      //     "PATCH",
-      //     null,
-      //     {
-      //       Authorization: "Bearer " + login.token,
-      //       "Content-Type": "Application/json",
-      //     }
-      //   );
-      // } catch (err) {
-      //   console.log(err);
-      // }
-
       login.notification();
       setShowSuccess("The place was deleted successfully");
       setTimeout(() => {
         navigate("/api/homepage");
-        // window.location.reload();
       }, "1000");
       setTimeout(() => {
-        // navigate("/homepage");
         setShowSuccess(false);
       }, "2000");
-    } catch (err) {
-      // setTimeout(() => {
-      //   onErrorDeleteComment(
-      //     err,
-      //     "errorDelete",
-      //     null,
-      //     "Something went wrong, try again"
-      //   );
-      //   onRefreshPlaceComments(onPlaceComments.placeId);
-      // }, "910");
-    }
+    } catch (err) {}
 
     handleCloseDeletePlace();
   };
-
-  // useEffect(() => {
-  //   const fetchPlaces = async () => {
-  //     try {
-  //       const responseData = await sendRequest(
-  //         `http://localhost:4000/api/places/${pid}`
-  //       );
-  //       setLoadedPlace(responseData.place);
-
-  //       console.log(responseData.place);
-  //     } catch (err) {}
-  //   };
-  //   fetchPlaces();
-  // }, [sendRequest, pid]);
 
   useEffect(() => {
     const fetchPlace = async () => {
@@ -199,45 +105,33 @@ const EditPlacePostDisplay = () => {
           `${process.env.REACT_APP_BACKEND_URL}/places/${pid}`
         );
         setLoadedPlace(responseData.place);
-        // console.log("down here");
-        // console.log(responseData.place);
 
         setFormInputs(
           {
             title: {
               value: responseData.place.title,
-              // isValid: true,
             },
             description: {
               value: responseData.place.description,
-              // isValid: true,
             },
             image: {
               value: responseData.place.imageUrl.url,
-              // isValid: true,
             },
             address: {
               value: responseData.place.address,
-              // isValid: true,
             },
             postDate: {
               value: responseData.place.postDate,
-              // isValid: true,
             },
           },
           true
         );
         setImageUrl(responseData.place.imageUrl.url);
         setSelectedImage(responseData.place.imageUrl.url);
-        // console.log(formInputs.title);
       } catch (err) {}
     };
     fetchPlace();
-  }, [sendRequest, pid, setFormData, setImageUrl, setSelectedImage]);
-
-  //   const result = DUMMY_PLACES[0].map((place) => place.placeId === PlaceId);
-
-  // console.log(result);
+  }, [sendRequest, pid, setImageUrl, setSelectedImage]);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -252,7 +146,6 @@ const EditPlacePostDisplay = () => {
   }, [selectedImage, imageUrl]);
 
   const formInputsHandler = (e) => {
-    // console.log(e.target.name);
     if (e.target.name === "title" && showBlurTitle) {
       setShowBlurTitle(false);
     }
@@ -267,7 +160,6 @@ const EditPlacePostDisplay = () => {
       setShowAddress(false);
     }
 
-    // console.log("aqui" + e.target.value);
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();
@@ -353,11 +245,8 @@ const EditPlacePostDisplay = () => {
 
     let date = new Date().toJSON();
     if (login.isLoggedIn && formInputs) {
-      // console.log(formInputs);
-
       if (!formInputs.image) {
         formInputs.image = {
-          //Replace for a placeholder image
           public_id: "1234",
           url: "",
         };
@@ -376,7 +265,6 @@ const EditPlacePostDisplay = () => {
         formInputs.address = "same";
       }
 
-      // console.log(formInputs.image);
       try {
         const myForm = new FormData();
         myForm.append("title", formInputs.title);
@@ -392,23 +280,6 @@ const EditPlacePostDisplay = () => {
             Authorization: "Bearer " + login.token,
           }
         );
-
-        // await sendRequest(
-        //   `http://localhost:4000/api/places/editplace/${pid}`,
-        //   "PATCH",
-        //   JSON.stringify({
-        //     title: formInputs.title,
-        //     description: formInputs.description,
-        //     address: formInputs.address,
-        //     image: formInputs.image,
-        //     postDate: date,
-        //   }),
-        //   {
-        //     "Content-Type": "Application/json",
-        //   }
-        // );
-
-        // navigate(`/api/places/${pid}`, { state: { editPlace: "edited" } });
 
         setShowSuccess("The place was updated successfully");
         setTimeout(() => {
@@ -454,9 +325,6 @@ const EditPlacePostDisplay = () => {
           justifyContent: "center",
           marginTop: "14px",
           marginBottom: "100%",
-          // marginTop: "24%",
-          // marginLeft: "40%",
-          // marginRight: "46%",
         }}
       >
         <LoadingSpinner asOverlay />
@@ -573,7 +441,6 @@ const EditPlacePostDisplay = () => {
                           titleChangeHandler(e);
                         }}
                         onBlur={showBlurTitle ? null : titleBlurHandler}
-                        // value={titleInput}
                         error={titleInputHasError}
                         helperText={
                           titleInputHasError
@@ -656,7 +523,6 @@ const EditPlacePostDisplay = () => {
                         onBlur={
                           showBlurDescription ? null : descriptionBlurHandler
                         }
-                        // value={descriptionInput}
                         error={descriptionInputHasError}
                         helperText={
                           descriptionInputHasError
@@ -736,7 +602,6 @@ const EditPlacePostDisplay = () => {
                           addressChangeHandler(e);
                         }}
                         onBlur={showBlurAddress ? null : addressBlurHandler}
-                        // value={addressInput}
                         error={addressInputHasError}
                         helperText={
                           addressInputHasError

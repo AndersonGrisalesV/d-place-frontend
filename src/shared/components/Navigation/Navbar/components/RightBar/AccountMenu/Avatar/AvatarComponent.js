@@ -11,7 +11,7 @@ const AvatarComponent = () => {
   const login = useContext(LoginContext);
 
   const [loadedPlace, setLoadedPlace] = useState();
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
   const [succssProfilePhoto, setSuccessProfilePhoto] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,6 @@ const AvatarComponent = () => {
             }
           );
 
-          console.log(responseData.user);
           setLoadedPlace(responseData.user);
         } catch (err) {}
       };

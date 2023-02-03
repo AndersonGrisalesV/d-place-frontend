@@ -34,16 +34,13 @@ const StyleButtonOnComment = styled(Button)(({ theme }) => ({
 }));
 
 const LoginButton = ({ OnComment = false }) => {
-  // const handleLogin = () => {};
   const login = useContext(LoginContext);
 
   const cleanListItemsHandler = () => {
     login.listItemsNotListed();
-    // console.log(onClearListItems);
   };
 
   const location = useLocation();
-  // console.log(location);
 
   const buttonLeaveAComment = OnComment ? (
     <Box onClick={cleanListItemsHandler}>
@@ -97,7 +94,6 @@ const LoginButton = ({ OnComment = false }) => {
     </Box>
   );
 
-  // const login = useContext(LoginContext);
   return <React.Fragment>{buttonLeaveAComment}</React.Fragment>;
 };
 

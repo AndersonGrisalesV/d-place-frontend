@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 
 import { LoginContext } from "../../../../../context/login-context";
 
-import { useAuth } from "../../../../../hooks/auth-hook";
 import { useHttpClient } from "../../../../../hooks/http-hook";
 
 import { Switch } from "@mui/material";
@@ -58,8 +57,7 @@ const StyleSwitch = styled(Switch)(({ theme }) => ({
 
 const ModeSwitch = ({ mode, setMode }) => {
   const login = useContext(LoginContext);
-  const { userId } = useAuth();
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { sendRequest } = useHttpClient();
 
   const switchVariant = mode === "light" ? false : true;
   const [changeSwitch, setChangeSwitch] = useState(switchVariant);
@@ -89,21 +87,12 @@ const ModeSwitch = ({ mode, setMode }) => {
       updateTheme();
     }
 
-    // login.themeUserHandler(mode === "light" ? "dark" : "light");
-
-    // const storedData = JSON.parse(localStorage.getItem("userData"));
-
     const data = window.localStorage.getItem("userData");
     const newData = JSON.parse(data);
     localStorage.setItem(
       "userData",
       JSON.stringify({ ...newData, theme: mode === "light" ? "dark" : "light" })
     );
-
-    //  localStorage.setItem('userInfo',JSON.stringify({name:'reza',age:20}));
-    // const data = window.localStorage.getItem('userInfo')
-    // const newData = JSON.parse(data)
-    // localStorage.setItem('userInfo',JSON.stringify({...newData,age:44}))
   };
 
   return (

@@ -33,7 +33,7 @@ const SideBar = ({ mode, setMode, menuOption = true, onClearSearchBar }) => {
           setMode={setMode}
           menuOption={menuOption}
           onClearSearchBar={onClearSearchBar}
-        ></DrawerComponent>
+        />
       </Box>
     </Box>
   );

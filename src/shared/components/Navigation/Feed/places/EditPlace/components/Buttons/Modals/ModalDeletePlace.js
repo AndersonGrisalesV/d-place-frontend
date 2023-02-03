@@ -40,7 +40,6 @@ const styleModalDelete = {
     ms: "5.6rem",
     lgs: "5.6rem",
   },
-
   bgcolor: "background.paper",
   borderRadius: "8px",
   boxShadow: 24,

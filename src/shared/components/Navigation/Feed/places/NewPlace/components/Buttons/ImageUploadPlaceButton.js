@@ -24,11 +24,9 @@ const ImageUploadPlaceButton = ({
   const handleClickImageUploadPlaceButton = (e) => {
     if (e.target.files[0]) {
       formInputsHandler(e);
-
-      // console.log(e.target.files[0]);
-      // console.log(e.target.value);
     }
   };
+
   return (
     <Stack direction="row" spacing={1} justifyContent="space-between">
       <input

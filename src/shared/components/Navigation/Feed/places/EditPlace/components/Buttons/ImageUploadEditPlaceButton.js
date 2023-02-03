@@ -29,11 +29,9 @@ const ImageUploadEditPlaceButton = ({
     if (e.target.files[0]) {
       formInputsHandler(e);
       setImageUrl(null);
-
-      //   console.log(e.target.files[0]);
-      //   console.log(e.target.value);
     }
   };
+
   return (
     <Stack direction="row" spacing={1} justifyContent="space-between">
       <input

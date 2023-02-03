@@ -92,7 +92,6 @@ const ProfilePlaces = ({ onFilterSearch = null }) => {
     }
     if (counter && count < 0) {
       setEmptySearch(true);
-      // console.log("empty");
     } else {
       setEmptySearch(false);
     }
@@ -131,8 +130,6 @@ const ProfilePlaces = ({ onFilterSearch = null }) => {
           justifyContent: "center",
           marginTop: "14px",
           marginBottom: "100%",
-          // marginLeft: "38%",
-          // marginRight: "49%",
         }}
       >
         <LoadingSpinner asOverlay />

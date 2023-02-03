@@ -29,9 +29,6 @@ const StyleBox = styled(Box)(({ theme }) => ({
 }));
 
 function App() {
-  // const [token, setToken] = useState(false);
-  // const [userId, setUserId] = useState(false);
-
   const [newNotification, setNewNotification] = useState(false);
 
   const { token, login, logout, userId } = useAuth();
@@ -42,7 +39,7 @@ function App() {
   const [storedInputSearch, setStoredInputSearch] = useState(null);
   const [showCloseButton, setShowCloseButton] = useState(false);
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
   const [loadedPlaces, setLoadedPlaces] = useState();
 
   useEffect(() => {
@@ -68,7 +65,6 @@ function App() {
       setStoredInputSearch(e);
       setSearchBar(e.target.value);
     }
-    // console.log("here" + e.target.value);
   };
 
   let filteredPlaces;
@@ -118,37 +114,12 @@ function App() {
   };
 
   const handlleSideBarCleanSearchBar = () => {
-    // navigate("/homepage");
     setSearchBar("");
     if (storedInputSearch) {
       storedInputSearch.target.value = "";
     }
     setShowCloseButton(false);
-
-    // setClearSBar(true);
   };
-
-  // const login = useCallback((uid, token) => {
-  //   setToken(token);
-  //   setUserId(uid);
-
-  //   setNewNotification(true);
-  // }, []);
-
-  // const createAccount = useCallback((uid, token) => {
-  //   setToken(token);
-  //   setUserId(uid);
-  //   setNewNotification(true);
-  // }, []);
-
-  // const logout = useCallback(() => {
-  //   setToken(null);
-  //   setUserId(null);
-  // }, []);
-
-  // const notification = useCallback(() => {
-  //   setNewNotification((preNewNotification) => !preNewNotification);
-  // }, []);
 
   const [clearListItems, setClearListItems] = useState(false);
   const [pidCleanListItems, setPidCleanListItems] = useState(null);
@@ -178,25 +149,6 @@ function App() {
   const refreshAvatar = useCallback(() => {
     setNewAvatar((preNewAvatar) => !preNewAvatar);
   }, []);
-
-  // useEffect(() => {
-  //   const fetchPlaces = async () => {
-  //     try {
-  //       const responseData = await sendRequest(
-  //         `http://localhost:4000/api/users/profile/${userId}`
-  //       );
-
-  //       setMode(responseData.user.themePreference);
-  //     } catch (err) {}
-  //   };
-  //   fetchPlaces();
-  // }, [sendRequest, userId]);
-
-  // const [themeUser, setThemeUser] = useState(false);
-
-  // const themeUserHandler = useCallback((theme) => {
-  //   setThemeUser(theme);
-  // }, []);
 
   const storedData = JSON.parse(localStorage.getItem("userData")) || null;
 
@@ -292,30 +244,6 @@ function App() {
     },
   });
 
-  // useEffect(() => {
-  //   if (login.isLoggedIn) {
-  //     const updateTheme = async () => {
-  //       try {
-  //         await sendRequest(
-  //           `http://localhost:4000/api/users/updatetheme/${login.userId}`,
-  //           "PATCH",
-  //           JSON.stringify({
-  //             theme: mode === "light" ? "dark" : "light",
-  //           }),
-  //           {
-  //             "Content-Type": "Application/json",
-  //           }
-  //         );
-  //       } catch (err) {}
-  //     };
-  //     updateTheme();
-  //   }
-  // }, [mode, login.isLoggedIn, sendRequest, login.userId]);
-
-  // const themeUpdate = useCallback(() => {
-  //   updateTheme();
-  // }, []);
-
   const [menuOption, setMenuOption] = useState(true);
 
   const handleBurgerMenu = () => {
@@ -331,9 +259,6 @@ function App() {
           justifyContent: "center",
           marginTop: "14px",
           marginBottom: "100%",
-          // marginTop: "25%",
-          // marginLeft: "40%",
-          // marginRight: "50%",
         }}
       >
         <LoadingSpinner asOverlay />
@@ -361,8 +286,6 @@ function App() {
         listItemsCleanHomepage: listItemsCleanHomepage,
       }}
     >
-      {/* <GoBackRefreshMenu> */}
-
       <ThemeProvider theme={darkThemeTypographyAndBreakpoints}>
         <StyleBox
           className={AppStyles}
@@ -436,8 +359,6 @@ function App() {
           )}
         </StyleBox>
       </ThemeProvider>
-
-      {/* </GoBackRefreshMenu> */}
     </LoginContext.Provider>
   );
 }

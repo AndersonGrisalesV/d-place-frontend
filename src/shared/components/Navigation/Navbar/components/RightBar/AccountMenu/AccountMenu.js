@@ -12,7 +12,7 @@ import styled from "@emotion/styled/macro";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {
-    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    backgroundColor: theme.palette.mode === "dark" ? "#da4453c7" : "#ffe0e3c7",
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     [`${AccountCircleOutlined}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",

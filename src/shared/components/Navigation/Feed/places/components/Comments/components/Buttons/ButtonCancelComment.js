@@ -13,7 +13,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonCancelComment = ({ DUMMY_PLACES, onHandleOpen }) => {
+const ButtonCancelComment = ({ onHandleOpen }) => {
   const login = useContext(LoginContext);
 
   return (

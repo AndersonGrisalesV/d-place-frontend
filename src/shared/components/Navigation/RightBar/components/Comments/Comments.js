@@ -48,7 +48,7 @@ const StyleCommentNavLink = styled(NavLink)(({ theme }) => ({
 }));
 
 const Comments = () => {
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
   const [loadedPlaces, setLoadedPlaces] = useState();
 
   const login = useContext(LoginContext);
@@ -96,7 +96,6 @@ const Comments = () => {
       latestComment1 = !isLoading && loadedPlaces ? loadedPlaces[1] : null;
 
       finalComment1 = latestComment1.commentText.trimEnd() + "…";
-      console.log("this one" + latestComment1.commentText.includes(" "));
 
       if (latestComment1.commentText.match(regex).length >= 64) {
         finalComment1 = latestComment1.commentText.slice(0, 64).trimEnd() + "…";
@@ -131,21 +130,18 @@ const Comments = () => {
 
   const firstpPlaceLinkHandler = () => {
     if (loadedPlaces[0] !== undefined) {
-      // navigate(`/api/places/${latestComment0.placeId._id}`);
       login.listItemsNotListed(latestComment0.placeId._id);
     }
   };
 
   const secondPlaceLinkHandler = () => {
     if (loadedPlaces[1] !== undefined) {
-      // navigate(`/api/places/${latestComment1.placeId._id}`);
       login.listItemsNotListed(latestComment1.placeId._id);
     }
   };
 
   const thirdpPlaceLinkHandler = () => {
     if (loadedPlaces[2] !== undefined) {
-      // navigate(`/api/places/${latestComment2.placeId._id}`);
       login.listItemsNotListed(latestComment2.placeId._id);
     }
   };

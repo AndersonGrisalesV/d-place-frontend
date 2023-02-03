@@ -18,7 +18,7 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
   const { pid } = params;
 
   const [loadedPlaces, setLoadedPlaces] = useState();
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
   const [dataStatus, setDataStatus] = useState(false);
   const [emptySearch, setEmptySearch] = useState(false);
   const [counter, setCounter] = useState(false);
@@ -81,7 +81,6 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
     }
     if (counter && count < 0) {
       setEmptySearch(true);
-      console.log("empty");
     } else {
       setEmptySearch(false);
     }
@@ -115,9 +114,6 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
           justifyContent: "center",
           marginBottom: "100%",
           paddingBottom: "800px",
-          // marginTop: "34.4%",
-          // marginLeft: "38%",
-          // marginRight: "30%",
         }}
       >
         <LoadingSpinner asOverlay />
@@ -137,12 +133,7 @@ const Feed = ({ onDetail = false, onMap = false, onFilterSearch = null }) => {
         spinner
       ) : (
         <ScrollToTop pathname={pathname}>
-          {onDetail && !onMap ? (
-            <React.Fragment>
-              {/* <Place />
-          <br /> */}
-            </React.Fragment>
-          ) : onDetail && onMap ? (
+          {onDetail && onMap ? (
             <PlaceGetById
               onMap={true}
               onShowComments={onDetail}

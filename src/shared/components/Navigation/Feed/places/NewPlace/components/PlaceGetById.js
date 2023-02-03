@@ -10,7 +10,6 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
   const [loadedPlace, setLoadedPlace] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [refreshpage, setRefreshPage] = useState(false);
-  const [deletedComment, setDeletedComment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [postShowSuccess, setPostSuccess] = useState(false);
 
@@ -19,15 +18,9 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
   useEffect(() => {
     if (stateAux) {
       if (stateAux.editPlace === "edited") {
-        // setPostSuccess(postShowSuccess.editPlace);
         setPostSuccess(stateAux.editPlace);
       }
     }
-    // if (postShowSuccess === "edited") {
-    //   setPostSuccess(postShowSuccess.editPlace);
-    // } else {
-    //   setPostSuccess(null);
-    // }
   }, [stateAux]);
 
   setTimeout(() => {
@@ -44,7 +37,6 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
           `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`
         );
         setLoadedPlace(responseData.place);
-        // console.log(responseData.place);
       } catch (err) {}
     };
     fetchPlaces();
@@ -58,7 +50,7 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
             `${process.env.REACT_APP_BACKEND_URL}/places/${refreshpage}`
           );
           setLoadedPlace(responseData.place);
-          // console.log(responseData.place);
+
           setRefreshPage(false);
         } catch (err) {}
       };
@@ -76,8 +68,6 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
     showSucc,
     msg
   ) => {
-    // console.log(errDatabase);
-
     if (
       showSucc === "created" ||
       showSucc === "deleted" ||
@@ -86,7 +76,6 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
       setShowSuccess(msg);
       setTimeout(() => {
         setShowSuccess(false);
-        setDeletedComment(null);
       }, "6000");
     }
 
@@ -98,7 +87,6 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
       setShowError(msg);
       setTimeout(() => {
         setShowError(false);
-        setDeletedComment(null);
       }, "6000");
     }
   };
@@ -146,7 +134,6 @@ const PlaceGetById = ({ onMap, onShowComments, placeId }) => {
             id={loadedPlace._id}
             key={loadedPlace._id}
             onRefreshPlaceComments={refresPlaceCommentsHandler}
-            // onDeletedComments={handleDeletedComments}
             onErrorDeleteComment={handleErrorDeletingComment}
             onArrangeBigSize={true}
           />

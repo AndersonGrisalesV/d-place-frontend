@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import { LoginContext } from "../../../../../../context/login-context";
 
@@ -89,6 +89,7 @@ const StyleListItemText = styled(ListItemText)(({ theme }) => ({
 const StyleListItemsHomepage = styled(ListItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     [`${StyleHomeIcon}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -113,7 +114,7 @@ const StyleListItemsHomepage = styled(ListItem)(({ theme }) => ({
     },
   },
   "&.Mui-selected": {
-    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    backgroundColor: theme.palette.mode === "dark" ? "#da4453c7" : "#ffe0e3c7",
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     [`${StyleHomeIcon}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -151,7 +152,7 @@ const StyleListItemsFavorites = styled(ListItem)(({ theme }) => ({
     },
   },
   "&.Mui-selected": {
-    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    backgroundColor: theme.palette.mode === "dark" ? "#da4453c7" : "#ffe0e3c7",
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     [`${StyleFavoriteIcon}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -189,7 +190,7 @@ const StyleListItemsMyPlaces = styled(ListItem)(({ theme }) => ({
     },
   },
   "&.Mui-selected": {
-    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    backgroundColor: theme.palette.mode === "dark" ? "#da4453c7" : "#ffe0e3c7",
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     [`${StyleMyplacesIcon}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -203,6 +204,7 @@ const StyleListItemsMyPlaces = styled(ListItem)(({ theme }) => ({
 const StyleListItemsProfile = styled(ListItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     [`${StyleHomeIcon}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -227,7 +229,7 @@ const StyleListItemsProfile = styled(ListItem)(({ theme }) => ({
     },
   },
   "&.Mui-selected": {
-    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    backgroundColor: theme.palette.mode === "dark" ? "#da4453c7" : "#ffe0e3c7",
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     [`${StyleAccountCircleIcon}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -265,7 +267,7 @@ const StyleListItemsSettings = styled(ListItem)(({ theme }) => ({
     },
   },
   "&.Mui-selected": {
-    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    backgroundColor: theme.palette.mode === "dark" ? "#da4453c7" : "#ffe0e3c7",
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     [`${StyleSettingsIcon}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -324,11 +326,6 @@ const ListItems = ({
 }) => {
   const login = useContext(LoginContext);
   let navigate = useNavigate();
-
-  const { pathname } = useLocation();
-  const str = pathname;
-  const parts = str.split("/");
-  const id = parts[3];
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -416,7 +413,7 @@ const ListItems = ({
         setSelectedIndex(0);
         document.title = "Home";
         break;
-      case `/api/users/favorites/${login.userId}`: //here we use pidCleanListItems instead oflogin.userId because there is a conflict between favorites and profile
+      case `/api/users/favorites/${login.userId}`:
         setSelectedIndex(1);
         document.title = "Favorites";
         break;
@@ -429,14 +426,11 @@ const ListItems = ({
         document.title = "Profile";
         break;
       case `/api/places/editplace/${login.pidCleanListItems}`:
-        // alert(window.location.pathname);
-        // login.listItemsNotListed(login.pidCleanListItems);
         setSelectedIndex(4);
         setClearListItem(false);
         document.title = "Edit place";
         break;
       case `/api/places/${login.pidCleanListItems}`:
-        // login.listItemsNotListed(login.pidCleanListItems);
         setSelectedIndex(4);
         setClearListItem(false);
 
@@ -455,9 +449,6 @@ const ListItems = ({
         setSelectedIndex(6);
         document.title = "Signup";
         break;
-      // case `/api/places/places/${login.pidCleanListItems}`:
-      //   setClearListItem(true);
-      //   break;
       default:
         setSelectedIndex(4);
         setClearListItem(false);

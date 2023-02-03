@@ -71,11 +71,9 @@ const CommentShow = ({
 }) => {
   const login = useContext(LoginContext);
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
 
   const [showSuccess, setShowSuccess] = useState(false);
-
-  console.log(onPlaceComments);
 
   const addDays = (date) => {
     let year;
@@ -133,10 +131,6 @@ const CommentShow = ({
 
   let fetchedDate = addDays(onPlaceComments.postCommentDate);
 
-  const [commentValue, setCommentValue] = useState(
-    `${onPlaceComments.commentText}`
-  );
-
   const initialFormInputs = {
     commentText: `${onPlaceComments.commentText}`,
   };
@@ -144,7 +138,6 @@ const CommentShow = ({
   const [formInputs, setFormInputs] = useState(initialFormInputs);
 
   const formInputsHandler = (e) => {
-    // console.log("hello " + e.target.value);
     if (e.target.name === "commentText" && showBlurComment) {
       setShowBlurComment(false);
     }
@@ -155,7 +148,7 @@ const CommentShow = ({
   };
 
   const {
-    defaultValue: commentInput = commentValue,
+    defaultValue: commentInput,
     isValid: commentIsValid,
     hasError: commentInputHasError,
     valueChangeHandler: commentChangeHandler,
@@ -171,7 +164,6 @@ const CommentShow = ({
   }
 
   const handleSendComment = (e) => {
-    // console.log("hello" + formInputs.commentText);
     resetCommentInput();
   };
 
@@ -206,13 +198,10 @@ const CommentShow = ({
         );
 
         onRefreshPlaceComments(onPlaceComments.placeId);
-        // setTimeout(() => {
-        //   // onErrorDeleteComment(null, "created", null, null);
-        // }, "910");
+
         setTimeout(() => {
           setShowSuccess(false);
         }, "930");
-        // navigate(`/api/places/${pid}`);
       } catch (err) {
         setTimeout(() => {
           onErrorDeleteComment(
@@ -232,26 +221,10 @@ const CommentShow = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // const [showButtons, setShowButtons] = useState(false);
-
-  // useEffect(() => {
-  //   if (`${DUMMY_COMMENTS.commentId}` === `${onButton.creatorId}`) {
-  //     setShowButtons(true);
-  //   } else {
-  //     setShowButtons(false);
-  //   }
-  // }, [DUMMY_COMMENTS, onButton]);
-
-  // let buttonsShow;
-  // buttonsShow = Object.values(DUMMY_COMMENTS).filter(
-  //   (comment) => comment.creatorId === onButton.creatorId
-  // );
-
   const [editComment, setEditComment] = useState(false);
   const [showBlurComment, setShowBlurComment] = useState(true);
 
   const handleEditComment = () => {
-    // if(login && userowncomment){
     if (login.isLoggedIn) {
       setEditComment((eComment) => !eComment);
     }
@@ -264,7 +237,6 @@ const CommentShow = ({
   };
 
   const handleDeleteComment = () => {
-    // if(login && userowncomment){ deleete comment
     if (login.isLoggedIn) {
       handleOpen();
     }
@@ -317,12 +289,6 @@ const CommentShow = ({
     if (!showBlurComment && commentIsValid) {
       formIsValid = true;
     }
-  }
-
-  let sendCommentIsValid = false;
-
-  if (formIsValid && !commentInputHasError) {
-    sendCommentIsValid = true;
   }
 
   let isEdit = false;
@@ -535,7 +501,6 @@ const CommentShow = ({
                     isLoading ? true : false || showSuccess ? true : false
                   }
                   multiline
-                  // defaultValue={commentInput}
                   autoComplete="current-commentText"
                   size="small"
                   name="commentText"
@@ -545,11 +510,7 @@ const CommentShow = ({
                     commentChangeHandler(e);
                   }}
                   onBlur={showBlurComment ? null : commentBlurHandler}
-                  // value={titleInput}
                   error={commentInputHasError}
-                  // onBlur={commentBlurHandler}
-                  // value={commentInput}
-                  // error={commentInputHasError}
                   helperText={
                     commentInputHasError
                       ? "Edit your comment to send it. (Cannot be empty)"

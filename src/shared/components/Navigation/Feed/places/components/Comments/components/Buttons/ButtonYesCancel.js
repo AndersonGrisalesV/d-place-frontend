@@ -12,7 +12,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ButtonYesCancel = ({ DUMMY_PLACES, onYesCancel }) => {
+const ButtonYesCancel = ({ onYesCancel }) => {
   const login = useContext(LoginContext);
 
   return (

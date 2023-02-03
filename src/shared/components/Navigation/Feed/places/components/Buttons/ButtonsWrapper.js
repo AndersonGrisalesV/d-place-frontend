@@ -1,5 +1,4 @@
 import React, { useContext, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 
 import { LoginContext } from "../../../../../../context/login-context";
 
@@ -126,22 +125,18 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
           }
         );
         setChangeFavorite(responseData);
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
 
       try {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/places/${loadedPlaces._id}`
         );
         setUserLikeValue(responseData.place);
-        console.log(responseData.place);
       } catch (err) {}
     } else {
       setShowSuccess("You must be logged in to like posts");
 
       setTimeout(() => {
-        // navigate("/api/users/loginregister");
         setShowSuccess(false);
       }, "4000");
     }
@@ -160,12 +155,6 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
     setAnchorElLinks(null);
     setShowAllShareLinks(false);
   };
-
-  // const handleFacebookLink = () => {
-
-  //   window?.location.href ?? ""
-  //   alert(`${String(window.location)}`);
-  // };
 
   const [sharedPost, setSharedPost] = useState(false);
   const [copySuccess, setCopySuccess] = useState(null);

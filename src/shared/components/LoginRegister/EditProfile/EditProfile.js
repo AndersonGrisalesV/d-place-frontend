@@ -386,8 +386,6 @@ const EditProfile = () => {
           navigate("/api/homepage");
 
           cleanListItemsHandler();
-
-          // refresh page to change avatar in navigation bar
         }, "910");
         setTimeout(() => {
           setShowSuccess(false);
@@ -399,23 +397,18 @@ const EditProfile = () => {
           {
             name: {
               value: loadedUser.name,
-              // isValid: true,
             },
             email: {
               value: loadedUser.email,
-              // isValid: true,
             },
             password: {
               value: loadedUser.password,
-              // isValid: true,
             },
             confirmPassword: {
               value: loadedUser.confirmPassword,
-              // isValid: true,
             },
             image: {
               value: loadedUser.imageUrl.url,
-              // isValid: true,
             },
           },
           true

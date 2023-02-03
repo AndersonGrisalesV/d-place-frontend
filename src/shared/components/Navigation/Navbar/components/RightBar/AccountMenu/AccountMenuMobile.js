@@ -20,7 +20,7 @@ import styled from "@emotion/styled/macro";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {
-    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    backgroundColor: theme.palette.mode === "dark" ? "#da4453c7" : "#ffe0e3c7",
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     [`${FavoriteBorderOutlined}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -42,7 +42,7 @@ const AccountMenuMobile = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { sendRequest } = useHttpClient();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -97,9 +97,7 @@ const AccountMenuMobile = ({
         }
       );
       setUserInfo(responseData.user);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const mobileMenuId = "primary-search-account-menu-mobile";

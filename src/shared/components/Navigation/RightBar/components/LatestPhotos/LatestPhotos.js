@@ -28,7 +28,7 @@ function srcset(image, size, rows = 1, cols = 1) {
 const LatestPhotos = () => {
   const login = useContext(LoginContext);
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
   const [loadedPlaces, setLoadedPlaces] = useState();
 
   let navigate = useNavigate();
@@ -48,8 +48,6 @@ const LatestPhotos = () => {
 
   let images;
   let count = 0;
-
-  console.log(loadedPlaces);
 
   const imageLinkHandler = (e, id) => {
     navigate(`/api/places/${id}`);

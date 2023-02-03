@@ -26,6 +26,7 @@ const ImagePreviewEditPlaceButton = ({
   setTimeout(() => {
     setLoadingImage(false);
   }, "1000");
+
   return (
     <React.Fragment>
       <React.Fragment>

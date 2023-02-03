@@ -11,7 +11,6 @@ const FavoritesButton = () => {
 
   const cleanListItemsHandler = () => {
     login.listItemsNotListed(login.userId);
-    // console.log(onClearListItems);
   };
 
   return (

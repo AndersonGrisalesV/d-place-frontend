@@ -76,8 +76,6 @@ const ModalCancelEditComment = ({ open, handleClose, handleConfirmCancel }) => {
                   sx={{
                     backgroundColor: "transparent",
                     color: "#da4453c7",
-                    // stroke: "#ffffff",
-                    // strokeWidth: 4,
                     width: {
                       sps: "15px",
                       ps: "16px",

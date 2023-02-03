@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { LoginContext } from "../../../../../../context/login-context";
 
 import { useHttpClient } from "../../../../../../hooks/http-hook";
-import { useNavigate } from "react-router-dom";
 
 import PopoverComponent from "./PopoverComponent";
 
@@ -13,7 +12,7 @@ import styled from "@emotion/styled/macro";
 
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {
-    backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
+    backgroundColor: theme.palette.mode === "dark" ? "#da4453c7" : "#ffe0e3c7",
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     [`${NotificationsOutlinedIcon}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -32,13 +31,11 @@ const NotificationsButton = ({
   const responsiveVariant = onResponsive;
   const [changeResponsive, setChangeResponsive] = useState(responsiveVariant);
 
-  let navigate = useNavigate();
-
   useEffect(() => {
     setChangeResponsive(responsiveVariant);
   }, [responsiveVariant]);
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
   const [loadedPlaces, setLoadedPlaces] = useState();
   const [showNotification, setShowNotification] = useState(false);
 
@@ -50,7 +47,6 @@ const NotificationsButton = ({
         );
 
         setLoadedPlaces(responseData.places);
-        console.log(login.userId);
 
         if (
           login.userId ===
@@ -73,21 +69,12 @@ const NotificationsButton = ({
           }
         );
 
-        // setLoadedPlaces(responseData.user);
-        // console.log("aqui" + responseData.places.length())
-
         if (responseData.user.viewedNotification) {
           setShowNotification(true);
         }
       } catch (err) {}
     };
     fetchUser();
-
-    // if (login.newNotification) {
-    //   fetchPlaces();
-    //   fetchUser();
-    //   login.notification();
-    // }
   }, [
     sendRequest,
     login.userId,
@@ -100,15 +87,11 @@ const NotificationsButton = ({
   ]);
 
   const [anchorEl, setAnchorEl] = useState(false);
-  const [showPopOver, setShowPopOver] = useState(false);
   const notificationBadge = useRef(null);
 
   const handleClick = async (event) => {
     setAnchorEl(event.currentTarget);
-    // console.log(loadedPlaces.reverse().slice(0, 1)[0].creatorId._id);
-    // console.log(login.userId);
 
-    // alert(loadedPlaces.slice(0, 1)[0].creatorId._id);
     if (login.userId !== loadedPlaces.slice(0, 1)[0].creatorId._id) {
       if (showNotification && !updateNotification) {
         try {
@@ -123,9 +106,7 @@ const NotificationsButton = ({
               "Content-Type": "Application/json",
             }
           );
-        } catch (err) {
-          console.log(err);
-        }
+        } catch (err) {}
       }
       setUpdateNotification(true);
       setShowNotification(false);
@@ -134,17 +115,10 @@ const NotificationsButton = ({
     if (onResponsive) {
       notificationBadge.current.click();
     }
-
-    setShowPopOver(true);
   };
-
-  // useEffect(() => {
-  //   // setUpdateNotification(true);
-  // }, [updateNotification]);
 
   const handleClose = () => {
     setAnchorEl(false);
-    setShowPopOver(false);
   };
 
   let popOver;

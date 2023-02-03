@@ -32,10 +32,9 @@ const PopoverComponent = ({
 
   let navigate = useNavigate();
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
 
   const [updatedPlaceId, setUpdatedPlaceId] = useState(null);
-  const [reload, setReload] = useState(false);
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -49,10 +48,6 @@ const PopoverComponent = ({
           setLoadedPlaces(responseData.places);
 
           setUpdatedPlaceId(responseData.places.reverse().slice(0, 1)[0]);
-          // setTimeout(() => {
-          //   // navigate("/homepage");
-          //   setReload(true);
-          // }, "100");
         } catch (err) {}
       };
       if (count === 0) {
@@ -60,7 +55,7 @@ const PopoverComponent = ({
         setCount(1);
       }
     }
-  }, [onPost, sendRequest, setLoadedPlaces, reload, count]);
+  }, [onPost, sendRequest, setLoadedPlaces, count]);
 
   const handleNewPost = () => {
     login.listItemsNotListed();
@@ -79,8 +74,6 @@ const PopoverComponent = ({
           open={anchorEl ? true : false}
           anchorEl={anchorEl}
           onClose={onHandleClose}
-          // anchorReference="anchorPosition"
-          // anchorPosition={{ top: 67, left: 1084 }}
           anchorOrigin={{
             vertical: "bottom",
             horizontal: "left",

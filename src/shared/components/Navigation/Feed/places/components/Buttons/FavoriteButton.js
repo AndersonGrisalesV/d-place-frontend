@@ -8,7 +8,6 @@ import styled from "@emotion/styled";
 const StyleFavoriteBorderIcon = styled(FavoriteBorderIcon)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
-  // color: "#da4453",
   "&:hover": {
     backgroundColor: "#db2d3f0f",
     color: "#db2d3f",
@@ -49,14 +48,6 @@ const FavoriteButton = ({
 
   const handlerClickFavorite = () => {
     setFavoriteCount(true);
-    // if (onChangeFavorite.favorite) {
-    //   setPlaceFavorites(userLikeValue + 1);
-    // } else {
-    //   setPlaceFavorites(userLikeValue - 1);
-    // }
-    // setTimeout(() => {
-    //   fetchPlaces();
-    // }, "100");
   };
 
   return (
@@ -71,10 +62,6 @@ const FavoriteButton = ({
         onFavoriteHandler(e);
         handlerClickFavorite(e);
       }}
-      // onChange={(e) => {
-      //                     formInputsHandler(e);
-      //                     titleChangeHandler(e);
-      //                   }}
       sx={{
         paddingTop: "0px",
         paddingBottom: "0px",

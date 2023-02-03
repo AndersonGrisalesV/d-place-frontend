@@ -71,14 +71,9 @@ const LoginRegister = ({ mode, setMode }) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
 
-  // let location = useLocation();
-  // const from =
-  //   location.pathname === "/api/users/loginregister" ? "/homepage" : -1;
   const { pathname } = useLocation();
 
   let navigate = useNavigate();
-
-  // const [successMessage, setSuccessMessage] = useState(false);
 
   const passwordInputRef = useRef(null);
 
@@ -95,7 +90,7 @@ const LoginRegister = ({ mode, setMode }) => {
   const onSubmitLoginRegisterHandler = async (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
-    // console.log(formInputs.image);
+
     if (!formInputs.image || formInputs.image === "noImage") {
       formInputs.image = "";
     }
@@ -114,19 +109,10 @@ const LoginRegister = ({ mode, setMode }) => {
           }
         );
 
-        // console.log(window.history.state.usr);
-
-        // if (window.history.state.usr != null) {
-        //   navigate("/homepage", { replace: true });
-        // } else {
-        //   window.history.go(-1);
-        // }
-
         setSuccessMessage(`Welcome back ${responseData.user.name}`);
         setShowSuccess(true);
 
         setTimeout(() => {
-          // login.themeUserHandler(mode === "light" ? "light" : "dark");
           login.login(
             responseData.user.id,
             responseData.token,
@@ -163,21 +149,6 @@ const LoginRegister = ({ mode, setMode }) => {
           "POST",
           myForm
         );
-
-        // const responseData = await sendRequest(
-        //   "http://localhost:4000/api/users/register",
-        //   "POST",
-        //   JSON.stringify({
-        //     name: formInputs.name,
-        //     email: formInputs.email,
-        //     password: formInputs.password,
-        //     confirmPassword: formInputs.confirmPassword,
-        //     image: formInputs.image,
-        //   }),
-        //   {
-        //     "Content-Type": "Application/json",
-        //   }
-        // );
 
         setSuccessMessage(`Welcome to Dplace ${responseData.user.name}`);
         setShowSuccess(true);
@@ -298,9 +269,6 @@ const LoginRegister = ({ mode, setMode }) => {
   }
 
   function ValidatePassword(password) {
-    // if (!isLoginMode) {
-    //   return false;
-    // }
     if (password.trim() !== "" && password.length > 5) {
       return true;
     }
@@ -331,7 +299,7 @@ const LoginRegister = ({ mode, setMode }) => {
   ) {
     formIsValid = true;
   }
-  // alert(passwordInput.length > 5);
+
   const handleRemoveImage = () => {
     formInputs.image = "noImage";
     setSelectedImage(null);

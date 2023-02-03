@@ -22,8 +22,6 @@ import CardContentNewPlacePost from "./components/CardContentNewPlacePost";
 import { Divider, Stack, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
-const formData = require("form-data");
-
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
@@ -57,7 +55,6 @@ const NewPlacePostDisplay = () => {
     description: "",
     address: "",
     image: "",
-    // imageUrl: "",
   };
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
@@ -76,7 +73,6 @@ const NewPlacePostDisplay = () => {
   }, [selectedImage]);
 
   const formInputsHandler = (e) => {
-    // console.log("aqui" + e.target.value);
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();
@@ -154,13 +150,11 @@ const NewPlacePostDisplay = () => {
 
       if (!formInputs.image) {
         formInputs.image = {
-          //Replace for a placeholder image
           public_id: "1234",
           url: "",
         };
       }
 
-      // console.log(formInputs.image);
       try {
         const myForm = new FormData();
         myForm.append("title", formInputs.title);
@@ -179,6 +173,7 @@ const NewPlacePostDisplay = () => {
         );
 
         setShowSuccess(true);
+
         setTimeout(() => {
           setShowSuccess(false);
           navigate("/api/homepage");
@@ -202,11 +197,9 @@ const NewPlacePostDisplay = () => {
             "Content-Type": "Application/json",
           }
         );
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     }
-    // login.notification();
+
     resetTitleInput();
     resetDescriptionInput();
     resetAddressInput();
@@ -226,12 +219,6 @@ const NewPlacePostDisplay = () => {
   ) {
     formIsValid = true;
   }
-
-  // const [removeImage, setRemoveImage] = useState(false);
-
-  // useEffect(() => {
-  //   setRemoveImage(false);
-  // }, [imageUrl]);
 
   const handleRemoveImage = () => {
     setSelectedImage(null);

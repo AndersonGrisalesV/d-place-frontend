@@ -20,7 +20,7 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
   const { uid } = params;
 
   const [loadedPlaces, setLoadedPlaces] = useState();
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
   const [dataStatus, setDataStatus] = useState(false);
   const [emptySearch, setEmptySearch] = useState(false);
   const [counter, setCounter] = useState(false);
@@ -45,10 +45,6 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
       fetchPlaces();
     }
   }, [sendRequest, uid, login.isLoggedIn, login.token]);
-
-  useEffect(() => {
-    console.log(onFilterSearch);
-  }, [onFilterSearch]);
 
   let filteredPlaces;
   let count = 0;
@@ -95,7 +91,6 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
     }
     if (counter && count < 0) {
       setEmptySearch(true);
-      console.log("empty");
     } else {
       setEmptySearch(false);
     }
@@ -133,9 +128,6 @@ const FavoritePlaces = ({ onFilterSearch = null }) => {
           justifyContent: "center",
           marginTop: "14px",
           marginBottom: "100%",
-          // marginTop: "25%",
-          // marginLeft: "40%",
-          // marginRight: "50%",
         }}
       >
         <LoadingSpinner asOverlay />

@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 import ButtonGobackSendComment from "../ButtonGobackSendComment";
 import ButtonYesCancelSendComment from "../ButtonYesCancelSendComment";
@@ -57,9 +56,7 @@ const ModalCancelSendComment = ({
   onHandleClose,
   CancelSendComment,
 }) => {
-  let navigate = useNavigate();
   const handleConfirmCancel = () => {
-    // redirect
     CancelSendComment();
     onHandleClose();
   };

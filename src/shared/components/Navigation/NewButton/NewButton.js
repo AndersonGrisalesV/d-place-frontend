@@ -36,7 +36,6 @@ const NewButton = ({
 
   const cleanListItemsHandler = () => {
     login.listItemsNotListed("newplace");
-    // console.log(onClearListItems);
   };
 
   if (login.isLoggedIn && menuOption && !onResponsive) {

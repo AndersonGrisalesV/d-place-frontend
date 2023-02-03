@@ -38,16 +38,12 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
 const CommentsDisplay = ({
   onPlaceComments,
   onPlaceId,
-  onAddComment,
   onRefreshPlaceComments,
-  onDeletedComments,
   onErrorDeleteComment,
 }) => {
   const login = useContext(LoginContext);
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
-  const [showSuccess, setShowSuccess] = useState(false);
+  const { sendRequest } = useHttpClient();
 
   const initialFormInputs = {
     comment: "",
@@ -89,11 +85,9 @@ const CommentsDisplay = ({
   }
 
   const onSubmitAddCommentHandler = async (e) => {
-    // onErrorDeleteComment(error, true, null, null);
     e.preventDefault();
 
     if (login.isLoggedIn && formIsValid) {
-      // console.log(formInputs);
       // send comment here
       let date = new Date().toJSON();
 
@@ -113,7 +107,6 @@ const CommentsDisplay = ({
           }
         );
 
-        setShowSuccess(true);
         onErrorDeleteComment(
           null,
           null,
@@ -122,10 +115,6 @@ const CommentsDisplay = ({
         );
 
         onRefreshPlaceComments(onPlaceId);
-
-        setTimeout(() => {
-          setShowSuccess(false);
-        }, "930");
       } catch (err) {
         setTimeout(() => {
           onErrorDeleteComment(
@@ -159,7 +148,6 @@ const CommentsDisplay = ({
         <React.Fragment key={comment._id}>
           <CommentShow
             onRefreshPlaceComments={onRefreshPlaceComments}
-            // onDeletedComments={onDeletedComments}
             onErrorDeleteComment={onErrorDeleteComment}
             onPlaceComments={comment}
             key={comment._id}

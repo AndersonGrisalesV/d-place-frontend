@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-
-import { LoginContext } from "../../../../../context/login-context";
+import React, { useState } from "react";
 
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
@@ -38,7 +36,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -50,10 +47,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchBar = ({ onSearch, onClear, onShowCloseButton }) => {
   const [erasedDataSearch, setErasedDataSearch] = useState(false);
-
-  const login = useContext(LoginContext);
-
-  useEffect(() => {}, [onShowCloseButton]);
 
   const handleCloseSearch = () => {
     onSearch(null, "clean");
@@ -113,7 +106,6 @@ const SearchBar = ({ onSearch, onClear, onShowCloseButton }) => {
                 changeHandler(e);
               }}
               onKeyPress={(ev) => {
-                console.log(`Pressed keyCode ${ev.key}`);
                 if (ev.key === "Enter") {
                   onClear(ev);
                   ev.preventDefault();

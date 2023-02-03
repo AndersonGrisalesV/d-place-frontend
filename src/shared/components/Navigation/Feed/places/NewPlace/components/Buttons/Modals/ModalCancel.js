@@ -49,12 +49,10 @@ const styleModalCancel = {
   paddingBottom: "0px",
 };
 
-const ModalCancel = ({ open, close, onHandleOpen, onHandleClose }) => {
+const ModalCancel = ({ open, close, onHandleClose }) => {
   let navigate = useNavigate();
 
   const handleConfirmCancel = useCallback(() => {
-    // redirect
-
     onHandleClose();
     navigate(-1);
   }, [onHandleClose, navigate]);

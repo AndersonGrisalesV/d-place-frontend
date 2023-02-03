@@ -51,7 +51,7 @@ const Drawer = styled(MuiDrawer, {
 const DrawerComponent = ({ mode, setMode, menuOption, onClearSearchBar }) => {
   return (
     <Drawer variant="permanent" open={menuOption}>
-      <DrawerHeaderComponent menuOption={menuOption} />
+      <DrawerHeaderComponent />
       <ListComponent
         mode={mode}
         setMode={setMode}
