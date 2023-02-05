@@ -8,31 +8,33 @@ import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import { yellow } from "@mui/material/colors";
 import { Checkbox, IconButton, styled } from "@mui/material";
 
+// Personalized color from MUI
 const colorYellow = yellow[700];
 
+// Styled component for ModeCommentOutlinedIcon
 const StyleCommentBorderIcon = styled(ModeCommentOutlinedIcon)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
 }));
 
+// Styled component for CommentIcon
 const StyleCommentIcon = styled(CommentIcon)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 0,
 }));
 
-const CommentButton = ({
-  isFavorite = "",
-  onFavoriteHandler,
-  onChangeFavorite,
-  onLoadedPlaces = false,
-}) => {
+// loadedPlaces are places passed by FavoritePlaces or Feed or ProfilePlaces depending on where place is called
+// CommentButton is on ButtonsWrapper
+const CommentButton = ({ loadedPlaces = false }) => {
   let navigate = useNavigate();
   const login = useContext(LoginContext);
 
+  // login.listItemsNotListed cleans the leftSideBar selected menu Item to none
+  // When click the StyleCommentIcon goest to the place's details
   const handleNavigateToPost = () => {
-    if (onLoadedPlaces) {
-      login.listItemsNotListed(onLoadedPlaces.id);
-      navigate(`/api/places/${onLoadedPlaces.id}`);
+    if (loadedPlaces) {
+      login.listItemsNotListed(loadedPlaces.id);
+      navigate(`/api/places/${loadedPlaces.id}`);
     }
   };
 
@@ -46,6 +48,7 @@ const CommentButton = ({
       sx={{
         paddingTop: "0px",
         paddingBottom: "0px",
+        // fontSize for different screen sizes
         fontSize: {
           sps: "10px",
           ps: "12px",
@@ -64,11 +67,12 @@ const CommentButton = ({
     >
       <Checkbox
         disableRipple={true}
-        checked={onLoadedPlaces.comments.length >= 1 ? true : false}
+        checked={loadedPlaces.comments.length >= 1 ? true : false}
         style={{ backgroundColor: "transparent" }}
         icon={
           <StyleCommentBorderIcon
             sx={{
+              // width for different screen sizes
               width: {
                 sps: "15px",
                 ps: "16px",
@@ -83,6 +87,7 @@ const CommentButton = ({
                 ms: "24px",
                 lgs: "24px",
               },
+              // height for different screen sizes
               height: {
                 sps: "18px",
                 ps: "20px",
@@ -105,6 +110,7 @@ const CommentButton = ({
             sx={{
               backgroundColor: "transparent",
               color: `${colorYellow}`,
+              // width for different screen sizes
               width: {
                 sps: "15px",
                 ps: "16px",
@@ -119,6 +125,7 @@ const CommentButton = ({
                 ms: "24px",
                 lgs: "24px",
               },
+              // height for different screen sizes
               height: {
                 sps: "18px",
                 ps: "20px",
@@ -137,7 +144,7 @@ const CommentButton = ({
           />
         }
       />
-      {onLoadedPlaces ? onLoadedPlaces.comments.length : "0"}
+      {loadedPlaces ? loadedPlaces.comments.length : "0"}
     </IconButton>
   );
 };

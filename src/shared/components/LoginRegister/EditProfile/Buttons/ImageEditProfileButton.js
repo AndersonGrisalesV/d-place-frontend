@@ -2,6 +2,7 @@ import React from "react";
 
 import { Button, Stack, styled } from "@mui/material";
 
+// Styled component for Button
 const StyleButtonImage = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
   "&:hover": {
@@ -10,21 +11,25 @@ const StyleButtonImage = styled(Button)(({ theme }) => ({
   },
 }));
 
+// formInputsHandler is pointer to a function that stores the new image into an object on EditProfile
+// isLoading is a boolean indicating whether the image is loaded or not on EditProfile
+// showSuccess helps us disable the button(s) after clicking the form on EditProfile
+// imageUrl contains the URL of an image on EditProfile
+// setImageUrl  is a state passed as a prop that sets the new image selected by the user on EditProfile
 const ImageEditProfileButton = ({
   formInputsHandler,
-  isLoadingshowSuccess,
   isLoading,
   showSuccess,
   setImageUrl,
-  showBlurImage,
 }) => {
+  // Event handler when the input file changes (changes the image and reflects that change)
   const handleChangeImageUploadPlaceButton = (e) => {
     if (e.target.files[0]) {
       formInputsHandler(e);
       setImageUrl(null);
     }
   };
-
+  // Event handler when the input file is clicked (opens up a select image for user to select image)
   const handleClickImageUploadPlaceButton = (e) => {
     if (e.target.files[0]) {
       formInputsHandler(e);
@@ -55,6 +60,7 @@ const ImageEditProfileButton = ({
           sx={{
             fontWeight: 500,
             textTransform: "none",
+            // fontSize for different screen sizes
             fontSize: {
               sps: "10px",
               ps: "12px",

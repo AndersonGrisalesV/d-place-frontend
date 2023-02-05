@@ -4,12 +4,12 @@ import { IconButton } from "@mui/material";
 import LinkIcon from "@mui/icons-material/Link";
 import styled from "@emotion/styled";
 
+// Styled component for LinkIcon
 const StyleLinkIcon = styled(LinkIcon)(({ theme }) => ({
   color: "#db2d3f",
   backgroundColor: "transparent",
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
-
   "&:hover": {
     backgroundColor: "transparent",
     color: "#db2d3f",

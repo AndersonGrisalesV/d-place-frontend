@@ -7,11 +7,13 @@ import { Modal, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
+// Styled component for styleModalDeleteComment container Box
 const styleModalDelete = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
+  // width for different screen sizes
   width: {
     sps: "280px",
     ps: "346px",
@@ -26,6 +28,7 @@ const styleModalDelete = {
     ms: "509px",
     lgs: "509px",
   },
+  // height for different screen sizes
   height: {
     sps: "4.1rem",
     ps: "4.5rem",
@@ -40,7 +43,6 @@ const styleModalDelete = {
     ms: "5.6rem",
     lgs: "5.6rem",
   },
-
   bgcolor: "background.paper",
   borderRadius: "8px",
   boxShadow: 24,
@@ -50,6 +52,9 @@ const styleModalDelete = {
   paddingBottom: "0px",
 };
 
+// open is a pointer to a function that changes the state open to true on CommentShow
+// handleClose is a pointer to a function that changes the state open to false on CommentShow
+// handleConfirmDelete is a pointer to a function that deletes the comment and refreshes the places' comments
 const ModalCancelDeleteComment = ({
   open,
   handleClose,
@@ -60,8 +65,8 @@ const ModalCancelDeleteComment = ({
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-cancel-delete-comment"
-        aria-describedby="modal-modal-cancel-delete-comment"
+        aria-labelledby="modal-cancel-delete-comment"
+        aria-describedby="modal-cancel-delete-comment"
       >
         <Stack>
           <Box sx={styleModalDelete}>
@@ -82,6 +87,7 @@ const ModalCancelDeleteComment = ({
                   sx={{
                     backgroundColor: "transparent",
                     color: "#da4453c7",
+                    // width for different screen sizes
                     width: {
                       sps: "15px",
                       ps: "16px",
@@ -96,6 +102,7 @@ const ModalCancelDeleteComment = ({
                       ms: "24px",
                       lgs: "24px",
                     },
+                    // height for different screen sizes
                     height: {
                       sps: "18px",
                       ps: "20px",
@@ -115,6 +122,7 @@ const ModalCancelDeleteComment = ({
                 <Typography
                   sx={{
                     display: "inline",
+                    // fontSize for different screen sizes
                     fontSize: {
                       sps: "12px",
                       ps: "13px",
@@ -137,7 +145,7 @@ const ModalCancelDeleteComment = ({
                   Your comment will be deleted, continue?
                 </Typography>
               </Stack>
-
+              {/* Margin correction */}
               <p style={{ margin: "1px" }} />
               <Stack
                 direction="row"

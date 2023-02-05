@@ -5,6 +5,7 @@ import { LoginContext } from "../../../../context/login-context";
 import { Button, Zoom } from "@mui/material";
 import { styled } from "@mui/system";
 
+// Styled component for Button
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
   border:
@@ -15,6 +16,10 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+// onChangePassword is a pointer to a function that says if the user wants to change the password (reevaluated the state of the form once clicked)
+// onValue is a boolean indicating if the the users wants to change the password or not on EditPorfile
+// isLoading is a boolean indicating whether the form was clicked or not on EditProfile
+// showSuccess helps us disable the button(s) after clicking the form on EditProfile
 const ButtonChangePassword = ({
   onChangePassword,
   onValue = false,
@@ -33,6 +38,7 @@ const ButtonChangePassword = ({
             sx={{
               fontWeight: 500,
               textTransform: "none",
+              // fontSize for different screen sizes
               fontSize: {
                 sps: "10px",
                 ps: "12px",
@@ -47,6 +53,7 @@ const ButtonChangePassword = ({
                 ms: "14px",
                 lgs: "14px",
               },
+              // marginRight for different screen sizes
               marginRight: {
                 sps: "-10px",
                 ps: "-9px",

@@ -174,6 +174,7 @@ const CommentsDisplay = ({
             justifyContent: "center",
             alignItems: "center",
             textAlign: "-webkit-center",
+            // fontSize for different screen sizes
             fontSize: {
               sps: "0.9rem",
               ps: "1rem",
@@ -210,6 +211,7 @@ const CommentsDisplay = ({
                 name="comment"
                 inputProps={{
                   sx: {
+                    // fontSize for different screen sizes
                     fontSize: {
                       sps: "9px",
                       ps: "10px",
@@ -229,6 +231,7 @@ const CommentsDisplay = ({
                 }}
                 FormHelperTextProps={{
                   sx: {
+                    // fontSize for different screen sizes
                     fontSize: {
                       sps: "9px",
                       ps: "10px",
@@ -280,7 +283,7 @@ const CommentsDisplay = ({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-
+              // fontSize for different screen sizes
               fontSize: {
                 sps: "8px",
                 ps: "9px",

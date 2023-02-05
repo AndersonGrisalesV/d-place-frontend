@@ -52,7 +52,7 @@ const styleModalDelete = {
   paddingBottom: "0px",
 };
 
-// open is a boolean indicating if the modal is open or not located on EditProfile
+// open is a boolean indicating if the modal is open and located on EditProfile
 // close is a pointer to a function that changes the state open to false on EditProfile
 // handleConfirmDelete is a pointer to a function that triggers the deletion of a profile
 const ModalDeleteProfile = ({ open, close, onConfirmDelete }) => {

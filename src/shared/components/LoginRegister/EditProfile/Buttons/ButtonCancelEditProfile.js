@@ -16,6 +16,9 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+// open is a boolean indicating if the modal is open and located on EditProfile
+// close is a pointer to a function that changes the state open to false on EditProfile
+// onOpenModal is a pointer to a function that triggers the cancelation of a profile editing on EditProfile
 const ButtonCancelEditProfile = ({ open, close, onOpenModal }) => {
   const login = useContext(LoginContext);
 
@@ -29,6 +32,7 @@ const ButtonCancelEditProfile = ({ open, close, onOpenModal }) => {
             sx={{
               fontWeight: 500,
               textTransform: "none",
+              // fontSize for different screen sizes
               fontSize: {
                 sps: "10px",
                 ps: "12px",
@@ -43,6 +47,7 @@ const ButtonCancelEditProfile = ({ open, close, onOpenModal }) => {
                 ms: "14px",
                 lgs: "14px",
               },
+              // marginRight for different screen sizes
               marginRight: {
                 sps: "-10px",
                 ps: "-9px",

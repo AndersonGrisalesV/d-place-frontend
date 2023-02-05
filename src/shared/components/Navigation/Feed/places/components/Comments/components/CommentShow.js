@@ -27,11 +27,13 @@ import {
 } from "@mui/material";
 import styled from "@emotion/styled";
 
+// Styled component for ListItem
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",
   paddingLeft: "0px",
 });
 
+// Styled component for ListItemText
 const StyleListItemText = styled(ListItemText)(({ theme }) => ({
   "& .MuiListItemText-primary": {
     display: "flex",
@@ -43,6 +45,7 @@ const StyleListItemText = styled(ListItemText)(({ theme }) => ({
   },
 }));
 
+// Styled component for TextField
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
@@ -330,6 +333,7 @@ const CommentShow = ({
                 sx={{
                   paddingTop: "2px",
                   marginTop: "0px",
+                  // display for different screen sizes
                   display: {
                     sps: "none",
                     ps: "none",
@@ -351,6 +355,7 @@ const CommentShow = ({
                     color: "#fff",
                     marginTop: "5%",
                     marginLeft: "5%",
+                    // display for different screen sizes
                     fontSize: {
                       sps: "10px",
                       ps: "12px",
@@ -366,6 +371,7 @@ const CommentShow = ({
                       lgs: "18px",
                     },
                     bgcolor: "#da4453c7",
+                    // width for different screen sizes
                     width: {
                       sps: "28px",
                       ps: "31px",
@@ -380,6 +386,7 @@ const CommentShow = ({
                       ms: "40px",
                       lgs: "40px",
                     },
+                    // height for different screen sizes
                     height: {
                       sps: "28px",
                       ps: "31px",
@@ -412,6 +419,7 @@ const CommentShow = ({
                     fontWeight={400}
                     color="text.primary"
                     sx={{
+                      // fontSize for different screen sizes
                       fontSize: {
                         sps: "10px",
                         ps: "11px",
@@ -437,6 +445,7 @@ const CommentShow = ({
                     fontWeight={400}
                     color="text.secondary"
                     sx={{
+                      // fontSize for different screen sizes
                       fontSize: {
                         sps: "8px",
                         ps: "9px",
@@ -458,6 +467,7 @@ const CommentShow = ({
                         display: "flex",
                         justifyContent: "flex-start",
                         marginBottom: "10px",
+                        // fontSize for different screen sizes
                         fontSize: {
                           sps: "6px",
                           ps: "7px",

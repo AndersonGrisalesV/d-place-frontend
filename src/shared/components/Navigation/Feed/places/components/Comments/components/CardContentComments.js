@@ -6,6 +6,7 @@ const CardContentComments = (props) => {
   return (
     <CardContent
       sx={{
+        // width for different screen sizes
         width: {
           sps: "123px",
           ps: "226px",

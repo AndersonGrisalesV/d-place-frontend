@@ -25,7 +25,7 @@ const CardTitle = ({ onMap = false, loadedPlaces }) => {
         color="text.primary"
         sx={{
           cursor: "pointer",
-
+          // fontSize for different screen sizes
           fontSize: {
             sps: "10px",
             ps: "11px",
@@ -52,6 +52,7 @@ const CardTitle = ({ onMap = false, loadedPlaces }) => {
             fontWeight={400}
             color="text.secondary"
             sx={{
+              // fontSize for different screen sizes
               fontSize: {
                 sps: "8px",
                 ps: "9px",

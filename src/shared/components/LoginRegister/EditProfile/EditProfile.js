@@ -432,6 +432,7 @@ const EditProfile = () => {
   const handleRemoveImage = () => {
     formInputs.image = "noImage";
 
+    // Checks if user had an image when the profile was loaded in order to delete this image
     if (loadedUser) {
       if (loadedUser.imageUrl.url === "") {
         setDeleteImage(false);
@@ -631,7 +632,6 @@ const EditProfile = () => {
                           isLoading={isLoading}
                           showSuccess={showSuccess}
                           setImageUrl={setImageUrl}
-                          showBlurImage={showBlurImage}
                         />
                       </React.Fragment>
 

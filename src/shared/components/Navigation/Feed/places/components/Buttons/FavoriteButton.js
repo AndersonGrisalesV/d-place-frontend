@@ -5,6 +5,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Checkbox, IconButton } from "@mui/material";
 import styled from "@emotion/styled";
 
+// Styled component for FavoriteBorderIcon
 const StyleFavoriteBorderIcon = styled(FavoriteBorderIcon)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
@@ -14,6 +15,7 @@ const StyleFavoriteBorderIcon = styled(FavoriteBorderIcon)(({ theme }) => ({
   },
 }));
 
+// Styled component for FavoriteIcon
 const StyleFavoriteIcon = styled(FavoriteIcon)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
@@ -26,6 +28,11 @@ const StyleFavoriteIcon = styled(FavoriteIcon)(({ theme }) => ({
 
 const IconButtonModified = styled(IconButton)({});
 
+// isFavorite is a boolean that indicates if a place is favorite by the user who's loggedIn
+// onFavoriteHandler is a pointer to a function that sets or removes a favorites from the user on ButtonsWrapper
+// onChangeFavorite is a boolean that indicates if a user wants to change a place to favorite or remove said favorite on ButtonsWrapper
+// loadedPlaces are places passed by FavoritePlaces or Feed or ProfilePlaces depending on where place is called
+// onCount is a boolean that indicates if a place is liked by the user or not on ButtonsWrapper
 const FavoriteButton = ({
   isFavorite = "",
   onFavoriteHandler,
@@ -36,6 +43,7 @@ const FavoriteButton = ({
   const [newFavorite, setNewFavorite] = useState(false);
   const [favoriteCount, setFavoriteCount] = useState(0);
 
+  // Checks if user wants to change the state of the place to favorite or remove favorite and sets a state for this new change
   useEffect(() => {
     if (onChangeFavorite) {
       if (onChangeFavorite.favorite === true) {
@@ -46,6 +54,7 @@ const FavoriteButton = ({
     }
   }, [onChangeFavorite]);
 
+  // Sets a new count for favorites to display in real time without having to send an API request to the backend
   const handlerClickFavorite = () => {
     setFavoriteCount(true);
   };
@@ -65,6 +74,7 @@ const FavoriteButton = ({
       sx={{
         paddingTop: "0px",
         paddingBottom: "0px",
+        // fontSize for different screen sizes
         fontSize: {
           sps: "10px",
           ps: "12px",
@@ -91,6 +101,7 @@ const FavoriteButton = ({
           <StyleFavoriteBorderIcon
             sx={{
               backgroundColor: "transparent",
+              // width for different screen sizes
               width: {
                 sps: "15px",
                 ps: "16px",
@@ -105,6 +116,7 @@ const FavoriteButton = ({
                 ms: "24px",
                 lgs: "24px",
               },
+              // height for different screen sizes
               height: {
                 sps: "18px",
                 ps: "20px",
@@ -127,6 +139,7 @@ const FavoriteButton = ({
             sx={{
               backgroundColor: "transparent",
               color: "red",
+              // width for different screen sizes
               width: {
                 sps: "15px",
                 ps: "16px",
@@ -141,6 +154,7 @@ const FavoriteButton = ({
                 ms: "24px",
                 lgs: "24px",
               },
+              // height for different screen sizes
               height: {
                 sps: "18px",
                 ps: "20px",
@@ -159,6 +173,13 @@ const FavoriteButton = ({
           />
         }
       />
+      {/* Check if favoriteCount, onCount, and newFavorite are truthy,
+       If all are truthy, set length to onCount's favoritesUserIds length
+       If favoriteCount and onCount are truthy, but newFavorite is falsy, 
+        set length to onCount's favoritesUserIds length minus 1
+         If none of the above conditions are met, 
+         set length to onLoadedPlaces' favoritesUserIds length
+       */}
       {favoriteCount && onCount && newFavorite
         ? onCount.favoritesUserIds.length
         : favoriteCount && onCount && !newFavorite
