@@ -24,6 +24,7 @@ import AppStyles from "./App.css";
 import { Box, createTheme, Stack, ThemeProvider } from "@mui/material";
 import styled from "@emotion/styled";
 
+//* Styled component for StyleBox (background)
 const StyleBox = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === "dark" ? "#121212" : "#f2f2f2",
 }));

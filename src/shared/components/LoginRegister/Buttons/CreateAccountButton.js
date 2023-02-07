@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Zoom } from "@mui/material";
 import styled from "@emotion/styled";
 
-// Styled component for the Button
+//* Styled component for the Button
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
   "&:hover": {
@@ -12,7 +12,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-// switchModeHandler resets values when changin login/signup and changes isLoingMode
+//* switchModeHandler resets values when changin login/signup and changes isLoingMode
 // isLoginMode is a boolean indicating the mode we are in (login/signup)
 // showSuccess is a boolean indicating success creating the account which allows us to disable the button
 const CreateAccountButton = ({
@@ -33,7 +33,7 @@ const CreateAccountButton = ({
             alignItems: "center",
             fontWeight: 500,
             textTransform: "none",
-            // fontSize for different screen sizes
+            //* fontSize for different screen sizes
             fontSize: {
               sps: "10px",
               ps: "12px",

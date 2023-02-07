@@ -17,6 +17,7 @@ import LoginButton from "../../../../Navbar/components/RightBar/LoginButtons/Log
 import { Divider, Stack, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
+//* Styled component for TextField
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
@@ -35,6 +36,10 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+//* onPlaceComments are the comment places passed down by PlaceGetById > CommentsPost where only comments are selected and then passed down to CommentsDisplay
+//* onPlaceId is the place Id passed down by PlaceGetById > CommentsPost where only the placeId is selected andcomments are selected and then passed down to CommentsDisplay
+//* onRefreshPlaceComments is a pointer to a function that triggers a state that refreshes the places and their comments once one of them is edited or deleted PlaceGetById > CommentsPost where only comments are selected and then passed down to CommentsDisplay
+//* onErrorDeleteComment is a pointer to a function that manages error/success messages when creating, editing, deleting a message PlaceGetById > CommentsPost > CommentsDisplay
 const CommentsDisplay = ({
   onPlaceComments,
   onPlaceId,
@@ -43,18 +48,22 @@ const CommentsDisplay = ({
 }) => {
   const login = useContext(LoginContext);
 
+  // Custom hook to send Http request to the backend
   const { sendRequest } = useHttpClient();
 
+  // Preloads the place comment to avoid errors without inital data
   const initialFormInputs = {
     comment: "",
   };
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
 
+  // State and function sto open modals to warn users when trying to cancel the sending/creation of a new comment
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // Fucntion to handle the object storing the new comment
   const formInputsHandler = (e) => {
     setFormInputs({
       ...formInputs,
@@ -62,6 +71,7 @@ const CommentsDisplay = ({
     });
   };
 
+  // Comment validators
   const {
     value: commentInput,
     isValid: commentIsValid,
@@ -78,6 +88,7 @@ const CommentsDisplay = ({
     return false;
   }
 
+  //* Logic to enable/disable send new comment button
   let formIsValid = false;
 
   if (login.isLoggedIn && commentIsValid) {
@@ -88,7 +99,7 @@ const CommentsDisplay = ({
     e.preventDefault();
 
     if (login.isLoggedIn && formIsValid) {
-      // send comment here
+      //* Generates a new date to assign to the new comment
       let date = new Date().toJSON();
 
       try {
@@ -106,16 +117,17 @@ const CommentsDisplay = ({
             "Content-Type": "Application/json",
           }
         );
-
+        // Shows the success message, using onErrorDeleteComment pointer to the funciton that handles that operation on PlaceGetById
         onErrorDeleteComment(
           null,
           null,
           "created",
           "Your comment was created successfully"
         );
-
+        // Triggers the pointer to the function that refreshes the state of the place's comments
         onRefreshPlaceComments(onPlaceId);
       } catch (err) {
+        // Shows possible errors message, using onErrorDeleteComment pointer to the funciton that handles that operation on PlaceGetById
         setTimeout(() => {
           onErrorDeleteComment(
             err,
@@ -123,17 +135,22 @@ const CommentsDisplay = ({
             null,
             "Something went wrong, try again"
           );
+          // Triggers  the pointer to the function that refreshes the state of the place's comments
           onRefreshPlaceComments(onPlaceId);
         }, "910");
       }
     }
+
+    // Resets the InputValue of the comment Box
     resetCommentInput();
   };
 
+  // Functions that resets the InputValue of the comment Box
   const handleCancelSendComment = () => {
     resetCommentInput();
   };
 
+  //* Adittional logic needed to enable/disable send new comment button
   let cancelSendCommentIsValid = false;
 
   if (commentInputHasError) {
@@ -142,6 +159,7 @@ const CommentsDisplay = ({
     cancelSendCommentIsValid = true;
   }
 
+  // Loads comments to show
   const comments = (
     <React.Fragment>
       {onPlaceComments.map((comment) => (
@@ -174,7 +192,7 @@ const CommentsDisplay = ({
             justifyContent: "center",
             alignItems: "center",
             textAlign: "-webkit-center",
-            // fontSize for different screen sizes
+            //* fontSize for different screen sizes
             fontSize: {
               sps: "0.9rem",
               ps: "1rem",
@@ -211,7 +229,7 @@ const CommentsDisplay = ({
                 name="comment"
                 inputProps={{
                   sx: {
-                    // fontSize for different screen sizes
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "9px",
                       ps: "10px",
@@ -231,7 +249,7 @@ const CommentsDisplay = ({
                 }}
                 FormHelperTextProps={{
                   sx: {
-                    // fontSize for different screen sizes
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "9px",
                       ps: "10px",
@@ -264,12 +282,12 @@ const CommentsDisplay = ({
               <Stack direction="row" spacing={1} justifyContent="center">
                 <ButtonSendComment formIsValid={formIsValid} />
                 <ButtonCancelSendComment
-                  cancelSendCommentIsValid={cancelSendCommentIsValid}
                   open={open}
                   close={handleClose}
                   onHandleOpen={handleOpen}
                   onHandleClose={handleClose}
                   handleCancelSendComment={handleCancelSendComment}
+                  cancelSendCommentIsValid={cancelSendCommentIsValid}
                 />
               </Stack>
             </Stack>
@@ -283,7 +301,7 @@ const CommentsDisplay = ({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              // fontSize for different screen sizes
+              //* fontSize for different screen sizes
               fontSize: {
                 sps: "8px",
                 ps: "9px",

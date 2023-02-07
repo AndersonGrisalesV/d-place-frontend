@@ -2,6 +2,7 @@ import React from "react";
 
 import { Button, Stack, styled } from "@mui/material";
 
+//* Styled component for Button
 const StyleButtonImage = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
   "&:hover": {
@@ -10,17 +11,22 @@ const StyleButtonImage = styled(Button)(({ theme }) => ({
   },
 }));
 
+//* formInputsHandler is pointer to a function that stores the new image into an object on NewPlacePostDisplay
+// isLoading is a boolean indicating whether the image is loaded or not on NewPlacePostDisplay
+// showSuccess helps us disable the button(s) after clicking the form on NewPlacePostDisplay
 const ImageUploadPlaceButton = ({
   formInputsHandler,
   isLoading,
   showSuccess,
 }) => {
+  //* Event handler when the input file changes (changes the image and reflects that change)
   const handleChangeImageUploadPlaceButton = (e) => {
     if (e.target.files[0]) {
       formInputsHandler(e);
     }
   };
 
+  //* Event handler when the input file is clicked (opens up a select image for user to select image)
   const handleClickImageUploadPlaceButton = (e) => {
     if (e.target.files[0]) {
       formInputsHandler(e);
@@ -46,6 +52,7 @@ const ImageUploadPlaceButton = ({
           sx={{
             fontWeight: 500,
             textTransform: "none",
+            //* fontSize for different screen sizes
             fontSize: {
               sps: "10px",
               ps: "12px",

@@ -7,13 +7,13 @@ import { Modal, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import ButtonYesDelete from "../ButtonYesDelete";
 
-// Styled component for ModalDelete
+//* Styled component for ModalDelete
 const styleModalDelete = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  // width for different screen sizes
+  //* width for different screen sizes
   width: {
     sps: "280px",
     ps: "346px",
@@ -28,7 +28,7 @@ const styleModalDelete = {
     ms: "509px",
     lgs: "509px",
   },
-  // height for different screen sizes
+  //* height for different screen sizes
   height: {
     sps: "4.1rem",
     ps: "4.5rem",
@@ -54,7 +54,7 @@ const styleModalDelete = {
 
 // open is a boolean indicating if the modal is open and located on EditProfile
 // close is a pointer to a function that changes the state open to false on EditProfile
-// handleConfirmDelete is a pointer to a function that triggers the deletion of a profile
+//* handleConfirmDelete is a pointer to a function that triggers the deletion of a profile
 const ModalDeleteProfile = ({ open, close, onConfirmDelete }) => {
   return (
     <div>
@@ -83,7 +83,7 @@ const ModalDeleteProfile = ({ open, close, onConfirmDelete }) => {
                   sx={{
                     backgroundColor: "transparent",
                     color: "#da4453c7",
-                    // width for different screen sizes
+                    //* width for different screen sizes
                     width: {
                       sps: "15px",
                       ps: "16px",
@@ -98,7 +98,7 @@ const ModalDeleteProfile = ({ open, close, onConfirmDelete }) => {
                       ms: "24px",
                       lgs: "24px",
                     },
-                    // height for different screen sizes
+                    //* height for different screen sizes
                     height: {
                       sps: "18px",
                       ps: "20px",
@@ -118,7 +118,7 @@ const ModalDeleteProfile = ({ open, close, onConfirmDelete }) => {
                 <Typography
                   sx={{
                     display: "inline",
-                    // fontSize for different screen sizes
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "12px",
                       ps: "13px",

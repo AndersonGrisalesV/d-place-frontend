@@ -9,7 +9,7 @@ import ButtonEdit from "../Buttons/ButtonEdit";
 
 import { CardHeader, styled } from "@mui/material";
 
-// Styled component for NavLink
+//* Styled component for NavLink
 const StyleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
   color:
@@ -21,13 +21,13 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
   },
 }));
 
-// loadedPlaces are places passed by FavoritePlaces or Feed or ProfilePlaces depending on where place is called
+//* loadedPlaces are places passed by FavoritePlaces or Feed or ProfilePlaces depending on where place is called
 const AvatarWrapper = ({ loadedPlaces }) => {
   const login = useContext(LoginContext);
 
   let navigate = useNavigate();
 
-  // Function to convert the place's postDate to a human readable date
+  //* Function to convert the place's postDate to a human readable date
   const addDays = (date) => {
     let year;
     let month;
@@ -86,15 +86,15 @@ const AvatarWrapper = ({ loadedPlaces }) => {
 
   const [isEdit, setIsEdit] = useState(false);
 
-  // The useEffect runs after the first render , and whenever the values of loadedPlaces and login change.
-  // The function checks if login.isLoggedIn is true and if the creatorId._id property of loadedPlaces is equal to login.userId. it means the user owns the place and can edit it
+  //* The useEffect runs after the first render , and whenever the values of loadedPlaces and login change.
+  //* it checks if login.isLoggedIn is true and if the creatorId._id property of loadedPlaces is equal to login.userId. it means the user owns the place and can edit it
   useEffect(() => {
     if (login.isLoggedIn && loadedPlaces.creatorId._id === login.userId) {
       setIsEdit(true);
     }
   }, [loadedPlaces, login]);
 
-  // Check if user is loggedIn to redirect user to profile or loginregister
+  //* Check if user is loggedIn to redirect user to profile or loginregister
   // login.listItemsNotListed cleans the leftSideBar selected menu Item to none
   const profileNavigationHandler = () => {
     if (login.isLoggedIn) {
@@ -106,7 +106,7 @@ const AvatarWrapper = ({ loadedPlaces }) => {
     }
   };
 
-  // Checks if user is loggedIn to change the leftSideBar selected menu depending on user status
+  //* Checks if user is loggedIn to change the leftSideBar selected menu depending on user status
   // login.listItemsNotListed cleans the leftSideBar selected menu Item to none
   const handleProfileVisit = () => {
     if (login.isLoggedIn) {
@@ -131,7 +131,7 @@ const AvatarWrapper = ({ loadedPlaces }) => {
           ""
         )
       }
-      // Checks if user is loggedIn to redirect accordingly
+      //* Checks if user is loggedIn to redirect accordingly
       title={
         <StyleNavLink
           to={
@@ -147,7 +147,7 @@ const AvatarWrapper = ({ loadedPlaces }) => {
       subheader={`${fetchedDate.month} ${fetchedDate.day}, ${fetchedDate.year}`}
       titleTypographyProps={{
         fontWeight: "500",
-        // fontSize for different screen sizes
+        //* fontSize for different screen sizes
         fontSize: {
           sps: "10px",
           ps: "12px",
@@ -164,7 +164,7 @@ const AvatarWrapper = ({ loadedPlaces }) => {
         },
       }}
       subheaderTypographyProps={{
-        // fontSize for different screen sizes
+        //* fontSize for different screen sizes
         fontSize: {
           sps: "10px",
           ps: "12px",

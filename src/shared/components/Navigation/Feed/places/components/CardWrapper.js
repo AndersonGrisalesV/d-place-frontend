@@ -4,8 +4,9 @@ import { Box } from "@mui/system";
 import { Card } from "@mui/material";
 import styled from "@emotion/styled";
 
+//* Styled component for CardWrapper on CardPlace
 const BoxStyled = styled(Box)(() => ({
-  // fontSize for different screen sizes
+  //* fontSize for different screen sizes
   display: {
     sps: "flex",
     ps: "flex",
@@ -20,7 +21,7 @@ const BoxStyled = styled(Box)(() => ({
     lgs: "flex",
   },
   justifyContent: "center",
-  // height for different screen sizes
+  //* height for different screen sizes
   height: {
     ns: "514px",
     mns: "514px",
@@ -28,7 +29,7 @@ const BoxStyled = styled(Box)(() => ({
     ms: "514px",
     lgs: "514px",
   },
-  // maxWidth for different screen sizes
+  //* maxWidth for different screen sizes
   maxWidth: {
     ns: "800px",
     msc: "800px",
@@ -45,7 +46,7 @@ const CardWrapper = (props) => {
         sx={{
           borderRadius: "18px",
           paddingBottom: "8px",
-          // maxWidth for different screen sizes
+          //* maxWidth for different screen sizes
           maxWidth: {
             sps: "200px",
             ps: "285px",

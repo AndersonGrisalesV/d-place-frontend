@@ -2,6 +2,7 @@ import React from "react";
 
 import { Button, Stack, styled } from "@mui/material";
 
+//* Styled component for Button
 const StyleButtonImage = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
   "&:hover": {
@@ -10,14 +11,17 @@ const StyleButtonImage = styled(Button)(({ theme }) => ({
   },
 }));
 
+//* formInputsHandler is pointer to a function that stores the new image into an object on EditPlacePostDisplay
+// isLoading is a boolean indicating whether the image is loaded or not on EditPlacePostDisplay
+// showSuccess helps us disable the button(s) after clicking the form on EditPlacePostDisplay
+// setImageUrl  is a state passed as a prop that sets the new image selected by the user on EditPlacePostDisplay
 const ImageUploadEditPlaceButton = ({
   formInputsHandler,
-  isLoadingshowSuccess,
   isLoading,
   showSuccess,
   setImageUrl,
-  showBlurImage,
 }) => {
+  //* Event handler when the input file changes (changes the image and reflects that change)
   const handleChangeImageUploadPlaceButton = (e) => {
     if (e.target.files[0]) {
       formInputsHandler(e);
@@ -25,6 +29,7 @@ const ImageUploadEditPlaceButton = ({
     }
   };
 
+  //* Event handler when the input file is clicked (opens up a select image for user to select image)
   const handleClickImageUploadPlaceButton = (e) => {
     if (e.target.files[0]) {
       formInputsHandler(e);
@@ -51,6 +56,7 @@ const ImageUploadEditPlaceButton = ({
           sx={{
             fontWeight: 500,
             textTransform: "none",
+            //* fontSize for different screen sizes
             fontSize: {
               sps: "10px",
               ps: "12px",

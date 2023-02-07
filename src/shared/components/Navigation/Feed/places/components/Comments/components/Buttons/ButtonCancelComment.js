@@ -5,7 +5,7 @@ import { LoginContext } from "../../../../../../../../context/login-context";
 import { Button, Zoom } from "@mui/material";
 import styled from "@emotion/styled";
 
-// Styled component for Button
+//* Styled component for Button
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
   "&:hover": {
@@ -14,6 +14,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+// onHandleClose is a pointer to a function that changes the state of open to tru to open up the modal to cancel the sending/creation of a new comment by the user
 const ButtonCancelComment = ({ onHandleOpen }) => {
   const login = useContext(LoginContext);
 
@@ -27,7 +28,7 @@ const ButtonCancelComment = ({ onHandleOpen }) => {
             sx={{
               fontWeight: 500,
               textTransform: "none",
-              // fontSize for different screen sizes
+              //* fontSize for different screen sizes
               fontSize: {
                 sps: "10px",
                 ps: "12px",
@@ -42,7 +43,7 @@ const ButtonCancelComment = ({ onHandleOpen }) => {
                 ms: "14px",
                 lgs: "14px",
               },
-              // marginRight for different screen sizes
+              //* marginRight for different screen sizes
               marginRight: {
                 sps: "-10px",
                 ps: "-9px",

@@ -14,7 +14,7 @@ const TitleComments = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          // fontSize for different screen sizes
+          //* fontSize for different screen sizes
           fontSize: {
             sps: "0.9rem",
             ps: "1rem",

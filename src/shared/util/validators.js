@@ -1,4 +1,4 @@
-// Constants defining the type of validators
+//* Constants defining the type of validators
 const VALIDATOR_TYPE_REQUIRE = "REQUIRE";
 const VALIDATOR_TYPE_MINLENGTH = "MINLENGTH";
 const VALIDATOR_TYPE_MAXLENGTH = "MAXLENGTH";
@@ -22,10 +22,10 @@ export const VALIDATOR_MIN = (val) => ({ type: VALIDATOR_TYPE_MIN, val: val });
 export const VALIDATOR_MAX = (val) => ({ type: VALIDATOR_TYPE_MAX, val: val });
 export const VALIDATOR_EMAIL = () => ({ type: VALIDATOR_TYPE_EMAIL });
 
-// Function to validate a value based on an array of validators
+//* Function to validate a value based on an array of validators
 export const validate = (value, validators) => {
   let isValid = true;
-  // Loop through each validator in the array
+  //* Loop through each validator in the array
   for (const validator of validators) {
     if (validator.type === VALIDATOR_TYPE_REQUIRE) {
       isValid = isValid && value.trim().length > 0;

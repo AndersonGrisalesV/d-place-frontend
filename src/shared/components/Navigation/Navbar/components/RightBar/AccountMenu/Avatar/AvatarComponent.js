@@ -14,7 +14,9 @@ const AvatarComponent = () => {
   const { isLoading, sendRequest } = useHttpClient();
   const [succssProfilePhoto, setSuccessProfilePhoto] = useState(false);
 
+  // Using useEffect hook to fetch the user data and set it in the loadedPlace state
   useEffect(() => {
+    // If successProfilePhoto is false or the newAvatar in the login context has changed
     if (!succssProfilePhoto || login.newAvatar) {
       const fetchPlaces = async () => {
         try {
@@ -26,13 +28,16 @@ const AvatarComponent = () => {
               Authorization: "Bearer " + login.token,
             }
           );
-
+          // Setting the fetched user data in the loadedPlace state
           setLoadedPlace(responseData.user);
         } catch (err) {}
       };
+
       fetchPlaces();
     }
+    // Setting successProfilePhoto to true
     setSuccessProfilePhoto(true);
+    // Calling the refreshAvatar function in the login context
     login.refreshAvatar();
   }, [sendRequest, succssProfilePhoto, login]);
 
@@ -45,6 +50,7 @@ const AvatarComponent = () => {
           sx={{
             color: "#fff",
             cursor: "pointer",
+            //* fontSize for different screen sizes
             fontSize: {
               sps: "10px",
               ps: "12px",
@@ -60,6 +66,7 @@ const AvatarComponent = () => {
               lgs: "18px",
             },
             bgcolor: "#da4453c7",
+            //* width for different screen sizes
             width: {
               sps: "28px",
               ps: "31px",
@@ -74,6 +81,7 @@ const AvatarComponent = () => {
               ms: "40px",
               lgs: "40px",
             },
+            //* height for different screen sizes
             height: {
               sps: "28px",
               ps: "31px",
@@ -91,6 +99,7 @@ const AvatarComponent = () => {
           }}
           aria-label="recipe"
         >
+          {/* If there's no image then it selects the first letter of the user */}
           {loadedPlace.imageUrl.url === "" ? loadedPlace.name.charAt(0) : ""}
         </Avatar>
       ) : (

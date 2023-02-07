@@ -48,13 +48,13 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import styled from "@emotion/styled";
 
-// Styled component and responsive design for menuItems in shareButton
+//* Styled component and responsive design for menuItems in shareButton
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  // width for different screen sizes
+  //* width for different screen sizes
   width: {
     sps: "210px",
     ps: "290px",
@@ -76,7 +76,7 @@ const style = {
   padding: "0px",
 };
 
-// Styled component for MenuItem
+//* Styled component for MenuItem
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -87,8 +87,8 @@ const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   },
 }));
 
-// onMap is a boolean that is passed down by PlaceDetail page
-// loadedPlaces are places passed by FavoritePlaces or Feed or ProfilePlaces depending on where place is called
+//* onMap is a boolean that is passed down by PlaceDetail page
+//* loadedPlaces are places passed by FavoritePlaces or Feed or ProfilePlaces depending on where place is called
 const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -96,7 +96,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
 
   const login = useContext(LoginContext);
 
-  // custom hook to send Http request to the backend
+  // Custom hook to send Http request to the backend
   const { sendRequest, clearError } = useHttpClient();
 
   const [changeFavorite, setChangeFavorite] = useState(null);
@@ -105,7 +105,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
 
   let isFavorite = false;
 
-  // checks if user is logged in to select favorite user places
+  // Checks if user is logged in to select favorite user places
   if (login.isLoggedIn) {
     loadedPlaces.favoritesUserIds.map((favorite) => {
       if (favorite === login.userId) {
@@ -135,7 +135,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
         setChangeFavorite(responseData);
       } catch (err) {}
 
-      // Makes a requesto to the place in order to count the likes of said place and update the count in real time
+      //* Makes a requesto to the place in order to count the likes of said place and update the count in real time
       try {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/places/${loadedPlaces._id}`
@@ -143,7 +143,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
         setUserLikeValue(responseData.place);
       } catch (err) {}
     } else {
-      // Error shown to user when not loggedIn and trying to like a post
+      //! Error shown to user when not loggedIn and trying to like a post
       setShowSuccess("You must be logged in to like posts");
       setTimeout(() => {
         setShowSuccess(false);
@@ -273,7 +273,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
     setShowAllShareLinks(false);
   };
 
-  // shareCountHandler function triggers a call to the API to increase the share count in the DB
+  //* shareCountHandler function triggers a call to the API to increase the share count in the DB
   const shareCountHandler = async () => {
     try {
       await sendRequest(
@@ -348,7 +348,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                 onClick={handleCopyLink}
                 sx={{
                   marginLeft: "-7px",
-                  // fontSize for different screen sizes
+                  //* fontSize for different screen sizes
                   fontSize: {
                     sps: "11px",
                     ps: "13px",
@@ -371,7 +371,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
               <StyleMenuItem
                 onClick={handleFacebookLink}
                 sx={{
-                  // fontSize for different screen sizes
+                  //* fontSize for different screen sizes
                   fontSize: {
                     sps: "11px",
                     ps: "13px",
@@ -401,7 +401,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
               <StyleMenuItem
                 onClick={handleWhatsappLink}
                 sx={{
-                  // fontSize for different screen sizes
+                  //* fontSize for different screen sizes
                   fontSize: {
                     sps: "11px",
                     ps: "13px",
@@ -430,7 +430,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
               <StyleMenuItem
                 onClick={handleTwitterLink}
                 sx={{
-                  // fontSize for different screen sizes
+                  //* fontSize for different screen sizes
                   fontSize: {
                     sps: "11px",
                     ps: "13px",
@@ -474,7 +474,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                   <StyleMenuItem
                     onClick={handleLineLink}
                     sx={{
-                      // fontSize for different screen sizes
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "11px",
                         ps: "13px",
@@ -504,7 +504,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                   <StyleMenuItem
                     onClick={handleRedditLink}
                     sx={{
-                      // fontSize for different screen sizes
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "11px",
                         ps: "13px",
@@ -534,7 +534,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                   <StyleMenuItem
                     onClick={handleTelegramLink}
                     sx={{
-                      // fontSize for different screen sizes
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "11px",
                         ps: "13px",
@@ -563,7 +563,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                   <StyleMenuItem
                     onClick={handlePinterestLink}
                     sx={{
-                      // fontSize for different screen sizes
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "11px",
                         ps: "13px",
@@ -650,7 +650,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                           sx={{
                             display: "inline",
                             paddingLeft: "24px",
-                            // fontSize for different screen sizes
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "12px",
                               ps: "13px",
@@ -687,7 +687,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                           sx={{
                             marginBottom: "10px",
                             paddingLeft: "24px",
-                            // fontSize for different screen sizes
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "8px",
                               ps: "9px",
@@ -718,7 +718,7 @@ const ButtonsWrapper = ({ onMap = false, loadedPlaces }) => {
                     >
                       <Box
                         sx={{
-                          // height for different screen sizes
+                          //* height for different screen sizes
                           height: {
                             sps: "15rem",
                             ps: "20rem",

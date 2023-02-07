@@ -10,7 +10,7 @@ const CardWrapperCommentsDisplay = (props) => {
       <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
         <Box
           sx={{
-            // marginLeft for different screen sizes
+            //* marginLeft for different screen sizes
             marginLeft: {
               sps: "-14px",
               ps: "-16px",

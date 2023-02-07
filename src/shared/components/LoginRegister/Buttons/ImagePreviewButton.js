@@ -25,7 +25,7 @@ const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
 
 // imageUrl contains the URL of an image
 // selectedImageName contains the name of the selected image
-// handleRemoveImageis pointer function that removes the image
+//* handleRemoveImageis pointer function that removes the image
 // isLoading is a boolean indicating whether the image is loaded or not
 // showSuccess helps us disable the button(s) after clicking the form
 const ImagePreviewButton = ({
@@ -37,7 +37,7 @@ const ImagePreviewButton = ({
 }) => {
   const [loadingImage, setLoadingImage] = useState(true);
 
-  // This emulates a loading time when user selects an image
+  //* This emulates a loading time when user selects an image
   setTimeout(() => {
     setLoadingImage(false);
   }, "1000");
@@ -52,7 +52,7 @@ const ImagePreviewButton = ({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            // fontSize for different screen sizes
+            //* fontSize for different screen sizes
             fontSize: {
               sps: "11px",
               ps: "13px",
@@ -112,7 +112,7 @@ const ImagePreviewButton = ({
                         visibility:
                           isLoading || showSuccess ? "hidden" : "visible",
                         cursor: "pointer",
-                        // width for different screen sizes
+                        //* width for different screen sizes
                         width: {
                           sps: "16px",
                           ps: "17px",
@@ -127,7 +127,7 @@ const ImagePreviewButton = ({
                           ms: "24px",
                           lgs: "24px",
                         },
-                        // height for different screen sizes
+                        //* height for different screen sizes
                         height: {
                           sps: "16px",
                           ps: "17px",
@@ -157,7 +157,7 @@ const ImagePreviewButton = ({
                         src={imageUrl}
                         alt={selectedImageName}
                         sx={{
-                          // width for different screen sizes
+                          //* width for different screen sizes
                           width: {
                             sps: "60px",
                             ps: "90px",
@@ -172,7 +172,7 @@ const ImagePreviewButton = ({
                             ms: "150px",
                             lgs: "150px",
                           },
-                          // height for different screen sizes
+                          //* height for different screen sizes
                           height: {
                             sps: "60px",
                             ps: "90px",

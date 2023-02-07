@@ -5,7 +5,7 @@ import { LoginContext } from "../../../../../../../../context/login-context";
 import ModalCancelSendComment from "./Modals/ModalCancelSendComment";
 import { Button, styled, Zoom } from "@mui/material";
 
-// Styled component for Button
+//* Styled component for Button
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
   "&:hover": {
@@ -14,6 +14,11 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+// open is a boolean that indicates if the user wants to cancel the sending/creation of a new comment on CommentDisplay
+// close is a pointer to a function that changes the state open to false on CommentShow
+// onHandleOpen is a pointer to a function that changes the state open to true on CommentShow (they have to be individual functions or else MUI will have a conflict)
+// onHandleClose is a pointer to a function that changes the state open to false on CommentShow (they have to be individual functions or else MUI will have a conflict)
+// cancelSendCommentIsValid is a boolean that indicates if the user has a valid comment to send or not
 const ButtonCancelSendComment = ({
   open,
   close,
@@ -35,7 +40,7 @@ const ButtonCancelSendComment = ({
             sx={{
               fontWeight: 500,
               textTransform: "none",
-              // fontSize for different screen sizes
+              //* fontSize for different screen sizes
               fontSize: {
                 sps: "10px",
                 ps: "12px",
@@ -50,7 +55,7 @@ const ButtonCancelSendComment = ({
                 ms: "14px",
                 lgs: "14px",
               },
-              // marginRight for different screen sizes
+              //* marginRight for different screen sizes
               marginRight: {
                 sps: "-10px",
                 ps: "-9px",

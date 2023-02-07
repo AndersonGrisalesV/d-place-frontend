@@ -7,6 +7,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Box } from "@mui/system";
 import { ImageListItem, Stack, styled, Typography } from "@mui/material";
 
+//* Styled component for CloseIcon
 const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
   color:
     theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453c7",
@@ -15,14 +16,16 @@ const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
     color: "#9b9b9bc7",
   },
 }));
-
+// imageUrl contains the URL of the image on EditPlacePostDisplay
+// selectedImageName is a props that contains the name of the image when the image is loaded on EditPlacePostDisplay
+// handleRemoveImage is a pointer to a function that removes the selected image and checks if the user wants to delete the current profile photo on EditPlacePostDisplay
 const ImagePreviewEditPlaceButton = ({
   imageUrl,
   selectedImageName,
   handleRemoveImage,
 }) => {
   const [loadingImage, setLoadingImage] = useState(true);
-
+  //* This emulates a loading time when user selects an image
   setTimeout(() => {
     setLoadingImage(false);
   }, "1000");
@@ -37,6 +40,8 @@ const ImagePreviewEditPlaceButton = ({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            //* fontSize for different screen sizes
+
             fontSize: {
               sps: "11px",
               ps: "13px",
@@ -95,6 +100,7 @@ const ImagePreviewEditPlaceButton = ({
                       onClick={handleRemoveImage}
                       sx={{
                         cursor: "pointer",
+                        //* width for different screen sizes
                         width: {
                           sps: "16px",
                           ps: "17px",
@@ -109,6 +115,7 @@ const ImagePreviewEditPlaceButton = ({
                           ms: "24px",
                           lgs: "24px",
                         },
+                        //* height for different screen sizes
                         height: {
                           sps: "16px",
                           ps: "17px",

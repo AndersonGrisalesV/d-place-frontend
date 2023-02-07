@@ -19,6 +19,7 @@ import { Box, Grow } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import styles from "./NavigationBar.module.css";
 
+//* Styled component for Toolbar
 const StyleToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",

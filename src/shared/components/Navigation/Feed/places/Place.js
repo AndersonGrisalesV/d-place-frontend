@@ -19,6 +19,8 @@ const Place = ({
       <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
         <Box
           sx={{
+            //* marginLeft for different screen sizes
+            //! marginLeft on big sizes becomes not well adjusted hence the propr trying to arrange them at least to a certain degree
             marginLeft: {
               sps: onArrangeBigSize ? "-14px" : "-15px",
               ps: onArrangeBigSize ? "-16px" : "-16px",
@@ -37,9 +39,9 @@ const Place = ({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            // // specify one value that is applied in all breakpoints
+            // TODO: specify one value that is applied in all breakpoints
             // color: "white",
-            // // specify multiple values applied in specific breakpoints
+            // specify multiple values applied in specific breakpoints
             // backgroundColor: {
             //   sps: "orange",
             //   ps: "green",

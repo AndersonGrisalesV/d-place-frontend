@@ -22,6 +22,7 @@ import CardContentNewPlacePost from "./components/CardContentNewPlacePost";
 import { Divider, Stack, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
+//* Styled component for TextField
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
@@ -262,6 +263,7 @@ const NewPlacePostDisplay = () => {
                 name="title"
                 InputLabelProps={{
                   sx: {
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "11px",
                       ps: "12px",
@@ -281,6 +283,7 @@ const NewPlacePostDisplay = () => {
                 InputProps={{
                   inputProps: {
                     sx: {
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "11px",
                         ps: "12px",
@@ -300,6 +303,7 @@ const NewPlacePostDisplay = () => {
                 }}
                 FormHelperTextProps={{
                   sx: {
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "9px",
                       ps: "10px",
@@ -340,6 +344,7 @@ const NewPlacePostDisplay = () => {
                 name="description"
                 InputLabelProps={{
                   sx: {
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "11px",
                       ps: "12px",
@@ -359,6 +364,7 @@ const NewPlacePostDisplay = () => {
                 InputProps={{
                   inputProps: {
                     sx: {
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "11px",
                         ps: "12px",
@@ -378,6 +384,7 @@ const NewPlacePostDisplay = () => {
                 }}
                 FormHelperTextProps={{
                   sx: {
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "9px",
                       ps: "10px",
@@ -419,6 +426,7 @@ const NewPlacePostDisplay = () => {
                 name="address"
                 InputLabelProps={{
                   sx: {
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "11px",
                       ps: "12px",
@@ -438,6 +446,7 @@ const NewPlacePostDisplay = () => {
                 InputProps={{
                   inputProps: {
                     sx: {
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "11px",
                         ps: "12px",
@@ -457,6 +466,7 @@ const NewPlacePostDisplay = () => {
                 }}
                 FormHelperTextProps={{
                   sx: {
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "9px",
                       ps: "10px",
@@ -504,6 +514,7 @@ const NewPlacePostDisplay = () => {
                           sx={{
                             display: "flex",
                             justifyContent: "center",
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "7px",
                               ps: "8px",

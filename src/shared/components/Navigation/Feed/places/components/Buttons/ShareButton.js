@@ -35,8 +35,8 @@ const ShareButton = ({
 }) => {
   const [freezeShareIcon, setFreezeShareIcon] = useState(false);
 
-  // Checks if the share icon is clicked and executes the function that sets the current target for the event
-  // and declares a new state to control the output shown of the sharecounts without having to make a new API called
+  //* Checks if the share icon is clicked and executes the function that sets the current target for the event
+  //* and declares a new state to control the output shown of the sharecounts without having to make a new API called
   const handleClickShareButton = (e) => {
     onClickLinks(e);
     setFreezeShareIcon(true);
@@ -44,8 +44,9 @@ const ShareButton = ({
 
   const [storeValueToShow, setStoreValueToShow] = useState(0);
 
-  // useEffect checks when a post has been shared after the user clicked one sharable link on ButtonsWrapper and
-  // stores a new value to display the correct count of shares on the UI.
+  //? useEffect checks when a post has been shared after the user clicked one sharable link on ButtonsWrapper and
+  //? stores a new value to display the correct count of shares on the UI.
+  //? if removed the share count won't display correctly
   useEffect(() => {
     if (onSharePost) {
       setStoreValueToShow(1);
@@ -61,7 +62,7 @@ const ShareButton = ({
       icon={
         <StyleShareBorderIcon
           sx={{
-            // width for different screen sizes
+            //* width for different screen sizes
             width: {
               sps: "14px",
               ps: "15px",
@@ -76,7 +77,7 @@ const ShareButton = ({
               ms: "23px",
               lgs: "23px",
             },
-            // height for different screen sizes
+            //* height for different screen sizes
             height: {
               sps: "18px",
               ps: "20px",
@@ -97,7 +98,7 @@ const ShareButton = ({
       checkedIcon={
         <StyleShareBorderIcon
           sx={{
-            // width for different screen sizes
+            //* width for different screen sizes
             width: {
               sps: "14px",
               ps: "15px",
@@ -112,7 +113,7 @@ const ShareButton = ({
               ms: "23px",
               lgs: "23px",
             },
-            // height for different screen sizes
+            //* height for different screen sizes
             height: {
               sps: "18px",
               ps: "20px",
@@ -141,7 +142,7 @@ const ShareButton = ({
         <StyleShareIcon
           sx={{
             color: `${colorGreen}`,
-            // width for different screen sizes
+            //* width for different screen sizes
             width: {
               sps: "14px",
               ps: "15px",
@@ -156,7 +157,7 @@ const ShareButton = ({
               ms: "23px",
               lgs: "23px",
             },
-            // height for different screen sizes
+            //* height for different screen sizes
             height: {
               sps: "18px",
               ps: "20px",
@@ -178,7 +179,7 @@ const ShareButton = ({
         <StyleShareIcon
           sx={{
             color: `${colorGreen}`,
-            // width for different screen sizes
+            //* width for different screen sizes
             width: {
               sps: "14px",
               ps: "15px",
@@ -193,7 +194,7 @@ const ShareButton = ({
               ms: "23px",
               lgs: "23px",
             },
-            // height for different screen sizes
+            //* height for different screen sizes
             height: {
               sps: "18px",
               ps: "20px",
@@ -228,7 +229,7 @@ const ShareButton = ({
       sx={{
         paddingTop: "0px",
         paddingBottom: "0px",
-        // fontSize for different screen sizes
+        //* fontSize for different screen sizes
         fontSize: {
           sps: "10px",
           ps: "12px",

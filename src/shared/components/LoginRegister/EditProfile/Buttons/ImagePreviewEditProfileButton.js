@@ -7,7 +7,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Box } from "@mui/system";
 import { Avatar, ImageListItem, Stack, styled } from "@mui/material";
 
-// Styled component for Button
+//* Styled component for Button
 const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
   color:
     theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453c7",
@@ -18,7 +18,7 @@ const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
 }));
 
 // imageUrl contains the URL of the image on EditProfile
-// formInputsHandler is pointer to a function that stores the new image into an object on EditProfile
+//* formInputsHandler is pointer to a function that stores the new image into an object on EditProfile
 // selectedImageName is a props that contains the name of the image when the image is loaded
 // handleRemoveImage is a pointer to a function that removes the selected image and checks if the user wants to delete the current profile photo
 // isLoading is a boolean indicating whether the image is loaded or not
@@ -32,7 +32,7 @@ const ImagePreviewEditProfileButton = ({
 }) => {
   const [loadingImage, setLoadingImage] = useState(true);
 
-  // This emulates a loading time when user selects an image
+  //* This emulates a loading time when user selects an image
   setTimeout(() => {
     setLoadingImage(false);
   }, "1000");
@@ -81,7 +81,7 @@ const ImagePreviewEditProfileButton = ({
                         visibility:
                           isLoading || showSuccess ? "hidden" : "visible",
                         cursor: "pointer",
-                        // width for different screen sizes
+                        //* width for different screen sizes
                         width: {
                           sps: "16px",
                           ps: "17px",
@@ -96,7 +96,7 @@ const ImagePreviewEditProfileButton = ({
                           ms: "24px",
                           lgs: "24px",
                         },
-                        // height for different screen sizes
+                        //* height for different screen sizes
                         height: {
                           sps: "16px",
                           ps: "17px",
@@ -127,7 +127,7 @@ const ImagePreviewEditProfileButton = ({
                         srcSet={imageUrl}
                         alt={selectedImageName}
                         sx={{
-                          // width for different screen sizes
+                          //* width for different screen sizes
                           width: {
                             sps: "60px",
                             ps: "90px",
@@ -142,7 +142,7 @@ const ImagePreviewEditProfileButton = ({
                             ms: "150px",
                             lgs: "150px",
                           },
-                          // height for different screen sizes
+                          //* height for different screen sizes
                           height: {
                             sps: "60px",
                             ps: "90px",

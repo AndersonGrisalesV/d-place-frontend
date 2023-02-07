@@ -10,6 +10,7 @@ import styled from "@emotion/styled";
 
 const drawerWidth = 214;
 
+//* Component configuration for openedMixin
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -18,7 +19,7 @@ const openedMixin = (theme) => ({
   }),
   overflowX: "hidden",
 });
-
+//* Component configuration for closedMixin
 const closedMixin = (theme) => ({
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
@@ -30,7 +31,7 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
-
+//* Styled component for MuiDrawer
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({

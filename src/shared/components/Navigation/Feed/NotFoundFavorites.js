@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Box, Card, CardMedia, styled } from "@mui/material";
 
+//* Styled component for NotFoundFavorites on FavoritePlaces
 const BoxStyled = styled(Box)(() => ({
   marginTop: "12%",
   backgroundImage: "none",
@@ -9,6 +10,7 @@ const BoxStyled = styled(Box)(() => ({
   boxShadow: "transparent",
   display: "flex",
   justifyContent: "center",
+  //* height for different screen sizes
   height: {
     ns: "514px",
     mns: "514px",
@@ -16,6 +18,7 @@ const BoxStyled = styled(Box)(() => ({
     ms: "514px",
     lgs: "514px",
   },
+  //* maxWidth for different screen sizes
   maxWidth: {
     ns: "800px",
     msc: "800px",
@@ -26,10 +29,15 @@ const BoxStyled = styled(Box)(() => ({
 }));
 
 const NotFoundFavorites = () => {
+  // retrieve the storedData from local storage
   const storedData = JSON.parse(localStorage.getItem("userData")) || null;
 
+  // initialize the theme state with either the storedData theme or "light"
   const [theme, setTheme] = useState(storedData ? storedData.theme : "light");
 
+  // useEffect hook that listens to changes on storedData and theme
+  // compare the theme in storedData and the theme in state
+  // if they are different, update the theme in state
   useEffect(() => {
     if (storedData) {
       if (storedData.theme !== theme) {
@@ -47,6 +55,7 @@ const NotFoundFavorites = () => {
           backgroundImage: "none",
           borderRadius: "18px",
           paddingBottom: "8px",
+          //* maxWidth for different screen sizes
           maxWidth: {
             sps: "200px",
             ps: "285px",

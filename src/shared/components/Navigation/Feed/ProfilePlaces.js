@@ -21,7 +21,7 @@ const ProfilePlaces = ({ onFilterSearch = null }) => {
   const { uid } = params;
 
   const [loadedPlaces, setLoadedPlaces] = useState();
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
   const [dataStatus, setDataStatus] = useState(false);
   const [emptySearch, setEmptySearch] = useState(false);
   const [counter, setCounter] = useState(false);

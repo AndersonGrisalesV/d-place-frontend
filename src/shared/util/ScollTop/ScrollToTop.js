@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-// ScrollToTop component that scrolls to top of the page whenever the pathname changes
+//* ScrollToTop component that scrolls to top of the page whenever the pathname changes
 const ScrollToTop = (props, { pathname }) => {
   // useEffect hook that listens for changes in the pathname and executes a scroll to top function
   useEffect(() => {

@@ -6,13 +6,13 @@ import ButtonYesCancel from "../ButtonYesCancel";
 import { Box, Modal, Stack, Typography } from "@mui/material";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 
-// Styled component for styleModalCancelEditComment container Box
+//* Styled component for styleModalCancelEditComment container Box
 const styleModalCancel = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  // width for different screen sizes
+  //* width for different screen sizes
   width: {
     sps: "257px",
     ps: "267px",
@@ -27,7 +27,7 @@ const styleModalCancel = {
     ms: "396px",
     lgs: "396px",
   },
-  // height for different screen sizes
+  //* height for different screen sizes
   height: {
     sps: "4.1rem",
     ps: "4.5rem",
@@ -53,7 +53,7 @@ const styleModalCancel = {
 
 // open is a pointer to a function that changes the state open to true on CommentShow
 // handleClose is a pointer to a function that changes the state open to false on CommentShow
-// handleConfirmDelete is a pointer to a function that cancels the edition of the comment
+//* handleConfirmDelete is a pointer to a function that cancels the edition of the comment
 const ModalCancelEditComment = ({ open, handleClose, handleConfirmCancel }) => {
   return (
     <div>
@@ -82,7 +82,7 @@ const ModalCancelEditComment = ({ open, handleClose, handleConfirmCancel }) => {
                   sx={{
                     backgroundColor: "transparent",
                     color: "#da4453c7",
-                    // width for different screen sizes
+                    //* width for different screen sizes
                     width: {
                       sps: "15px",
                       ps: "16px",
@@ -97,7 +97,7 @@ const ModalCancelEditComment = ({ open, handleClose, handleConfirmCancel }) => {
                       ms: "24px",
                       lgs: "24px",
                     },
-                    // height for different screen sizes
+                    //* height for different screen sizes
                     height: {
                       sps: "18px",
                       ps: "20px",
@@ -117,7 +117,7 @@ const ModalCancelEditComment = ({ open, handleClose, handleConfirmCancel }) => {
                 <Typography
                   sx={{
                     display: "inline",
-                    // fontSize for different screen sizes
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "12px",
                       ps: "13px",

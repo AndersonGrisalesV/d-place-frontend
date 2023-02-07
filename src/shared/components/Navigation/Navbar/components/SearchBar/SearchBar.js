@@ -6,6 +6,7 @@ import { Box, ListItemIcon, Stack, Zoom } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import { alpha, styled } from "@mui/material/styles";
 
+//* Styled component for SearchBar
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -21,7 +22,7 @@ const Search = styled("div")(({ theme }) => ({
     width: "auto",
   },
 }));
-
+//* Styled component for SearchIconWrapper
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
@@ -31,7 +32,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
 }));
-
+//* Styled component for StyledInputBase
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {

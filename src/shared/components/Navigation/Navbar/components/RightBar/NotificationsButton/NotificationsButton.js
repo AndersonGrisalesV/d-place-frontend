@@ -10,6 +10,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import { Badge, Box, IconButton, MenuItem } from "@mui/material";
 import styled from "@emotion/styled/macro";
 
+//* Styled component for MenuItem
 const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "#da4453c7" : "#ffe0e3c7",

@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Box, Fab, Grow, Zoom } from "@mui/material";
 import styled from "@emotion/styled";
 
+//* Styled component for Fab
 const StyleFabButton = styled(Fab)(({ theme }) => ({
   background: "#da4453",
   color: theme.palette.mode === "dark" ? "" : "#fff",
@@ -15,7 +16,7 @@ const StyleFabButton = styled(Fab)(({ theme }) => ({
     color: theme.palette.mode === "dark" ? "" : "#fff",
   },
 }));
-
+//* Styled component for NavLink
 const StyleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
 }));

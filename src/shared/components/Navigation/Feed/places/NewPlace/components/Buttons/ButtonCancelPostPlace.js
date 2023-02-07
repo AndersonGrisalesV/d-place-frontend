@@ -7,6 +7,7 @@ import ModalCancel from "./Modals/ModalCancel";
 import { Button, Zoom } from "@mui/material";
 import { styled } from "@mui/system";
 
+//* Styled component for Button
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
   "&:hover": {
@@ -15,6 +16,11 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+// open is a boolean that indicates if the user wants to cancel the posting a new place on NewPlacePostDisplay
+// close is a pointer to a function that changes the state open to false on NewPlacePostDisplay
+// onHandleOpen is a pointer to a function that changes the state open to true on NewPlacePostDisplay (they have to be individual functions or else MUI will have a conflict)
+// onHandleClose is a pointer to a function that changes the state open to false on NewPlacePostDisplay (they have to be individual functions or else MUI will have a conflict)
+// showSuccess helps us disable the button(s) after clicking the form
 const ButtonCancelPostPlace = ({
   open,
   close,
@@ -35,6 +41,7 @@ const ButtonCancelPostPlace = ({
             sx={{
               fontWeight: 500,
               textTransform: "none",
+              //* fontSize for different screen sizes
               fontSize: {
                 sps: "10px",
                 ps: "12px",
@@ -49,6 +56,7 @@ const ButtonCancelPostPlace = ({
                 ms: "14px",
                 lgs: "14px",
               },
+              //* marginRight for different screen sizes
               marginRight: {
                 sps: "-10px",
                 ps: "-9px",
@@ -74,7 +82,6 @@ const ButtonCancelPostPlace = ({
           <ModalCancel
             open={open}
             close={close}
-            onHandleOpen={onHandleOpen}
             onHandleClose={onHandleClose}
           />
         )}

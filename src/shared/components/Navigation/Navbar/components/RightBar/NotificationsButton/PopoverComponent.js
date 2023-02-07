@@ -10,6 +10,7 @@ import AvatarNotification from "./AvatarNotification";
 import { Popover, Typography } from "@mui/material";
 import { Stack, styled } from "@mui/system";
 
+//* Styled component for Stack
 const StyleStack = styled(Stack)(({ theme }) => ({
   "&:hover": {
     color:

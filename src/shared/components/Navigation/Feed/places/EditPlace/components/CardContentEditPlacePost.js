@@ -6,6 +6,7 @@ const CardContentEditPlacePost = (props) => {
   return (
     <CardContent
       sx={{
+        //* width for different screen sizes
         width: {
           sps: "150px",
           ps: "246px",

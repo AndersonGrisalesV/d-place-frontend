@@ -8,23 +8,23 @@ import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import { yellow } from "@mui/material/colors";
 import { Checkbox, IconButton, styled } from "@mui/material";
 
-// Personalized color from MUI
+//* Personalized color from MUI
 const colorYellow = yellow[700];
 
-// Styled component for ModeCommentOutlinedIcon
+//* Styled component for ModeCommentOutlinedIcon
 const StyleCommentBorderIcon = styled(ModeCommentOutlinedIcon)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 1,
 }));
 
-// Styled component for CommentIcon
+//* Styled component for CommentIcon
 const StyleCommentIcon = styled(CommentIcon)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 0,
 }));
 
-// loadedPlaces are places passed by FavoritePlaces or Feed or ProfilePlaces depending on where place is called
-// CommentButton is on ButtonsWrapper
+//* loadedPlaces are places passed by FavoritePlaces or Feed or ProfilePlaces depending on where place is called
+//* CommentButton is on ButtonsWrapper
 const CommentButton = ({ loadedPlaces = false }) => {
   let navigate = useNavigate();
   const login = useContext(LoginContext);
@@ -48,7 +48,7 @@ const CommentButton = ({ loadedPlaces = false }) => {
       sx={{
         paddingTop: "0px",
         paddingBottom: "0px",
-        // fontSize for different screen sizes
+        //* fontSize for different screen sizes
         fontSize: {
           sps: "10px",
           ps: "12px",
@@ -72,7 +72,7 @@ const CommentButton = ({ loadedPlaces = false }) => {
         icon={
           <StyleCommentBorderIcon
             sx={{
-              // width for different screen sizes
+              //* width for different screen sizes
               width: {
                 sps: "15px",
                 ps: "16px",
@@ -87,7 +87,7 @@ const CommentButton = ({ loadedPlaces = false }) => {
                 ms: "24px",
                 lgs: "24px",
               },
-              // height for different screen sizes
+              //* height for different screen sizes
               height: {
                 sps: "18px",
                 ps: "20px",
@@ -110,7 +110,7 @@ const CommentButton = ({ loadedPlaces = false }) => {
             sx={{
               backgroundColor: "transparent",
               color: `${colorYellow}`,
-              // width for different screen sizes
+              //* width for different screen sizes
               width: {
                 sps: "15px",
                 ps: "16px",
@@ -125,7 +125,7 @@ const CommentButton = ({ loadedPlaces = false }) => {
                 ms: "24px",
                 lgs: "24px",
               },
-              // height for different screen sizes
+              //* height for different screen sizes
               height: {
                 sps: "18px",
                 ps: "20px",

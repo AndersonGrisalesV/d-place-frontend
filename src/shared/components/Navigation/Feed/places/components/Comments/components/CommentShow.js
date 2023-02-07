@@ -27,13 +27,13 @@ import {
 } from "@mui/material";
 import styled from "@emotion/styled";
 
-// Styled component for ListItem
+//* Styled component for ListItem
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",
   paddingLeft: "0px",
 });
 
-// Styled component for ListItemText
+//* Styled component for ListItemText
 const StyleListItemText = styled(ListItemText)(({ theme }) => ({
   "& .MuiListItemText-primary": {
     display: "flex",
@@ -45,7 +45,7 @@ const StyleListItemText = styled(ListItemText)(({ theme }) => ({
   },
 }));
 
-// Styled component for TextField
+//* Styled component for TextField
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
@@ -64,12 +64,12 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+//* onPlaceComments are the comment places passed down by PlaceGetById > CommentsPost where only comments are selected and then passed down to CommentsDisplay and then to CommentShow
+//* onRefreshPlaceComments is a pointer to a function that triggers a state that refreshes the places and their comments once one of them is edited or deleted PlaceGetById > CommentsPost where only comments are selected and then passed down to CommentsDisplay and then to CommentShow
+//* onErrorDeleteComment is a pointer to a function that manages error/success messages when creating, editing, deleting a message PlaceGetById > CommentsPost > CommentsDisplay
 const CommentShow = ({
   onPlaceComments,
   onRefreshPlaceComments,
-  onButton,
-  onAddComment,
-  onDeletedComments,
   onErrorDeleteComment,
 }) => {
   const login = useContext(LoginContext);
@@ -78,6 +78,7 @@ const CommentShow = ({
 
   const [showSuccess, setShowSuccess] = useState(false);
 
+  //* Function to convert the comment's postDate to a human readable date
   const addDays = (date) => {
     let year;
     let month;
@@ -134,12 +135,14 @@ const CommentShow = ({
 
   let fetchedDate = addDays(onPlaceComments.postCommentDate);
 
+  // Preloads the place comments
   const initialFormInputs = {
     commentText: `${onPlaceComments.commentText}`,
   };
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
 
+  // Fucntion to handle the object storing the comment edition or when a comment was touched or modified by user
   const formInputsHandler = (e) => {
     if (e.target.name === "commentText" && showBlurComment) {
       setShowBlurComment(false);
@@ -150,6 +153,7 @@ const CommentShow = ({
     });
   };
 
+  // Comment validators
   const {
     defaultValue: commentInput,
     isValid: commentIsValid,
@@ -166,18 +170,23 @@ const CommentShow = ({
     return false;
   }
 
+  // Function to reset the value of a comment the user tried to modify
   const handleSendComment = (e) => {
     resetCommentInput();
   };
 
+  // Function that handles when the fomr(comment) was submited
   const onSubmitEditHandler = async (e) => {
     e.preventDefault();
 
+    //* Generates a new date to assign to the new comment
     let date = new Date().toJSON();
+    //* Checks if the user modified the comment or not
     if (login.isLoggedIn && formInputs) {
       if (showBlurComment) {
         formInputs.commentText = "same";
       }
+
       try {
         await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/places/${onPlaceComments.placeId}/editcomment/${onPlaceComments._id}`,
@@ -192,20 +201,21 @@ const CommentShow = ({
           }
         );
         setShowSuccess(true);
-
+        // Shows the success message, using onErrorDeleteComment pointer to the funciton that handles that operation on PlaceGetById
         onErrorDeleteComment(
           null,
           null,
           "edited",
           "Your comment was edited successfully"
         );
-
+        // Triggers the pointer to the function that refreshes the state of the place's comments
         onRefreshPlaceComments(onPlaceComments.placeId);
-
+        // Delays success message for user to see it
         setTimeout(() => {
           setShowSuccess(false);
         }, "930");
       } catch (err) {
+        // Shows possible errors message, using onErrorDeleteComment pointer to the funciton that handles that operation on PlaceGetById
         setTimeout(() => {
           onErrorDeleteComment(
             err,
@@ -213,38 +223,44 @@ const CommentShow = ({
             null,
             "Something went wrong, try again"
           );
-
+          // Triggers  the pointer to the function that refreshes the state of the place's comments
           onRefreshPlaceComments(onPlaceComments.placeId);
         }, "910");
       }
     }
   };
 
+  // State and functions to open modals to warn users when trying to cancel the edition or deletion a comment
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const [editComment, setEditComment] = useState(false);
+  //* State to check if user touches the comment before enable submit button or not
   const [showBlurComment, setShowBlurComment] = useState(true);
 
+  // Function to change state in order for the button EditDeleteComment to know which one to show
   const handleEditComment = () => {
     if (login.isLoggedIn) {
       setEditComment((eComment) => !eComment);
     }
   };
 
+  // Function to close the modal ModalCancelEditComment, it changes the state setEditComment to show the correcto button and resets the commentInput
   const handleConfirmCancel = () => {
     handleClose();
     setEditComment((eComment) => !eComment);
     resetCommentInput();
   };
 
+  // Function to open up the modal ModalCancelDeleteComment only if user is loggedIn
   const handleDeleteComment = () => {
     if (login.isLoggedIn) {
       handleOpen();
     }
   };
 
+  //* Function that sends an API request to the backend in order to delete a comment
   const handleConfirmDelete = async (e) => {
     e.preventDefault();
     try {
@@ -258,19 +274,21 @@ const CommentShow = ({
       );
 
       setShowSuccess(true);
-
+      // Shows the success message, using onErrorDeleteComment pointer to the funciton that handles that operation on PlaceGetById
       onErrorDeleteComment(
         null,
         null,
         "deleted",
         "Your comment was deleted successfully"
       );
-
+      // Triggers the pointer to the function that refreshes the state of the place's comments
       onRefreshPlaceComments(onPlaceComments.placeId);
+      // Delays success message for user to see it
       setTimeout(() => {
         setShowSuccess(false);
       }, "930");
     } catch (err) {
+      // Shows possible errors message, using onErrorDeleteComment pointer to the funciton that handles that operation on PlaceGetById
       setTimeout(() => {
         onErrorDeleteComment(
           err,
@@ -278,14 +296,15 @@ const CommentShow = ({
           null,
           "Something went wrong, try again"
         );
-
+        //  Triggers  the pointer to the function that refreshes the state of the place's comments
         onRefreshPlaceComments(onPlaceComments.placeId);
       }, "910");
     }
-
+    // Function to close modal ModalCancelDeleteComment
     handleClose();
   };
 
+  //* Logic to enable/disable send button
   let formIsValid = false;
 
   if (login.isLoggedIn) {
@@ -333,7 +352,7 @@ const CommentShow = ({
                 sx={{
                   paddingTop: "2px",
                   marginTop: "0px",
-                  // display for different screen sizes
+                  //* display for different screen sizes
                   display: {
                     sps: "none",
                     ps: "none",
@@ -355,7 +374,7 @@ const CommentShow = ({
                     color: "#fff",
                     marginTop: "5%",
                     marginLeft: "5%",
-                    // display for different screen sizes
+                    //* display for different screen sizes
                     fontSize: {
                       sps: "10px",
                       ps: "12px",
@@ -371,7 +390,7 @@ const CommentShow = ({
                       lgs: "18px",
                     },
                     bgcolor: "#da4453c7",
-                    // width for different screen sizes
+                    //* width for different screen sizes
                     width: {
                       sps: "28px",
                       ps: "31px",
@@ -386,7 +405,7 @@ const CommentShow = ({
                       ms: "40px",
                       lgs: "40px",
                     },
-                    // height for different screen sizes
+                    //* height for different screen sizes
                     height: {
                       sps: "28px",
                       ps: "31px",
@@ -419,7 +438,7 @@ const CommentShow = ({
                     fontWeight={400}
                     color="text.primary"
                     sx={{
-                      // fontSize for different screen sizes
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "10px",
                         ps: "11px",
@@ -445,7 +464,7 @@ const CommentShow = ({
                     fontWeight={400}
                     color="text.secondary"
                     sx={{
-                      // fontSize for different screen sizes
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "8px",
                         ps: "9px",
@@ -467,7 +486,7 @@ const CommentShow = ({
                         display: "flex",
                         justifyContent: "flex-start",
                         marginBottom: "10px",
-                        // fontSize for different screen sizes
+                        //* fontSize for different screen sizes
                         fontSize: {
                           sps: "6px",
                           ps: "7px",
@@ -489,6 +508,9 @@ const CommentShow = ({
                     >
                       {`${fetchedDate.month} ${fetchedDate.day}, ${fetchedDate.year}`}
                     </Typography>
+                    {/* Limmits the characters shown in the comment, but if users
+                    writes characters without spaces it breaks things. (It only works if users
+                    leave no spaces but if users write many characters and leave a space it implodes) */}
                     {`${
                       onPlaceComments.commentText.includes(" ") === false
                         ? onPlaceComments.commentText.slice(0, 72) + "…"
@@ -554,6 +576,7 @@ const CommentShow = ({
           {login.isLoggedIn && !editComment && isEdit ? (
             buttonsShow
           ) : (
+            //* Correction of space when showing edit/delete comment buttons
             <React.Fragment>
               <br />
             </React.Fragment>

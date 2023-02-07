@@ -2,13 +2,13 @@ import React from "react";
 
 import Avatar from "@mui/material/Avatar";
 
-// loadedPlaces are places passed by FavoritePlaces or Feed or ProfilePlaces depending on where place is called
+//* loadedPlaces are places passed by FavoritePlaces or Feed or ProfilePlaces depending on where place is called
 // onProfileNavigation is a pointer to a function that goes to the creator of the place profile on AvatarWrapper component
 const AvatarComponent = ({ loadedPlaces, onProfileNavigation }) => {
   return (
     <Avatar
       onClick={onProfileNavigation}
-      // Checks if the user has an image or not
+      //* Checks if the user has an image or not
       src={
         loadedPlaces.creatorId.imageUrl.url
           ? loadedPlaces.creatorId.imageUrl.url
@@ -18,7 +18,7 @@ const AvatarComponent = ({ loadedPlaces, onProfileNavigation }) => {
       sx={{
         color: "#fff",
         cursor: "pointer",
-        // fontSize for different screen sizes
+        //* fontSize for different screen sizes
         fontSize: {
           sps: "10px",
           ps: "12px",
@@ -34,7 +34,7 @@ const AvatarComponent = ({ loadedPlaces, onProfileNavigation }) => {
           lgs: "18px",
         },
         bgcolor: "#da4453c7",
-        // width for different screen sizes
+        //* width for different screen sizes
         width: {
           sps: "28px",
           ps: "31px",
@@ -49,7 +49,7 @@ const AvatarComponent = ({ loadedPlaces, onProfileNavigation }) => {
           ms: "40px",
           lgs: "40px",
         },
-        // height for different screen sizes
+        //* height for different screen sizes
         height: {
           sps: "28px",
           ps: "31px",

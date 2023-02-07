@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
 import { red } from "@mui/material/colors";
 
+//* Personalized color from MUI
 const buttonColor = red["A400"];
 
 const LoginButton = () => {

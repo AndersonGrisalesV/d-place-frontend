@@ -5,9 +5,7 @@ import { Stack } from "@mui/material";
 const LoadingSpinnerWrapper = (props) => {
   let loadingSpinner = null;
 
-  // Checking which one "onLogin" or the "onNewPlace" prop comes in
-  // to render the loadingSpinner with different width sizes
-
+  //* Checking which one "onLogin" or the "onNewPlace" prop comes in to render the loadingSpinner with different width sizes
   if (props.onLogin) {
     loadingSpinner = (
       <Stack
@@ -17,7 +15,7 @@ const LoadingSpinnerWrapper = (props) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          // width for different screen sizes
+          //* width for different screen sizes
           width: {
             sps: "122%",
             ps: "112%",
@@ -46,7 +44,7 @@ const LoadingSpinnerWrapper = (props) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          // width for different screen sizes
+          //* width for different screen sizes
           width: {
             sps: "122%",
             ps: "125%",

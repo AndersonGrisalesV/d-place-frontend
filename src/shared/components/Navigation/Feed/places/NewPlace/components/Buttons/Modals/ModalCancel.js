@@ -7,11 +7,13 @@ import ButtonYesCancelNewPlace from "../ButtonYesCancelNewPlace";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { Box, Modal, Stack, Typography } from "@mui/material";
 
+//* Styled component for ModalCancel on ButtonCancelPostPlace > NewPlacePostDisplay
 const styleModalCancel = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
+  //* width for different screen sizes
   width: {
     sps: "234px",
     ps: "278px",
@@ -26,6 +28,7 @@ const styleModalCancel = {
     ms: "388px",
     lgs: "388px",
   },
+  //* height for different screen sizes
   height: {
     sps: "4.1rem",
     ps: "4.5rem",
@@ -49,9 +52,13 @@ const styleModalCancel = {
   paddingBottom: "0px",
 };
 
+// open is a pointer to a function that changes the state open to true on ButtonCancelPostPlace > NewPlacePostDisplay
+// close is a pointer to a function that changes the state open to false on ButtonCancelPostPlace > NewPlacePostDisplay
+//* onHandleClose is a pointer to a function that changes the state open to false on ButtonCancelPostPlace > NewPlacePostDisplay (it must be in a different prop as close or MUI has problems)
 const ModalCancel = ({ open, close, onHandleClose }) => {
   let navigate = useNavigate();
 
+  // Function that gets the user to where he was before when cancelling the creation of a new place and closes the modal ModalCncel on ButtonCancePostPlace
   const handleConfirmCancel = useCallback(() => {
     onHandleClose();
     navigate(-1);
@@ -62,8 +69,8 @@ const ModalCancel = ({ open, close, onHandleClose }) => {
       <Modal
         open={open}
         onClose={close}
-        aria-labelledby="modal-modal-confirm-cancel"
-        aria-describedby="modal-modal-confirm-cancel-edit"
+        aria-labelledby="modal-confirm-cancel-send-new-place"
+        aria-describedby="modal-confirm-cancel-send-new-place"
       >
         <Stack>
           <Box sx={styleModalCancel}>
@@ -84,6 +91,7 @@ const ModalCancel = ({ open, close, onHandleClose }) => {
                   sx={{
                     backgroundColor: "transparent",
                     color: "#da4453c7",
+                    //* width for different screen sizes
                     width: {
                       sps: "15px",
                       ps: "16px",
@@ -98,6 +106,7 @@ const ModalCancel = ({ open, close, onHandleClose }) => {
                       ms: "24px",
                       lgs: "24px",
                     },
+                    //* height for different screen sizes
                     height: {
                       sps: "18px",
                       ps: "20px",
@@ -117,6 +126,7 @@ const ModalCancel = ({ open, close, onHandleClose }) => {
                 <Typography
                   sx={{
                     display: "inline",
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "12px",
                       ps: "13px",
@@ -139,7 +149,7 @@ const ModalCancel = ({ open, close, onHandleClose }) => {
                   Your place will be lost, cancel?
                 </Typography>
               </Stack>
-
+              {/* Margin correction */}
               <p style={{ margin: "1px" }} />
               <Stack
                 direction="row"

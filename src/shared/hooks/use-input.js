@@ -1,12 +1,12 @@
 import { useReducer } from "react";
 
-// Defining the initial state for the input form element
+//* Defining the initial state for the input form element
 const initialInputState = {
   value: "",
   isTouched: false,
 };
 
-// The input state reducer function
+//* The input state reducer function
 const inputStateReducer = (state, action) => {
   // Handling the INPUT action
   if (action.type === "INPUT") {
@@ -24,29 +24,29 @@ const inputStateReducer = (state, action) => {
   return initialInputState;
 };
 
-// The custom hook for handling focus and blur events on the input element
+//* The custom hook for handling focus and blur events on the input element
 const useFocusBlurHook = (validateValue) => {
-  // Declaring the inputState using the useReducer hook
+  //* Declaring the inputState using the useReducer hook
   const [inputState, dispatch] = useReducer(
     inputStateReducer,
     initialInputState
   );
 
-  // Checking the validity of the input value using the passed validateValue function
+  //* Checking the validity of the input value using the passed validateValue function
   const valueIsValid = validateValue(inputState.value);
-  // Checking whether there's an error or not based on the input validity and whether the input has been touched or not
+  //* Checking whether there's an error or not based on the input validity and whether the input has been touched or not
   const hasError = !valueIsValid && inputState.isTouched;
 
-  // Event handler for the change event of the input element
+  //* Event handler for the change event of the input element
   const valueChangeHandler = (event) => {
     dispatch({ type: "INPUT", value: event.target.value });
   };
-  // Event handler for the blur event of the input element
+  //* Event handler for the blur event of the input element
   const inputBlurHandler = (event) => {
     dispatch({ type: "BLUR" });
   };
 
-  // Function to reset the input state
+  //* Function to reset the input state
   const reset = () => {
     dispatch({ type: "RESET" });
   };

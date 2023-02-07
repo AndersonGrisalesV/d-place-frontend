@@ -4,6 +4,7 @@ import { LoginContext } from "../../../../../../../context/login-context";
 
 import { Button, styled, Zoom } from "@mui/material";
 
+//* Styled component for Button
 const StyleButton = styled(Button)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453",
   "&:hover": {
@@ -12,6 +13,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+// onYesDelete is a pointer to a function that cancels the edition of a place on ModalCancel > ButtonCancelEditPlace > EditlacePostDisplay
 const ButtonYesCancelEditPlace = ({ onYesCancel }) => {
   const login = useContext(LoginContext);
 
@@ -25,6 +27,7 @@ const ButtonYesCancelEditPlace = ({ onYesCancel }) => {
             sx={{
               fontWeight: 500,
               textTransform: "none",
+              //* fontSize for different screen sizes
               fontSize: {
                 sps: "10px",
                 ps: "12px",
@@ -39,6 +42,7 @@ const ButtonYesCancelEditPlace = ({ onYesCancel }) => {
                 ms: "14px",
                 lgs: "14px",
               },
+              //* marginRight for different screen sizes
               marginRight: {
                 sps: "-10px",
                 ps: "-9px",

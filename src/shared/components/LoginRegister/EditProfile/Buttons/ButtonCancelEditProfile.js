@@ -32,7 +32,7 @@ const ButtonCancelEditProfile = ({ open, close, onOpenModal }) => {
             sx={{
               fontWeight: 500,
               textTransform: "none",
-              // fontSize for different screen sizes
+              //* fontSize for different screen sizes
               fontSize: {
                 sps: "10px",
                 ps: "12px",
@@ -47,7 +47,7 @@ const ButtonCancelEditProfile = ({ open, close, onOpenModal }) => {
                 ms: "14px",
                 lgs: "14px",
               },
-              // marginRight for different screen sizes
+              //* marginRight for different screen sizes
               marginRight: {
                 sps: "-10px",
                 ps: "-9px",

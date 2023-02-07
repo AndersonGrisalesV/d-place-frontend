@@ -24,6 +24,7 @@ import ButtonDeletePlace from "./components/Buttons/ButtonDeletePlace";
 import { Box, Divider, Stack, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
+//* Styled component for TextField
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
@@ -381,6 +382,7 @@ const EditPlacePostDisplay = () => {
                         name="title"
                         InputLabelProps={{
                           sx: {
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "11px",
                               ps: "12px",
@@ -400,6 +402,7 @@ const EditPlacePostDisplay = () => {
                         InputProps={{
                           inputProps: {
                             sx: {
+                              //* fontSize for different screen sizes
                               fontSize: {
                                 sps: "11px",
                                 ps: "12px",
@@ -419,6 +422,7 @@ const EditPlacePostDisplay = () => {
                         }}
                         FormHelperTextProps={{
                           sx: {
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "9px",
                               ps: "10px",
@@ -461,6 +465,7 @@ const EditPlacePostDisplay = () => {
                         name="description"
                         InputLabelProps={{
                           sx: {
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "11px",
                               ps: "12px",
@@ -480,6 +485,7 @@ const EditPlacePostDisplay = () => {
                         InputProps={{
                           inputProps: {
                             sx: {
+                              //* fontSize for different screen sizes
                               fontSize: {
                                 sps: "11px",
                                 ps: "12px",
@@ -499,6 +505,7 @@ const EditPlacePostDisplay = () => {
                         }}
                         FormHelperTextProps={{
                           sx: {
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "9px",
                               ps: "10px",
@@ -542,6 +549,7 @@ const EditPlacePostDisplay = () => {
                         name="address"
                         InputLabelProps={{
                           sx: {
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "11px",
                               ps: "12px",
@@ -561,6 +569,7 @@ const EditPlacePostDisplay = () => {
                         InputProps={{
                           inputProps: {
                             sx: {
+                              //* fontSize for different screen sizes
                               fontSize: {
                                 sps: "11px",
                                 ps: "12px",
@@ -580,6 +589,7 @@ const EditPlacePostDisplay = () => {
                         }}
                         FormHelperTextProps={{
                           sx: {
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "9px",
                               ps: "10px",
@@ -622,13 +632,13 @@ const EditPlacePostDisplay = () => {
                                 isLoading={isLoading}
                                 showSuccess={showSuccess}
                                 setImageUrl={setImageUrl}
-                                showBlurImage={showBlurImage}
                               />
                               {!imageUrl && !selectedImage ? (
                                 <Typography
                                   sx={{
                                     display: "flex",
                                     justifyContent: "center",
+                                    //* fontSize for different screen sizes
                                     fontSize: {
                                       sps: "7px",
                                       ps: "8px",

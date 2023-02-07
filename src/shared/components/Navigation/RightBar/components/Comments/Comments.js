@@ -17,6 +17,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 
+//* Styled component for ListItem
 const StyledListItem = styled(ListItem)({
   paddingTop: "0px",
   paddingLeft: "0px",

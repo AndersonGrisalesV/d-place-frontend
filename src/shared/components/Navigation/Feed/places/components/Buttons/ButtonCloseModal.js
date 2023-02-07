@@ -3,7 +3,7 @@ import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, styled, Zoom } from "@mui/material";
 
-// Styled component for CloseIcon
+//* Styled component for CloseIcon
 const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
   color:
     theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#da4453c7",
@@ -13,7 +13,7 @@ const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
   },
 }));
 
-// handleClose is a pointer to a function that closes the map Modal on ButtonsWrapper
+//* handleClose is a pointer to a function that closes the map Modal on ButtonsWrapper
 const ButtonCloseModal = ({ handleClose }) => {
   return (
     <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
@@ -23,7 +23,7 @@ const ButtonCloseModal = ({ handleClose }) => {
           justifyContent: "end",
           alignAitems: "flex-start",
           backgroundColor: "transparent",
-          // marginRight for different screen sizes
+          //* marginRight for different screen sizes
           marginRight: {
             sps: "20px",
             ps: "20px",
@@ -45,7 +45,7 @@ const ButtonCloseModal = ({ handleClose }) => {
           onClick={handleClose}
           sx={{
             cursor: "pointer",
-            // width for different screen sizes
+            //* width for different screen sizes
             width: {
               sps: "16px",
               ps: "17px",
@@ -60,7 +60,7 @@ const ButtonCloseModal = ({ handleClose }) => {
               ms: "24px",
               lgs: "24px",
             },
-            // height for different screen sizes
+            //* height for different screen sizes
             height: {
               sps: "16px",
               ps: "17px",

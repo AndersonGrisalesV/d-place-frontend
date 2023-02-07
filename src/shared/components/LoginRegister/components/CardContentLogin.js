@@ -8,7 +8,7 @@ const CardContentLogin = (props) => {
     <CardContent
       bgcolor={"backgroundColor"}
       sx={{
-        // width for different screen sizes
+        //* width for different screen sizes
         width: {
           sps: "156px",
           ps: "224px",

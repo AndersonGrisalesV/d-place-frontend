@@ -8,8 +8,10 @@ import { Box } from "@mui/material";
 import { red } from "@mui/material/colors";
 import styled from "@emotion/styled";
 
+//* Personalized color from MUI
 const buttonColor = red["A400"];
 
+//* Styled component for Button
 const StyleButton = styled(Button)(({ theme }) => ({
   backgroundColor:
     theme.palette.mode === "dark" ? "transparent" : "transparent",
@@ -20,6 +22,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+//* Styled component for Button
 const StyleButtonOnComment = styled(Button)(({ theme }) => ({
   minWidth: "51px",
   padding: "0px",

@@ -7,11 +7,13 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { Modal, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 
+//* Styled component for styleModalDDeletePlace container Box
 const styleModalDelete = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
+  //* width for different screen sizes
   width: {
     sps: "280px",
     ps: "346px",
@@ -26,6 +28,7 @@ const styleModalDelete = {
     ms: "509px",
     lgs: "509px",
   },
+  //* height for different screen sizes
   height: {
     sps: "4.1rem",
     ps: "4.5rem",
@@ -49,14 +52,17 @@ const styleModalDelete = {
   paddingBottom: "0px",
 };
 
+// open is a pointer to a function that changes the state open to true on  EditPlacePostDisplay
+// handleClose is a pointer to a function that changes the state open to false on  EditPlacePostDisplay
+//* handleConfirmDelete is a pointer to a function that send an API request to the backend to delte the place onEditPlacePostDisplay
 const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
   return (
     <div>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-cancel-delete-place"
-        aria-describedby="modal-modal-cancel-delete-place"
+        aria-labelledby="modal-cancel-delete-place"
+        aria-describedby="modal-cancel-delete-place"
       >
         <Stack>
           <Box sx={styleModalDelete}>
@@ -69,6 +75,7 @@ const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
             >
               <Stack
                 direction="row"
+                //* Arranges who the modal is shown on small screen sizes
                 spacing={window.innerWidth > 350 ? 2 : 0}
                 justifyContent="center"
                 alignItems="center"
@@ -77,6 +84,7 @@ const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
                   sx={{
                     backgroundColor: "transparent",
                     color: "#da4453c7",
+                    //* width for different screen sizes
                     width: {
                       sps: "15px",
                       ps: "16px",
@@ -91,6 +99,7 @@ const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
                       ms: "24px",
                       lgs: "24px",
                     },
+                    //* height for different screen sizes
                     height: {
                       sps: "18px",
                       ps: "20px",
@@ -110,6 +119,7 @@ const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
                 <Typography
                   sx={{
                     display: "inline",
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "12px",
                       ps: "13px",
@@ -132,7 +142,7 @@ const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
                   Your palce will be deleted, continue?
                 </Typography>
               </Stack>
-
+              {/* Margin correction */}
               <p style={{ margin: "1px" }} />
               <Stack
                 direction="row"

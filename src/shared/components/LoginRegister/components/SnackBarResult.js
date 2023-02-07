@@ -8,7 +8,7 @@ import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import styled from "@emotion/styled/macro";
 
-// Styled component for the ErrorIcon
+//* Styled component for the ErrorIcon
 const StyleErrorIcon = styled(ErrorIcon)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "#da4453c7" : "#fff",
   "&:hover": {
@@ -16,9 +16,9 @@ const StyleErrorIcon = styled(ErrorIcon)(({ theme }) => ({
   },
 }));
 
-// Styled component for the MuiAlert
-// It uses styled/macro to be able to control other MUI elements on hover in this case)
-// Note: They(MUI elements) have to be previously defined for them to work
+//* Styled component for the MuiAlert
+//* It uses styled/macro to be able to control other MUI elements on hover in this case)
+//TODO Note: They(MUI elements) have to be previously defined for them to work
 const StyleAlertError = styled(MuiAlert)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#fff",
   backgroundColor: theme.palette.mode === "dark" ? "#121212" : "#da4453",
@@ -45,7 +45,7 @@ const StyleAlertError = styled(MuiAlert)(({ theme }) => ({
   },
 }));
 
-// Styled component for the Snackbar
+//* Styled component for the Snackbar
 const StyleSnackBarError = styled(Snackbar)(({ theme }) => ({
   justifyContent: "end",
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#fff",
@@ -54,7 +54,7 @@ const StyleSnackBarError = styled(Snackbar)(({ theme }) => ({
   },
 }));
 
-// Styled component for the CheckCircleIcon
+//* Styled component for the CheckCircleIcon
 const StyleSuccessIcon = styled(CheckCircleIcon)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "#429E45" : "#fff",
   "&:hover": {
@@ -62,9 +62,9 @@ const StyleSuccessIcon = styled(CheckCircleIcon)(({ theme }) => ({
   },
 }));
 
-// Styled component for the MuiAlert
-// It uses styled/macro to be able to control other MUI elements on hover in this case)
-// Note: They(MUI elements) have to be previously defined for them to work
+//* Styled component for the MuiAlert
+//* It uses styled/macro to be able to control other MUI elements on hover in this case)
+//TODO Note: They(MUI elements) have to be previously defined for them to work
 const StyleAlertSuccess = styled(MuiAlert)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#fff",
   backgroundColor: theme.palette.mode === "dark" ? "#121212" : "#429E45",
@@ -91,7 +91,7 @@ const StyleAlertSuccess = styled(MuiAlert)(({ theme }) => ({
   },
 }));
 
-// Styled component for the Snackbar
+//* Styled component for the Snackbar
 const StyleSnackBarSuccess = styled(Snackbar)(({ theme }) => ({
   justifyContent: "end",
   color: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#fff",
@@ -109,8 +109,8 @@ const SnackBarResult = ({ error, onClear, onSuccess, message, onDuration }) => {
   const [errorState, setErrorState] = useState(error ? true : false);
   const [successState, setSuccessState] = useState(onSuccess ? true : false);
 
-  // The useEffect hook updates the state variables errorState and successState
-  // whenever the values of the props error, onSuccess change.
+  //* The useEffect hook updates the state variables errorState and successState
+  //* whenever the values of the props error, onSuccess change.
   useEffect(() => {
     setErrorState(error ? true : false);
     setSuccessState(onSuccess ? true : false);
@@ -120,7 +120,7 @@ const SnackBarResult = ({ error, onClear, onSuccess, message, onDuration }) => {
     setErrorState(error ? true : false);
     setSuccessState(onSuccess ? false : true);
 
-    // Triggers onClear to clean error/success messages
+    //* Triggers onClear to clean error/success messages
     if (!onSuccess) {
       onClear();
     }
@@ -150,7 +150,7 @@ const SnackBarResult = ({ error, onClear, onSuccess, message, onDuration }) => {
                 <CloseIcon
                   sx={{
                     marginLeft: "-9px",
-                    // fontSize for different screen sizes
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "14px",
                       ps: "16px",
@@ -173,7 +173,7 @@ const SnackBarResult = ({ error, onClear, onSuccess, message, onDuration }) => {
               </IconButton>
             }
             sx={{
-              // fontSize for different screen sizes
+              //* fontSize for different screen sizes
               fontSize: {
                 sps: "9px",
                 ps: "10px",
@@ -192,7 +192,7 @@ const SnackBarResult = ({ error, onClear, onSuccess, message, onDuration }) => {
             icon={
               <StyleErrorIcon
                 sx={{
-                  // fontSize for different screen sizes
+                  //* fontSize for different screen sizes
                   fontSize: {
                     sps: "14px",
                     ps: "16px",
@@ -233,7 +233,7 @@ const SnackBarResult = ({ error, onClear, onSuccess, message, onDuration }) => {
                 <CloseIcon
                   sx={{
                     marginLeft: "-9px",
-                    // fontSize for different screen sizes
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "14px",
                       ps: "16px",
@@ -256,7 +256,7 @@ const SnackBarResult = ({ error, onClear, onSuccess, message, onDuration }) => {
               </IconButton>
             }
             sx={{
-              // fontSize for different screen sizes
+              //* fontSize for different screen sizes
               fontSize: {
                 sps: "9px",
                 ps: "10px",
@@ -275,7 +275,7 @@ const SnackBarResult = ({ error, onClear, onSuccess, message, onDuration }) => {
             icon={
               <StyleSuccessIcon
                 sx={{
-                  // fontSize for different screen sizes
+                  //* fontSize for different screen sizes
                   fontSize: {
                     sps: "14px",
                     ps: "16px",

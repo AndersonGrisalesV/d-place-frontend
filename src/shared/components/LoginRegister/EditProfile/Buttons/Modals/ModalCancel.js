@@ -7,13 +7,13 @@ import ButtonYesCancelEditProfile from "../ButtonYesCancelEditProfile";
 import { Box, Modal, Stack, Typography } from "@mui/material";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 
-// Styled component for ModalCancel
+//* Styled component for ModalCancel
 const styleModalCancel = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  // width for different screen sizes
+  //* width for different screen sizes
   width: {
     sps: "234px",
     ps: "278px",
@@ -28,7 +28,7 @@ const styleModalCancel = {
     ms: "388px",
     lgs: "388px",
   },
-  // height for different screen sizes
+  //* height for different screen sizes
   height: {
     sps: "4.1rem",
     ps: "4.5rem",
@@ -57,7 +57,7 @@ const styleModalCancel = {
 const ModalCancel = ({ open, close }) => {
   let navigate = useNavigate();
 
-  // Confirms cancel EditProfile
+  //* Confirms cancel EditProfile
   const handleConfirmCancel = () => {
     close();
     navigate("/api/homepage");
@@ -90,7 +90,7 @@ const ModalCancel = ({ open, close }) => {
                   sx={{
                     backgroundColor: "transparent",
                     color: "#da4453c7",
-                    // width for different screen sizes
+                    //* width for different screen sizes
                     width: {
                       sps: "15px",
                       ps: "16px",
@@ -105,7 +105,7 @@ const ModalCancel = ({ open, close }) => {
                       ms: "24px",
                       lgs: "24px",
                     },
-                    // height for different screen sizes
+                    //* height for different screen sizes
                     height: {
                       sps: "18px",
                       ps: "20px",
@@ -125,7 +125,7 @@ const ModalCancel = ({ open, close }) => {
                 <Typography
                   sx={{
                     display: "inline",
-                    // fontSize for different screen sizes
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "12px",
                       ps: "13px",

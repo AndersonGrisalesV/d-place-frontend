@@ -3,14 +3,18 @@ import { useNavigate } from "react-router-dom";
 
 import { CardContent, Typography } from "@mui/material";
 
+//* onMap is a boolean that is passed down by PlaceDetail page
+//* loadedPlaces is the places passed down by Place, Feed, FavoritePlaces, ProfilePlaces or PlaceGetById
 const CardTitle = ({ onMap = false, loadedPlaces }) => {
   let navigate = useNavigate();
 
+  // Function that enables users to click the title and sends them to said title's place details
   const handleNavigateToPost = () => {
     if (loadedPlaces) {
       navigate(`/api/places/${loadedPlaces.id}`);
     }
   };
+
   return (
     <CardContent
       sx={{
@@ -25,7 +29,7 @@ const CardTitle = ({ onMap = false, loadedPlaces }) => {
         color="text.primary"
         sx={{
           cursor: "pointer",
-          // fontSize for different screen sizes
+          //* fontSize for different screen sizes
           fontSize: {
             sps: "10px",
             ps: "11px",
@@ -52,7 +56,7 @@ const CardTitle = ({ onMap = false, loadedPlaces }) => {
             fontWeight={400}
             color="text.secondary"
             sx={{
-              // fontSize for different screen sizes
+              //* fontSize for different screen sizes
               fontSize: {
                 sps: "8px",
                 ps: "9px",
