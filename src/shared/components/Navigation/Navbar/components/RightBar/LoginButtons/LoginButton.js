@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import { LoginContext } from "../../../../../../context/login-context";
 
@@ -39,20 +39,16 @@ const StyleButtonOnComment = styled(Button)(({ theme }) => ({
 const LoginButton = ({ OnComment = false }) => {
   const login = useContext(LoginContext);
 
+  // login.listItemsNotListed cleans the leftSideBar selected menu Item to none
   const cleanListItemsHandler = () => {
     login.listItemsNotListed();
   };
-
-  const location = useLocation();
 
   const buttonLeaveAComment = OnComment ? (
     <Box onClick={cleanListItemsHandler}>
       <NavLink
         to={{
           pathname: "/api/users/loginregister",
-          state: {
-            from: `${location}`,
-          },
         }}
         style={{ textDecoration: "none" }}
       >
@@ -61,6 +57,7 @@ const LoginButton = ({ OnComment = false }) => {
           sx={{
             textTransform: "none",
             bgcolor: `${buttonColor}`,
+            //* display for different screen sizes
             fontSize: {
               sps: "10px",
               ps: "12px",

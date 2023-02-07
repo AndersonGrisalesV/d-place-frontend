@@ -2,9 +2,11 @@ import React from "react";
 
 import Avatar from "@mui/material/Avatar";
 
+//* loadedPlaces are places passed by NotificationsButton
 const AvatarNotification = ({ loadedPlaces }) => {
   return (
     <Avatar
+      //* Checks if the user has an image or not
       src={
         loadedPlaces.slice(0, 1)[0].creatorId.imageUrl.url
           ? loadedPlaces.slice(0, 1)[0].creatorId.imageUrl.url
@@ -15,6 +17,7 @@ const AvatarNotification = ({ loadedPlaces }) => {
         color: "#fff",
         marginLeft: "10px",
         marginBottom: "18px",
+        //* display for different screen sizes
         fontSize: {
           sps: "10px",
           ps: "12px",
@@ -30,6 +33,7 @@ const AvatarNotification = ({ loadedPlaces }) => {
           lgs: "18px",
         },
         bgcolor: "#da4453c7",
+        //* width for different screen sizes
         width: {
           sps: "28px",
           ps: "31px",
@@ -44,6 +48,7 @@ const AvatarNotification = ({ loadedPlaces }) => {
           ms: "40px",
           lgs: "40px",
         },
+        //* height for different screen sizes
         height: {
           sps: "28px",
           ps: "31px",
@@ -61,6 +66,8 @@ const AvatarNotification = ({ loadedPlaces }) => {
       }}
       aria-label="recipe"
     >
+      {/* Checks if the user has an image or not to show the user's name (first
+      letter) instead */}
       {loadedPlaces.slice(0, 1)[0].creatorId.imageUrl.url === ""
         ? loadedPlaces.slice(0, 1)[0].creatorId.name.charAt(0)
         : ""}

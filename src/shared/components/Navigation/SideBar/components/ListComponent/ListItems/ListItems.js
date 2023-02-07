@@ -25,6 +25,7 @@ import {
 import ListItem from "@mui/material/ListItem";
 import styled from "@emotion/styled/macro";
 
+//* Styled component for the StyleHomeIcon
 const StyleHomeIcon = styled(HomeOutlined)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
@@ -34,6 +35,7 @@ const StyleHomeIcon = styled(HomeOutlined)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleFavoriteIcon
 const StyleFavoriteIcon = styled(FavoriteBorderOutlined)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
@@ -43,6 +45,7 @@ const StyleFavoriteIcon = styled(FavoriteBorderOutlined)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleAccountCircleIcon
 const StyleAccountCircleIcon = styled(AccountCircleOutlined)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
@@ -51,7 +54,7 @@ const StyleAccountCircleIcon = styled(AccountCircleOutlined)(({ theme }) => ({
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
   },
 }));
-
+//* Styled component for the StyleSettingsIcon
 const StyleSettingsIcon = styled(SettingsOutlined)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
@@ -61,6 +64,7 @@ const StyleSettingsIcon = styled(SettingsOutlined)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleLogoutIcon
 const StyleLogoutIcon = styled(Logout)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
@@ -70,6 +74,7 @@ const StyleLogoutIcon = styled(Logout)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleMyplacesIcon
 const StyleMyplacesIcon = styled(CollectionsOutlinedIcon)(({ theme }) => ({
   stroke: theme.palette.mode === "dark" ? "#fffff" : "#ffffff",
   strokeWidth: theme.palette.mode === "dark" ? 1 : 0.6,
@@ -79,6 +84,7 @@ const StyleMyplacesIcon = styled(CollectionsOutlinedIcon)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleListItemText
 const StyleListItemText = styled(ListItemText)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "" : "#000000de",
   "&:hover": {
@@ -86,6 +92,9 @@ const StyleListItemText = styled(ListItemText)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleListItemsHomepage
+//* It uses styled/macro to be able to control other MUI elements on hover in this case)
+//TODO Note: They(MUI elements) have to be previously defined for them to work
 const StyleListItemsHomepage = styled(ListItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
@@ -125,6 +134,9 @@ const StyleListItemsHomepage = styled(ListItem)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleListItemsFavorites
+//* It uses styled/macro to be able to control other MUI elements on hover in this case)
+//TODO Note: They(MUI elements) have to be previously defined for them to work
 const StyleListItemsFavorites = styled(ListItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
@@ -163,6 +175,9 @@ const StyleListItemsFavorites = styled(ListItem)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleListItemsMyPlaces
+//* It uses styled/macro to be able to control other MUI elements on hover in this case)
+//TODO Note: They(MUI elements) have to be previously defined for them to work
 const StyleListItemsMyPlaces = styled(ListItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
@@ -201,10 +216,12 @@ const StyleListItemsMyPlaces = styled(ListItem)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleListItemsProfile
+//* It uses styled/macro to be able to control other MUI elements on hover in this case)
+//TODO Note: They(MUI elements) have to be previously defined for them to work
 const StyleListItemsProfile = styled(ListItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
-
     color: theme.palette.mode === "dark" ? "" : "#da4453c7",
     [`${StyleHomeIcon}`]: {
       color: theme.palette.mode === "dark" ? "" : "#da4453c7",
@@ -240,6 +257,9 @@ const StyleListItemsProfile = styled(ListItem)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleListItemsSettings
+//* It uses styled/macro to be able to control other MUI elements on hover in this case)
+//TODO Note: They(MUI elements) have to be previously defined for them to work
 const StyleListItemsSettings = styled(ListItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
@@ -278,6 +298,9 @@ const StyleListItemsSettings = styled(ListItem)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleListItems
+//* It uses styled/macro to be able to control other MUI elements on hover in this case)
+//TODO Note: They(MUI elements) have to be previously defined for them to work
 const StyleListItems = styled(ListItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.mode === "dark" ? "" : "#ffe0e3c7",
@@ -306,6 +329,7 @@ const StyleListItems = styled(ListItem)(({ theme }) => ({
   },
 }));
 
+//* Styled component for the StyleNavLink
 const StyleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
   color: theme.palette.mode === "dark" ? "#fff" : "#000000",

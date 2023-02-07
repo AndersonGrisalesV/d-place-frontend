@@ -68,31 +68,28 @@ function App() {
     }
   };
 
-  let filteredPlaces;
   let count = 0;
   let placeSearched;
 
   const clearSearchBar = (e) => {
-    filteredPlaces = (
-      <>
-        {!isLoading && loadedPlaces && (
-          <React.Fragment>
-            {loadedPlaces.map((place) => {
-              let filtered;
-              if (
-                place.title.toLowerCase().includes(e.target.value.toLowerCase())
-              ) {
-                if (count === 0) {
-                  placeSearched = place.id;
-                }
-                count++;
+    <>
+      {!isLoading && loadedPlaces && (
+        <React.Fragment>
+          {loadedPlaces.map((place) => {
+            let filtered;
+            if (
+              place.title.toLowerCase().includes(e.target.value.toLowerCase())
+            ) {
+              if (count === 0) {
+                placeSearched = place.id;
               }
-              return filtered;
-            })}
-          </React.Fragment>
-        )}
-      </>
-    );
+              count++;
+            }
+            return filtered;
+          })}
+        </React.Fragment>
+      )}
+    </>;
 
     if (count === 0) {
       count--;
@@ -114,7 +111,7 @@ function App() {
     }
   };
 
-  const handlleSideBarCleanSearchBar = () => {
+  const handleSideBarCleanSearchBar = () => {
     setSearchBar("");
     if (storedInputSearch) {
       storedInputSearch.target.value = "";
@@ -303,7 +300,7 @@ function App() {
                 onOption={handleBurgerMenu}
                 onSearch={handleSearchBar}
                 onClear={clearSearchBar}
-                onClearSearchBar={handlleSideBarCleanSearchBar}
+                onClearSearchBar={handleSideBarCleanSearchBar}
                 onShowCloseButton={showCloseButton}
                 onCurrent={storedInputSearch}
               />
@@ -320,7 +317,7 @@ function App() {
                       mode={mode}
                       setMode={setMode}
                       onOption={handleBurgerMenu}
-                      onClearSearchBar={handlleSideBarCleanSearchBar}
+                      onClearSearchBar={handleSideBarCleanSearchBar}
                     />
                   ) : (
                     <SideBar
@@ -328,7 +325,7 @@ function App() {
                       mode={mode}
                       setMode={setMode}
                       onOption={handleBurgerMenu}
-                      onClearSearchBar={handlleSideBarCleanSearchBar}
+                      onClearSearchBar={handleSideBarCleanSearchBar}
                     />
                   )}
 

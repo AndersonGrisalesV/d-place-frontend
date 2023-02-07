@@ -78,6 +78,7 @@ export default function NavigationBar(props) {
 
               <Box
                 sx={{
+                  //* display for different screen sizes
                   display: {
                     sps: "none",
                     ps: "none",

@@ -68,6 +68,7 @@ const SearchBar = ({ onSearch, onClear, onShowCloseButton }) => {
         alignItems="center"
         justifyContent="center"
         sx={{
+          //* display for different screen sizes
           display: {
             sps: "flex",
             ps: "flex",

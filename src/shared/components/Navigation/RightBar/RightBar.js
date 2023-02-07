@@ -17,6 +17,7 @@ const Rightbar = () => {
         flex={2}
         p={0}
         sx={{
+          //* display for different screen sizes
           display: {
             sps: "none",
             ps: "none",
@@ -38,6 +39,7 @@ const Rightbar = () => {
             variant="outlined"
             sx={{
               margin: "0px",
+              //* maxWidth for different screen sizes
               maxWidth: {
                 msc: "300px",
                 mns: "800px",

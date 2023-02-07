@@ -19,6 +19,7 @@ const openedMixin = (theme) => ({
   }),
   overflowX: "hidden",
 });
+
 //* Component configuration for closedMixin
 const closedMixin = (theme) => ({
   transition: theme.transitions.create("width", {
@@ -31,6 +32,7 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
+
 //* Styled component for MuiDrawer
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",

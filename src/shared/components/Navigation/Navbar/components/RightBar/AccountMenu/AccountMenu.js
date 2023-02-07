@@ -21,6 +21,7 @@ const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   },
 }));
 
+//* onClearSearchBar is a pointer to a function that cleans the searchBar on NavigationBar, SideBar > App
 const AccountMenu = ({ onClearSearchBar }) => {
   const login = useContext(LoginContext);
   let navigate = useNavigate();
@@ -29,33 +30,33 @@ const AccountMenu = ({ onClearSearchBar }) => {
 
   const isMenuOpen = Boolean(anchorEl);
 
+  // handleProfileMenuOpen function sets the currentTarget as the anchor element
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {};
-
+  // handleMenuClose functon sets anchorEl to null
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
+  // handleMenuClose function sets anchorEl to null
   const handleProfileMenuClose = () => {
     login.listItemsNotListed();
     setAnchorEl(null);
-    handleMobileMenuClose();
     navigate(`/api/users/profile/${login.userId}`);
   };
 
+  // handleProfileMenuClose function closes the profile menu, logs the list of items that are not listed, sets anchorEl to null and navigates to the profile page for the current user
   const handleMenuCloseAndLogout = () => {
     setAnchorEl(null);
     login.logout();
     onClearSearchBar();
-    handleMobileMenuClose();
     navigate("/api/homepage");
     window.location.reload();
   };
 
+  // Menu to be rendered
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -88,6 +89,7 @@ const AccountMenu = ({ onClearSearchBar }) => {
         <Zoom in={true} style={{ transitionDelay: true ? "200ms" : "0ms" }}>
           <Box
             sx={{
+              //* display for different screen sizes
               display: {
                 sps: "none",
                 ps: "none",

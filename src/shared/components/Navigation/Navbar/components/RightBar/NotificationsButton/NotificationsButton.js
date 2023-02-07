@@ -141,6 +141,7 @@ const NotificationsButton = ({
       {changeResponsive ? (
         <Box
           sx={{
+            //* display for different screen sizes
             display: {
               sps: "flex",
               ps: "flex",
@@ -183,6 +184,7 @@ const NotificationsButton = ({
       ) : (
         <Box
           sx={{
+            //* display for different screen sizes
             display: {
               sps: "none",
               ps: "none",

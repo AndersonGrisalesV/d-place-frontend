@@ -8,6 +8,7 @@ const SideBarMenuResponsive = (props) => {
   return (
     <Box
       sx={{
+        //* display for different screen sizes
         display: {
           sps: "flex",
           ps: "flex",

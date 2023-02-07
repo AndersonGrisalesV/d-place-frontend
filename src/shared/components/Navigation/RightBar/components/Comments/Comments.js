@@ -23,6 +23,7 @@ const StyledListItem = styled(ListItem)({
   paddingLeft: "0px",
 });
 
+//* Styled component for NavLink
 const StyleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
   color:
@@ -34,6 +35,7 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
   },
 }));
 
+//* Styled component for NavLink
 const StyleTitleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
   fontWeight: "500",
@@ -41,6 +43,7 @@ const StyleTitleNavLink = styled(NavLink)(({ theme }) => ({
     theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#000000de",
 }));
 
+//* Styled component for NavLink
 const StyleCommentNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
   fontWeight: "500",

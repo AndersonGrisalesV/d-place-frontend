@@ -10,6 +10,7 @@ const SideBar = ({ mode, setMode, menuOption = true, onClearSearchBar }) => {
       flex={1}
       sx={{
         padding: "5px",
+        //* display for different screen sizes
         display: {
           sps: "none",
           ps: "none",

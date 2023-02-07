@@ -5,12 +5,17 @@ import CommentsPost from "./components/Comments/CommentsPost";
 
 import { Box, Zoom } from "@mui/material";
 
+//* onMap is a boolean that is passed down by PlaceDetail page
+//* loadedPlaces are the places passed down by Feed, FavoritePlaces, PlaceDetail or ProfilePlaces
+//* onShowComments is a boolean that is passed down by Feed page
+//* onRefreshPlaceComments is a pointer to a function that triggers a state that refreshes the places and their comments once one of them is edited or deleted PlaceGetById > CommentsPost where only comments are selected and then passed down
+//* onErrorDeleteComment is a pointer to a function that manages error/success messages when creating, editing, deleting a message PlaceGetById > CommentsPost > CommentsDisplay
+//* onArrangeBigSize is a boolean that helps us arrange the margin on big sized screens when showing FavoritePlaces, ProfilePlaces and FilteredPlaces
 const Place = ({
   onMap = false,
   loadedPlaces,
   onShowComments = false,
   onRefreshPlaceComments,
-  onDeletedComments,
   onErrorDeleteComment,
   onArrangeBigSize = false,
 }) => {
@@ -64,7 +69,6 @@ const Place = ({
           <CommentsPost
             loadedPlaces={loadedPlaces}
             onRefreshPlaceComments={onRefreshPlaceComments}
-            onDeletedComments={onDeletedComments}
             onErrorDeleteComment={onErrorDeleteComment}
           />
         </React.Fragment>

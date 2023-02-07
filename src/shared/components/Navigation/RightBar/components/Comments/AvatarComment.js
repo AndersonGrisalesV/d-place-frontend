@@ -15,6 +15,7 @@ const AvatarComment = ({ loadedPlace, onProfileNavigation }) => {
       sx={{
         color: "#fff",
         cursor: "pointer",
+        //* display for different screen sizes
         fontSize: {
           sps: "10px",
           ps: "12px",
@@ -30,6 +31,7 @@ const AvatarComment = ({ loadedPlace, onProfileNavigation }) => {
           lgs: "18px",
         },
         bgcolor: "#da4453c7",
+        //* width for different screen sizes
         width: {
           sps: "28px",
           ps: "31px",
@@ -44,6 +46,7 @@ const AvatarComment = ({ loadedPlace, onProfileNavigation }) => {
           ms: "40px",
           lgs: "40px",
         },
+        //* height for different screen sizes
         height: {
           sps: "28px",
           ps: "31px",

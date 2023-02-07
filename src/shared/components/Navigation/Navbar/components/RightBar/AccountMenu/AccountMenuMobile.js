@@ -32,6 +32,9 @@ const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
   },
 }));
 
+//* onClearSearchBar is a pointer to a function that cleans the searchBar on NavigationBar, SideBar > App
+// setUpdateNotification is a setState passed down by NavigationBar to help maintain the same state for the notification badge on mobile and desktop-sized screens
+// updateNotification is a state passed down by NavigationBar to help maintain the same state for the notification badge on mobile and desktop-sized screens
 const AccountMenuMobile = ({
   onClearSearchBar,
   setUpdateNotification,
@@ -48,19 +51,23 @@ const AccountMenuMobile = ({
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  // handleProfileMenuOpen function sets the currentTarget as the anchor element
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  // handleMenuhandleMobileMenuCloseClose functon sets anchorEl to null
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
 
+  // handleMenuClose function sets anchorEl to null and closes the mobile menu calling handleMobileMenuClose
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
 
+  // handleProfileMenuClose function closes the mobile menu, logs the list of items that are not listed, sets anchorEl to null and navigates to the profile page for the current user
   const handleProfileMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
@@ -68,12 +75,14 @@ const AccountMenuMobile = ({
     login.listItemsNotListed();
   };
 
+  // handleFavoritesMenuClose function  ets anchorEl to null and closes the mobile menu navigating to user favorite places
   const handleFavoritesMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
     navigate(`/api/users/favorites/${login.userId}`);
   };
 
+  // handleProfileMenuClose function closes the mobile menu, clears the searchBar, sets anchorEl to null and navigates to the home page wherethe user is logged out
   const handleMenuCloseAndLogout = () => {
     setAnchorEl(null);
     login.logout();
@@ -85,6 +94,7 @@ const AccountMenuMobile = ({
 
   const [userInfo, setUserInfo] = useState();
 
+  // handleMobileMenuOpen function sends an API request to the backend in order to retrieve the infor of the user to be passed down to the NotificationButton
   const handleMobileMenuOpen = async (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
 
@@ -101,6 +111,7 @@ const AccountMenuMobile = ({
     } catch (err) {}
   };
 
+  // Mobile Menu to be rendered
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -159,6 +170,7 @@ const AccountMenuMobile = ({
     </Menu>
   );
 
+  // Sub mobile Mmnu to be rendered inside the mobile menu
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -190,6 +202,7 @@ const AccountMenuMobile = ({
       {login.isLoggedIn ? (
         <Box
           sx={{
+            //* display for different screen sizes
             display: {
               sps: "flex",
               ps: "flex",
@@ -224,6 +237,7 @@ const AccountMenuMobile = ({
       ) : (
         <Box
           sx={{
+            //* display for different screen sizes
             display: {
               sps: "flex",
               ps: "flex",

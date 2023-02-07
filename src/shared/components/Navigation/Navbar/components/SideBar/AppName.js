@@ -13,6 +13,7 @@ const AppName = () => {
 
   let navigate = useNavigate();
 
+  // handleClickAppName functions redirects to the home page and activates animation on App's name through activateAnimation state
   const handleClickAppName = () => {
     setActivateAnimation(true);
     navigate("/api/homepage");
@@ -35,6 +36,7 @@ const AppName = () => {
         sx={{
           cursor: "pointer",
           marginLeft: "3px",
+          //* display for different screen sizes
           display: {
             sps: "none",
             ps: "none",
