@@ -31,6 +31,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import styled from "@emotion/styled";
 
+//* Styled component for StyleTextField
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
@@ -49,6 +50,7 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+//* Styled component for StyleVisibilityOffIcon
 const StyleVisibilityOffIcon = styled(VisibilityOff)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
   "&:hover": {
@@ -56,6 +58,7 @@ const StyleVisibilityOffIcon = styled(VisibilityOff)(({ theme }) => ({
   },
 }));
 
+//* Styled component for StyleVisibilityIcon
 const StyleVisibilityIcon = styled(Visibility)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "#ffffff5c" : "#0000005e",
   "&:hover": {
@@ -77,6 +80,7 @@ const LoginRegister = ({ mode, setMode }) => {
 
   const passwordInputRef = useRef(null);
 
+  // Initial form inputs state
   const initialFormInputs = {
     name: "",
     email: "",
@@ -87,10 +91,13 @@ const LoginRegister = ({ mode, setMode }) => {
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
 
+  // onSubmitLoginRegisterHandler function handles submit event for login and registration
   const onSubmitLoginRegisterHandler = async (e) => {
     e.preventDefault();
+    //Scrolls to the top of the page when the siibmit button is clicked
     window.scrollTo(0, 0);
 
+    //* Checks if there are no images selected in order to be formated correctly in the backend
     if (!formInputs.image || formInputs.image === "noImage") {
       formInputs.image = "";
     }
@@ -109,9 +116,11 @@ const LoginRegister = ({ mode, setMode }) => {
           }
         );
 
+        // Setting success message and show success flag
         setSuccessMessage(`Welcome back ${responseData.user.name}`);
         setShowSuccess(true);
 
+        // Timeout to login the user and prepared the LoggedIn token plus it closes the success message and navigate to homepage
         setTimeout(() => {
           login.login(
             responseData.user.id,
@@ -119,6 +128,8 @@ const LoginRegister = ({ mode, setMode }) => {
             null,
             responseData.user.themePreference === "light" ? "light" : "dark"
           );
+
+          //Sets the new mode
           setMode(
             responseData.user.themePreference === "light" ? "light" : "dark"
           );
@@ -133,9 +144,12 @@ const LoginRegister = ({ mode, setMode }) => {
 
         setImageUrl(null);
         setSelectedImage(null);
-      } catch (err) {}
+      } catch (err) {
+        //! Error shown to user when something goes wrong loggin in
+      }
     } else {
       try {
+        // Creates the FormData object and appends the form inputs to be send to the backend API point
         const myForm = new FormData();
         myForm.append("name", formInputs.name);
         myForm.append("email", formInputs.email);
@@ -149,9 +163,11 @@ const LoginRegister = ({ mode, setMode }) => {
           "POST",
           myForm
         );
-
+        // Setting success message and show success flag
         setSuccessMessage(`Welcome to Dplace ${responseData.user.name}`);
         setShowSuccess(true);
+
+        // Timeout to login the user and prepared the LoggedIn token plus it closes the success message and navigate to homepage
         setTimeout(() => {
           login.login(
             responseData.user.id,
@@ -159,6 +175,8 @@ const LoginRegister = ({ mode, setMode }) => {
             null,
             responseData.user.themePreference === "light" ? "light" : "dark"
           );
+
+          //Sets the new mode
           setMode(
             responseData.user.themePreference === "light" ? "light" : "dark"
           );
@@ -168,17 +186,23 @@ const LoginRegister = ({ mode, setMode }) => {
           setShowSuccess(false);
           setSuccessMessage(null);
         }, "930");
+
+        // Resets inputs
         resetNameInput();
         resetEmailInput();
-
         setImageUrl(null);
         setSelectedImage(null);
-      } catch (err) {}
+      } catch (err) {
+        //! Error shown to user when something goes wrong creating the new account
+      }
     }
+
+    // Each time the foomr is clicked the passwords fields' reset
     resetPasswordInput();
     resetconfirmPasswordInput();
   };
 
+  // switchModeHandler function is used to toggle between login and sign up mode reseting the inputs each time
   const switchModeHandler = () => {
     resetNameInput();
     resetEmailInput();
@@ -192,19 +216,21 @@ const LoginRegister = ({ mode, setMode }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
+  // useEffect hook listens for changes to selectedImage and updates imageUrl accordingly.
   useEffect(() => {
     if (selectedImage) {
       setImageUrl(URL.createObjectURL(selectedImage));
     }
   }, [selectedImage]);
 
+  //The formInputsHandler function is used to update the form inputs state, which is stored in the formInputs object. This function checks if the input being changed is an image, in which case it uses the FileReader API to read the image and convert it to a base64-encoded string, before updating the formInputs object with the image data. Otherwise, it updates the formInputs object with the new value of the changed input.
   const formInputsHandler = (e) => {
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = () => {
-        // console.log(reader.result); //base64encoded string
+        //base64encoded string
         setFormInputs({
           ...formInputs,
           [e.target.name]: reader.result,
@@ -218,6 +244,7 @@ const LoginRegister = ({ mode, setMode }) => {
     }
   };
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'nameInput'
   const {
     value: nameInput,
     isValid: nameIsValid,
@@ -227,6 +254,7 @@ const LoginRegister = ({ mode, setMode }) => {
     reset: resetNameInput,
   } = useFocusBlurHook((value) => validateNameAndLastName(value));
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'emailInput'
   const {
     value: emailInput,
     isValid: emailIsValid,
@@ -236,6 +264,7 @@ const LoginRegister = ({ mode, setMode }) => {
     reset: resetEmailInput,
   } = useFocusBlurHook((value) => ValidateEmail(value));
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'passwordInput'
   const {
     value: passwordInput,
     isValid: passwordIsValid,
@@ -245,6 +274,7 @@ const LoginRegister = ({ mode, setMode }) => {
     reset: resetPasswordInput,
   } = useFocusBlurHook((value) => ValidatePassword(value));
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'confirmPasswordInput'
   const {
     value: confirmPasswordInput,
     isValid: confirmPasswordIsValid,
@@ -254,6 +284,7 @@ const LoginRegister = ({ mode, setMode }) => {
     reset: resetconfirmPasswordInput,
   } = useFocusBlurHook((value) => ValidatePasswordAndConfirmPassword(value));
 
+  // Extra functions to validate inputs
   function validateNameAndLastName(text) {
     if (text.trim() !== "" && text.length > 4) {
       return true;
@@ -275,6 +306,7 @@ const LoginRegister = ({ mode, setMode }) => {
     return false;
   }
 
+  // Checks if the passwords are the same password and confirmPassword
   function ValidatePasswordAndConfirmPassword(password) {
     if (
       password.trim() !== "" &&
@@ -287,6 +319,7 @@ const LoginRegister = ({ mode, setMode }) => {
     return false;
   }
 
+  //* formIsValid is a boolean indicating whether the form is valid to enable the button login/signup and login/signup
   let formIsValid = false;
 
   if (
@@ -300,6 +333,7 @@ const LoginRegister = ({ mode, setMode }) => {
     formIsValid = true;
   }
 
+  // handleRemoveImage is a function toremove the image and set to null the values
   const handleRemoveImage = () => {
     formInputs.image = "noImage";
     setSelectedImage(null);
@@ -308,8 +342,10 @@ const LoginRegister = ({ mode, setMode }) => {
 
   const [showUserPassword, setShowUserPassword] = useState(false);
 
-  const handleClickShowUserPassword = () =>
+  // handleClickShowUserPassword is a function that toggles the value of showUserPassword state between true and false.
+  const handleClickShowUserPassword = () => {
     setShowUserPassword((show) => !show);
+  };
 
   return (
     <ScrollToTop pathname={pathname}>
@@ -348,6 +384,7 @@ const LoginRegister = ({ mode, setMode }) => {
                   name="name"
                   InputLabelProps={{
                     sx: {
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "11px",
                         ps: "12px",
@@ -367,6 +404,7 @@ const LoginRegister = ({ mode, setMode }) => {
                   InputProps={{
                     inputProps: {
                       sx: {
+                        //* fontSize for different screen sizes
                         fontSize: {
                           sps: "11px",
                           ps: "12px",
@@ -386,6 +424,7 @@ const LoginRegister = ({ mode, setMode }) => {
                   }}
                   FormHelperTextProps={{
                     sx: {
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "9px",
                         ps: "10px",
@@ -426,6 +465,7 @@ const LoginRegister = ({ mode, setMode }) => {
                 name="email"
                 InputLabelProps={{
                   sx: {
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "11px",
                       ps: "12px",
@@ -445,6 +485,7 @@ const LoginRegister = ({ mode, setMode }) => {
                 InputProps={{
                   inputProps: {
                     sx: {
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "11px",
                         ps: "12px",
@@ -464,6 +505,7 @@ const LoginRegister = ({ mode, setMode }) => {
                 }}
                 FormHelperTextProps={{
                   sx: {
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "9px",
                       ps: "10px",
@@ -507,6 +549,7 @@ const LoginRegister = ({ mode, setMode }) => {
                 name="password"
                 InputLabelProps={{
                   sx: {
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "11px",
                       ps: "12px",
@@ -536,6 +579,7 @@ const LoginRegister = ({ mode, setMode }) => {
                         {showUserPassword ? (
                           <StyleVisibilityOffIcon
                             sx={{
+                              //* width for different screen sizes
                               width: {
                                 sps: "15px",
                                 ps: "16px",
@@ -550,6 +594,7 @@ const LoginRegister = ({ mode, setMode }) => {
                                 ms: "24px",
                                 lgs: "24px",
                               },
+                              //* height for different screen sizes
                               height: {
                                 sps: "18px",
                                 ps: "20px",
@@ -569,6 +614,7 @@ const LoginRegister = ({ mode, setMode }) => {
                         ) : (
                           <StyleVisibilityIcon
                             sx={{
+                              //* width for different screen sizes
                               width: {
                                 sps: "15px",
                                 ps: "16px",
@@ -583,6 +629,7 @@ const LoginRegister = ({ mode, setMode }) => {
                                 ms: "24px",
                                 lgs: "24px",
                               },
+                              //* height for different screen sizes
                               height: {
                                 sps: "18px",
                                 ps: "20px",
@@ -605,6 +652,7 @@ const LoginRegister = ({ mode, setMode }) => {
                   ),
                   inputProps: {
                     sx: {
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "11px",
                         ps: "12px",
@@ -624,6 +672,7 @@ const LoginRegister = ({ mode, setMode }) => {
                 }}
                 FormHelperTextProps={{
                   sx: {
+                    //* fontSize for different screen sizes
                     fontSize: {
                       sps: "9px",
                       ps: "10px",
@@ -669,6 +718,7 @@ const LoginRegister = ({ mode, setMode }) => {
                   name="confirmPassword"
                   InputLabelProps={{
                     sx: {
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "11px",
                         ps: "12px",
@@ -688,6 +738,7 @@ const LoginRegister = ({ mode, setMode }) => {
                   InputProps={{
                     inputProps: {
                       sx: {
+                        //* fontSize for different screen sizes
                         fontSize: {
                           sps: "11px",
                           ps: "12px",
@@ -707,6 +758,7 @@ const LoginRegister = ({ mode, setMode }) => {
                   }}
                   FormHelperTextProps={{
                     sx: {
+                      //* fontSize for different screen sizes
                       fontSize: {
                         sps: "9px",
                         ps: "10px",
@@ -747,6 +799,7 @@ const LoginRegister = ({ mode, setMode }) => {
                       sx={{
                         display: "flex",
                         justifyContent: "center",
+                        //* fontSize for different screen sizes
                         fontSize: {
                           sps: "7px",
                           ps: "8px",

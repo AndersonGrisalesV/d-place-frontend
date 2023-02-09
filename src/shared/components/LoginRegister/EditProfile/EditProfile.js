@@ -36,6 +36,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import styled from "@emotion/styled";
 
+//* Styled component for StyleTextField
 const StyleTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
     color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
@@ -54,6 +55,7 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+//* Styled component for StyleVisibilityOffIcon
 const StyleVisibilityOffIcon = styled(VisibilityOff)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "#fff" : "#da4453c7",
   "&:hover": {
@@ -61,6 +63,7 @@ const StyleVisibilityOffIcon = styled(VisibilityOff)(({ theme }) => ({
   },
 }));
 
+//* Styled component for StyleVisibilityIcon
 const StyleVisibilityIcon = styled(Visibility)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "#ffffff5c" : "#0000005e",
   "&:hover": {
@@ -74,15 +77,22 @@ const EditProfile = () => {
   const { pathname } = useLocation();
   let navigate = useNavigate();
 
+  // Import the `isLoading`, `error`, `sendRequest`, and `clearError` functions from the `useHttpClient` hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
+  // State variable to store the loaded user
   const [loadedUser, setLoadedUser] = useState();
-  const [showSuccess, setShowSuccess] = useState(false);
 
+  // State variable to store the success message visibility status
+  const [showSuccess, setShowSuccess] = useState(false);
+  // State variable to store the success message
   const [successMessage, setSuccessMessage] = useState(null);
 
+  // State variable to store the form inputs
   const [formInputs, setFormInputs] = useState(null);
 
+  // State variable to store the selected image
+  // State variable to store the image URL
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -90,6 +100,7 @@ const EditProfile = () => {
 
   const { uid } = params;
 
+  // Reference for the old password input field
   const oldPasswordInputRef = useRef();
 
   const [openDeleteProfile, setOpenDeleteProfile] = useState(false);
@@ -97,8 +108,10 @@ const EditProfile = () => {
 
   const [loadingSpinnerButtons, setLoadingSpinnerButtons] = useState(false);
 
+  // handleConfirmDeleteProfile is a function that is called when the user confirms to delete their profile
   const handleConfirmDeleteProfile = async (e) => {
     e.preventDefault();
+    //Scrolls to the top of the page when the siibmit button is clicked
     window.scrollTo(0, 0);
     try {
       await sendRequest(
@@ -110,10 +123,13 @@ const EditProfile = () => {
         }
       );
 
+      // Setting success message and show success flag
       setShowSuccess(true);
       setSuccessMessage(
         `${loadedUser.name}'s profile was successfully deleted`
       );
+
+      // Timeoout to logout the user after the deletion of the profile and redirect
       setTimeout(() => {
         login.logout();
         navigate("/api/homepage");
@@ -122,12 +138,14 @@ const EditProfile = () => {
         setShowSuccess(false);
       }, "2000");
     } catch (err) {
-      console.log(err);
+      //! Error shown to user when something goes wrong deleting the profile
     }
 
+    // Closes the modal warning the user is about to delete the profile
     handleCloseDeleteProfile();
   };
 
+  // fetchPlace is a useEffect hook that fetches the user profile data from the backend API
   useEffect(() => {
     const fetchPlace = async () => {
       try {
@@ -141,6 +159,7 @@ const EditProfile = () => {
         );
         setLoadedUser(responseData.user);
 
+        // set the form inputs to the retrieved user profile data
         setFormInputs(
           {
             name: {
@@ -161,18 +180,22 @@ const EditProfile = () => {
           },
           true
         );
-
+        // set the image URL and selected image data
         setImageUrl(responseData.user.imageUrl.url);
         setSelectedImage(responseData.user.imageUrl.url);
-      } catch (err) {}
+      } catch (err) {
+        //! Error shown to user when something goes wrong fetching the user's info
+      }
     };
     fetchPlace();
   }, [sendRequest, uid, setImageUrl, setSelectedImage, login.token]);
 
+  // Define state and functions for controlling the opening/closing of a modal
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // useEffect hook to update the `imageUrl` state if `selectedImage` changes
   useEffect(() => {
     if (!imageUrl) {
       if (selectedImage) {
@@ -181,6 +204,7 @@ const EditProfile = () => {
     }
   }, [selectedImage, imageUrl]);
 
+  // formInputsHandler function to handle changes to form inputs
   const formInputsHandler = (e) => {
     if (e.target.name === "name" && showBlurName) {
       setShowBlurName(false);
@@ -206,18 +230,20 @@ const EditProfile = () => {
       setShowBlurImage(false);
     }
 
+    // If the input is for image, process the image and set it as a base64 encoded string
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = () => {
-        // console.log(reader.result); //base64encoded string
+        //base64encoded string
         setFormInputs({
           ...formInputs,
           [e.target.name]: reader.result,
         });
       };
     } else {
+      // Update the form inputs with the new value
       setFormInputs({
         ...formInputs,
         [e.target.name]: e.target.value,
@@ -225,6 +251,7 @@ const EditProfile = () => {
     }
   };
 
+  // Declare the state variables for each input, indicating if it has been blurred
   const [showBlurName, setShowBlurName] = useState(true);
   const [showBlurEmail, setShowBlurEmail] = useState(true);
   const [showBlurOldPassword, setShowBlurOldPassword] = useState(true);
@@ -232,6 +259,7 @@ const EditProfile = () => {
   const [showBlurConfirmPassword, setShowBlurConfirmPassword] = useState(true);
   const [showBlurImage, setShowBlurImage] = useState(true);
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'nameInput'
   const {
     value: nameInput,
     isValid: nameIsValid,
@@ -248,6 +276,7 @@ const EditProfile = () => {
     return false;
   }
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'emailInput'
   const {
     value: emailInput,
     isValid: emailIsValid,
@@ -264,6 +293,7 @@ const EditProfile = () => {
     return false;
   }
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'oldPasswordInput'
   const {
     value: oldPasswordInput,
     isValid: oldPasswordIsValid,
@@ -273,6 +303,7 @@ const EditProfile = () => {
     reset: resetOldPasswordInput,
   } = useFocusBlurHook((value) => ValidatePassword(value));
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'passwordInput'
   const {
     value: passwordInput,
     isValid: passwordIsValid,
@@ -289,6 +320,7 @@ const EditProfile = () => {
     return false;
   }
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'confirmPasswordInput'
   const {
     value: confirmPasswordInput,
     isValid: confirmPasswordIsValid,
@@ -298,6 +330,7 @@ const EditProfile = () => {
     reset: resetconfirmPasswordInput,
   } = useFocusBlurHook((value) => ValidatePasswordAndConfirmPassword(value));
 
+  // Extra functions to validate inputs
   function ValidatePasswordAndConfirmPassword(password) {
     if (
       password.trim() !== "" &&
@@ -309,23 +342,27 @@ const EditProfile = () => {
     }
     return false;
   }
-
+  // handleDeleteProfileModal function to handle opening the delete profile modal
   const handleDeleteProfileModal = () => {
     if (login.isLoggedIn) {
       setOpenDeleteProfile(true);
     }
   };
 
+  // cleanListItemsHandler function to clean the list items on the leftSideBar
   const cleanListItemsHandler = () => {
     login.listItemsNotListed();
   };
 
+  // onSubmitEditProfileHandler function handles submit event for edition of a profile
   const onSubmitEditProfileHandler = async (e) => {
     e.preventDefault();
-
+    // Scrolls to the top of the page when the siibmit button is clicked
     window.scrollTo(0, 0);
+    // Sets loading spinnerButtons to change them to a loadingSpinner
     setLoadingSpinnerButtons(true);
 
+    //* Checks if there are no images selected in order to be formated correctly in the backend
     if (login.isLoggedIn && formInputs) {
       if (!formInputs.image && formInputs.image !== "noImage") {
         formInputs.image = {
@@ -334,30 +371,33 @@ const EditProfile = () => {
           url: "",
         };
       }
-
+      //if the blur of the name is shown set the name input to "same"
       if (showBlurName) {
         formInputs.name = "same";
       }
+      //if the blur of the email is shown set the email input to "same"
       if (showBlurEmail) {
         formInputs.email = "same";
       }
+      //if the blur of the password is shown set the password input to "same"
       if (showBlurPassword) {
         formInputs.password = "same";
       }
+      //if the blur of the confirmPassword is shown set the confirmPassword input to "same"
       if (showBlurConfirmPassword) {
         formInputs.confirmPassword = "same";
       }
+      //if the blur of the image is shown set the image input to "same"
       if (formInputs.image !== "noImage") {
         if (showBlurImage) {
           formInputs.image = "same";
         }
       }
-
+      // Creates the FormData object and appends the form inputs to be send to the backend API point
       try {
         const myForm = new FormData();
         myForm.append("name", formInputs.name);
         myForm.append("email", formInputs.email);
-
         if (changePassword) {
           myForm.append("oldPassword", oldPasswordInput);
           myForm.append("password", formInputs.password);
@@ -376,23 +416,25 @@ const EditProfile = () => {
             Authorization: "Bearer " + login.token,
           }
         );
-
+        // Setting success message and show success flag
         setSuccessMessage(
           `${responseData.user.name}'s profile was successfully updated`
         );
+        // Refreshes the avatar in order for changes to be reflected
         login.refreshAvatar();
         setShowSuccess(true);
         setTimeout(() => {
           navigate("/api/homepage");
-
           cleanListItemsHandler();
         }, "910");
+        // Timeout to change the succes messages and spinner back to default state
         setTimeout(() => {
           setShowSuccess(false);
           setSuccessMessage(null);
           setLoadingSpinnerButtons(false);
         }, "930");
       } catch (err) {
+        //! If there's an error formInputs must be re-loaded with the user data again in order for it to not have any conflict if the user wants to try again
         setFormInputs(
           {
             name: {
@@ -417,10 +459,11 @@ const EditProfile = () => {
         setImageUrl(loadedUser.imageUrl.url);
         setSelectedImage(loadedUser.imageUrl.url);
       }
+      // Resets inputs
       resetNameInput();
       resetEmailInput();
     }
-
+    // Each time the foomr is clicked the passwords fields' reset
     resetOldPasswordInput();
     resetPasswordInput();
     resetconfirmPasswordInput();
@@ -429,6 +472,7 @@ const EditProfile = () => {
   const [changePassword, setChangePassword] = useState(false);
   const [deleteImage, setDeleteImage] = useState(false);
 
+  // handleRemoveImage is a function toremove the image and set to null the values
   const handleRemoveImage = () => {
     formInputs.image = "noImage";
 
@@ -447,13 +491,16 @@ const EditProfile = () => {
 
   let formIsValid = false;
 
+  // changePasswordHandler checks if form is valid based on various conditions, changes the value for a new password and ressets their input values
   const changePasswordHandler = () => {
     setChangePassword((prevPassword) => !prevPassword);
 
+    // reset the old password, password and confirm password inputs
     resetOldPasswordInput();
     resetPasswordInput();
     resetconfirmPasswordInput();
 
+    // Checks if name, email, password and confirm password inputs are valid
     if (!showBlurName && nameIsValid && !changePassword) {
       formIsValid = true;
     } else if (!showBlurEmail && emailIsValid && !changePassword) {
@@ -468,7 +515,7 @@ const EditProfile = () => {
     } else if (!showBlurImage && !changePassword) {
       formIsValid = true;
     }
-
+    // Check if an image is selected
     if (!selectedImage && !imageUrl && !changePassword) {
       if (loadedUser) {
         if (formInputs.image.value !== "") {
@@ -476,6 +523,7 @@ const EditProfile = () => {
         }
       }
     }
+    // Check if an image is deleted
     if (deleteImage) {
       if (loadedUser) {
         if (loadedUser.imageUrl.url === "") {
@@ -487,6 +535,7 @@ const EditProfile = () => {
     }
   };
 
+  //* A spinner contained within a long margin to keep light/dark themes consistent (if this is not added when a page is loading the background will be shown incorrectly)
   let spinner = "";
   if (isLoading && !loadingSpinnerButtons) {
     spinner = (
@@ -504,14 +553,16 @@ const EditProfile = () => {
   }
 
   const [showUserOldPassword, setShowUserOldPassword] = useState(false);
-
+  // handleClickShowUserOldPassword is a function that toggles the value of sshowUserOldPassword state between true and false in order to be shown or not
   const handleClickShowUserOldPassword = () =>
     setShowUserOldPassword((show) => !show);
 
   const [showUserNewPassword, setShowUserNewPassword] = useState(false);
 
-  const handleClickShowUserNewPassword = () =>
+  // handleClickShowUserNewPassword is a function that toggles the value of showUserPassword state between true and false.
+  const handleClickShowUserNewPassword = () => {
     setShowUserNewPassword((show) => !show);
+  };
 
   if (login.isLoggedIn) {
     if (!showBlurName && nameIsValid && !changePassword) {
@@ -597,6 +648,7 @@ const EditProfile = () => {
                               marginTop: "40px",
                               display: "flex",
                               justifyContent: "center",
+                              //* fontSize for different screen sizes
                               fontSize: {
                                 sps: "7px",
                                 ps: "8px",
@@ -647,6 +699,7 @@ const EditProfile = () => {
                         name="name"
                         InputLabelProps={{
                           sx: {
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "11px",
                               ps: "12px",
@@ -666,6 +719,7 @@ const EditProfile = () => {
                         InputProps={{
                           inputProps: {
                             sx: {
+                              //* fontSize for different screen sizes
                               fontSize: {
                                 sps: "11px",
                                 ps: "12px",
@@ -685,6 +739,7 @@ const EditProfile = () => {
                         }}
                         FormHelperTextProps={{
                           sx: {
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "9px",
                               ps: "10px",
@@ -727,6 +782,7 @@ const EditProfile = () => {
                         name="email"
                         InputLabelProps={{
                           sx: {
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "11px",
                               ps: "12px",
@@ -746,6 +802,7 @@ const EditProfile = () => {
                         InputProps={{
                           inputProps: {
                             sx: {
+                              //* fontSize for different screen sizes
                               fontSize: {
                                 sps: "11px",
                                 ps: "12px",
@@ -765,6 +822,7 @@ const EditProfile = () => {
                         }}
                         FormHelperTextProps={{
                           sx: {
+                            //* fontSize for different screen sizes
                             fontSize: {
                               sps: "9px",
                               ps: "10px",
@@ -815,6 +873,7 @@ const EditProfile = () => {
                             name="password"
                             InputLabelProps={{
                               sx: {
+                                //* fontSize for different screen sizes
                                 fontSize: {
                                   sps: "11px",
                                   ps: "12px",
@@ -846,6 +905,7 @@ const EditProfile = () => {
                                     {showUserOldPassword ? (
                                       <StyleVisibilityOffIcon
                                         sx={{
+                                          //* width for different screen sizes
                                           width: {
                                             sps: "15px",
                                             ps: "16px",
@@ -860,6 +920,7 @@ const EditProfile = () => {
                                             ms: "24px",
                                             lgs: "24px",
                                           },
+                                          //* height for different screen sizes
                                           height: {
                                             sps: "18px",
                                             ps: "20px",
@@ -879,6 +940,7 @@ const EditProfile = () => {
                                     ) : (
                                       <StyleVisibilityIcon
                                         sx={{
+                                          //* width for different screen sizes
                                           width: {
                                             sps: "15px",
                                             ps: "16px",
@@ -893,6 +955,7 @@ const EditProfile = () => {
                                             ms: "24px",
                                             lgs: "24px",
                                           },
+                                          //* height for different screen sizes
                                           height: {
                                             sps: "18px",
                                             ps: "20px",
@@ -915,6 +978,7 @@ const EditProfile = () => {
                               ),
                               inputProps: {
                                 sx: {
+                                  //* fontSize for different screen sizes
                                   fontSize: {
                                     sps: "11px",
                                     ps: "12px",
@@ -934,6 +998,7 @@ const EditProfile = () => {
                             }}
                             FormHelperTextProps={{
                               sx: {
+                                //* fontSize for different screen sizes
                                 fontSize: {
                                   sps: "9px",
                                   ps: "10px",
@@ -985,6 +1050,7 @@ const EditProfile = () => {
                             name="password"
                             InputLabelProps={{
                               sx: {
+                                //* fontSize for different screen sizes
                                 fontSize: {
                                   sps: "11px",
                                   ps: "12px",
@@ -1016,6 +1082,7 @@ const EditProfile = () => {
                                     {showUserNewPassword ? (
                                       <StyleVisibilityOffIcon
                                         sx={{
+                                          //* width for different screen sizes
                                           width: {
                                             sps: "15px",
                                             ps: "16px",
@@ -1030,6 +1097,7 @@ const EditProfile = () => {
                                             ms: "24px",
                                             lgs: "24px",
                                           },
+                                          //* height for different screen sizes
                                           height: {
                                             sps: "18px",
                                             ps: "20px",
@@ -1049,6 +1117,7 @@ const EditProfile = () => {
                                     ) : (
                                       <StyleVisibilityIcon
                                         sx={{
+                                          //* width for different screen sizes
                                           width: {
                                             sps: "15px",
                                             ps: "16px",
@@ -1063,6 +1132,7 @@ const EditProfile = () => {
                                             ms: "24px",
                                             lgs: "24px",
                                           },
+                                          //* height for different screen sizes
                                           height: {
                                             sps: "18px",
                                             ps: "20px",
@@ -1085,6 +1155,7 @@ const EditProfile = () => {
                               ),
                               inputProps: {
                                 sx: {
+                                  //* fontSize for different screen sizes
                                   fontSize: {
                                     sps: "11px",
                                     ps: "12px",
@@ -1104,6 +1175,7 @@ const EditProfile = () => {
                             }}
                             FormHelperTextProps={{
                               sx: {
+                                //* fontSize for different screen sizes
                                 fontSize: {
                                   sps: "9px",
                                   ps: "10px",
@@ -1151,6 +1223,7 @@ const EditProfile = () => {
                             name="confirmPassword"
                             InputLabelProps={{
                               sx: {
+                                //* fontSize for different screen sizes
                                 fontSize: {
                                   sps: "11px",
                                   ps: "12px",
@@ -1170,6 +1243,7 @@ const EditProfile = () => {
                             InputProps={{
                               inputProps: {
                                 sx: {
+                                  //* fontSize for different screen sizes
                                   fontSize: {
                                     sps: "11px",
                                     ps: "12px",
@@ -1189,6 +1263,7 @@ const EditProfile = () => {
                             }}
                             FormHelperTextProps={{
                               sx: {
+                                //* fontSize for different screen sizes
                                 fontSize: {
                                   sps: "9px",
                                   ps: "10px",

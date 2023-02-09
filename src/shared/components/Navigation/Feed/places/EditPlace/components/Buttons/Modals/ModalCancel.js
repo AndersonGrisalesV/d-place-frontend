@@ -58,7 +58,7 @@ const styleModalCancel = {
 const ModalCancel = ({ open, close, onHandleClose }) => {
   let navigate = useNavigate();
 
-  // Function that closes the modal mOdalCancel on ButtonCancelEditPlace 2 EditPlacePostDisplay and navigates the user back to the homepage
+  // Function that closes the modal modalCancel on ButtonCancelEditPlace 2 EditPlacePostDisplay and navigates the user back to the homepage
   const handleConfirmCancel = () => {
     onHandleClose();
     navigate("/api/homepage");

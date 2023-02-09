@@ -2,10 +2,13 @@ import React from "react";
 
 import Avatar from "@mui/material/Avatar";
 
+//* loadedPlaces is a state with the places passed down by Comments
+//* onProfileNavigation is a pointer to a function that when clicked goes to the profile of the creator of that post on Comment
 const AvatarComment = ({ loadedPlace, onProfileNavigation }) => {
   return (
     <Avatar
       onClick={onProfileNavigation}
+      // If there's no image then it selects the first letter of the user
       src={
         loadedPlace.creatorId.imageUrl.url
           ? loadedPlace.creatorId.imageUrl.url
@@ -64,6 +67,7 @@ const AvatarComment = ({ loadedPlace, onProfileNavigation }) => {
       }}
       aria-label="recipe"
     >
+      {/* If there's no image then it selects the first letter of the user */}
       {loadedPlace.creatorId.imageUrl.url === ""
         ? loadedPlace.creatorId.name.charAt(0)
         : ""}

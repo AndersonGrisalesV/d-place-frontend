@@ -25,6 +25,7 @@ const StyleToolbar = styled(Toolbar)({
   justifyContent: "space-between",
 });
 
+// Receives multiple props from App that distributes in the different react components
 export default function NavigationBar(props) {
   const login = useContext(LoginContext);
 

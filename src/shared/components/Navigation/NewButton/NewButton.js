@@ -21,6 +21,10 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
 }));
 
+//* menuOption is a boolean that indicates what sideBar is the right one to show (responsive or not responsive) on App
+//* onResponsive is a boolean that indicates if a small screen sized is accesing in order to display correctly the SideBarResponsive features on SideBarResponsive
+//* onCloseResponsiveDrawer is boolean that indicates if a responsive drawer is open in order for this said open drawer to be close using the onToggleResponsive function on NavigationBar
+//* onToggleResponsive is a pointer to a funciton that closes the responsive drawer on SideBarResponsive
 const NewButton = ({
   menuOption,
   onResponsive = false,
@@ -30,14 +34,18 @@ const NewButton = ({
   const login = useContext(LoginContext);
   let Button;
 
+  // handleDrawerClose function to toggle the resposiveMenue and login.listItemsNotListed cleans the leftSideBar selected menu Item to none
   const handleDrawerClose = () => {
     onToggleResponsive("left", false);
     login.listItemsNotListed("newplace");
   };
 
+  // cleanListItemsHandler functio to cleans the leftSideBar selected menu Item to none using login.listItemsNotListed
   const cleanListItemsHandler = () => {
     login.listItemsNotListed("newplace");
   };
+
+  // Chooses the right button to display depending on the menu and responsive props
 
   if (login.isLoggedIn && menuOption && !onResponsive) {
     Button = (

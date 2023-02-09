@@ -8,6 +8,10 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 
+// mode is a boolean state to help determine the app's theme on SideBarMenuResponsive > App
+// setMode is a boolean state to help change the state of  the app's theme on SideBarMenuResponsive > App
+// menuOption is a boolean that indicates what sideBar is the right one to show (responsive or not responsive) on SideBarMenuResponsive > App
+// onClearSearchBar is a pointer to a function that clear the searchBar on SideBarMenuResponsive > App
 export default function SideBarResponsive({
   mode,
   setMode,
@@ -18,17 +22,22 @@ export default function SideBarResponsive({
     left: false,
   });
 
+  // toggleDrawer function to toggle the state of a drawer given an anchor and open/close status
   const toggleDrawer = (anchor, open) => (event) => {
+    // Check if the event type is "keydown" and if the key pressed is "Tab" or "Shift"
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
     }
+    // Update the state with the new open/close status for the given anchor
     setState({ ...state, [anchor]: open });
   };
 
+  // toggleResponsiveDrawer function to toggle the state of a responsive drawer given an anchor and open/close status
   const toggleResponsiveDrawer = (anchor, open) => {
+    // Update the state with the new open/close status for the given anchor
     setState({ ...state, [anchor]: open });
   };
 

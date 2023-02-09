@@ -341,6 +341,11 @@ const StyleNavLink = styled(NavLink)(({ theme }) => ({
   },
 }));
 
+// mode is a boolean state to help determine the app's theme on SideBar > App
+// setMode is a boolean state to help change the state of  the app's theme on SideBar > App
+//* onCloseResponsiveDrawer is boolean that indicates if a responsive drawer is open in order for this said open drawer to be close using the onToggleResponsive function on SideBarResponsive
+//* onToggleResponsive is a pointer to a funciton that closes the responsive drawer on SideBarResponsive
+// onClearSearchBar is a pointer to a function that clear the searchBar on SideBar > App
 const ListItems = ({
   mode,
   setMode,
@@ -357,11 +362,13 @@ const ListItems = ({
 
   const [settingsSelectedItem, setSettingsSelecteditem] = useState(0);
 
+  // handleProfileMenuOpen is an event handler function to set the anchor element and selected item when the profile menu is opened
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
     setSettingsSelecteditem(5);
   };
 
+  // handleMenuClose is a function to close the menu and clear the state when the menu is closed
   const handleMenuClose = () => {
     setSettingsSelecteditem(0);
     setAnchorEl(null);
@@ -370,6 +377,7 @@ const ListItems = ({
     }
   };
 
+  // handleLogout is a function to log out the user and clear the state when the logout button is clicked
   const handleLogout = () => {
     navigate("/api/homepage");
 
@@ -382,6 +390,7 @@ const ListItems = ({
     }
   };
 
+  // Loads the menu to be shown when settings is clicked in order to allow the user to modify the current theme
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -415,7 +424,7 @@ const ListItems = ({
       </MenuItem>
     </Menu>
   );
-
+  // handleDrawerClose is a callback function that sets the anchor element to null and calls handleClear when the drawer is closed.
   const handleDrawerClose = () => {
     setAnchorEl(null);
     if (onToggleResponsive) {
@@ -424,6 +433,7 @@ const ListItems = ({
     handleClear();
   };
 
+  // handleClear is a callback function that calls the onClearSearchBar function to clear the search bar.
   const handleClear = () => {
     onClearSearchBar();
   };
@@ -431,6 +441,7 @@ const ListItems = ({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [clearListItem, setClearListItem] = useState(false);
 
+  // The useEffect hook listens to changes in several properties in the login object and updates the selectedIndex and clearListItem state variables based on the current URL path. It also sets the document title based on the URL path.
   useEffect(() => {
     switch (window.location.pathname) {
       case "/api/homepage":
@@ -487,6 +498,7 @@ const ListItems = ({
     login,
   ]);
 
+  // activeStateHandler is a callback function that updates the selectedIndex and clearListItem state variables when the user clicks on a navigation item.
   const activeStateHandler = (e, index) => {
     setClearListItem(false);
     login.listItemsCleanListed();
@@ -497,6 +509,8 @@ const ListItems = ({
       setSelectedIndex(index);
     }
   };
+
+  // homepageButton is a reference to a button element that is used to navigate to the homepage
   const homepageButton = useRef(null);
 
   return (
@@ -565,6 +579,7 @@ const ListItems = ({
               disablePadding
               component={StyleNavLink}
               to={`/api/users/favorites/${login.userId}`}
+              //! deprecated feature (selected)
               selected={selectedIndex === 1 ? true : null}
               onClick={(e) => activeStateHandler(e, 1)}
             >
@@ -594,6 +609,7 @@ const ListItems = ({
               disablePadding
               component={StyleNavLink}
               to={`/api/users/myplaces/${login.userId}`}
+              //! deprecated feature (selected)
               selected={selectedIndex === 2 && !clearListItem ? true : null}
               onClick={(e) => activeStateHandler(e, 2)}
             >
@@ -622,6 +638,7 @@ const ListItems = ({
               disablePadding
               component={StyleNavLink}
               to={`/api/users/profile/${login.userId}`}
+              //! deprecated feature (selected)
               selected={selectedIndex === 3 ? true : null}
               onClick={(e) => activeStateHandler(e, 3)}
             >
@@ -648,6 +665,7 @@ const ListItems = ({
           >
             <StyleListItemsSettings
               disablePadding
+              //! deprecated feature (selected)
               selected={settingsSelectedItem === 5 ? true : null}
             >
               <ListItemButton

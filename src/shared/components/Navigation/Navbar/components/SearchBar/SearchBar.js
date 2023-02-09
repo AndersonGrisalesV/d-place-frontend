@@ -46,12 +46,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+//* onSearch is a pointer to a function that handles the funcitonality in the searchbar on NavigationBar > App
+//* onClear is a pointer to a function that handles the funcitonality in to clear the searchBar on NavigationBar > App
+//* showCloseButton is a boolean that indicates when is neccesary toi show the close button on the serach bar
 const SearchBar = ({ onSearch, onClear, onShowCloseButton }) => {
   const [erasedDataSearch, setErasedDataSearch] = useState(false);
 
+  // handleCloseSearch function to trigger onSearch and clean the searchBar on App
   const handleCloseSearch = () => {
     onSearch(null, "clean");
   };
+
+  //  changeHandler funciton to sheck when the searchBar is empty to set a state and not show the close button on the searchBar
   const changeHandler = (e) => {
     if (e.target.value === "") {
       setErasedDataSearch(true);
@@ -107,6 +113,7 @@ const SearchBar = ({ onSearch, onClear, onShowCloseButton }) => {
                 onSearch(e, null);
                 changeHandler(e);
               }}
+              // Checks if enter is pressed on the searchBar and triggers the onClear funciton to clear the searchBar
               onKeyPress={(ev) => {
                 if (ev.key === "Enter") {
                   onClear(ev);

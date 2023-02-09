@@ -16,9 +16,13 @@ import {
   Zoom,
 } from "@mui/material";
 
+// function to generate src and srcSet strings for a given image
 function srcset(image, size, rows = 1, cols = 1) {
+  // return an object with src and srcSet properties
   return {
+    // src property with URL for the image with specified width and height
     src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
+    // srcSet property with URL for the image with specified width and height and double resolution
     srcSet: `${image}?w=${size * cols}&h=${
       size * rows
     }&fit=crop&auto=format&dpr=2 2x`,
@@ -33,6 +37,7 @@ const LatestPhotos = () => {
 
   let navigate = useNavigate();
 
+  //* useEffect to umake an API request in order to retreive the latest place's photos to be displayed on the homePage
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
@@ -49,11 +54,13 @@ const LatestPhotos = () => {
   let images;
   let count = 0;
 
+  // imageLinkHandler function to go the specific place when an image is clicked
   const imageLinkHandler = (e, id) => {
     navigate(`/api/places/${id}`);
     login.listItemsNotListed(id);
   };
 
+  // Spinner to be displayed while images are loading
   let spinner = "";
   if (isLoading) {
     spinner = (

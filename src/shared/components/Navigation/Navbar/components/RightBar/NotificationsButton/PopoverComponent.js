@@ -21,6 +21,12 @@ const StyleStack = styled(Stack)(({ theme }) => ({
   },
 }));
 
+//* anchorEl is a boolean that indicates if the popOver is to be open or not on NotificationButton
+//* onHandleClose is a pointer to a function he that closes the popOver on NotificationButton
+//* loadedPlaces is a state with the places passed down by NotificationButton
+//* onPost is a boolean that indicates that a new post is beign added on NotificationButton
+//* setLoadedPlaces a setState with the places passed down by NotificationButton in order to be updated here once a new Place has been added
+// onCloseMenuResponsive is a pointer to a function that closes  the mobile menu on AccountMenuMobile
 const PopoverComponent = ({
   anchorEl,
   onHandleClose,
@@ -38,6 +44,7 @@ const PopoverComponent = ({
   const [updatedPlaceId, setUpdatedPlaceId] = useState(null);
   const [count, setCount] = useState(0);
 
+  // useEffect to send an API request to the backend to fetch places in order to get the recently added place to show the popOver
   useEffect(() => {
     if (onPost) {
       const fetchPlaces = async () => {
@@ -58,6 +65,7 @@ const PopoverComponent = ({
     }
   }, [onPost, sendRequest, setLoadedPlaces, count]);
 
+  // handleNewPost function to navigate to the place shown in the popOver and to clean the leftSideBar
   const handleNewPost = () => {
     login.listItemsNotListed();
     navigate(`/api/places/${updatedPlaceId._id}`);

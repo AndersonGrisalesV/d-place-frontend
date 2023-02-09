@@ -49,13 +49,20 @@ const EditPlacePostDisplay = () => {
   const { pathname } = useLocation();
   let navigate = useNavigate();
 
+  // Import the `isLoading`, `error`, `sendRequest`, and `clearError` functions from the `useHttpClient` hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
+  // State variable to store the loaded user
   const [loadedPlace, setLoadedPlace] = useState();
+
+  // State variable to store the success message visibility status
   const [showSuccess, setShowSuccess] = useState(false);
 
+  // State variable to store the form inputs
   const [formInputs, setFormInputs] = useState(null);
 
+  // State variable to store the selected image
+  // State variable to store the image URL
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -63,19 +70,24 @@ const EditPlacePostDisplay = () => {
 
   const { pid } = params;
 
+  // Define state and functions for controlling the opening/closing of a modal to delete place
   const [openDeletePlace, setOpenDeletePlace] = useState(false);
   const handleOpenDeletePlace = () => setOpenDeletePlace(true);
   const handleCloseDeletePlace = () => setOpenDeletePlace(false);
 
+  // handleOpenModalDeletePlace function to open the modal deletePlace
   const handleOpenModalDeletePlace = () => {
     if (login.isLoggedIn) {
       handleOpenDeletePlace();
     }
   };
 
+  // handleConfirmDeletePlace is a function to handle the delete place event
   const handleConfirmDeletePlace = async (e) => {
     e.preventDefault();
+    //Scrolls to the top of the page when the siibmit button is clicked
     window.scrollTo(0, 0);
+
     try {
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/places/deleteplace/${pid}`,
@@ -86,19 +98,27 @@ const EditPlacePostDisplay = () => {
         }
       );
 
+      // send a new notification
       login.notification();
+
+      // Setting success message and show success flag and refirects
       setShowSuccess("The place was deleted successfully");
       setTimeout(() => {
         navigate("/api/homepage");
       }, "1000");
+      // Timeout to change the succes messages and spinner back to default state
       setTimeout(() => {
         setShowSuccess(false);
       }, "2000");
-    } catch (err) {}
+    } catch (err) {
+      //! If there's an error deleting the place it woill be trigger and shown on the same page
+    }
 
+    // Closes the modal warning the user is about to delete the place
     handleCloseDeletePlace();
   };
 
+  //useEffect hook to fetch the place data from the backednAPI point
   useEffect(() => {
     const fetchPlace = async () => {
       try {
@@ -106,7 +126,7 @@ const EditPlacePostDisplay = () => {
           `${process.env.REACT_APP_BACKEND_URL}/places/${pid}`
         );
         setLoadedPlace(responseData.place);
-
+        // set the form inputs to the retrieved place
         setFormInputs(
           {
             title: {
@@ -127,17 +147,22 @@ const EditPlacePostDisplay = () => {
           },
           true
         );
+        // set the image URL and selected image data
         setImageUrl(responseData.place.imageUrl.url);
         setSelectedImage(responseData.place.imageUrl.url);
-      } catch (err) {}
+      } catch (err) {
+        //! Error shown to user when something goes wrong fetching the places's info
+      }
     };
     fetchPlace();
   }, [sendRequest, pid, setImageUrl, setSelectedImage]);
 
+  // Define state and functions for controlling the opening/closing of a modal GObACK
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // useEffect hook to update the `imageUrl` state if `selectedImage` changes
   useEffect(() => {
     if (!imageUrl) {
       if (selectedImage) {
@@ -146,6 +171,7 @@ const EditPlacePostDisplay = () => {
     }
   }, [selectedImage, imageUrl]);
 
+  // formInputsHandler function to handle changes to form inputs
   const formInputsHandler = (e) => {
     if (e.target.name === "title" && showBlurTitle) {
       setShowBlurTitle(false);
@@ -160,19 +186,20 @@ const EditPlacePostDisplay = () => {
     if (e.target.name === "address" && showBlurAddress) {
       setShowAddress(false);
     }
-
+    // If the input is for image, process the image and set it as a base64 encoded string
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = () => {
-        // console.log(reader.result); //base64encoded string
+        //base64encoded string
         setFormInputs({
           ...formInputs,
           [e.target.name]: reader.result,
         });
       };
     } else {
+      // Update the form inputs with the new value
       setFormInputs({
         ...formInputs,
         [e.target.name]: e.target.value,
@@ -180,11 +207,13 @@ const EditPlacePostDisplay = () => {
     }
   };
 
+  // Declare the state variables for each input, indicating if it has been blurred
   const [showBlurTitle, setShowBlurTitle] = useState(true);
   const [showBlurDescription, setShowBlurDescription] = useState(true);
   const [showBlurAddress, setShowAddress] = useState(true);
   const [showBlurImage, setShowImage] = useState(true);
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'titleInput'
   const {
     value: titleInput,
     isValid: titleIsValid,
@@ -201,6 +230,7 @@ const EditPlacePostDisplay = () => {
     return false;
   }
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'descriptionInput'
   const {
     value: descriptionInput,
     isValid: descriptionIsValid,
@@ -217,6 +247,7 @@ const EditPlacePostDisplay = () => {
     return false;
   }
 
+  // Use the custom hook 'useFocusBlurHook' with input name 'addressInput'
   const {
     value: addressInput,
     isValid: addressIsValid,
@@ -233,18 +264,21 @@ const EditPlacePostDisplay = () => {
     return false;
   }
 
+  // handleDeletePlaceModal function to handle opening the delete place modal
   const handleDeletePlaceModal = () => {
     if (login.isLoggedIn) {
       setOpenDeletePlace(true);
     }
   };
 
+  // onSubmitPostPlaceHandler function handles submit event for edition of a place
   const onSubmitPostPlaceHandler = async (e) => {
     e.preventDefault();
-
+    // Scrolls to the top of the page when the siibmit button is clicked
     window.scrollTo(0, 0);
 
     let date = new Date().toJSON();
+    //! Checks if there are no images selected in order to be formated correctly in the backend (not used anymore, an image must be selected)
     if (login.isLoggedIn && formInputs) {
       if (!formInputs.image) {
         formInputs.image = {
@@ -253,19 +287,24 @@ const EditPlacePostDisplay = () => {
         };
       }
 
+      //if the blur of the title is shown set the title input to "same"
       if (showBlurTitle) {
         formInputs.title = "same";
       }
+      //if the blur of the description is shown set the description input to "same"
       if (showBlurDescription) {
         formInputs.description = "same";
       }
+      //if the blur of the image is shown set the image input to "same"
       if (showBlurImage) {
         formInputs.image = "same";
       }
+      //if the blur of the address is shown set the address input to "same"
       if (showBlurAddress) {
         formInputs.address = "same";
       }
 
+      // Creates the FormData object and appends the form inputs to be send to the backend API point
       try {
         const myForm = new FormData();
         myForm.append("title", formInputs.title);
@@ -281,19 +320,24 @@ const EditPlacePostDisplay = () => {
             Authorization: "Bearer " + login.token,
           }
         );
-
+        // Setting success message and show success flag
         setShowSuccess("The place was updated successfully");
+        // Timeout to redirect
         setTimeout(() => {
           setShowSuccess(false);
           navigate(`/api/places/${pid}`);
         }, "2000");
-      } catch (err) {}
+      } catch (err) {
+        //! Error shown to user when something goes wrong editing the place
+      }
     }
+    // Reset inputs
     resetTitleInput();
     resetDescriptionInput();
     resetAddressInput();
   };
 
+  //* formIsValid is a boolean indicating whether the form is valid to enable the button send to edit the place
   let formIsValid = false;
 
   if (login.isLoggedIn) {
@@ -312,11 +356,13 @@ const EditPlacePostDisplay = () => {
     }
   }
 
+  // handleRemoveImage is a function toremove the image and set to null the values
   const handleRemoveImage = () => {
     setSelectedImage(null);
     setImageUrl(null);
   };
 
+  //* A spinner contained within a long margin to keep light/dark themes consistent (if this is not added when a page is loading the background will be shown incorrectly)
   let spinner = "";
   if (isLoading) {
     spinner = (

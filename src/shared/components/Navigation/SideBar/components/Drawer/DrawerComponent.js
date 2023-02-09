@@ -51,6 +51,9 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+// mode is a boolean state to help determine the app's theme on SideBar > App
+// setMode is a boolean state to help change the state of  the app's theme on SideBar > App
+// onClearSearchBar is a pointer to a function that clear the searchBar on SideBar > App
 const DrawerComponent = ({ mode, setMode, menuOption, onClearSearchBar }) => {
   return (
     <Drawer variant="permanent" open={menuOption}>

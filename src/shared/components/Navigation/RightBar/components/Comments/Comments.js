@@ -59,6 +59,7 @@ const Comments = () => {
 
   let navigate = useNavigate();
 
+  //* useEffect to umake an API request in order to retreive the latest comments to be displayed on the homePage
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
@@ -72,8 +73,10 @@ const Comments = () => {
     fetchPlaces();
   }, [sendRequest]);
 
+  // Regular expression with specific pattern of characters to match character combinations in strings
   let regex = /[a-zA-Z0-9]/g;
 
+  // Declare variables to store the latest comment and final comment for each index
   let latestComment0;
   let latestComment1;
   let latestComment2;
@@ -82,16 +85,21 @@ const Comments = () => {
   let finalComment1;
   let finalComment2;
 
+  // Check if the data is not being loaded and there are loaded places
   if (!isLoading && loadedPlaces) {
+    // Check if the first place has a comment
     if (loadedPlaces[0] !== undefined) {
       latestComment0 = !isLoading && loadedPlaces ? loadedPlaces[0] : null;
-
+      // Trim the end of the comment and add ellipsis
       finalComment0 = latestComment0.commentText.trimEnd() + "…";
-
+      // Check if the length of the comment's alphanumeric characters is greater than or equal to 64
       if (latestComment0.commentText.match(regex).length >= 64) {
+        // Trim the comment to the first 64 characters and add ellipsis
         finalComment0 = latestComment0.commentText.slice(0, 64).trimEnd() + "…";
       }
+      // Check if the comment does not contain any spaces
       if (latestComment0.commentText.includes(" ") === false) {
+        // Trim the comment to the first 20 characters and add ellipsis
         finalComment0 = latestComment0.commentText.slice(0, 20).trimEnd() + "…";
       }
     }
@@ -122,6 +130,8 @@ const Comments = () => {
       }
     }
   }
+
+  // profileNavigationHandlernavigtes function goes to the user profile and updates the ListItems to profile
   const profileNavigationHandler = () => {
     if (login.isLoggedIn) {
       login.listItemsNotListed(login.userId);
@@ -132,28 +142,33 @@ const Comments = () => {
     }
   };
 
+  // firstpPlaceLinkHandler function goes to the place's detailsupdates the ListItems to none
   const firstpPlaceLinkHandler = () => {
     if (loadedPlaces[0] !== undefined) {
       login.listItemsNotListed(latestComment0.placeId._id);
     }
   };
 
+  // secondPlaceLinkHandler function goes to the place's detailsupdates the ListItems to none
   const secondPlaceLinkHandler = () => {
     if (loadedPlaces[1] !== undefined) {
       login.listItemsNotListed(latestComment1.placeId._id);
     }
   };
 
+  // thirdpPlaceLinkHandler function goes to the place's detailsupdates the ListItems to none
   const thirdpPlaceLinkHandler = () => {
     if (loadedPlaces[2] !== undefined) {
       login.listItemsNotListed(latestComment2.placeId._id);
     }
   };
 
+  // thirdpPlaceLinkHandler function udpates the ListItems to profile
   const cleanListHandler = () => {
     login.listItemsNotListed(login.userId);
   };
 
+  // Spinner to be displayed while images are loading
   let spinner = "";
   if (isLoading) {
     spinner = (

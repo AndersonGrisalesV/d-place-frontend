@@ -55,17 +55,22 @@ const StyleSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
+// mode is a boolean state to help determine the app's theme on SideBar > App
+// setMode is a boolean state to help change the state of  the app's theme on SideBar > App
 const ModeSwitch = ({ mode, setMode }) => {
   const login = useContext(LoginContext);
   const { sendRequest } = useHttpClient();
 
+  // Checks the incoming theme
   const switchVariant = mode === "light" ? false : true;
   const [changeSwitch, setChangeSwitch] = useState(switchVariant);
 
+  // useEffect changes everytime the switchVariant is changed
   useEffect(() => {
     setChangeSwitch(switchVariant);
   }, [switchVariant]);
 
+  // modeHandler function to send an API request to the backend to change the users's theme value stored in the database
   const modeHandler = async (e) => {
     setMode(mode === "light" ? "dark" : "light");
 
@@ -87,6 +92,7 @@ const ModeSwitch = ({ mode, setMode }) => {
       updateTheme();
     }
 
+    //* Updates de localStorage item userData in order to store the new theme in the localStorage object and keep  the new one there
     const data = window.localStorage.getItem("userData");
     const newData = JSON.parse(data);
     localStorage.setItem(

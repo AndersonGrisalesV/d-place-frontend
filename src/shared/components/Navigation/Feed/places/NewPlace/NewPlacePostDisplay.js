@@ -47,10 +47,13 @@ const NewPlacePostDisplay = () => {
   const { pathname } = useLocation();
   let navigate = useNavigate();
 
+  // Import the `isLoading`, `error`, `sendRequest`, and `clearError` functions from the `useHttpClient` hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
+  // State variable to store the success message visibility status
   const [showSuccess, setShowSuccess] = useState(false);
 
+  // Initial form inputs state
   const initialFormInputs = {
     title: "",
     description: "",
@@ -60,40 +63,45 @@ const NewPlacePostDisplay = () => {
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
 
+  // State variable to store the selected image
+  // State variable to store the image URL
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
+  // Define state and functions for controlling the opening/closing of a modal
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // useEffect hook to update the `imageUrl` state if `selectedImage` changes
   useEffect(() => {
     if (selectedImage) {
       setImageUrl(URL.createObjectURL(selectedImage));
     }
   }, [selectedImage]);
 
+  // formInputsHandler function to handle changes to form inputs
   const formInputsHandler = (e) => {
     if (e.target.name === "image") {
       setSelectedImage(e.target.files[0]);
       let reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
-
       reader.onloadend = () => {
-        // console.log(reader.result); //base64encoded string
+        //base64encoded string
         setFormInputs({
           ...formInputs,
           [e.target.name]: reader.result,
         });
       };
     } else {
+      // Update the form inputs with the new value
       setFormInputs({
         ...formInputs,
         [e.target.name]: e.target.value,
       });
     }
   };
-
+  // Use the custom hook 'useFocusBlurHook' with input name 'titleInput'
   const {
     value: titleInput,
     isValid: titleIsValid,
@@ -109,7 +117,7 @@ const NewPlacePostDisplay = () => {
     }
     return false;
   }
-
+  // Use the custom hook 'useFocusBlurHook' with input name 'descriptionInput'
   const {
     value: descriptionInput,
     isValid: descriptionIsValid,
@@ -125,7 +133,7 @@ const NewPlacePostDisplay = () => {
     }
     return false;
   }
-
+  // Use the custom hook 'useFocusBlurHook' with input name 'addressInput'
   const {
     value: addressInput,
     isValid: addressIsValid,
@@ -142,8 +150,11 @@ const NewPlacePostDisplay = () => {
     return false;
   }
 
+  // onSubmitPostPlaceHandler function handles submit event for the creation of a new place
   const onSubmitPostPlaceHandler = async (e) => {
     e.preventDefault();
+
+    // Scrolls to the top of the page when the siibmit button is clicked
     window.scrollTo(0, 0);
 
     if (login.isLoggedIn && formIsValid) {
@@ -156,6 +167,7 @@ const NewPlacePostDisplay = () => {
         };
       }
 
+      // Creates the FormData object and appends the form inputs to be send to the backend API point
       try {
         const myForm = new FormData();
         myForm.append("title", formInputs.title);
@@ -172,20 +184,40 @@ const NewPlacePostDisplay = () => {
             Authorization: "Bearer " + login.token,
           }
         );
-
+        // Setting success message and show success flag
         setShowSuccess(true);
 
+        // Timeout to change the succes messages, redirect and send a new notification
         setTimeout(() => {
           setShowSuccess(false);
           navigate("/api/homepage");
           login.notification();
         }, "2000");
       } catch (err) {
-        setTimeout(() => {
-          setShowSuccess(false);
-          navigate("/api/homepage");
-          login.notification();
-        }, "2000");
+        //! If there's an error the user must be redirected for the new attempt to be made in order to not cause conflict
+        setFormInputs(
+          {
+            name: {
+              value: formInputs.name,
+            },
+            email: {
+              value: formInputs.email,
+            },
+            password: {
+              value: formInputs.password,
+            },
+            confirmPassword: {
+              value: formInputs.confirmPassword,
+            },
+            image: {
+              value: formInputs.imageUrl.url,
+            },
+          },
+          true
+        );
+
+        setImageUrl(formInputs.imageUrl.url);
+        setSelectedImage(formInputs.imageUrl.url);
       }
 
       try {
@@ -198,9 +230,12 @@ const NewPlacePostDisplay = () => {
             "Content-Type": "Application/json",
           }
         );
-      } catch (err) {}
+      } catch (err) {
+        //! If there's an error updating the new notification for it to be shown to all users the error can be set to be displayed in the backend
+      }
     }
 
+    // Resets inputs
     resetTitleInput();
     resetDescriptionInput();
     resetAddressInput();
@@ -208,8 +243,8 @@ const NewPlacePostDisplay = () => {
     setSelectedImage(null);
   };
 
+  //* formIsValid is a boolean indicating whether the form is valid to enable the button send to create a new place
   let formIsValid = false;
-
   if (
     login.isLoggedIn &&
     titleIsValid &&
@@ -221,6 +256,7 @@ const NewPlacePostDisplay = () => {
     formIsValid = true;
   }
 
+  // handleRemoveImage is a function toremove the image and set to null the values
   const handleRemoveImage = () => {
     setSelectedImage(null);
     setImageUrl(null);
