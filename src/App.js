@@ -30,32 +30,42 @@ const StyleBox = styled(Box)(({ theme }) => ({
 }));
 
 function App() {
+  // Declaring state for newNotification
   const [newNotification, setNewNotification] = useState(false);
 
+  // Using the useAuth hook to get the token, login, logout, and userId from the authentication context
   const { token, login, logout, userId } = useAuth();
 
   let navigate = useNavigate();
 
+  // State to manage the searchBa and the closeIcon of the searchBar
   const [searchBar, setSearchBar] = useState();
-  const [storedInputSearch, setStoredInputSearch] = useState(null);
   const [showCloseButton, setShowCloseButton] = useState(false);
 
+  // Declaring state for storedInputSearch
+  const [storedInputSearch, setStoredInputSearch] = useState(null);
+
+  // Import the `isLoading`, `sendRequest`, from the `useHttpClient` hook
   const { isLoading, sendRequest } = useHttpClient();
+
+  // State variable to store the loaded user
   const [loadedPlaces, setLoadedPlaces] = useState();
 
+  //* useEffect sends an API request to the backend in order to fetch the places to be shown on the homepage
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/homepage`
         );
-
+        // Setting the state with the fetched places
         setLoadedPlaces(responseData.places.reverse());
       } catch (err) {}
     };
     fetchPlaces();
   }, [sendRequest]);
 
+  // handleSearchBar function to set the state with the search bar value and showIcon states plus checks if the searchBar is to be cleaned
   const handleSearchBar = (e, cleaner = null) => {
     setShowCloseButton(true);
     if (e === null && cleaner === "clean") {
@@ -68,10 +78,15 @@ function App() {
     }
   };
 
+  // These variables are used to count the number of places
+  // that match the search criteria and to store the ID of the
+  // first place that matches the search criteria
   let count = 0;
   let placeSearched;
 
   const clearSearchBar = (e) => {
+    // This fragment maps through the loaded places and finds the
+    // place that matches the search criteria
     <>
       {!isLoading && loadedPlaces && (
         <React.Fragment>
@@ -90,20 +105,22 @@ function App() {
         </React.Fragment>
       )}
     </>;
-
+    // If no place matches the search criteria, decrement count
     if (count === 0) {
       count--;
     }
-
+    // Clearing the search bar
     e.target.value = "";
     setSearchBar("");
     setShowCloseButton(false);
 
+    // Navigating to the place that matches the search criteria
     navigate(`/api/places/${placeSearched}`);
     if (placeSearched !== undefined) {
       listItemsNotListed(placeSearched);
     }
 
+    // If no place matches the search criteria, navigate back after 2 seconds
     if (placeSearched === undefined) {
       setTimeout(() => {
         navigate(-1);
@@ -111,6 +128,7 @@ function App() {
     }
   };
 
+  // handleSideBarCleanSearchBar function to clear the search bar when the side bar is closed
   const handleSideBarCleanSearchBar = () => {
     setSearchBar("");
     if (storedInputSearch) {
@@ -119,11 +137,19 @@ function App() {
     setShowCloseButton(false);
   };
 
+  // State hook to store whether the list items should be cleared or not on the LeftSideItems
   const [clearListItems, setClearListItems] = useState(false);
+
+  // State hook to store the id of the place whose list items should be cleared on the LeftSideItems
   const [pidCleanListItems, setPidCleanListItems] = useState(null);
+
+  // State hook to store the index of the list items to be cleared on the LeftSideItems
   const [homepageListItems, setHomepageListItems] = useState(null);
+
+  // State hook to store the new avatar
   const [newAvatar, setNewAvatar] = useState(null);
 
+  //Callback function to change the state of the list items on the LeftSideItems in order to not show any selected menuItem
   const listItemsNotListed = useCallback((pid) => {
     setClearListItems(true);
     if (pid !== "") {
@@ -131,25 +157,31 @@ function App() {
     }
   }, []);
 
+  // Callback function to change the state of the list items on the LeftSideItems back to their original state
   const listItemsCleanListed = useCallback(() => {
     setClearListItems(false);
     setPidCleanListItems(null);
   }, []);
 
+  //Callback function to change the state of the homepage list items and redirect correctly to homepage when the AppNmes is clicked
   const listItemsCleanHomepage = useCallback((index) => {
     setHomepageListItems(index);
   }, []);
 
+  // Callback function to change the state of new notifications to be shown to the user
   const notification = useCallback(() => {
     setNewNotification((preNewNotification) => !preNewNotification);
   }, []);
 
+  // Callback function to refresh the avatar
   const refreshAvatar = useCallback(() => {
     setNewAvatar((preNewAvatar) => !preNewAvatar);
   }, []);
 
+  // Get the user data stored in local storage or set it to null ir order to not have conflict with the theme
   const storedData = JSON.parse(localStorage.getItem("userData")) || null;
 
+  // State to store the mode (light or dark)
   const [mode, setMode] = useState(storedData ? storedData.theme : "light");
 
   let routes;
@@ -202,6 +234,7 @@ function App() {
     );
   }
 
+  //* Theme object for dark mode, with breakpoints and typography values defined
   const darkThemeTypographyAndBreakpoints = createTheme({
     breakpoints: {
       values: {
@@ -242,12 +275,15 @@ function App() {
     },
   });
 
+  // state to keep track of the state of the menu option for us to show the correct SideBar depending on the screen size
   const [menuOption, setMenuOption] = useState(true);
 
+  // function to handle the burger menu it flips the menu option by negating the previous state
   const handleBurgerMenu = () => {
     setMenuOption((prevMenuOption) => !prevMenuOption);
   };
 
+  //* A spinner contained within a long margin to keep light/dark themes consistent (if this is not added when a page is loading the background will be shown incorrectly)
   let spinner = "";
   if (isLoading) {
     spinner = (
