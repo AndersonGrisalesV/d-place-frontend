@@ -157,8 +157,8 @@ const ModalCancel = ({ open, close, onHandleClose }) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <ButtonYesCancelNewPlace onYesCancel={handleConfirmCancel} />
                 <ButtonGobackNewPlace onGoback={close} />
+                <ButtonYesCancelNewPlace onYesCancel={handleConfirmCancel} />
               </Stack>
             </Stack>
           </Box>

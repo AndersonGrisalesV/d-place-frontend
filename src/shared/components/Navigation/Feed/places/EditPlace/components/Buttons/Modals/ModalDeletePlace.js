@@ -150,8 +150,8 @@ const ModalDeletePlace = ({ open, handleClose, handleConfirmDelete }) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <ButtonYesDelete onYesDelete={handleConfirmDelete} />
                 <ButtonGoback onGoback={handleClose} />
+                <ButtonYesDelete onYesDelete={handleConfirmDelete} />
               </Stack>
             </Stack>
           </Box>

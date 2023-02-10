@@ -149,8 +149,8 @@ const ModalDeleteProfile = ({ open, close, onConfirmDelete }) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <ButtonYesDelete onYesDelete={onConfirmDelete} />
                 <ButtonGoback onGoback={close} />
+                <ButtonYesDelete onYesDelete={onConfirmDelete} />
               </Stack>
             </Stack>
           </Box>

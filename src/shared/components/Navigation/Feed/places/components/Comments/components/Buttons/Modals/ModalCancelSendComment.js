@@ -160,8 +160,8 @@ const ModalCancelSendComment = ({
                 justifyContent="center"
                 alignItems="center"
               >
-                <ButtonYesCancelSendComment onYesCancel={handleConfirmCancel} />
                 <ButtonGobackSendComment onGoback={close} />
+                <ButtonYesCancelSendComment onYesCancel={handleConfirmCancel} />
               </Stack>
             </Stack>
           </Box>

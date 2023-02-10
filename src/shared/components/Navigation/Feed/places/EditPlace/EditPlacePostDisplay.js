@@ -727,13 +727,13 @@ const EditPlacePostDisplay = () => {
                                 spacing={0}
                                 justifyContent="center"
                               >
-                                <ButtonEditPlace formIsValid={formIsValid} />
                                 <ButtonCancelEditPlace
                                   open={open}
                                   close={handleClose}
                                   onHandleOpen={handleOpen}
                                   onHandleClose={handleClose}
                                 />
+                                <ButtonEditPlace formIsValid={formIsValid} />
                               </Stack>
                               <ButtonDeletePlace
                                 onDelete={handleDeletePlaceModal}

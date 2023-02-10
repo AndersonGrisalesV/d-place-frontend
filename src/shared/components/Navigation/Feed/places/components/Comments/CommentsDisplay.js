@@ -280,7 +280,6 @@ const CommentsDisplay = ({
                 }
               />
               <Stack direction="row" spacing={1} justifyContent="center">
-                <ButtonSendComment formIsValid={formIsValid} />
                 <ButtonCancelSendComment
                   open={open}
                   close={handleClose}
@@ -289,6 +288,7 @@ const CommentsDisplay = ({
                   handleCancelSendComment={handleCancelSendComment}
                   cancelSendCommentIsValid={cancelSendCommentIsValid}
                 />
+                <ButtonSendComment formIsValid={formIsValid} />
               </Stack>
             </Stack>
           </form>

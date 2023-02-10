@@ -148,8 +148,8 @@ const ModalCancelEditComment = ({ open, handleClose, handleConfirmCancel }) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <ButtonYesCancel onYesCancel={handleConfirmCancel} />
                 <ButtonGoback onGoback={handleClose} />
+                <ButtonYesCancel onYesCancel={handleConfirmCancel} />
               </Stack>
             </Stack>
           </Box>

@@ -580,7 +580,6 @@ const NewPlacePostDisplay = () => {
                     </React.Fragment>
 
                     <Stack direction="row" spacing={0} justifyContent="center">
-                      <ButtonPostPlace formIsValid={formIsValid} />
                       <ButtonCancelPostPlace
                         showSuccess={showSuccess}
                         open={open}
@@ -588,6 +587,7 @@ const NewPlacePostDisplay = () => {
                         onHandleOpen={handleOpen}
                         onHandleClose={handleClose}
                       />
+                      <ButtonPostPlace formIsValid={formIsValid} />
                     </Stack>
                   </React.Fragment>
                 )}
