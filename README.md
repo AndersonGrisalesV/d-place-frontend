@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://user-images.githubusercontent.com/94204560/218552485-cc3545f5-b588-493a-9331-0c681f66544a.png" width=15% height=15%>
-  <h1>MERN Stack Dplace</h1>
+  <h1>Dplace</h1>
  </div>
 
  
@@ -26,8 +26,45 @@ Dplace website is an innovative web application that enables users to share thei
 - User profiles: Users can view their profile and all the posts they have shared and liked
 - Cloudinary integration: Photos uploaded by users are stored using the Cloudinary platform
 
+# 👨‍💻 Tech stack
 
-Features
+Here's a brief high-level overview of the tech stack the Well app uses:
+
+- This project uses the [Flutter app development framework](https://flutter.dev/). Flutter is a cross-platform hybrid app development platform which allows us to use a single codebase for apps on mobile, desktop, and the web.
+- For persistent storage (database), the app uses the [Hive](https://hivedb.dev/) package which allows the app to create a custom storage schema and save it to a local database.
+- To send local push notifications, the app uses the [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications) package which supports Android, iOS, and macOS.
+- The app uses the font ["Work Sans"](https://fonts.google.com/specimen/Work+Sans) as its main font, and the design of the app adheres to the material design guidelines.
+
+## 🖥️ Tech Stack
+**Frontend:**
+
+![reactjs](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)&nbsp;
+![react-router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)&nbsp;
+![redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)&nbsp;
+![tailwindcss](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)&nbsp;
+![mui](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white)&nbsp;
+
+**Backend:**
+
+![nodejs](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)&nbsp;
+![expressjs](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)&nbsp;
+![mongodb](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)&nbsp;
+![jwt](	https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)&nbsp;
+
+**Realtime Communication:**
+
+![socketio](https://img.shields.io/badge/Socket.io-010101?&style=for-the-badge&logo=Socket.io&logoColor=white)
+
+**Cloud Storage:**
+
+![aws-s3](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
+
+**Deployed On:**
+
+![heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
+
+**Cloud Storage:** [Cloudinary](https://cloudinary.com/)
+**Mail Service:** [Sendgrid](https://sendgrid.com/)
 
 
  
@@ -36,7 +73,11 @@ Features
  </a>
 
 
+---
 
+## :warning: Images Copyright Claim
+
+The images used in this project are the property of their respective creators/authors. No claim of ownership is made by the developer or users of this project.
 
 # Getting Started with Create React App 
 
