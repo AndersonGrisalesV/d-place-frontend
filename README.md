@@ -1,4 +1,21 @@
-# Getting Started with Create React App
+
+
+<div align="center">
+ <img src="https://user-images.githubusercontent.com/94204560/218552485-cc3545f5-b588-493a-9331-0c681f66544a.png" width=15% height=15%>
+  <h1>MERN Stack Dplace</h1>
+ </div>
+ 
+<a href='https://projects.colegaw.in/well-app?utm_source=GitHub&utm_medium=readme&utm_campaign=well_app_readme'>
+  
+<img src='https://img.shields.io/badge/HOMEPAGE-gray?style=for-the-badge'>
+  
+</a>
+ 
+# Project philosophy
+Discover and Share Your Journey Memories with the World. This innovative web application enables users to upload pictures of their travel destinations and showcase them on Google Maps. With the ability to comment, like, and share posts, users can interact with a thriving community of travelers. Creating an account on the app also opens the door for users to share their own travel adventures. Built with React for a seamless front-end experience and powered by Node.js and Express for efficient back-end operations, this app is your ultimate travel companion.
+
+
+# Getting Started with Create React App 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
