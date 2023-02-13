@@ -1,17 +1,69 @@
-
-
 <div align="center">
   <img src="https://user-images.githubusercontent.com/94204560/218552485-cc3545f5-b588-493a-9331-0c681f66544a.png" width=15% height=15%>
   <h1>MERN Stack Dplace</h1>
  </div>
- 
- <a href='https://dplace-3d5f4.web.app/api/homepage?utm_source=GitHub&utm_medium=readme&utm_campaign=well_app_readme'>
-  <img src='https://img.shields.io/badge/HOMEPAGE-gray?style=for-the-badge'>
- </a>
 
  
 Dplace website is an innovative web application that enables users to share their experiences through photos and locations for others to see and visit as well. With the ability to see the place on Google maps, comment, like, and share posts, users can interact with a community of people all showing the beauty around the world. Creating an account on the website also opens the door for users to share their own places, and engange with other people's places.
 Built with React for a seamless front-end experience and powered by Node.js and Express for efficient back-end operations, this app is your ultimate epxerience sharing website.
+
+---
+
+# Features
+
+- Login/Signup User Account
+- Login Sing With Email
+- Update Profile Name/Email/Password/ProfilePicture 
+- Delete Own User
+- Add New Posts
+- Update Post Title/Description/Address/Image/PostDate
+- Like/Unlike Posts
+- Share Posts on Different Social Media platforms
+- Search Posts by Title
+- Delete Own Posts
+- Add New Comments on Posts
+- Update Comment Text/CommentDate 
+- Delete Own Commments
+
+
+
+
+
+- Map integration Places shared by users are displayed on a map for easy navigation and visualization
+- User profiles: Users can view their profile and all the posts they have shared and all the posts the have liked
+- Cloudinary integration: Photos uploaded by users are stored using the Cloudinary platform
+
+
+Features
+
+
+
+
+Features
+User authentication (register and login)
+Upload photos of places with a location on Google Maps
+Display photos on Google Maps
+Ability for users to comment, like, and share posts
+User profiles displaying their uploaded places
+Image cloud storage with Cloudinary
+Admin panel for managing users, places, comments, and likes
+
+Features
+User authentication: Users can sign up and log in to their account, allowing them to access their uploaded photos and other features.
+
+Uploading photos: Users can upload photos of places they've been to, along with a description and location.
+
+Google Maps integration: Photos are displayed on a Google Maps interface, allowing users to view the location of each photo.
+
+Interactions with others: Users can like, comment on, and share photos uploaded by other users.
+
+User profiles: Users have a profile page that displays their uploaded photos and allows others to view and interact with their photos.
+
+User account management: Users can edit their profile and delete their account if they choose to.
+ 
+ <a href='https://dplace-3d5f4.web.app/api/homepage?utm_source=GitHub&utm_medium=readme&utm_campaign=well_app_readme'>
+  <img src='https://img.shields.io/badge/HOMEPAGE-gray?style=for-the-badge'>
+ </a>
 
 
 
